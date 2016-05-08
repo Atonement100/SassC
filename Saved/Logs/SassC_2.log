@@ -1,0 +1,42 @@
+﻿Log file open, 05/08/16 02:15:55
+LogInit:Display: Running engine for game: SassC
+LogPlatformFile: Not using cached read wrapper
+LogInit:Display: RandInit(1125757106) SRandInit(1125757108).
+LogInit: Using version manifest at CL 0 with build ID '8dd05bf7-9dff-4859-a560-b2bd2ef590e5'
+LogTaskGraph: Started task graph with 4 named threads and 7 total threads.
+LogStats: Stats thread started at 0.079458
+LogInit:Warning: Incompatible or missing module: UE4Editor-GitPush.dll
+Running V:/Program Files/Epic Games/UnrealEngine/Engine/Binaries/DotNET/UnrealBuildTool.exe SassC Development Win64 -project="C:/Users/Tim/Documents/Unreal Projects/SassC/SassC.uproject" -editorrecompile -progress -noubtmakefiles -NoHotReloadFromIDE -2015
+LogInit:Warning: Still incompatible or missing module: UE4Editor-GitPush.dll
+LogExit: Preparing to exit.
+LogDerivedDataCache:Display: Max Cache Size: 512 MB
+LogDerivedDataCache: Loaded boot cache 0.35s 46MB C:/Users/Tim/Documents/Unreal Projects/SassC/DerivedDataCache/Boot.ddc.
+LogDerivedDataCache:Display: Loaded Boot cache: C:/Users/Tim/Documents/Unreal Projects/SassC/DerivedDataCache/Boot.ddc
+LogDerivedDataCache: FDerivedDataBackendGraph:  Pak pak cache file C:/Users/Tim/Documents/Unreal Projects/SassC/DerivedDataCache/DDC.ddp not found, will not use a pak cache.
+LogDerivedDataCache: Unable to find inner node Pak for hierarchical cache Hierarchy.
+LogDerivedDataCache: FDerivedDataBackendGraph:  EnginePak pak cache file ../../../Engine/DerivedDataCache/DDC.ddp not found, will not use a pak cache.
+LogDerivedDataCache: Unable to find inner node EnginePak for hierarchical cache Hierarchy.
+LogDerivedDataCache: Using Local data cache path ../../../Engine/DerivedDataCache: Writable
+LogDerivedDataCache: Shared data cache path not found in *engine.ini, will not use an Shared cache.
+LogDerivedDataCache: Unable to find inner node Shared for hierarchical cache Hierarchy.
+LogDerivedDataCache: Shutdown
+LogModuleManager: Shutting down and abandoning module CookingStats (17)
+LogModuleManager: Shutting down and abandoning module DerivedDataCache (16)
+LogDerivedDataCache: Shutdown
+LogModuleManager: Shutting down and abandoning module DesktopPlatform (15)
+LogModuleManager: Shutting down and abandoning module TextureCompressor (14)
+LogModuleManager: Shutting down and abandoning module ShaderCore (13)
+LogModuleManager: Shutting down and abandoning module Landscape (12)
+LogModuleManager: Shutting down and abandoning module SlateRHIRenderer (11)
+LogModuleManager: Shutting down and abandoning module OpenGLDrv (10)
+LogModuleManager: Shutting down and abandoning module D3D11RHI (9)
+LogModuleManager: Shutting down and abandoning module AnimGraphRuntime (8)
+LogModuleManager: Shutting down and abandoning module Renderer (7)
+LogModuleManager: Shutting down and abandoning module Engine (6)
+LogModuleManager: Shutting down and abandoning module CoreUObject (5)
+LogModuleManager: Shutting down and abandoning module NetworkFile (4)
+LogModuleManager: Shutting down and abandoning module StreamingFile (3)
+LogModuleManager: Shutting down and abandoning module SandboxFile (2)
+LogModuleManager: Shutting down and abandoning module PakFile (1)
+LogExit: Exiting.
+Log file closed, 05/08/16 02:16:16
