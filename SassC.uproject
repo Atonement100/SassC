@@ -1,0 +1,13 @@
+{
+	"FileVersion": 3,
+	"EngineAssociation": "{34D35763-41E5-782D-CE54-FDA05FD68838}",
+	"Category": "",
+	"Description": "",
+	"Modules": [
+		{
+			"Name": "SassC",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
+		}
+	]
+}
