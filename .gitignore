@@ -43,6 +43,10 @@ SourceArt/**/*.tga
 # Binary Files
 Binaries/*
 
+# StarterContent
+Content/StarterContent/*
+Content/MixamoAnimPack/*
+
 # Builds
 Build/*
 
