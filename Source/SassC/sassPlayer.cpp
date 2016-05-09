@@ -33,6 +33,40 @@ void AsassPlayer::SetupPlayerInputComponent(class UInputComponent* InputComponen
 	InputComponent->BindAxis("MoveRight", this, &AsassPlayer::MoveRight);
 	InputComponent->BindAxis("PitchCamera", this, &AsassPlayer::PitchCamera);
 	InputComponent->BindAxis("YawCamera", this, &AsassPlayer::YawCamera);
+	InputComponent->BindAction("Sprint", IE_Pressed, this, &AsassPlayer::SprintPressed);
+	InputComponent->BindAction("Sprint", IE_Released, this, &AsassPlayer::SprintReleased);
+}
+
+void AsassPlayer::Sprint_Implementation(bool isRunning) {
+	if (isRunning) {
+		GetCharacterMovement()->MaxWalkSpeed = SprintSpeed;
+	}
+	else {
+		GetCharacterMovement()->MaxWalkSpeed = WalkSpeed;
+	}
+
+	if (Role < ROLE_Authority) {
+		SprintNetwork_Implementation(isRunning);
+	}
+}
+
+void AsassPlayer::SprintNetwork_Implementation(bool isRunning) {
+	Sprint_Implementation(isRunning);
+}
+
+bool AsassPlayer::SprintNetwork_Validate(bool isRunning) {
+	return true;
+}
+
+void AsassPlayer::SprintPressed() {
+	IsSprintPressed = true;
+	IsCrouchPressed = false;
+	Sprint_Implementation(IsSprintPressed);
+}
+
+void AsassPlayer::SprintReleased() {
+	IsSprintPressed = false;
+	Sprint_Implementation(IsSprintPressed);
 }
 
 void AsassPlayer::MoveForward(float AxisValue) {

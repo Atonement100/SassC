@@ -19,6 +19,8 @@ public:
 	void MoveRight(float AxisValue);
 	void PitchCamera(float AxisValue);
 	void YawCamera(float AxisValue);
+	void SprintPressed();
+	void SprintReleased();
 
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -29,8 +31,20 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
 	
+	UFUNCTION(BlueprintNativeEvent, Category = "Movement")
+	void Sprint(bool isRunning);
+	virtual void Sprint_Implementation(bool isRunning);
+	UFUNCTION(Server, Reliable, WithValidation)
+	void SprintNetwork(bool isRunning);
+	virtual void SprintNetwork_Implementation(bool isRunning);
+	virtual bool SprintNetwork_Validate(bool isRunning);
+
 
 private:
 	bool InvertPitch = false;
 	bool InvertYaw = false;
+	bool IsCrouchPressed = false;
+	bool IsSprintPressed = false;
+	float SprintSpeed = 800.0f;
+	float WalkSpeed = 400.0f;
 };
