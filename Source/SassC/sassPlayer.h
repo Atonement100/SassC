@@ -21,6 +21,7 @@ public:
 	void YawCamera(float AxisValue);
 	void SprintPressed();
 	void SprintReleased();
+	void testFunction();
 
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -31,13 +32,15 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
 	
+	/*
 	UFUNCTION(BlueprintNativeEvent, Category = "Movement")
 	void Sprint(bool isRunning);
 	virtual void Sprint_Implementation(bool isRunning);
 	UFUNCTION(Server, Reliable, WithValidation)
-	void SprintNetwork(bool isRunning);
-	virtual void SprintNetwork_Implementation(bool isRunning);
-	virtual bool SprintNetwork_Validate(bool isRunning);
+	void ServerSprint(bool isRunning);
+	virtual void ServerSprint_Implementation(bool isRunning);
+	virtual bool ServerSprint_Validate(bool isRunning);
+	*/
 
 
 private:
