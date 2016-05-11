@@ -31,12 +31,19 @@ void AsassPlayer::Tick( float DeltaTime )
 void AsassPlayer::SetupPlayerInputComponent(class UInputComponent* InputComponent)
 {
 	Super::SetupPlayerInputComponent(InputComponent);
+	//WASD Movement
 	InputComponent->BindAxis("MoveForward", this, &AsassPlayer::MoveForward);
 	InputComponent->BindAxis("MoveRight", this, &AsassPlayer::MoveRight);
+	//Camera Movement
 	InputComponent->BindAxis("PitchCamera", this, &AsassPlayer::PitchCamera);
 	InputComponent->BindAxis("YawCamera", this, &AsassPlayer::YawCamera);
+	//Sprint functions
 	InputComponent->BindAction("Sprint", IE_Pressed, this, &AsassPlayer::SprintPressed);
 	InputComponent->BindAction("Sprint", IE_Released, this, &AsassPlayer::SprintReleased);
+	//Crouch functions
+	InputComponent->BindAction("Crouch", IE_Pressed, this, &AsassPlayer::CrouchPressed);
+	InputComponent->BindAction("Crouch", IE_Released, this, &AsassPlayer::CrouchReleased);
+	//test functions
 	InputComponent->BindAction("Test", IE_Pressed, this, &AsassPlayer::testFunction);
 }
 
@@ -46,14 +53,44 @@ void AsassPlayer::testFunction() {
 	
 }
 
+#pragma region Crouch functions
+void AsassPlayer::CrouchPressed() {
+	IsCrouchPressed = true;
+	IsSprintPressed = false;
+	BaseEyeHeight = CrouchingEyeHeight;
+	GetCharacterMovement()->MaxWalkSpeed = CrouchSpeed;
+	ServerCrouch(IsCrouchPressed, GetCharacterMovement());
+}
+
+void AsassPlayer::CrouchReleased() {
+	IsCrouchPressed = false;
+	BaseEyeHeight = StandingEyeHeight;
+	GetCharacterMovement()->MaxWalkSpeed = WalkSpeed;
+	ServerCrouch(IsCrouchPressed, GetCharacterMovement());
+}
+
+void AsassPlayer::ServerCrouch_Implementation(bool isCrouching, UCharacterMovementComponent *movementComponent) {
+	if (isCrouching) { movementComponent->MaxWalkSpeed = CrouchSpeed; }
+	else { movementComponent->MaxWalkSpeed = WalkSpeed; }
+}
+
+bool AsassPlayer::ServerCrouch_Validate(bool isCrouching, UCharacterMovementComponent *movementComponent) {
+	return true;
+}
+
+#pragma endregion
+
+#pragma region Sprint functions
 void AsassPlayer::SprintPressed() {
 	IsSprintPressed = true;
 	IsCrouchPressed = false;
+	GetCharacterMovement()->MaxWalkSpeed = SprintSpeed;
 	ServerSprint(IsSprintPressed, GetCharacterMovement());
 }
 
 void AsassPlayer::SprintReleased() {
 	IsSprintPressed = false;
+	GetCharacterMovement()->MaxWalkSpeed = WalkSpeed;
 	ServerSprint(IsSprintPressed, GetCharacterMovement());
 }
 
@@ -65,7 +102,9 @@ void AsassPlayer::ServerSprint_Implementation(bool isRunning, UCharacterMovement
 bool AsassPlayer::ServerSprint_Validate(bool isRunning, UCharacterMovementComponent *movementComponent) {
 	return true;
 }
+#pragma endregion
 
+#pragma region WASD Movement
 void AsassPlayer::MoveForward(float AxisValue) {
 	if (Controller != NULL && AxisValue != 0.0f) {
 		FRotator Rotation = Controller->GetControlRotation();
@@ -81,7 +120,9 @@ void AsassPlayer::MoveRight(float AxisValue) {
 		AddMovementInput(Direction, AxisValue);
 	}
 }
+#pragma endregion
 
+#pragma region Camera Movement
 void AsassPlayer::PitchCamera(float AxisValue) {
 	if (Controller != NULL && AxisValue != 0.0f) {
 		if (InvertPitch) {
@@ -103,3 +144,4 @@ void AsassPlayer::YawCamera(float AxisValue) {
 		}
 	}
 }
+#pragma endregion

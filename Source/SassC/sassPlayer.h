@@ -15,12 +15,19 @@ public:
 	AsassPlayer();
 
 	// Input
+	//WASD Movement
 	void MoveForward(float AxisValue);
 	void MoveRight(float AxisValue);
+	//Camera Movement
 	void PitchCamera(float AxisValue);
 	void YawCamera(float AxisValue);
+	//Sprint functions
 	void SprintPressed();
 	void SprintReleased();
+	//Crouch functions
+	void CrouchPressed();
+	void CrouchReleased();
+	//test functions
 	void testFunction();
 
 	// Called when the game starts or when spawned
@@ -37,6 +44,11 @@ public:
 	virtual void ServerSprint_Implementation(bool isRunning, UCharacterMovementComponent *movementComponent);
 	virtual bool ServerSprint_Validate(bool isRunning, UCharacterMovementComponent *movementComponent);
 
+	UFUNCTION(Reliable, Server, WithValidation)
+	void ServerCrouch(bool isCrouching, UCharacterMovementComponent *movementComponent);
+	virtual void ServerCrouch_Implementation(bool isCrouching, UCharacterMovementComponent *movementComponent);
+	virtual bool ServerCrouch_Validate(bool isCrouching, UCharacterMovementComponent *movementComponent);
+
 private:
 	bool InvertPitch = false;
 	bool InvertYaw = false;
@@ -44,4 +56,7 @@ private:
 	bool IsSprintPressed = false;
 	float SprintSpeed = 800.0f;
 	float WalkSpeed = 400.0f;
+	float CrouchSpeed = 200.0f;
+	float CrouchingEyeHeight = 40.0f;
+	float StandingEyeHeight = 80.0f;
 };
