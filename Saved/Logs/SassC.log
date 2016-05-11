@@ -1,10 +1,10 @@
-﻿Log file open, 05/09/16 13:56:24
+﻿Log file open, 05/10/16 23:35:12
 LogInit:Display: Running engine for game: SassC
 LogPlatformFile: Not using cached read wrapper
-LogInit:Display: RandInit(174757381) SRandInit(174757385).
+LogInit:Display: RandInit(-1230357986) SRandInit(-1230357983).
 LogInit: Using version manifest at CL 0 with build ID 'ce549ef3-6b34-4024-8a48-9cd850930748'
 LogTaskGraph: Started task graph with 4 named threads and 7 total threads.
-LogStats: Stats thread started at 3.162310
+LogStats: Stats thread started at 0.331533
 LogInit: Version: 4.11.2-0+UE4
 LogInit: API Version: 0
 LogInit: Compiled (64-bit): May  6 2016 23:57:44
@@ -30,643 +30,412 @@ LogInit:  - bDontReuseConnections = false  - Libcurl will reuse connections
 LogInit:  - CertBundlePath = nullptr  - Libcurl will use whatever was configured at build time.
 LogInit: Presizing for max 16777216 objects, including 0 objects not considered by GC, pre-allocating 0 bytes for permanent pool.
 LogInit: Object subsystem initialized
-[2016.05.09-17.56.25:929][  0]LogInit: Selected Device Profile: [Windows]
-[2016.05.09-17.56.25:929][  0]LogInit: Applying CVar settings loaded from the selected device profile: [Windows]
-[2016.05.09-17.56.26:038][  0]LogInit: Computer: TIM-PC
-[2016.05.09-17.56.26:038][  0]LogInit: User: Tim
-[2016.05.09-17.56.26:038][  0]LogInit: CPU Page size=65536, Cores=4
-[2016.05.09-17.56.26:038][  0]LogInit: High frequency timer resolution =3.002238 MHz
-[2016.05.09-17.56.26:046][  0]LogMemory: Memory total: Physical=6.0GB (6GB approx)
-[2016.05.09-17.56.26:046][  0]LogMemory: Platform Memory Stats for Windows
-[2016.05.09-17.56.26:046][  0]LogMemory: Process Physical Memory: 312.93 MB used, 312.93 MB peak
-[2016.05.09-17.56.26:046][  0]LogMemory: Process Virtual Memory: 315.17 MB used, 315.17 MB peak
-[2016.05.09-17.56.26:046][  0]LogMemory: Physical Memory: 4776.67 MB used, 6135.11 MB total
-[2016.05.09-17.56.26:046][  0]LogMemory: Virtual Memory: 650.89 MB used, 134217728.00 MB total
-[2016.05.09-17.56.27:261][  0]LogTextLocalizationManager: No specific translations for ('en-US') exist, so ('en') translations will be used.
-[2016.05.09-17.56.28:271][  0]LogD3D11RHI: D3D11 adapters:
-[2016.05.09-17.56.28:317][  0]LogD3D11RHI:    0. 'NVIDIA GeForce GTX 480' (Feature Level 11_0)
-[2016.05.09-17.56.28:317][  0]LogD3D11RHI:       1488MB of dedicated video memory, 0MB of dedicated system memory, and 3067MB of shared system memory, 1 output[s]
-[2016.05.09-17.56.28:321][  0]LogD3D11RHI:    1. 'Microsoft Basic Render Driver' (Feature Level 11_0)
-[2016.05.09-17.56.28:321][  0]LogD3D11RHI:       0MB of dedicated video memory, 0MB of dedicated system memory, and 3067MB of shared system memory, 0 output[s]
-[2016.05.09-17.56.28:321][  0]LogD3D11RHI: Chosen D3D11 Adapter: 0
-[2016.05.09-17.56.28:347][  0]LogD3D11RHI: Creating new Direct3DDevice
-[2016.05.09-17.56.28:348][  0]LogD3D11RHI:     Adapter Name: NVIDIA GeForce GTX 480
-[2016.05.09-17.56.28:349][  0]LogD3D11RHI:   Driver Version: Unknown (internal Unknown)
-[2016.05.09-17.56.28:349][  0]LogD3D11RHI:      Driver Date: Unknown
-[2016.05.09-17.56.28:350][  0]LogRHI: Texture pool is 1041 MB (70% of 1488 MB)
-[2016.05.09-17.56.28:373][  0]LogD3D11RHI: Async texture creation enabled
-[2016.05.09-17.56.28:677][  0]LogShaderCompilers: Guid format shader working directory is 0 characters bigger than the processId version (C:/Users/Tim/Documents/Unreal Projects/SassC/Intermediate/Shaders/WorkingDirectory/6564/).
-[2016.05.09-17.56.28:677][  0]LogShaderCompilers: Cleaned the shader compiler working directory 'C:/Users/Tim/AppData/Local/Temp/UnrealShaderWorkingDir/4069AEF34180D0D967910387058E428B/'.
-[2016.05.09-17.56.28:693][  0]LogShaderCompilers:Display: Using Local Shader Compiler.
-[2016.05.09-17.56.31:619][  0]LogTemp:Display: Loaded TP WindowsTargetPlatform
-[2016.05.09-17.56.31:675][  0]LogTemp:Display: Loaded TP WindowsNoEditorTargetPlatform
-[2016.05.09-17.56.31:731][  0]LogTemp:Display: Loaded TP WindowsServerTargetPlatform
-[2016.05.09-17.56.31:791][  0]LogTemp:Display: Loaded TP WindowsClientTargetPlatform
-[2016.05.09-17.56.31:837][  0]LogTemp:Display: Loaded TP AllDesktopTargetPlatform
-[2016.05.09-17.56.31:907][  0]LogTemp:Display: Loaded TP AndroidTargetPlatform
-[2016.05.09-17.56.31:981][  0]LogTemp:Display: Loaded TP Android_PVRTCTargetPlatform
-[2016.05.09-17.56.32:041][  0]LogTemp:Display: Loaded TP Android_ATCTargetPlatform
-[2016.05.09-17.56.32:114][  0]LogTemp:Display: Loaded TP Android_DXTTargetPlatform
-[2016.05.09-17.56.32:195][  0]LogTemp:Display: Loaded TP Android_ETC1TargetPlatform
-[2016.05.09-17.56.32:271][  0]LogTemp:Display: Loaded TP Android_ETC2TargetPlatform
-[2016.05.09-17.56.32:333][  0]LogTemp:Display: Loaded TP Android_ASTCTargetPlatform
-[2016.05.09-17.56.32:413][  0]LogTemp:Display: Loaded TP Android_MultiTargetPlatform
-[2016.05.09-17.56.32:458][  0]LogTemp:Display: Loaded TP HTML5TargetPlatform
-[2016.05.09-17.56.32:686][  0]LogTemp:Display: Loaded TP IOSTargetPlatform
-[2016.05.09-17.56.32:744][  0]LogTemp:Display: Loaded TP TVOSTargetPlatform
-[2016.05.09-17.56.32:744][  0]LogTargetPlatformManager:Display: Building Assets For Windows
-[2016.05.09-17.56.34:213][  0]LogDerivedDataCache:Display: Max Cache Size: 512 MB
-[2016.05.09-17.56.34:563][  0]LogDerivedDataCache: Loaded boot cache 0.35s 46MB C:/Users/Tim/Documents/Unreal Projects/SassC/DerivedDataCache/Boot.ddc.
-[2016.05.09-17.56.34:564][  0]LogDerivedDataCache:Display: Loaded Boot cache: C:/Users/Tim/Documents/Unreal Projects/SassC/DerivedDataCache/Boot.ddc
-[2016.05.09-17.56.34:564][  0]LogDerivedDataCache: FDerivedDataBackendGraph:  Pak pak cache file C:/Users/Tim/Documents/Unreal Projects/SassC/DerivedDataCache/DDC.ddp not found, will not use a pak cache.
-[2016.05.09-17.56.34:564][  0]LogDerivedDataCache: Unable to find inner node Pak for hierarchical cache Hierarchy.
-[2016.05.09-17.56.34:581][  0]LogDerivedDataCache: FDerivedDataBackendGraph:  EnginePak pak cache file ../../../Engine/DerivedDataCache/DDC.ddp not found, will not use a pak cache.
-[2016.05.09-17.56.34:581][  0]LogDerivedDataCache: Unable to find inner node EnginePak for hierarchical cache Hierarchy.
-[2016.05.09-17.56.34:593][  0]LogDerivedDataCache: Using Local data cache path ../../../Engine/DerivedDataCache: Writable
-[2016.05.09-17.56.34:593][  0]LogDerivedDataCache: Shared data cache path not found in *engine.ini, will not use an Shared cache.
-[2016.05.09-17.56.34:593][  0]LogDerivedDataCache: Unable to find inner node Shared for hierarchical cache Hierarchy.
-[2016.05.09-17.56.41:959][  0]LogInit: Selected Device Profile: [Windows]
-[2016.05.09-17.56.42:022][  0]LogContentStreaming: Texture pool size is 0.00 MB
-[2016.05.09-17.56.43:249][  0]LogMaterial: Uniform references updated for custom material expression Custom.
-[2016.05.09-17.56.44:336][  0]LogMeshUtilities: No automatic mesh reduction module available
-[2016.05.09-17.56.44:336][  0]LogMeshUtilities: No automatic mesh merging module available
-[2016.05.09-17.56.44:336][  0]LogMeshUtilities: No distributed automatic mesh merging module available
-[2016.05.09-17.56.48:394][  0]LogUObjectArray: 27672 objects as part of root set at end of initial load.
-[2016.05.09-17.56.48:394][  0]LogUObjectAllocator: 5590152 out of 0 bytes used by permanent object pool.
-[2016.05.09-17.56.48:394][  0]LogUObjectArray: CloseDisregardForGC: 0/0 objects in disregard for GC pool
-[2016.05.09-17.56.48:481][  0]LogInit: WinSock: version 1.1 (2.2), MaxSocks=32767, MaxUdp=65467
-[2016.05.09-17.56.54:414][  0]LogSlate: SlateFontCache - WITH_FREETYPE: 1, WITH_HARFBUZZ: 1
-[2016.05.09-17.56.54:425][  0]LogSlate: SlateFontCache - WITH_FREETYPE: 1, WITH_HARFBUZZ: 1
-[2016.05.09-17.56.57:472][  0]LogStreaming:Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Common/Selection_16x.png' error.
-[2016.05.09-17.56.57:472][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Common/Selection_16x.png
-[2016.05.09-17.56.57:472][  0]LogStreaming:Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Common/Selection_16x.png' error.
-[2016.05.09-17.56.57:472][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Common/Selection_16x.png
-[2016.05.09-17.56.57:472][  0]LogStreaming:Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Common/Selection_16x.png' error.
-[2016.05.09-17.56.57:472][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Common/Selection_16x.png
-[2016.05.09-17.57.06:965][  0]LogUdpMessaging: Initializing bridge on interface 0.0.0.0:0 to multicast group 230.0.0.1:6666.
-[2016.05.09-17.57.07:890][  0]LogAssetRegistry: FAssetRegistry took 0.0364 seconds to start up
-[2016.05.09-17.57.12:070][  0]SourceControl: Info Source control is disabled
-[2016.05.09-17.57.14:478][  0]LogStreaming:Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Common/Selection_16x.png' error.
-[2016.05.09-17.57.14:478][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Common/Selection_16x.png
-[2016.05.09-17.57.14:478][  0]LogStreaming:Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Common/Selection_16x.png' error.
-[2016.05.09-17.57.14:478][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Common/Selection_16x.png
-[2016.05.09-17.57.14:478][  0]LogStreaming:Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Common/Selection_16x.png' error.
-[2016.05.09-17.57.14:478][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Common/Selection_16x.png
-[2016.05.09-17.57.15:261][  0]LogWindows: GitPush: Got 1 branches.
-[2016.05.09-17.57.15:341][  0]LogWindows: GitPush: Got 1 remote hosts
-[2016.05.09-17.57.16:380][  0]LogHMD: Failed to initialize OpenVR with code 110
-[2016.05.09-17.57.17:609][  0]LogEngine: Initializing Engine...
-[2016.05.09-17.57.18:981][  0]LogAIModule: Creating AISystem for world NewWorld
-[2016.05.09-17.57.19:362][  0]LogInit: XAudio2 using 'Speakers (High Definition Audio Device)' : 2 channels at 44.1 kHz using 16 bits per sample (channel mask 0x3)
-[2016.05.09-17.57.19:404][  0]LogInit: FAudioDevice initialized.
-[2016.05.09-17.57.19:449][  0]LogDerivedDataCache: Saved boot cache 0.05s 46MB C:/Users/Tim/Documents/Unreal Projects/SassC/DerivedDataCache/Boot.ddc.
-[2016.05.09-17.57.19:469][  0]LogInit: Texture streaming: Enabled
-[2016.05.09-17.57.20:129][  0]LogInit: Transaction tracking system initialized
-[2016.05.09-17.57.20:872][  0]BlueprintLog: New page: Editor Load
-[2016.05.09-17.57.24:192][  0]LocalizationService: Info Localization service is disabled
-[2016.05.09-17.57.26:473][  0]LogConsoleResponse:Display: 
-[2016.05.09-17.57.28:070][  0]LogFileCache: Scanning file cache for directory 'C:/Users/Tim/Documents/Unreal Projects/SassC/Content/' took 0.07s
-[2016.05.09-17.57.28:070][  0]LogCook:Display: Max memory allowance for cook 8192mb
-[2016.05.09-17.57.28:071][  0]LogCook:Display: Mobile HDR setting 1
-[2016.05.09-17.57.28:072][  0]LogCook:Display: Done creating registry. It took  0.00s.
-[2016.05.09-17.57.29:856][  0]Cmd: MAP LOAD FILE="C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Maps/orbit.umap" TEMPLATE=0 SHOWPROGRESS=1 FEATURELEVEL=3
-[2016.05.09-17.57.29:918][  0]LightingResults: New page: Lighting Build
-[2016.05.09-17.57.30:205][  0]MapCheck: New page: Map Check
-[2016.05.09-17.57.30:205][  0]LightingResults: New page: Lighting Build
-[2016.05.09-17.57.32:381][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EdGraph_20.K2Node_CommutativeAssociativeBinaryOperator_2253' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.32:382][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EdGraph_20.K2Node_CallFunction_102548' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.32:382][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EdGraph_20.K2Node_VariableGet_2488' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.32:382][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EdGraph_20.K2Node_FunctionResult_0' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.32:382][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EdGraph_20.K2Node_FunctionEntry_139' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.32:436][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EdGraph_22.K2Node_CommutativeAssociativeBinaryOperator_2253' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.32:436][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EdGraph_22.K2Node_CallFunction_102548' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.32:437][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EdGraph_22.K2Node_VariableGet_2488' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.32:437][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EdGraph_22.K2Node_FunctionResult_0' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.32:437][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EdGraph_22.K2Node_FunctionEntry_139' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.32:931][  0]LogProperty:Error: UStructProperty::Serialize Loading: Property 'StructProperty /Game/Blueprints/lobby/sassLobbyGameState.sassLobbyGameState_C:ExecuteUbergraph_sassLobbyGameState.CallFunc_Array_Get_Item'. Unknown structure.
-[2016.05.09-17.57.32:931][  0]LogProperty:Error: UStructProperty::Serialize Loading: Property 'StructProperty /Game/Blueprints/lobby/sassLobbyGameState.sassLobbyGameState_C:ExecuteUbergraph_sassLobbyGameState.K2Node_MakeStruct_mapVoteStruct'. Unknown structure.
-[2016.05.09-17.57.32:932][  0]LogProperty:Error: UStructProperty::Serialize Loading: Property 'StructProperty /Game/Blueprints/lobby/sassLobbyGameState.sassLobbyGameState_C:aMapVoteArray.aMapVoteArray'. Unknown structure.
-[2016.05.09-17.57.33:139][  0]LogProperty:Error: UStructProperty::Serialize Loading: Property 'StructProperty /Game/Blueprints/lobby/lobbyGameMode.lobbyGameMode_C:resetVoteArrays.CallFunc_Array_Get_Item'. Unknown structure.
-[2016.05.09-17.57.33:140][  0]LogProperty:Error: UStructProperty::Serialize Loading: Property 'StructProperty /Game/Blueprints/lobby/lobbyGameMode.lobbyGameMode_C:resetVoteArrays.K2Node_MakeStruct_mapVoteStruct'. Unknown structure.
-[2016.05.09-17.57.33:141][  0]LogProperty:Error: UStructProperty::Serialize Loading: Property 'StructProperty /Game/Blueprints/lobby/lobbyGameMode.lobbyGameMode_C:ExecuteUbergraph_lobbyGameMode.CallFunc_Array_Get_Item2'. Unknown structure.
-[2016.05.09-17.57.33:143][  0]LogProperty:Error: UStructProperty::Serialize Loading: Property 'StructProperty /Game/Blueprints/lobby/lobbyGameMode.lobbyGameMode_C:ExecuteUbergraph_lobbyGameMode.CallFunc_Array_Get_Item5'. Unknown structure.
-[2016.05.09-17.57.33:143][  0]LogProperty:Error: UStructProperty::Serialize Loading: Property 'StructProperty /Game/Blueprints/lobby/lobbyGameMode.lobbyGameMode_C:aMapVoteArrayCopy.aMapVoteArrayCopy'. Unknown structure.
-[2016.05.09-17.57.33:155][  0]LogProperty:Error: UStructProperty::Serialize Loading: Property 'StructProperty /Game/Blueprints/lobby/lobbyHUD.lobbyHUD_C:getMapBinding.CallFunc_Array_Get_Item'. Unknown structure.
-[2016.05.09-17.57.33:204][  0]LogProperty:Error: UStructProperty::Serialize Loading: Property 'StructProperty /Game/Blueprints/lobby/lobbyMapVoteMenuHUD.lobbyMapVoteMenuHUD_C:getMapBinding.CallFunc_Array_Get_Item'. Unknown structure.
-[2016.05.09-17.57.33:204][  0]LogProperty:Error: UStructProperty::Serialize Loading: Property 'StructProperty /Game/Blueprints/lobby/lobbyMapVoteMenuHUD.lobbyMapVoteMenuHUD_C:getMapBinding.CallFunc_Array_Get_Item2'. Unknown structure.
-[2016.05.09-17.57.33:466][  0]LogBlueprint:Warning: USimpleConstructionScript::FixupRootNodeParentReferences() - Couldn't find inherited parent component 'DefaultSceneRoot' for 'GateMesh' in BlueprintGeneratedClass 'REINST_Gate_C_41' (it may have been removed)
-[2016.05.09-17.57.34:477][  0]LogBlueprint:Warning: [compiler sassLobbyPlayer] Warning Input Axis Event references unknown Axis 'LookUp' for  InputAxis LookUp 
-[2016.05.09-17.57.34:478][  0]LogBlueprint:Warning: [compiler sassLobbyPlayer] Warning Input Axis Event references unknown Axis 'Turn' for  InputAxis Turn 
-[2016.05.09-17.57.34:494][  0]LogBlueprint:Warning: [compiler sassLobbyPlayer] Warning [0076.34] Compile of sassLobbyPlayer successful, but with 2 Warning(s) [in 45 ms]
-[2016.05.09-17.57.34:494][  0]LogBlueprint:Warning: [compiler sassLobbyPlayer] Warning [0076.34] Compile of sassLobbyPlayer successful, but with 3 Warning(s) [in 0 ms]
-[2016.05.09-17.57.34:495][  0]LogBlueprint:Warning: [compiler sassLobbyPlayer] Warning [0076.34] Compile of sassLobbyPlayer successful, but with 4 Warning(s) [in 0 ms]
-[2016.05.09-17.57.34:643][  0]LogBlueprint:Warning: USimpleConstructionScript::FixupRootNodeParentReferences() - Couldn't find inherited parent component 'DefaultSceneRoot' for 'CityMesh' in BlueprintGeneratedClass 'REINST_City_C_99' (it may have been removed)
-[2016.05.09-17.57.34:643][  0]LogBlueprint:Warning: USimpleConstructionScript::FixupRootNodeParentReferences() - Couldn't find inherited parent component 'DefaultSceneRoot' for 'Box' in BlueprintGeneratedClass 'REINST_City_C_99' (it may have been removed)
-[2016.05.09-17.57.35:244][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EdGraph_370.K2Node_CommutativeAssociativeBinaryOperator_2253' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.35:244][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EdGraph_370.K2Node_CallFunction_102548' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.35:244][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EdGraph_370.K2Node_VariableGet_2488' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.35:245][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EdGraph_370.K2Node_FunctionResult_0' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.35:245][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EdGraph_370.K2Node_FunctionEntry_139' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.35:572][  0]LogBlueprint:Warning: [compiler sassLobbyPlayer] Warning Input Axis Event references unknown Axis 'LookUp' for  InputAxis LookUp 
-[2016.05.09-17.57.35:573][  0]LogBlueprint:Warning: [compiler sassLobbyPlayer] Warning Input Axis Event references unknown Axis 'Turn' for  InputAxis Turn 
-[2016.05.09-17.57.35:581][  0]LogBlueprint:Warning: [compiler sassLobbyPlayer] Warning [0077.43] Compile of sassLobbyPlayer successful, but with 2 Warning(s) [in 26 ms]
-[2016.05.09-17.57.35:581][  0]LogBlueprint:Warning: [compiler sassLobbyPlayer] Warning [0077.43] Compile of sassLobbyPlayer successful, but with 3 Warning(s) [in 0 ms]
-[2016.05.09-17.57.35:582][  0]LogBlueprint:Warning: [compiler sassLobbyPlayer] Warning [0077.43] Compile of sassLobbyPlayer successful, but with 4 Warning(s) [in 0 ms]
-[2016.05.09-17.57.38:239][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateNode_1.Locomotion/Idle.AnimGraphNode_BlendSpacePlayer_9' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.38:240][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_Root_5' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.38:240][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateNode_2.Run Jump.AnimGraphNode_SequencePlayer_34' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.38:241][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateNode_3.Jump.AnimGraphNode_SequencePlayer_483' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.38:241][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateNode_7.attacking.AnimGraphNode_SequencePlayer_153' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.38:241][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.38:241][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateNode_1.Locomotion/Idle.AnimGraphNode_StateResult_20' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.38:241][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateNode_2.Run Jump.AnimGraphNode_StateResult_15' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.38:242][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateNode_3.Jump.AnimGraphNode_StateResult_55' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.38:242][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateNode_7.attacking.AnimGraphNode_StateResult_188' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.38:242][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_1.Transition.AnimGraphNode_TransitionResult_20' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.38:242][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_12.Transition.AnimGraphNode_TransitionResult_467' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.38:243][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_2.Transition.AnimGraphNode_TransitionResult_28' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.38:243][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_5.Transition.AnimGraphNode_TransitionResult_142' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.38:243][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_6.AnimationTransitionGraph_65.AnimGraphNode_TransitionResult_22' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.38:243][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_7.Transition.AnimGraphNode_TransitionResult_148' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.38:244][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_8.Transition.AnimGraphNode_TransitionResult_233' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.38:244][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateEntryNode_0' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.38:244][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateNode_1' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.38:244][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateNode_2' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.38:244][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateNode_3' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.38:245][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateNode_7' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.38:245][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_1' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.38:245][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_12' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.38:245][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_2' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.38:245][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_5' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.38:246][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_6' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.38:246][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_7' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.38:246][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_8' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.38:246][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.EdGraphNode_Comment_19' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.38:246][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.EdGraphNode_Comment_22' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.38:247][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.EdGraphNode_Comment_26' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.38:248][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_12.Transition.K2Node_CallFunction_91451' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.38:248][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_2.Transition.K2Node_CallFunction_11224' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.38:249][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_5.Transition.K2Node_CallFunction_224620' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.38:249][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_5.Transition.K2Node_CallFunction_2831' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.38:249][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_6.AnimationTransitionGraph_65.K2Node_CallFunction_92056' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.38:249][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_7.Transition.K2Node_CallFunction_225505' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.38:249][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:CanJump.K2Node_CallFunction_102548' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.38:249][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_CallFunction_108580' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.38:250][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_CallFunction_162498' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.38:250][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_CallFunction_169492' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.38:250][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_CallFunction_227144' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.38:250][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_CallFunction_29781' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.38:250][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_CallFunction_29886' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.38:250][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_CallFunction_45546' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.38:250][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_CallFunction_45889' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.38:250][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_2.Transition.K2Node_CommutativeAssociativeBinaryOperator_211' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.38:251][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_5.Transition.K2Node_CommutativeAssociativeBinaryOperator_77' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.38:251][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:CanJump.K2Node_CommutativeAssociativeBinaryOperator_2253' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.38:251][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_CommutativeAssociativeBinaryOperator_521' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.38:251][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_DynamicCast_120' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.38:251][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_DynamicCast_127' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.38:251][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_DynamicCast_99' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.38:251][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_Event_1003' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.38:251][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_Event_2429' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.38:251][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_Event_85' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.38:251][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_ExecutionSequence_180' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.38:251][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:CanJump.K2Node_FunctionEntry_139' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.38:251][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:CanJump.K2Node_FunctionResult_0' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.38:252][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_IfThenElse_332' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.38:252][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_IfThenElse_413' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.38:252][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_12.Transition.K2Node_TransitionRuleGetter_8' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.38:252][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_6.AnimationTransitionGraph_65.K2Node_TransitionRuleGetter_17' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.38:252][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_6.AnimationTransitionGraph_65.K2Node_TransitionRuleGetter_182' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.38:252][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateNode_1.Locomotion/Idle.K2Node_VariableGet_589' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.38:252][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_1.Transition.K2Node_VariableGet_208' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.38:252][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_2.Transition.K2Node_VariableGet_125' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.38:252][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_2.Transition.K2Node_VariableGet_129' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.38:253][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_5.Transition.K2Node_VariableGet_1066' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.38:253][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_5.Transition.K2Node_VariableGet_74' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.38:253][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_7.Transition.K2Node_VariableGet_1084' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.38:253][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_8.Transition.K2Node_VariableGet_624' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.38:253][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:CanJump.K2Node_VariableGet_2488' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.38:253][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_VariableGet_1007' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.38:253][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_VariableGet_1157' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.38:253][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_VariableGet_3156' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.38:253][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_VariableSet_1402' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.38:254][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_VariableSet_2289' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.38:254][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_VariableSet_2465' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.38:254][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_VariableSet_74' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.09-17.57.38:596][  0]LogAIModule: Creating AISystem for world orbit
-[2016.05.09-17.57.39:299][  0]LogEditorServer: Finished looking for orphan Actors (0.008 secs)
-[2016.05.09-17.57.39:365][  0]Cmd: MAP CHECKDEP NOCLEARLOG
-[2016.05.09-17.57.39:531][  0]MapCheck: Info Map check complete: 0 Error(s), 0 Warning(s), took 165.652ms to complete.
-[2016.05.09-17.57.39:531][  0]LogFileHelpers: Loading map 'orbit' took 9.676
-[2016.05.09-17.57.41:818][  0]LogCollectionManager: Loaded 0 collections in 0.002373 seconds
-[2016.05.09-17.57.41:993][  0]LogFileCache: Scanning file cache for directory 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Collections/' took 0.01s
-[2016.05.09-17.57.41:994][  0]LogFileCache: Scanning file cache for directory 'C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Developers/Tim/Collections/' took 0.01s
-[2016.05.09-17.57.41:994][  0]LogFileCache: Scanning file cache for directory 'C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Collections/' took 0.01s
-[2016.05.09-17.57.41:994][  0]LogCollectionManager: Rebuilt the GUID cache for 0 collections in 0.000014 seconds
-[2016.05.09-17.57.42:039][  0]LogContentBrowser: Native class hierarchy populated in 0.0423 seconds. Added 1981 classes and 343 folders.
-[2016.05.09-17.57.42:185][  0]LogStats: UGameplayTagsManager::ConstructGameplayTagTree: Construct from data asset -  0.010 s
-[2016.05.09-17.57.42:186][  0]LogStats: UGameplayTagsManager::ConstructGameplayTagTree: GameplayTagTreeChangedEvent.Broadcast -  0.000 s
-[2016.05.09-17.57.42:203][  0]LogContentBrowser: Native class hierarchy updated for 'GameplayTags' in 0.0040 seconds. Added 12 classes and 0 folders.
-[2016.05.09-17.57.42:235][  0]LogContentBrowser: Native class hierarchy updated for 'WidgetCarousel' in 0.0038 seconds. Added 0 classes and 0 folders.
-[2016.05.09-17.57.42:499][  0]LogContentBrowser: Native class hierarchy updated for 'SuperSearch' in 0.0038 seconds. Added 1 classes and 2 folders.
-[2016.05.09-17.57.43:719][  0]LogContentBrowser: Native class hierarchy updated for 'AddContentDialog' in 0.0024 seconds. Added 0 classes and 0 folders.
-[2016.05.09-17.57.43:894][  0]LogContentBrowser: Native class hierarchy updated for 'SceneOutliner' in 0.0021 seconds. Added 1 classes and 2 folders.
-[2016.05.09-17.57.44:600][  0]LogCrashTracker: Crashtracker disabled due to settings.
-[2016.05.09-17.57.44:844][  0]LogUObjectGlobals:Warning: Failed to find object 'Class None.'
-[2016.05.09-17.57.45:080][  0]LogContentBrowser: Native class hierarchy updated for 'HierarchicalLODOutliner' in 0.0039 seconds. Added 1 classes and 2 folders.
-[2016.05.09-17.57.45:081][  0]LogLoad: Full Startup: 86.93 seconds (BP compile: 2.54 seconds)
-[2016.05.09-17.57.45:081][  0]LogExternalProfiler:Warning: No registered external profiler was matched with a command-line switch (or the DLL could not be loaded).  External profiling features will not be available.
-[2016.05.09-17.57.45:174][  0]LogOcInput: OculusInput pre-init called
-[2016.05.09-17.57.46:125][  0]SourceControl: Info On branch master
-[2016.05.09-17.57.46:125][  0]SourceControl: Info Your branch is up-to-date with 'origin/master'.
-[2016.05.09-17.57.46:126][  0]SourceControl: Info Changes to be committed:
-[2016.05.09-17.57.46:126][  0]SourceControl: Info   (use "git reset HEAD <file>..." to unstage)
-[2016.05.09-17.57.46:126][  0]SourceControl: Info 	new file:   Source/SassC/sassPlayerController.cpp
-[2016.05.09-17.57.46:126][  0]SourceControl: Info 	new file:   Source/SassC/sassPlayerController.h
-[2016.05.09-17.57.46:126][  0]SourceControl: Info Changes not staged for commit:
-[2016.05.09-17.57.46:127][  0]SourceControl: Info   (use "git add <file>..." to update what will be committed)
-[2016.05.09-17.57.46:127][  0]SourceControl: Info   (use "git checkout -- <file>..." to discard changes in working directory)
-[2016.05.09-17.57.46:127][  0]SourceControl: Info 	modified:   Content/Blueprints/sassilization/sassGamePlayer.uasset
-[2016.05.09-17.57.46:127][  0]SourceControl: Info 	modified:   Saved/AutoScreenshot.png
-[2016.05.09-17.57.46:127][  0]SourceControl: Info 	modified:   Saved/Config/Windows/EditorPerProjectUserSettings.ini
-[2016.05.09-17.57.46:127][  0]SourceControl: Info 	modified:   Saved/Config/Windows/Engine.ini
-[2016.05.09-17.57.46:127][  0]SourceControl: Info 	modified:   Saved/Logs/SassC.log
-[2016.05.09-17.57.46:127][  0]SourceControl: Info 	modified:   Saved/Logs/SassC_2.log
-[2016.05.09-17.57.46:127][  0]SourceControl: Info 	modified:   Source/SassC/sassPlayer.cpp
-[2016.05.09-17.57.46:128][  0]SourceControl: Info 	modified:   Source/SassC/sassPlayer.h
-[2016.05.09-17.57.46:150][  0]LogContentStreaming: Texture pool size now 1000 MB
-[2016.05.09-17.57.47:800][  1]LogRenderer: Reallocating scene render targets to support 440x392 (Frame:2).
-[2016.05.09-17.57.49:027][  5]LogAssetRegistry: Asset discovery search completed in 41.1634 seconds
-[2016.05.09-17.57.49:045][  5]LogCollectionManager: Rebuilt the object cache for 0 collections in 0.000001 seconds (found 0 objects)
-[2016.05.09-17.57.49:097][  5]LogCollectionManager: Fixed up redirectors for 0 collections in 0.025848 seconds (updated 0 objects)
-[2016.05.09-17.59.05:082][904]LogRenderer: Reallocating scene render targets to support 592x564 (Frame:8903).
-[2016.05.09-18.00.23:943][147]LogVSAccessor:Warning: Couldn't goto line number '0' in 'C:/Users/Tim/Documents/Unreal Projects/SassC/Source/SassC/sassPlayerController.h'
-[2016.05.09-18.00.24:037][147]LogVSAccessor:Warning: Couldn't goto line number '0' in 'C:/Users/Tim/Documents/Unreal Projects/SassC/Source/SassC/sassPlayerController.cpp'
-[2016.05.09-18.40.57:061][450]LogContentBrowser: Native class hierarchy updated for 'BlueprintGraph' in 0.0033 seconds. Added 108 classes and 0 folders.
-[2016.05.09-18.41.51:330][203]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
-[2016.05.09-18.41.51:663][203]LogFileHelpers: Editor autosave (incl. sublevels) for '/Game/Maps/orbit' took 0.349
-[2016.05.09-18.41.51:694][203]OBJ SavePackage: Generating thumbnails for [1] asset(s) in package [/Game/Blueprints/sassilization/sassGamePlayer] ([1] browsable assets)...
-[2016.05.09-18.41.51:746][203]OBJ SavePackage:     Rendered thumbnail for [Blueprint /Game/Blueprints/sassilization/sassGamePlayer.sassGamePlayer]
-[2016.05.09-18.41.51:746][203]OBJ SavePackage: Finished generating thumbnails for package [/Game/Blueprints/sassilization/sassGamePlayer]
-[2016.05.09-18.41.53:366][203]LogSavePackage: Save=1556.62ms
-[2016.05.09-18.41.53:367][203]LogSavePackage: Moving 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/sassGamePlayer_Auto17F898EC54092DB352ABA07BBE158B856.tmp' to 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Blueprints/sassilization/sassGamePlayer_Auto1.uasset'
-[2016.05.09-18.41.53:370][203]LogSavePackage: Total save time: 1602.16ms
-[2016.05.09-18.41.53:370][203]LogSavePackage:Display: Finished SavePackage C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Blueprints/sassilization/sassGamePlayer_Auto1.uasset
-[2016.05.09-18.41.53:370][203]LogFileHelpers: Auto-saving content packages took 1.706
-[2016.05.09-18.43.49:969][713]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
-[2016.05.09-18.43.50:146][713]Cmd: OBJ SAVEPACKAGE PACKAGE="/Game/Blueprints/sassilization/sassGamePlayer" FILE="C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassGamePlayer.uasset" SILENT=true
-[2016.05.09-18.43.51:468][713]LogSavePackage: Save=1309.64ms
-[2016.05.09-18.43.51:468][713]LogSavePackage: Moving 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/sassGamePlayer637F15F94311888057D0329B424FB0D3.tmp' to 'C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassGamePlayer.uasset'
-[2016.05.09-18.43.51:478][713]LogSavePackage: Total save time: 1330.13ms
-[2016.05.09-18.43.51:478][713]LogSavePackage:Display: Finished SavePackage C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassGamePlayer.uasset
-[2016.05.09-18.51.54:125][932]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
-[2016.05.09-18.51.54:166][932]LogFileHelpers: Editor autosave (incl. sublevels) for '/Game/Maps/orbit' took 0.041
-[2016.05.09-18.51.54:175][932]OBJ SavePackage: Generating thumbnails for [0] asset(s) in package [/Game/Blueprints/sassilization/Sassilization] ([1] browsable assets)...
-[2016.05.09-18.51.54:176][932]OBJ SavePackage: Finished generating thumbnails for package [/Game/Blueprints/sassilization/Sassilization]
-[2016.05.09-18.51.54:569][932]LogSavePackage: Save=368.48ms
-[2016.05.09-18.51.54:569][932]LogSavePackage: Moving 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Sassilization_Auto2641C62A0422DD7B4A491D08C69663CFF.tmp' to 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Blueprints/sassilization/Sassilization_Auto2.uasset'
-[2016.05.09-18.51.54:572][932]LogSavePackage: Total save time: 394.50ms
-[2016.05.09-18.51.54:572][932]LogSavePackage:Display: Finished SavePackage C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Blueprints/sassilization/Sassilization_Auto2.uasset
-[2016.05.09-18.51.54:572][932]LogFileHelpers: Auto-saving content packages took 0.406
-[2016.05.09-18.57.15:066][963]LogBlueprint:Warning: Reparenting blueprint Blueprint /Game/Blueprints/sassilization/sassPlayerController.sassPlayerController from PlayerController to sassPlayerController...
-[2016.05.09-18.57.15:122][963]BlueprintLog: New page: Compile sassPlayerController
-[2016.05.09-18.57.16:008][963]LogMaterial:Warning: MaterialInstanceDynamic /Engine/Transient.World_3:PersistentLevel.sassGamePlayer_C_0.MaterialInstanceDynamic_32 is not a valid parent for MaterialInstanceDynamic /Engine/Transient.World_3:PersistentLevel.sassGamePlayer_C_0.MaterialInstanceDynamic_43. Only Materials and MaterialInstanceConstants are valid parents for a material instance.
-[2016.05.09-18.57.16:035][963]LogMaterial:Warning: MaterialInstanceDynamic /Engine/Transient.World_3:PersistentLevel.sassGamePlayer_C_0.MaterialInstanceDynamic_43 is not a valid parent for MaterialInstanceDynamic /Engine/Transient.World_3:PersistentLevel.sassGamePlayer_C_0.MaterialInstanceDynamic_44. Only Materials and MaterialInstanceConstants are valid parents for a material instance.
-[2016.05.09-18.57.16:351][963]BlueprintEditorCompileResults: Info [3658.18] Compile of sassPlayerController successful! [in 1,210 ms]
-[2016.05.09-18.57.20:558][459]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
-[2016.05.09-18.57.26:876][459]Cmd: OBJ SAVEPACKAGE PACKAGE="/Game/Blueprints/sassilization/Sassilization" FILE="C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/Sassilization.uasset" SILENT=true
-[2016.05.09-18.57.27:263][459]LogSavePackage: Save=366.58ms
-[2016.05.09-18.57.27:264][459]LogSavePackage: Moving 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Sassilization6DF282E944EC303FE2E6278A9A7A0B1F.tmp' to 'C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/Sassilization.uasset'
-[2016.05.09-18.57.27:270][459]LogSavePackage: Total save time: 392.04ms
-[2016.05.09-18.57.27:270][459]LogSavePackage:Display: Finished SavePackage C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/Sassilization.uasset
-[2016.05.09-18.57.33:109][603]LogSavePackage: Save=15.81ms
-[2016.05.09-18.57.33:109][603]LogSavePackage: Moving 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/sassPlayerController8B3333984A44C700FDEEC7AD67ED4204.tmp' to 'C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassPlayerController.uasset'
-[2016.05.09-18.57.33:113][603]LogSavePackage: Total save time: 33.43ms
-[2016.05.09-18.57.33:113][603]LogSavePackage:Display: Finished SavePackage C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassPlayerController.uasset
-[2016.05.09-18.58.12:688][995]Running V:/Program Files/Epic Games/UnrealEngine/Engine/Binaries/DotNET/UnrealBuildTool.exe SassC Win64 Development -editorrecompile "C:/Users/Tim/Documents/Unreal Projects/SassC/SassC.uproject" -invalidatemakefilesonly -2015
-[2016.05.09-18.58.14:042][995]Invalidating makefiles only in this run.
-[2016.05.09-18.58.14:492][995]Recompiling SassC...
-[2016.05.09-18.58.14:499][995]Building UnrealBuildTool...
-[2016.05.09-18.58.14:500][995]Building UnrealBuildTool in V:/Program Files/Epic Games/UnrealEngine/...
-[2016.05.09-18.58.14:520][995]Running: C:\WINDOWS\system32\cmd.exe /c "V:\Program Files\Epic Games\UnrealEngine\Engine\Intermediate\Build\UnrealBuildTool\BuildUBT.bat"
-[2016.05.09-18.58.16:380][995]Launching UnrealBuildTool... [V:/Program Files/Epic Games/UnrealEngine/Engine/Binaries/DotNET/UnrealBuildTool.exe SassC -ModuleWithSuffix SassC 7034 Win64 Development -editorrecompile -canskiplink "C:/Users/Tim/Documents/Unreal Projects/SassC/SassC.uproject"  -2015]
-[2016.05.09-18.58.49:126][995]CompilerResultsLog: New page: Compilation - May 9, 2016, 9:58:49 AM
-[2016.05.09-18.58.49:136][995]CompilerResultsLog: Info Creating makefile for hot reloading SassC (no existing makefile)
-[2016.05.09-18.58.49:136][995]CompilerResultsLog: Info Compiling game modules for hot reload
-[2016.05.09-18.58.49:136][995]CompilerResultsLog: Info Building UnrealHeaderTool...
-[2016.05.09-18.58.49:136][995]CompilerResultsLog: Info Target is up to date
-[2016.05.09-18.58.49:136][995]CompilerResultsLog: Info Parsing headers for SassCEditor
-[2016.05.09-18.58.49:136][995]CompilerResultsLog: Info   Running UnrealHeaderTool "C:\Users\Tim\Documents\Unreal Projects\SassC\SassC.uproject" "C:\Users\Tim\Documents\Unreal Projects\SassC\Intermediate\Build\Win64\SassCEditor\Development\UnrealHeaderTool.manifest" -LogCmds="loginit warning, logexit warning, logdatabase error" -Unattended -WarningsAsErrors
-[2016.05.09-18.58.49:137][995]CompilerResultsLog: Info Reflection code generated for SassCEditor in 7.9768959 seconds
-[2016.05.09-18.58.49:137][995]CompilerResultsLog: Info Performing 4 actions (4 in parallel)
-[2016.05.09-18.58.49:137][995]CompilerResultsLog: Info sassPlayer.cpp
-[2016.05.09-18.58.49:137][995]CompilerResultsLog: Info sassPlayerState.cpp
-[2016.05.09-18.58.49:137][995]CompilerResultsLog: Info SassC.generated.cpp
-[2016.05.09-18.58.49:137][995]CompilerResultsLog: Info [4/4] Link UE4Editor-SassC-7034.dll
-[2016.05.09-18.58.49:137][995]CompilerResultsLog: Info    Creating library C:\Users\Tim\Documents\Unreal Projects\SassC\Intermediate\Build\Win64\UE4Editor\Development\UE4Editor-SassC-7034.lib and object C:\Users\Tim\Documents\Unreal Projects\SassC\Intermediate\Build\Win64\UE4Editor\Development\UE4Editor-SassC-7034.exp
-[2016.05.09-18.58.49:137][995]CompilerResultsLog: Info -------- End Detailed Actions Stats -----------------------------------------------------------
-[2016.05.09-18.58.49:137][995]CompilerResultsLog: Info Total build time: 32.64 seconds
-[2016.05.09-18.58.49:137][995]LogMainFrame: MainFrame: Module compiling took 34.734 seconds
-[2016.05.09-18.58.49:157][995]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
-[2016.05.09-18.58.49:451][995]LogClass: Could not find existing class sassPlayerState in package /Script/SassC for HotReload, assuming new class
-[2016.05.09-18.58.49:456][995]LogContentBrowser: Native class hierarchy updated for 'SassC' in 0.0023 seconds. Added 4 classes and 2 folders.
-[2016.05.09-18.58.49:460][995]Warning: HotReload successful (2 functions remapped  0 scriptstructs remapped)
-[2016.05.09-18.58.50:031][995]LogContentBrowser: Native class hierarchy populated in 0.0149 seconds. Added 1985 classes and 349 folders.
-[2016.05.09-18.58.50:083][995]Warning: HotReload took 35.7s.
-[2016.05.09-18.58.50:086][995]Warning: HotReload operation took 35.7s.
-[2016.05.09-18.58.50:239][995]LogVSAccessor:Warning: Couldn't goto line number '0' in 'C:/Users/Tim/Documents/Unreal Projects/SassC/Source/SassC/sassPlayerState.h'
-[2016.05.09-18.58.50:328][995]LogVSAccessor:Warning: Couldn't goto line number '0' in 'C:/Users/Tim/Documents/Unreal Projects/SassC/Source/SassC/sassPlayerState.cpp'
-[2016.05.09-18.58.50:415][995]LogHotReload: New module detected: UE4Editor-SassC-7034.dll
-[2016.05.09-18.58.50:578][996]LogHotReload: Starting Hot-Reload from IDE
-[2016.05.09-18.58.50:715][996]LogContentBrowser: Native class hierarchy updated for 'SassC' in 0.0022 seconds. Added 4 classes and 2 folders.
-[2016.05.09-18.58.50:717][996]Warning: HotReload successful (0 functions remapped  0 scriptstructs remapped)
-[2016.05.09-18.58.51:129][996]LogContentBrowser: Native class hierarchy populated in 0.0126 seconds. Added 1985 classes and 349 folders.
-[2016.05.09-18.58.51:133][996]Warning: HotReload took 36.7s.
-[2016.05.09-18.59.06:617][235]LogSlate:Warning: Prevented a slow task dialog from being summoned while a context menu was open
-[2016.05.09-18.59.12:184][870]LogBlueprint:Warning: Reparenting blueprint Blueprint /Game/Blueprints/sassilization/sassPlayerState.sassPlayerState from PlayerState to sassPlayerState...
-[2016.05.09-18.59.12:202][870]BlueprintLog: New page: Compile sassPlayerState
-[2016.05.09-18.59.12:914][870]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
-[2016.05.09-18.59.13:060][870]LogMaterial:Warning: MaterialInstanceDynamic /Engine/Transient.World_3:PersistentLevel.sassGamePlayer_C_0.MaterialInstanceDynamic_44 is not a valid parent for MaterialInstanceDynamic /Engine/Transient.World_3:PersistentLevel.sassGamePlayer_C_0.MaterialInstanceDynamic_50. Only Materials and MaterialInstanceConstants are valid parents for a material instance.
-[2016.05.09-18.59.13:085][870]LogMaterial:Warning: MaterialInstanceDynamic /Engine/Transient.World_3:PersistentLevel.sassGamePlayer_C_0.MaterialInstanceDynamic_50 is not a valid parent for MaterialInstanceDynamic /Engine/Transient.World_3:PersistentLevel.sassGamePlayer_C_0.MaterialInstanceDynamic_51. Only Materials and MaterialInstanceConstants are valid parents for a material instance.
-[2016.05.09-18.59.13:217][870]BlueprintEditorCompileResults: Info [3775.06] Compile of sassPlayerState successful! [in 1,014 ms]
-[2016.05.09-18.59.18:215][454]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
-[2016.05.09-18.59.18:349][454]Cmd: OBJ SAVEPACKAGE PACKAGE="/Game/Blueprints/sassilization/sassPlayerState" FILE="C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassPlayerState.uasset" SILENT=true
-[2016.05.09-18.59.18:395][454]LogSavePackage: Save=24.83ms
-[2016.05.09-18.59.18:395][454]LogSavePackage: Moving 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/sassPlayerState7E2502DE4B113FC247E38BB71072E4A7.tmp' to 'C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassPlayerState.uasset'
-[2016.05.09-18.59.18:399][454]LogSavePackage: Total save time: 48.33ms
-[2016.05.09-18.59.18:399][454]LogSavePackage:Display: Finished SavePackage C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassPlayerState.uasset
-[2016.05.09-19.00.14:890][221]Running V:/Program Files/Epic Games/UnrealEngine/Engine/Binaries/DotNET/UnrealBuildTool.exe SassC Win64 Development -editorrecompile "C:/Users/Tim/Documents/Unreal Projects/SassC/SassC.uproject" -invalidatemakefilesonly -2015
-[2016.05.09-19.00.15:415][221]Invalidating makefiles only in this run.
-[2016.05.09-19.00.15:742][221]Recompiling SassC...
-[2016.05.09-19.00.15:743][221]Launching UnrealBuildTool... [V:/Program Files/Epic Games/UnrealEngine/Engine/Binaries/DotNET/UnrealBuildTool.exe SassC -ModuleWithSuffix SassC 9936 Win64 Development -editorrecompile -canskiplink "C:/Users/Tim/Documents/Unreal Projects/SassC/SassC.uproject"  -2015]
-[2016.05.09-19.00.46:591][221]CompilerResultsLog: New page: Compilation - May 9, 2016, 10:00:46 AM
-[2016.05.09-19.00.46:591][221]CompilerResultsLog: Info Creating makefile for hot reloading SassC (no existing makefile)
-[2016.05.09-19.00.46:591][221]CompilerResultsLog: Info Compiling game modules for hot reload
-[2016.05.09-19.00.46:591][221]CompilerResultsLog: Info Building UnrealHeaderTool...
-[2016.05.09-19.00.46:592][221]CompilerResultsLog: Info Target is up to date
-[2016.05.09-19.00.46:592][221]CompilerResultsLog: Info Parsing headers for SassCEditor
-[2016.05.09-19.00.46:592][221]CompilerResultsLog: Info   Running UnrealHeaderTool "C:\Users\Tim\Documents\Unreal Projects\SassC\SassC.uproject" "C:\Users\Tim\Documents\Unreal Projects\SassC\Intermediate\Build\Win64\SassCEditor\Development\UnrealHeaderTool.manifest" -LogCmds="loginit warning, logexit warning, logdatabase error" -Unattended -WarningsAsErrors
-[2016.05.09-19.00.46:592][221]CompilerResultsLog: Info Reflection code generated for SassCEditor in 7.7904356 seconds
-[2016.05.09-19.00.46:592][221]CompilerResultsLog: Info Performing 3 actions (4 in parallel)
-[2016.05.09-19.00.46:592][221]CompilerResultsLog: Info SassC.generated.cpp
-[2016.05.09-19.00.46:592][221]CompilerResultsLog: Info sassGameState.cpp
-[2016.05.09-19.00.46:592][221]CompilerResultsLog: Info [3/3] Link UE4Editor-SassC-9936.dll
-[2016.05.09-19.00.46:593][221]CompilerResultsLog: Info    Creating library C:\Users\Tim\Documents\Unreal Projects\SassC\Intermediate\Build\Win64\UE4Editor\Development\UE4Editor-SassC-9936.lib and object C:\Users\Tim\Documents\Unreal Projects\SassC\Intermediate\Build\Win64\UE4Editor\Development\UE4Editor-SassC-9936.exp
-[2016.05.09-19.00.46:594][221]CompilerResultsLog: Info -------- End Detailed Actions Stats -----------------------------------------------------------
-[2016.05.09-19.00.46:594][221]CompilerResultsLog: Info Total build time: 30.79 seconds
-[2016.05.09-19.00.46:594][221]LogMainFrame: MainFrame: Module compiling took 30.856 seconds
-[2016.05.09-19.00.46:595][221]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
-[2016.05.09-19.00.46:698][221]LogClass: Could not find existing class sassGameState in package /Script/SassC for HotReload, assuming new class
-[2016.05.09-19.00.46:727][221]LogContentBrowser: Native class hierarchy updated for 'SassC' in 0.0022 seconds. Added 5 classes and 2 folders.
-[2016.05.09-19.00.46:732][221]Warning: HotReload successful (2 functions remapped  0 scriptstructs remapped)
-[2016.05.09-19.00.47:209][221]LogContentBrowser: Native class hierarchy populated in 0.0127 seconds. Added 1986 classes and 349 folders.
-[2016.05.09-19.00.47:210][221]Warning: HotReload took 31.5s.
-[2016.05.09-19.00.47:211][221]Warning: HotReload operation took 31.5s.
-[2016.05.09-19.00.47:357][221]LogVSAccessor:Warning: Couldn't goto line number '0' in 'C:/Users/Tim/Documents/Unreal Projects/SassC/Source/SassC/sassGameState.h'
-[2016.05.09-19.00.47:511][221]LogVSAccessor:Warning: Couldn't goto line number '0' in 'C:/Users/Tim/Documents/Unreal Projects/SassC/Source/SassC/sassGameState.cpp'
-[2016.05.09-19.00.47:546][221]LogHotReload: New module detected: UE4Editor-SassC-9936.dll
-[2016.05.09-19.00.47:585][222]LogHotReload: Starting Hot-Reload from IDE
-[2016.05.09-19.00.47:718][222]LogContentBrowser: Native class hierarchy updated for 'SassC' in 0.0022 seconds. Added 5 classes and 2 folders.
-[2016.05.09-19.00.47:722][222]Warning: HotReload successful (0 functions remapped  0 scriptstructs remapped)
-[2016.05.09-19.00.48:132][222]LogContentBrowser: Native class hierarchy populated in 0.0112 seconds. Added 1986 classes and 349 folders.
-[2016.05.09-19.00.48:136][222]Warning: HotReload took 32.4s.
-[2016.05.09-19.03.12:276][309]LogFileHelpers: Editor autosave (incl. sublevels) for '/Game/Maps/orbit' took 0.077
-[2016.05.09-19.03.13:428][429]Recompiling SassC...
-[2016.05.09-19.03.13:429][429]Launching UnrealBuildTool... [V:/Program Files/Epic Games/UnrealEngine/Engine/Binaries/DotNET/UnrealBuildTool.exe SassC -ModuleWithSuffix SassC 5102 Win64 Development -editorrecompile -canskiplink "C:/Users/Tim/Documents/Unreal Projects/SassC/SassC.uproject"  -2015]
-[2016.05.09-19.03.13:455][429]Warning: Starting HotReload took  0.0s.
-[2016.05.09-19.03.46:606][349]CompilerResultsLog: New page: Compilation - May 9, 2016, 10:03:46 AM
-[2016.05.09-19.03.46:606][349]CompilerResultsLog: Info Creating makefile for hot reloading SassC (working set of source files changed)
-[2016.05.09-19.03.46:606][349]CompilerResultsLog: Info Compiling game modules for hot reload
-[2016.05.09-19.03.46:606][349]CompilerResultsLog: Info Building UnrealHeaderTool...
-[2016.05.09-19.03.46:606][349]CompilerResultsLog: Info Target is up to date
-[2016.05.09-19.03.46:606][349]CompilerResultsLog: Info Parsing headers for SassCEditor
-[2016.05.09-19.03.46:607][349]CompilerResultsLog: Info   Running UnrealHeaderTool "C:\Users\Tim\Documents\Unreal Projects\SassC\SassC.uproject" "C:\Users\Tim\Documents\Unreal Projects\SassC\Intermediate\Build\Win64\SassCEditor\Development\UnrealHeaderTool.manifest" -LogCmds="loginit warning, logexit warning, logdatabase error" -Unattended -WarningsAsErrors
-[2016.05.09-19.03.46:607][349]CompilerResultsLog: Info Reflection code generated for SassCEditor in 7.9590998 seconds
-[2016.05.09-19.03.46:607][349]CompilerResultsLog: Info Performing 2 actions (4 in parallel)
-[2016.05.09-19.03.46:607][349]CompilerResultsLog: Info sassPlayer.cpp
-[2016.05.09-19.03.46:607][349]CompilerResultsLog: Info [2/2] Link UE4Editor-SassC-5102.dll
-[2016.05.09-19.03.46:607][349]CompilerResultsLog: Info    Creating library C:\Users\Tim\Documents\Unreal Projects\SassC\Intermediate\Build\Win64\UE4Editor\Development\UE4Editor-SassC-5102.lib and object C:\Users\Tim\Documents\Unreal Projects\SassC\Intermediate\Build\Win64\UE4Editor\Development\UE4Editor-SassC-5102.exp
-[2016.05.09-19.03.46:607][349]CompilerResultsLog: Info -------- End Detailed Actions Stats -----------------------------------------------------------
-[2016.05.09-19.03.46:607][349]CompilerResultsLog: Info Total build time: 32.96 seconds
-[2016.05.09-19.03.46:607][349]LogMainFrame: MainFrame: Module compiling took 33.182 seconds
-[2016.05.09-19.03.46:735][349]LogContentBrowser: Native class hierarchy updated for 'SassC' in 0.0022 seconds. Added 5 classes and 2 folders.
-[2016.05.09-19.03.46:740][349]Warning: HotReload successful (2 functions remapped  0 scriptstructs remapped)
-[2016.05.09-19.03.47:242][349]LogContentBrowser: Native class hierarchy populated in 0.0131 seconds. Added 1986 classes and 349 folders.
-[2016.05.09-19.03.47:242][349]Warning: HotReload took 33.8s.
-[2016.05.09-19.03.57:471][387]Cmd: OBJ SAVEPACKAGE PACKAGE="/Game/Maps/orbit" FILE="C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap" SILENT=true AUTOSAVING=true KEEPDIRTY=true
-[2016.05.09-19.03.58:271][387]LogSavePackage: Save=723.50ms
-[2016.05.09-19.03.58:271][387]LogSavePackage: Moving 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/UEDPCorbitF4A5A0F9437006F5C2EF1786FD922512.tmp' to 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap'
-[2016.05.09-19.03.58:273][387]LogSavePackage: Total save time: 781.64ms
-[2016.05.09-19.03.58:274][387]LogSavePackage:Display: Finished SavePackage C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap
-[2016.05.09-19.14.18:346][500]LogFileHelpers: Editor autosave (incl. sublevels) for '/Game/Maps/orbit' took 0.274
-[2016.05.09-19.17.28:949][345]Recompiling SassC...
-[2016.05.09-19.17.28:950][345]Launching UnrealBuildTool... [V:/Program Files/Epic Games/UnrealEngine/Engine/Binaries/DotNET/UnrealBuildTool.exe SassC -ModuleWithSuffix SassC 2132 Win64 Development -editorrecompile -canskiplink "C:/Users/Tim/Documents/Unreal Projects/SassC/SassC.uproject"  -2015]
-[2016.05.09-19.17.29:087][345]Warning: Starting HotReload took  0.2s.
-[2016.05.09-19.18.02:910][342]CompilerResultsLog: New page: Compilation - May 9, 2016, 10:18:02 AM
-[2016.05.09-19.18.02:910][342]CompilerResultsLog: Info Creating makefile for hot reloading SassC (working set of source files changed)
-[2016.05.09-19.18.02:910][342]CompilerResultsLog: Info Compiling game modules for hot reload
-[2016.05.09-19.18.02:910][342]CompilerResultsLog: Info Building UnrealHeaderTool...
-[2016.05.09-19.18.02:910][342]CompilerResultsLog: Info Target is up to date
-[2016.05.09-19.18.02:911][342]CompilerResultsLog: Info Parsing headers for SassCEditor
-[2016.05.09-19.18.02:911][342]CompilerResultsLog: Info   Running UnrealHeaderTool "C:\Users\Tim\Documents\Unreal Projects\SassC\SassC.uproject" "C:\Users\Tim\Documents\Unreal Projects\SassC\Intermediate\Build\Win64\SassCEditor\Development\UnrealHeaderTool.manifest" -LogCmds="loginit warning, logexit warning, logdatabase error" -Unattended -WarningsAsErrors
-[2016.05.09-19.18.02:911][342]CompilerResultsLog: Info Reflection code generated for SassCEditor in 8.1324115 seconds
-[2016.05.09-19.18.02:911][342]CompilerResultsLog: Info Performing 3 actions (4 in parallel)
-[2016.05.09-19.18.02:911][342]CompilerResultsLog: Info sassPlayer.cpp
-[2016.05.09-19.18.02:911][342]CompilerResultsLog: Info SassC.generated.cpp
-[2016.05.09-19.18.02:911][342]CompilerResultsLog: Info [3/3] Link UE4Editor-SassC-2132.dll
-[2016.05.09-19.18.02:912][342]CompilerResultsLog: Info    Creating library C:\Users\Tim\Documents\Unreal Projects\SassC\Intermediate\Build\Win64\UE4Editor\Development\UE4Editor-SassC-2132.lib and object C:\Users\Tim\Documents\Unreal Projects\SassC\Intermediate\Build\Win64\UE4Editor\Development\UE4Editor-SassC-2132.exp
-[2016.05.09-19.18.02:912][342]CompilerResultsLog: Info -------- End Detailed Actions Stats -----------------------------------------------------------
-[2016.05.09-19.18.02:912][342]CompilerResultsLog: Info Total build time: 33.57 seconds
-[2016.05.09-19.18.02:912][342]LogMainFrame: MainFrame: Module compiling took 33.966 seconds
-[2016.05.09-19.18.03:224][342]LogContentBrowser: Native class hierarchy updated for 'SassC' in 0.0164 seconds. Added 5 classes and 2 folders.
-[2016.05.09-19.18.03:230][342]Warning: HotReload successful (2 functions remapped  0 scriptstructs remapped)
-[2016.05.09-19.18.04:204][342]LogContentBrowser: Native class hierarchy populated in 0.0154 seconds. Added 1986 classes and 349 folders.
-[2016.05.09-19.18.04:214][342]Warning: HotReload took 35.3s.
-[2016.05.09-19.19.21:487][471]Cmd: OBJ SAVEPACKAGE PACKAGE="/Game/Maps/orbit" FILE="C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap" SILENT=true AUTOSAVING=true KEEPDIRTY=true
-[2016.05.09-19.19.22:057][471]LogSavePackage: Save=497.62ms
-[2016.05.09-19.19.22:057][471]LogSavePackage: Moving 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/UEDPCorbitF286837547FBB0940214549EC96BF77B.tmp' to 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap'
-[2016.05.09-19.19.22:060][471]LogSavePackage: Total save time: 567.40ms
-[2016.05.09-19.19.22:060][471]LogSavePackage:Display: Finished SavePackage C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap
-[2016.05.09-19.22.03:059][770]LogEditorViewport: Clicking on Actor (LMB): BP_Sky_Sphere_C (Sky Sphere)
-[2016.05.09-19.22.05:791][963]Recompiling SassC...
-[2016.05.09-19.22.05:792][963]Launching UnrealBuildTool... [V:/Program Files/Epic Games/UnrealEngine/Engine/Binaries/DotNET/UnrealBuildTool.exe SassC -ModuleWithSuffix SassC 2949 Win64 Development -editorrecompile -canskiplink "C:/Users/Tim/Documents/Unreal Projects/SassC/SassC.uproject"  -2015]
-[2016.05.09-19.22.05:945][963]Warning: Starting HotReload took  0.2s.
-[2016.05.09-19.22.43:758][ 47]CompilerResultsLog: New page: Compilation - May 9, 2016, 10:22:43 AM
-[2016.05.09-19.22.43:759][ 47]CompilerResultsLog: Info Creating makefile for hot reloading SassC (working set of source files changed)
-[2016.05.09-19.22.43:759][ 47]CompilerResultsLog: Info Compiling game modules for hot reload
-[2016.05.09-19.22.43:759][ 47]CompilerResultsLog: Info Building UnrealHeaderTool...
-[2016.05.09-19.22.43:759][ 47]CompilerResultsLog: Info Target is up to date
-[2016.05.09-19.22.43:759][ 47]CompilerResultsLog: Info Parsing headers for SassCEditor
-[2016.05.09-19.22.43:759][ 47]CompilerResultsLog: Info   Running UnrealHeaderTool "C:\Users\Tim\Documents\Unreal Projects\SassC\SassC.uproject" "C:\Users\Tim\Documents\Unreal Projects\SassC\Intermediate\Build\Win64\SassCEditor\Development\UnrealHeaderTool.manifest" -LogCmds="loginit warning, logexit warning, logdatabase error" -Unattended -WarningsAsErrors
-[2016.05.09-19.22.43:759][ 47]CompilerResultsLog: Info Reflection code generated for SassCEditor in 9.5033758 seconds
-[2016.05.09-19.22.43:759][ 47]CompilerResultsLog: Info Performing 2 actions (4 in parallel)
-[2016.05.09-19.22.43:759][ 47]CompilerResultsLog: Info sassPlayer.cpp
-[2016.05.09-19.22.43:759][ 47]CompilerResultsLog: Info [2/2] Link UE4Editor-SassC-2949.dll
-[2016.05.09-19.22.43:760][ 47]CompilerResultsLog: Info    Creating library C:\Users\Tim\Documents\Unreal Projects\SassC\Intermediate\Build\Win64\UE4Editor\Development\UE4Editor-SassC-2949.lib and object C:\Users\Tim\Documents\Unreal Projects\SassC\Intermediate\Build\Win64\UE4Editor\Development\UE4Editor-SassC-2949.exp
-[2016.05.09-19.22.43:760][ 47]CompilerResultsLog: Info -------- End Detailed Actions Stats -----------------------------------------------------------
-[2016.05.09-19.22.43:760][ 47]CompilerResultsLog: Info Total build time: 37.62 seconds
-[2016.05.09-19.22.43:760][ 47]LogMainFrame: MainFrame: Module compiling took 37.973 seconds
-[2016.05.09-19.22.44:026][ 47]LogContentBrowser: Native class hierarchy updated for 'SassC' in 0.0028 seconds. Added 5 classes and 2 folders.
-[2016.05.09-19.22.44:031][ 47]Warning: HotReload successful (2 functions remapped  0 scriptstructs remapped)
-[2016.05.09-19.22.44:722][ 47]LogContentBrowser: Native class hierarchy populated in 0.0169 seconds. Added 1986 classes and 349 folders.
-[2016.05.09-19.22.44:722][ 47]Warning: HotReload took 38.9s.
-[2016.05.09-19.22.57:566][391]Cmd: OBJ SAVEPACKAGE PACKAGE="/Game/Maps/orbit" FILE="C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap" SILENT=true AUTOSAVING=true KEEPDIRTY=true
-[2016.05.09-19.22.58:032][391]LogSavePackage: Save=448.18ms
-[2016.05.09-19.22.58:032][391]LogSavePackage: Moving 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/UEDPCorbitD30FEC6E420957CFC5C3C3960880D326.tmp' to 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap'
-[2016.05.09-19.22.58:033][391]LogSavePackage: Total save time: 463.51ms
-[2016.05.09-19.22.58:034][391]LogSavePackage:Display: Finished SavePackage C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap
-[2016.05.09-19.24.40:266][264]Recompiling SassC...
-[2016.05.09-19.24.40:266][264]Launching UnrealBuildTool... [V:/Program Files/Epic Games/UnrealEngine/Engine/Binaries/DotNET/UnrealBuildTool.exe SassC -ModuleWithSuffix SassC 1623 Win64 Development -editorrecompile -canskiplink "C:/Users/Tim/Documents/Unreal Projects/SassC/SassC.uproject"  -2015]
-[2016.05.09-19.24.40:269][264]Warning: Starting HotReload took  0.0s.
-[2016.05.09-19.25.12:919][791]CompilerResultsLog: New page: Compilation - May 9, 2016, 10:25:12 AM
-[2016.05.09-19.25.12:920][791]CompilerResultsLog: Info Creating makefile for hot reloading SassC (working set of source files changed)
-[2016.05.09-19.25.12:920][791]CompilerResultsLog: Info Compiling game modules for hot reload
-[2016.05.09-19.25.12:920][791]CompilerResultsLog: Info Building UnrealHeaderTool...
-[2016.05.09-19.25.12:920][791]CompilerResultsLog: Info Target is up to date
-[2016.05.09-19.25.12:920][791]CompilerResultsLog: Info Parsing headers for SassCEditor
-[2016.05.09-19.25.12:920][791]CompilerResultsLog: Info   Running UnrealHeaderTool "C:\Users\Tim\Documents\Unreal Projects\SassC\SassC.uproject" "C:\Users\Tim\Documents\Unreal Projects\SassC\Intermediate\Build\Win64\SassCEditor\Development\UnrealHeaderTool.manifest" -LogCmds="loginit warning, logexit warning, logdatabase error" -Unattended -WarningsAsErrors
-[2016.05.09-19.25.12:921][791]CompilerResultsLog: Info Reflection code generated for SassCEditor in 9.031167 seconds
-[2016.05.09-19.25.12:921][791]CompilerResultsLog: Info Performing 2 actions (4 in parallel)
-[2016.05.09-19.25.12:921][791]CompilerResultsLog: Info sassPlayer.cpp
-[2016.05.09-19.25.12:921][791]CompilerResultsLog: Info [2/2] Link UE4Editor-SassC-1623.dll
-[2016.05.09-19.25.12:921][791]CompilerResultsLog: Info    Creating library C:\Users\Tim\Documents\Unreal Projects\SassC\Intermediate\Build\Win64\UE4Editor\Development\UE4Editor-SassC-1623.lib and object C:\Users\Tim\Documents\Unreal Projects\SassC\Intermediate\Build\Win64\UE4Editor\Development\UE4Editor-SassC-1623.exp
-[2016.05.09-19.25.12:921][791]CompilerResultsLog: Info -------- End Detailed Actions Stats -----------------------------------------------------------
-[2016.05.09-19.25.12:921][791]CompilerResultsLog: Info Total build time: 32.59 seconds
-[2016.05.09-19.25.12:921][791]LogMainFrame: MainFrame: Module compiling took 32.659 seconds
-[2016.05.09-19.25.13:044][791]LogContentBrowser: Native class hierarchy updated for 'SassC' in 0.0026 seconds. Added 5 classes and 2 folders.
-[2016.05.09-19.25.13:050][791]Warning: HotReload successful (2 functions remapped  0 scriptstructs remapped)
-[2016.05.09-19.25.13:546][791]LogContentBrowser: Native class hierarchy populated in 0.0117 seconds. Added 1986 classes and 349 folders.
-[2016.05.09-19.25.13:546][791]Warning: HotReload took 33.3s.
-[2016.05.09-19.25.24:559][957]Cmd: OBJ SAVEPACKAGE PACKAGE="/Game/Maps/orbit" FILE="C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap" SILENT=true AUTOSAVING=true KEEPDIRTY=true
-[2016.05.09-19.25.25:019][957]LogSavePackage: Save=404.11ms
-[2016.05.09-19.25.25:020][957]LogSavePackage: Moving 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/UEDPCorbit579A9BE940DE9B87BD479FBE5204BACC.tmp' to 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap'
-[2016.05.09-19.25.25:023][957]LogSavePackage: Total save time: 460.60ms
-[2016.05.09-19.25.25:023][957]LogSavePackage:Display: Finished SavePackage C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap
-[2016.05.09-19.26.27:177][ 44]LogVSAccessor:Warning: Couldn't goto line number '0' in 'C:/Users/Tim/Documents/Unreal Projects/SassC/Source/SassC/sassPlayerController.h'
-[2016.05.09-19.26.27:289][ 44]LogVSAccessor:Warning: Couldn't goto line number '0' in 'C:/Users/Tim/Documents/Unreal Projects/SassC/Source/SassC/sassPlayerController.cpp'
-[2016.05.09-19.32.56:962][410]Recompiling SassC...
-[2016.05.09-19.32.56:962][410]Launching UnrealBuildTool... [V:/Program Files/Epic Games/UnrealEngine/Engine/Binaries/DotNET/UnrealBuildTool.exe SassC -ModuleWithSuffix SassC 2526 Win64 Development -editorrecompile -canskiplink "C:/Users/Tim/Documents/Unreal Projects/SassC/SassC.uproject"  -2015]
-[2016.05.09-19.32.56:965][410]Warning: Starting HotReload took  0.0s.
-[2016.05.09-19.33.24:679][366]CompilerResultsLog: New page: Compilation - May 9, 2016, 10:33:24 AM
-[2016.05.09-19.33.24:679][366]CompilerResultsLog: Info Creating makefile for hot reloading SassC (working set of source files changed)
-[2016.05.09-19.33.24:679][366]CompilerResultsLog: Info Compiling game modules for hot reload
-[2016.05.09-19.33.24:679][366]CompilerResultsLog: Info Building UnrealHeaderTool...
-[2016.05.09-19.33.24:680][366]CompilerResultsLog: Info Target is up to date
-[2016.05.09-19.33.24:680][366]CompilerResultsLog: Info Parsing headers for SassCEditor
-[2016.05.09-19.33.24:680][366]CompilerResultsLog: Info   Running UnrealHeaderTool "C:\Users\Tim\Documents\Unreal Projects\SassC\SassC.uproject" "C:\Users\Tim\Documents\Unreal Projects\SassC\Intermediate\Build\Win64\SassCEditor\Development\UnrealHeaderTool.manifest" -LogCmds="loginit warning, logexit warning, logdatabase error" -Unattended -WarningsAsErrors
-[2016.05.09-19.33.24:680][366]CompilerResultsLog: Info Reflection code generated for SassCEditor in 7.6801322 seconds
-[2016.05.09-19.33.24:680][366]CompilerResultsLog: Info Performing 3 actions (4 in parallel)
-[2016.05.09-19.33.24:680][366]CompilerResultsLog: Info sassPlayerController.cpp
-[2016.05.09-19.33.24:680][366]CompilerResultsLog: Info sassPlayer.cpp
-[2016.05.09-19.33.24:680][366]CompilerResultsLog: Info [3/3] Link UE4Editor-SassC-2526.dll
-[2016.05.09-19.33.24:680][366]CompilerResultsLog: Info    Creating library C:\Users\Tim\Documents\Unreal Projects\SassC\Intermediate\Build\Win64\UE4Editor\Development\UE4Editor-SassC-2526.lib and object C:\Users\Tim\Documents\Unreal Projects\SassC\Intermediate\Build\Win64\UE4Editor\Development\UE4Editor-SassC-2526.exp
-[2016.05.09-19.33.24:681][366]CompilerResultsLog: Info -------- End Detailed Actions Stats -----------------------------------------------------------
-[2016.05.09-19.33.24:681][366]CompilerResultsLog: Info Total build time: 27.59 seconds
-[2016.05.09-19.33.24:681][366]LogMainFrame: MainFrame: Module compiling took 27.723 seconds
-[2016.05.09-19.33.24:946][366]LogContentBrowser: Native class hierarchy updated for 'SassC' in 0.0029 seconds. Added 5 classes and 2 folders.
-[2016.05.09-19.33.24:951][366]Warning: HotReload successful (2 functions remapped  0 scriptstructs remapped)
-[2016.05.09-19.33.25:618][366]LogContentBrowser: Native class hierarchy populated in 0.0145 seconds. Added 1986 classes and 349 folders.
-[2016.05.09-19.33.25:619][366]Warning: HotReload took 28.7s.
-[2016.05.09-19.33.41:071][936]Cmd: OBJ SAVEPACKAGE PACKAGE="/Game/Maps/orbit" FILE="C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap" SILENT=true AUTOSAVING=true KEEPDIRTY=true
-[2016.05.09-19.33.41:554][936]LogSavePackage: Save=457.16ms
-[2016.05.09-19.33.41:554][936]LogSavePackage: Moving 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/UEDPCorbit7F20ADAB4FE41244BD94C19088087D1F.tmp' to 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap'
-[2016.05.09-19.33.41:557][936]LogSavePackage: Total save time: 482.11ms
-[2016.05.09-19.33.41:557][936]LogSavePackage:Display: Finished SavePackage C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap
-[2016.05.09-19.39.36:479][668]BlueprintLog: New page: Compile sassGamePlayer
-[2016.05.09-19.39.37:707][668]LogMaterial:Warning: MaterialInstanceDynamic /Engine/Transient.World_3:PersistentLevel.sassGamePlayer_C_0.MaterialInstanceDynamic_51 is not a valid parent for MaterialInstanceDynamic /Engine/Transient.World_3:PersistentLevel.sassGamePlayer_C_0.MaterialInstanceDynamic_57. Only Materials and MaterialInstanceConstants are valid parents for a material instance.
-[2016.05.09-19.39.37:716][668]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
-[2016.05.09-19.39.38:061][668]LogMaterial:Warning: MaterialInstanceDynamic /Engine/Transient.World_3:PersistentLevel.sassGamePlayer_C_0.MaterialInstanceDynamic_57 is not a valid parent for MaterialInstanceDynamic /Engine/Transient.World_3:PersistentLevel.sassGamePlayer_C_0.MaterialInstanceDynamic_58. Only Materials and MaterialInstanceConstants are valid parents for a material instance.
-[2016.05.09-19.39.38:152][668]LogMaterial:Warning: MaterialInstanceDynamic /Engine/Transient.World_3:PersistentLevel.sassGamePlayer_C_0.MaterialInstanceDynamic_58 is not a valid parent for MaterialInstanceDynamic /Engine/Transient.World_3:PersistentLevel.sassGamePlayer_C_0.MaterialInstanceDynamic_59. Only Materials and MaterialInstanceConstants are valid parents for a material instance.
-[2016.05.09-19.39.38:168][668]BlueprintEditorCompileResults: Info [6200.00] Compile of sassGamePlayer successful! [in 1,678 ms]
-[2016.05.09-19.39.56:286][882]Recompiling SassC...
-[2016.05.09-19.39.56:286][882]Launching UnrealBuildTool... [V:/Program Files/Epic Games/UnrealEngine/Engine/Binaries/DotNET/UnrealBuildTool.exe SassC -ModuleWithSuffix SassC 1300 Win64 Development -editorrecompile -canskiplink "C:/Users/Tim/Documents/Unreal Projects/SassC/SassC.uproject"  -2015]
-[2016.05.09-19.39.56:414][882]Warning: Starting HotReload took  0.1s.
-[2016.05.09-19.40.28:753][914]CompilerResultsLog: New page: Compilation - May 9, 2016, 10:40:28 AM
-[2016.05.09-19.40.28:754][914]CompilerResultsLog: Info Creating makefile for hot reloading SassC (working set of source files changed)
-[2016.05.09-19.40.28:754][914]CompilerResultsLog: Info Compiling game modules for hot reload
-[2016.05.09-19.40.28:754][914]CompilerResultsLog: Info Building UnrealHeaderTool...
-[2016.05.09-19.40.28:755][914]CompilerResultsLog: Info Target is up to date
-[2016.05.09-19.40.28:755][914]CompilerResultsLog: Info Parsing headers for SassCEditor
-[2016.05.09-19.40.28:755][914]CompilerResultsLog: Info   Running UnrealHeaderTool "C:\Users\Tim\Documents\Unreal Projects\SassC\SassC.uproject" "C:\Users\Tim\Documents\Unreal Projects\SassC\Intermediate\Build\Win64\SassCEditor\Development\UnrealHeaderTool.manifest" -LogCmds="loginit warning, logexit warning, logdatabase error" -Unattended -WarningsAsErrors
-[2016.05.09-19.40.28:755][914]CompilerResultsLog: Info Reflection code generated for SassCEditor in 7.6859872 seconds
-[2016.05.09-19.40.28:755][914]CompilerResultsLog: Info Performing 2 actions (4 in parallel)
-[2016.05.09-19.40.28:756][914]CompilerResultsLog: Info sassPlayer.cpp
-[2016.05.09-19.40.28:756][914]CompilerResultsLog: Info [2/2] Link UE4Editor-SassC-1300.dll
-[2016.05.09-19.40.28:756][914]CompilerResultsLog: Info    Creating library C:\Users\Tim\Documents\Unreal Projects\SassC\Intermediate\Build\Win64\UE4Editor\Development\UE4Editor-SassC-1300.lib and object C:\Users\Tim\Documents\Unreal Projects\SassC\Intermediate\Build\Win64\UE4Editor\Development\UE4Editor-SassC-1300.exp
-[2016.05.09-19.40.28:756][914]CompilerResultsLog:Error: Error sassPlayer.cpp.obj : error LNK2001: unresolved external symbol "public: virtual void __cdecl AsassPlayer::Sprint_Implementation(bool)" (?Sprint_Implementation@AsassPlayer@@UEAAX_N@Z)
-[2016.05.09-19.40.28:756][914]CompilerResultsLog:Error: Error SassC.generated.cpp.obj : error LNK2001: unresolved external symbol "public: virtual void __cdecl AsassPlayer::Sprint_Implementation(bool)" (?Sprint_Implementation@AsassPlayer@@UEAAX_N@Z)
-[2016.05.09-19.40.28:756][914]CompilerResultsLog:Error: Error sassPlayer.cpp.obj : error LNK2001: unresolved external symbol "public: virtual void __cdecl AsassPlayer::ServerSprint_Implementation(bool)" (?ServerSprint_Implementation@AsassPlayer@@UEAAX_N@Z)
-[2016.05.09-19.40.28:756][914]CompilerResultsLog:Error: Error SassC.generated.cpp.obj : error LNK2001: unresolved external symbol "public: virtual void __cdecl AsassPlayer::ServerSprint_Implementation(bool)" (?ServerSprint_Implementation@AsassPlayer@@UEAAX_N@Z)
-[2016.05.09-19.40.28:756][914]CompilerResultsLog:Error: Error sassPlayer.cpp.obj : error LNK2001: unresolved external symbol "public: virtual bool __cdecl AsassPlayer::ServerSprint_Validate(bool)" (?ServerSprint_Validate@AsassPlayer@@UEAA_N_N@Z)
-[2016.05.09-19.40.28:756][914]CompilerResultsLog:Error: Error SassC.generated.cpp.obj : error LNK2001: unresolved external symbol "public: virtual bool __cdecl AsassPlayer::ServerSprint_Validate(bool)" (?ServerSprint_Validate@AsassPlayer@@UEAA_N_N@Z)
-[2016.05.09-19.40.28:757][914]CompilerResultsLog:Error: Error C:\Users\Tim\Documents\Unreal Projects\SassC\Binaries\Win64\UE4Editor-SassC-1300.dll : fatal error LNK1120: 3 unresolved externals
-[2016.05.09-19.40.28:757][914]CompilerResultsLog: Info -------- End Detailed Actions Stats -----------------------------------------------------------
-[2016.05.09-19.40.28:757][914]CompilerResultsLog: Info ERROR: UBT ERROR: Failed to produce item: C:\Users\Tim\Documents\Unreal Projects\SassC\Binaries\Win64\UE4Editor-SassC-1300.dll
-[2016.05.09-19.40.28:757][914]CompilerResultsLog: Info Total build time: 31.74 seconds
-[2016.05.09-19.40.28:757][914]LogMainFrame: MainFrame: Module compiling took 32.475 seconds
-[2016.05.09-19.40.28:757][914]Warning: HotReload failed, recompile failed
-[2016.05.09-19.40.57:430][506]Recompiling SassC...
-[2016.05.09-19.40.57:431][506]Launching UnrealBuildTool... [V:/Program Files/Epic Games/UnrealEngine/Engine/Binaries/DotNET/UnrealBuildTool.exe SassC -ModuleWithSuffix SassC 6135 Win64 Development -editorrecompile -canskiplink "C:/Users/Tim/Documents/Unreal Projects/SassC/SassC.uproject"  -2015]
-[2016.05.09-19.40.57:432][506]Warning: Starting HotReload took  0.0s.
-[2016.05.09-19.41.06:625][316]CompilerResultsLog: New page: Compilation - May 9, 2016, 10:41:06 AM
-[2016.05.09-19.41.06:626][316]CompilerResultsLog: Info Compiling game modules for hot reload
-[2016.05.09-19.41.06:626][316]CompilerResultsLog: Info Parsing headers for SassCEditor
-[2016.05.09-19.41.06:626][316]CompilerResultsLog: Info   Running UnrealHeaderTool "C:\Users\Tim\Documents\Unreal Projects\SassC\SassC.uproject" "C:\Users\Tim\Documents\Unreal Projects\SassC\Intermediate\Build\Win64\SassCEditor\Development\UnrealHeaderTool.manifest" -LogCmds="loginit warning, logexit warning, logdatabase error" -Unattended -WarningsAsErrors
-[2016.05.09-19.41.06:626][316]CompilerResultsLog: Info Reflection code generated for SassCEditor in 5.7985699 seconds
-[2016.05.09-19.41.06:626][316]CompilerResultsLog: Info Performing 3 actions (4 in parallel)
-[2016.05.09-19.41.06:626][316]CompilerResultsLog: Info sassPlayer.cpp
-[2016.05.09-19.41.06:626][316]CompilerResultsLog: Info SassC.generated.cpp
-[2016.05.09-19.41.06:626][316]CompilerResultsLog: Info [3/3] Link UE4Editor-SassC-6135.dll
-[2016.05.09-19.41.06:627][316]CompilerResultsLog: Info    Creating library C:\Users\Tim\Documents\Unreal Projects\SassC\Intermediate\Build\Win64\UE4Editor\Development\UE4Editor-SassC-6135.lib and object C:\Users\Tim\Documents\Unreal Projects\SassC\Intermediate\Build\Win64\UE4Editor\Development\UE4Editor-SassC-6135.exp
-[2016.05.09-19.41.06:627][316]CompilerResultsLog: Info -------- End Detailed Actions Stats -----------------------------------------------------------
-[2016.05.09-19.41.06:627][316]CompilerResultsLog: Info Total build time: 9.13 seconds
-[2016.05.09-19.41.06:627][316]LogMainFrame: MainFrame: Module compiling took 9.200 seconds
-[2016.05.09-19.41.06:627][316]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
-[2016.05.09-19.41.06:745][316]LogClass: Could not find existing class sassPlayer in package /Script/SassC for HotReload, assuming new class
-[2016.05.09-19.41.06:807][316]LogHotReload: Re-instancing sassPlayer after hot-reload.
-[2016.05.09-19.41.07:830][316]LogMaterial:Warning: MaterialInstanceDynamic /Engine/Transient.World_3:PersistentLevel.sassGamePlayer_C_0.MaterialInstanceDynamic_60 is not a valid parent for MaterialInstanceDynamic /Engine/Transient.World_3:PersistentLevel.sassGamePlayer_C_0.MaterialInstanceDynamic_61. Only Materials and MaterialInstanceConstants are valid parents for a material instance.
-[2016.05.09-19.41.07:873][316]LogContentBrowser: Native class hierarchy updated for 'SassC' in 0.0205 seconds. Added 5 classes and 2 folders.
-[2016.05.09-19.41.07:879][316]Warning: HotReload successful (0 functions remapped  0 scriptstructs remapped)
-[2016.05.09-19.41.08:483][316]LogContentBrowser: Native class hierarchy populated in 0.0139 seconds. Added 1986 classes and 349 folders.
-[2016.05.09-19.41.08:483][316]Warning: HotReload took 11.1s.
-[2016.05.09-19.41.21:668][591]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
-[2016.05.09-19.41.21:790][591]LogFileHelpers: Editor autosave (incl. sublevels) for '/Game/Maps/orbit' took 0.123
-[2016.05.09-19.41.21:816][591]OBJ SavePackage: Generating thumbnails for [1] asset(s) in package [/Game/Blueprints/sassilization/sassGamePlayer] ([1] browsable assets)...
-[2016.05.09-19.41.21:847][591]OBJ SavePackage:     Rendered thumbnail for [Blueprint /Game/Blueprints/sassilization/sassGamePlayer.sassGamePlayer]
-[2016.05.09-19.41.21:847][591]OBJ SavePackage: Finished generating thumbnails for package [/Game/Blueprints/sassilization/sassGamePlayer]
-[2016.05.09-19.41.23:559][591]LogSavePackage: Save=1685.10ms
-[2016.05.09-19.41.23:559][591]LogSavePackage: Moving 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/sassGamePlayer_Auto366CF26CE4790B55C76534CB4168C0379.tmp' to 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Blueprints/sassilization/sassGamePlayer_Auto3.uasset'
-[2016.05.09-19.41.23:562][591]LogSavePackage: Total save time: 1710.52ms
-[2016.05.09-19.41.23:562][591]LogSavePackage:Display: Finished SavePackage C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Blueprints/sassilization/sassGamePlayer_Auto3.uasset
-[2016.05.09-19.41.23:563][591]LogFileHelpers: Auto-saving content packages took 1.771
-[2016.05.09-19.41.25:044][726]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
-[2016.05.09-19.41.26:587][726]Cmd: OBJ SAVEPACKAGE PACKAGE="/Game/Blueprints/sassilization/sassGamePlayer" FILE="C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassGamePlayer.uasset" SILENT=true
-[2016.05.09-19.41.28:144][726]LogSavePackage: Save=1543.10ms
-[2016.05.09-19.41.28:144][726]LogSavePackage: Moving 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/sassGamePlayerF8DA2413461713FCA7BB22B00E0B1271.tmp' to 'C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassGamePlayer.uasset'
-[2016.05.09-19.41.28:148][726]LogSavePackage: Total save time: 1558.61ms
-[2016.05.09-19.41.28:148][726]LogSavePackage:Display: Finished SavePackage C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassGamePlayer.uasset
-[2016.05.09-19.41.28:215][726]Cmd: OBJ SAVEPACKAGE PACKAGE="/Game/Maps/orbit" FILE="C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap" SILENT=true AUTOSAVING=true KEEPDIRTY=true
-[2016.05.09-19.41.28:721][726]LogSavePackage: Save=454.71ms
-[2016.05.09-19.41.28:721][726]LogSavePackage: Moving 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/UEDPCorbit8FC3AB114B394F1617499CB3131A7907.tmp' to 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap'
-[2016.05.09-19.41.28:724][726]LogSavePackage: Total save time: 505.88ms
-[2016.05.09-19.41.28:724][726]LogSavePackage:Display: Finished SavePackage C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap
-[2016.05.09-19.41.50:756][474]Recompiling SassC...
-[2016.05.09-19.41.50:757][474]Launching UnrealBuildTool... [V:/Program Files/Epic Games/UnrealEngine/Engine/Binaries/DotNET/UnrealBuildTool.exe SassC -ModuleWithSuffix SassC 8186 Win64 Development -editorrecompile -canskiplink "C:/Users/Tim/Documents/Unreal Projects/SassC/SassC.uproject"  -2015]
-[2016.05.09-19.41.50:759][474]Warning: Starting HotReload took  0.0s.
-[2016.05.09-19.41.51:866][568]CompilerResultsLog: New page: Compilation - May 9, 2016, 10:41:51 AM
-[2016.05.09-19.41.51:866][568]CompilerResultsLog: Info Compiling game modules for hot reload
-[2016.05.09-19.41.51:866][568]CompilerResultsLog: Info Target is up to date
-[2016.05.09-19.41.51:866][568]LogMainFrame: MainFrame: Module compiling took 1.113 seconds
-[2016.05.09-19.41.54:967][887]Cmd: OBJ SAVEPACKAGE PACKAGE="/Game/Maps/orbit" FILE="C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap" SILENT=true AUTOSAVING=true KEEPDIRTY=true
-[2016.05.09-19.41.55:391][887]LogSavePackage: Save=410.93ms
-[2016.05.09-19.41.55:391][887]LogSavePackage: Moving 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/UEDPCorbitB121543F4066277E137A69AA012459D9.tmp' to 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap'
-[2016.05.09-19.41.55:393][887]LogSavePackage: Total save time: 424.28ms
-[2016.05.09-19.41.55:393][887]LogSavePackage:Display: Finished SavePackage C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap
-[2016.05.09-19.42.07:313][139]LogActorComponent: UnregisterComponent: (/Engine/Transient.EditorFloorComp) Not registered. Aborting.
-[2016.05.09-19.42.07:459][139]LogActorComponent: UnregisterComponent: (/Engine/Transient.EditorFloorComp) Not registered. Aborting.
-[2016.05.09-19.42.07:588][139]LogActorComponent: UnregisterComponent: (/Engine/Transient.EditorFloorComp) Not registered. Aborting.
-[2016.05.09-19.42.07:725][139]LogActorComponent: UnregisterComponent: (/Engine/Transient.EditorFloorComp) Not registered. Aborting.
-[2016.05.09-19.42.07:841][139]LogWindowsTextInputMethodSystem:Display: IME system now deactivated.
-[2016.05.09-19.42.08:366][140]Cmd: QUIT_EDITOR
-[2016.05.09-19.42.08:828][140]LogExit: Preparing to exit.
-[2016.0
+[2016.05.11-03.35.13:611][  0]LogInit: Selected Device Profile: [Windows]
+[2016.05.11-03.35.13:611][  0]LogInit: Applying CVar settings loaded from the selected device profile: [Windows]
+[2016.05.11-03.35.13:722][  0]LogInit: Computer: TIM-PC
+[2016.05.11-03.35.13:722][  0]LogInit: User: Tim
+[2016.05.11-03.35.13:722][  0]LogInit: CPU Page size=65536, Cores=4
+[2016.05.11-03.35.13:722][  0]LogInit: High frequency timer resolution =3.002238 MHz
+[2016.05.11-03.35.13:737][  0]LogMemory: Memory total: Physical=6.0GB (6GB approx)
+[2016.05.11-03.35.13:737][  0]LogMemory: Platform Memory Stats for Windows
+[2016.05.11-03.35.13:737][  0]LogMemory: Process Physical Memory: 312.88 MB used, 312.88 MB peak
+[2016.05.11-03.35.13:737][  0]LogMemory: Process Virtual Memory: 315.24 MB used, 315.24 MB peak
+[2016.05.11-03.35.13:738][  0]LogMemory: Physical Memory: 3767.10 MB used, 6135.11 MB total
+[2016.05.11-03.35.13:738][  0]LogMemory: Virtual Memory: 650.89 MB used, 134217728.00 MB total
+[2016.05.11-03.35.15:451][  0]LogTextLocalizationManager: No specific translations for ('en-US') exist, so ('en') translations will be used.
+[2016.05.11-03.35.16:796][  0]LogD3D11RHI: D3D11 adapters:
+[2016.05.11-03.35.16:851][  0]LogD3D11RHI:    0. 'NVIDIA GeForce GTX 480' (Feature Level 11_0)
+[2016.05.11-03.35.16:851][  0]LogD3D11RHI:       1488MB of dedicated video memory, 0MB of dedicated system memory, and 3067MB of shared system memory, 1 output[s]
+[2016.05.11-03.35.16:857][  0]LogD3D11RHI:    1. 'Microsoft Basic Render Driver' (Feature Level 11_0)
+[2016.05.11-03.35.16:857][  0]LogD3D11RHI:       0MB of dedicated video memory, 0MB of dedicated system memory, and 3067MB of shared system memory, 0 output[s]
+[2016.05.11-03.35.16:857][  0]LogD3D11RHI: Chosen D3D11 Adapter: 0
+[2016.05.11-03.35.16:868][  0]LogD3D11RHI: Creating new Direct3DDevice
+[2016.05.11-03.35.16:869][  0]LogD3D11RHI:     Adapter Name: NVIDIA GeForce GTX 480
+[2016.05.11-03.35.16:869][  0]LogD3D11RHI:   Driver Version: Unknown (internal Unknown)
+[2016.05.11-03.35.16:869][  0]LogD3D11RHI:      Driver Date: Unknown
+[2016.05.11-03.35.16:870][  0]LogRHI: Texture pool is 1041 MB (70% of 1488 MB)
+[2016.05.11-03.35.16:889][  0]LogD3D11RHI: Async texture creation enabled
+[2016.05.11-03.35.17:160][  0]LogShaderCompilers: Guid format shader working directory is -1 characters bigger than the processId version (C:/Users/Tim/Documents/Unreal Projects/SassC/Intermediate/Shaders/WorkingDirectory/37740/).
+[2016.05.11-03.35.17:160][  0]LogShaderCompilers: Cleaned the shader compiler working directory 'C:/Users/Tim/AppData/Local/Temp/UnrealShaderWorkingDir/739CCDD440AAAE2F712D2D9F7C8436C6/'.
+[2016.05.11-03.35.17:175][  0]LogShaderCompilers:Display: Using Local Shader Compiler.
+[2016.05.11-03.35.20:063][  0]LogTemp:Display: Loaded TP WindowsTargetPlatform
+[2016.05.11-03.35.20:116][  0]LogTemp:Display: Loaded TP WindowsNoEditorTargetPlatform
+[2016.05.11-03.35.20:173][  0]LogTemp:Display: Loaded TP WindowsServerTargetPlatform
+[2016.05.11-03.35.20:249][  0]LogTemp:Display: Loaded TP WindowsClientTargetPlatform
+[2016.05.11-03.35.20:296][  0]LogTemp:Display: Loaded TP AllDesktopTargetPlatform
+[2016.05.11-03.35.20:381][  0]LogTemp:Display: Loaded TP AndroidTargetPlatform
+[2016.05.11-03.35.20:447][  0]LogTemp:Display: Loaded TP Android_PVRTCTargetPlatform
+[2016.05.11-03.35.20:507][  0]LogTemp:Display: Loaded TP Android_ATCTargetPlatform
+[2016.05.11-03.35.20:581][  0]LogTemp:Display: Loaded TP Android_DXTTargetPlatform
+[2016.05.11-03.35.20:661][  0]LogTemp:Display: Loaded TP Android_ETC1TargetPlatform
+[2016.05.11-03.35.20:746][  0]LogTemp:Display: Loaded TP Android_ETC2TargetPlatform
+[2016.05.11-03.35.20:815][  0]LogTemp:Display: Loaded TP Android_ASTCTargetPlatform
+[2016.05.11-03.35.20:879][  0]LogTemp:Display: Loaded TP Android_MultiTargetPlatform
+[2016.05.11-03.35.20:932][  0]LogTemp:Display: Loaded TP HTML5TargetPlatform
+[2016.05.11-03.35.21:203][  0]LogTemp:Display: Loaded TP IOSTargetPlatform
+[2016.05.11-03.35.21:256][  0]LogTemp:Display: Loaded TP TVOSTargetPlatform
+[2016.05.11-03.35.21:256][  0]LogTargetPlatformManager:Display: Building Assets For Windows
+[2016.05.11-03.35.22:785][  0]LogDerivedDataCache:Display: Max Cache Size: 512 MB
+[2016.05.11-03.35.23:139][  0]LogDerivedDataCache: Loaded boot cache 0.35s 46MB C:/Users/Tim/Documents/Unreal Projects/SassC/DerivedDataCache/Boot.ddc.
+[2016.05.11-03.35.23:140][  0]LogDerivedDataCache:Display: Loaded Boot cache: C:/Users/Tim/Documents/Unreal Projects/SassC/DerivedDataCache/Boot.ddc
+[2016.05.11-03.35.23:140][  0]LogDerivedDataCache: FDerivedDataBackendGraph:  Pak pak cache file C:/Users/Tim/Documents/Unreal Projects/SassC/DerivedDataCache/DDC.ddp not found, will not use a pak cache.
+[2016.05.11-03.35.23:140][  0]LogDerivedDataCache: Unable to find inner node Pak for hierarchical cache Hierarchy.
+[2016.05.11-03.35.23:171][  0]LogDerivedDataCache: FDerivedDataBackendGraph:  EnginePak pak cache file ../../../Engine/DerivedDataCache/DDC.ddp not found, will not use a pak cache.
+[2016.05.11-03.35.23:171][  0]LogDerivedDataCache: Unable to find inner node EnginePak for hierarchical cache Hierarchy.
+[2016.05.11-03.35.23:185][  0]LogDerivedDataCache: Using Local data cache path ../../../Engine/DerivedDataCache: Writable
+[2016.05.11-03.35.23:185][  0]LogDerivedDataCache: Shared data cache path not found in *engine.ini, will not use an Shared cache.
+[2016.05.11-03.35.23:185][  0]LogDerivedDataCache: Unable to find inner node Shared for hierarchical cache Hierarchy.
+[2016.05.11-03.35.30:632][  0]LogInit: Selected Device Profile: [Windows]
+[2016.05.11-03.35.30:708][  0]LogContentStreaming: Texture pool size is 0.00 MB
+[2016.05.11-03.35.31:931][  0]LogMaterial: Uniform references updated for custom material expression Custom.
+[2016.05.11-03.35.33:162][  0]LogMeshUtilities: No automatic mesh reduction module available
+[2016.05.11-03.35.33:162][  0]LogMeshUtilities: No automatic mesh merging module available
+[2016.05.11-03.35.33:163][  0]LogMeshUtilities: No distributed automatic mesh merging module available
+[2016.05.11-03.35.37:301][  0]LogUObjectArray: 27672 objects as part of root set at end of initial load.
+[2016.05.11-03.35.37:301][  0]LogUObjectAllocator: 5590152 out of 0 bytes used by permanent object pool.
+[2016.05.11-03.35.37:301][  0]LogUObjectArray: CloseDisregardForGC: 0/0 objects in disregard for GC pool
+[2016.05.11-03.35.37:381][  0]LogInit: WinSock: version 1.1 (2.2), MaxSocks=32767, MaxUdp=65467
+[2016.05.11-03.35.42:888][  0]LogSlate: SlateFontCache - WITH_FREETYPE: 1, WITH_HARFBUZZ: 1
+[2016.05.11-03.35.42:899][  0]LogSlate: SlateFontCache - WITH_FREETYPE: 1, WITH_HARFBUZZ: 1
+[2016.05.11-03.35.46:046][  0]LogStreaming:Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Common/Selection_16x.png' error.
+[2016.05.11-03.35.46:046][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Common/Selection_16x.png
+[2016.05.11-03.35.46:047][  0]LogStreaming:Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Common/Selection_16x.png' error.
+[2016.05.11-03.35.46:047][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Common/Selection_16x.png
+[2016.05.11-03.35.46:047][  0]LogStreaming:Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Common/Selection_16x.png' error.
+[2016.05.11-03.35.46:047][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Common/Selection_16x.png
+[2016.05.11-03.35.55:923][  0]LogUdpMessaging: Initializing bridge on interface 0.0.0.0:0 to multicast group 230.0.0.1:6666.
+[2016.05.11-03.35.56:863][  0]LogAssetRegistry: FAssetRegistry took 0.0356 seconds to start up
+[2016.05.11-03.36.01:244][  0]SourceControl: Info Source control is disabled
+[2016.05.11-03.36.03:786][  0]LogStreaming:Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Common/Selection_16x.png' error.
+[2016.05.11-03.36.03:787][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Common/Selection_16x.png
+[2016.05.11-03.36.03:787][  0]LogStreaming:Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Common/Selection_16x.png' error.
+[2016.05.11-03.36.03:787][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Common/Selection_16x.png
+[2016.05.11-03.36.03:787][  0]LogStreaming:Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Common/Selection_16x.png' error.
+[2016.05.11-03.36.03:787][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Common/Selection_16x.png
+[2016.05.11-03.36.04:566][  0]LogWindows: GitPush: Got 1 branches.
+[2016.05.11-03.36.04:656][  0]LogWindows: GitPush: Got 1 remote hosts
+[2016.05.11-03.36.05:594][  0]LogHMD: Failed to initialize OpenVR with code 110
+[2016.05.11-03.36.06:809][  0]LogEngine: Initializing Engine...
+[2016.05.11-03.36.08:188][  0]LogAIModule: Creating AISystem for world NewWorld
+[2016.05.11-03.36.08:557][  0]LogInit: XAudio2 using 'Speakers (High Definition Audio Device)' : 2 channels at 44.1 kHz using 16 bits per sample (channel mask 0x3)
+[2016.05.11-03.36.08:590][  0]LogInit: FAudioDevice initialized.
+[2016.05.11-03.36.08:629][  0]LogDerivedDataCache: Saved boot cache 0.04s 46MB C:/Users/Tim/Documents/Unreal Projects/SassC/DerivedDataCache/Boot.ddc.
+[2016.05.11-03.36.08:651][  0]LogInit: Texture streaming: Enabled
+[2016.05.11-03.36.09:303][  0]LogInit: Transaction tracking system initialized
+[2016.05.11-03.36.10:138][  0]BlueprintLog: New page: Editor Load
+[2016.05.11-03.36.13:897][  0]LocalizationService: Info Localization service is disabled
+[2016.05.11-03.36.15:921][  0]LogConsoleResponse:Display: 
+[2016.05.11-03.36.17:486][  0]LogFileCache: Scanning file cache for directory 'C:/Users/Tim/Documents/Unreal Projects/SassC/Content/' took 0.07s
+[2016.05.11-03.36.17:486][  0]LogCook:Display: Max memory allowance for cook 8192mb
+[2016.05.11-03.36.17:487][  0]LogCook:Display: Mobile HDR setting 1
+[2016.05.11-03.36.17:487][  0]LogCook:Display: Done creating registry. It took  0.00s.
+[2016.05.11-03.36.19:114][  0]Cmd: MAP LOAD FILE="C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Maps/orbit.umap" TEMPLATE=0 SHOWPROGRESS=1 FEATURELEVEL=3
+[2016.05.11-03.36.19:175][  0]LightingResults: New page: Lighting Build
+[2016.05.11-03.36.19:462][  0]MapCheck: New page: Map Check
+[2016.05.11-03.36.19:462][  0]LightingResults: New page: Lighting Build
+[2016.05.11-03.36.21:497][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EdGraph_20.K2Node_CommutativeAssociativeBinaryOperator_2253' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.21:497][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EdGraph_20.K2Node_CallFunction_102548' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.21:497][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EdGraph_20.K2Node_VariableGet_2488' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.21:497][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EdGraph_20.K2Node_FunctionResult_0' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.21:497][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EdGraph_20.K2Node_FunctionEntry_139' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.21:570][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EdGraph_22.K2Node_CommutativeAssociativeBinaryOperator_2253' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.21:570][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EdGraph_22.K2Node_CallFunction_102548' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.21:570][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EdGraph_22.K2Node_VariableGet_2488' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.21:570][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EdGraph_22.K2Node_FunctionResult_0' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.21:570][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EdGraph_22.K2Node_FunctionEntry_139' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.22:042][  0]LogProperty:Error: UStructProperty::Serialize Loading: Property 'StructProperty /Game/Blueprints/lobby/sassLobbyGameState.sassLobbyGameState_C:ExecuteUbergraph_sassLobbyGameState.CallFunc_Array_Get_Item'. Unknown structure.
+[2016.05.11-03.36.22:042][  0]LogProperty:Error: UStructProperty::Serialize Loading: Property 'StructProperty /Game/Blueprints/lobby/sassLobbyGameState.sassLobbyGameState_C:ExecuteUbergraph_sassLobbyGameState.K2Node_MakeStruct_mapVoteStruct'. Unknown structure.
+[2016.05.11-03.36.22:042][  0]LogProperty:Error: UStructProperty::Serialize Loading: Property 'StructProperty /Game/Blueprints/lobby/sassLobbyGameState.sassLobbyGameState_C:aMapVoteArray.aMapVoteArray'. Unknown structure.
+[2016.05.11-03.36.22:245][  0]LogProperty:Error: UStructProperty::Serialize Loading: Property 'StructProperty /Game/Blueprints/lobby/lobbyGameMode.lobbyGameMode_C:resetVoteArrays.CallFunc_Array_Get_Item'. Unknown structure.
+[2016.05.11-03.36.22:246][  0]LogProperty:Error: UStructProperty::Serialize Loading: Property 'StructProperty /Game/Blueprints/lobby/lobbyGameMode.lobbyGameMode_C:resetVoteArrays.K2Node_MakeStruct_mapVoteStruct'. Unknown structure.
+[2016.05.11-03.36.22:247][  0]LogProperty:Error: UStructProperty::Serialize Loading: Property 'StructProperty /Game/Blueprints/lobby/lobbyGameMode.lobbyGameMode_C:ExecuteUbergraph_lobbyGameMode.CallFunc_Array_Get_Item2'. Unknown structure.
+[2016.05.11-03.36.22:249][  0]LogProperty:Error: UStructProperty::Serialize Loading: Property 'StructProperty /Game/Blueprints/lobby/lobbyGameMode.lobbyGameMode_C:ExecuteUbergraph_lobbyGameMode.CallFunc_Array_Get_Item5'. Unknown structure.
+[2016.05.11-03.36.22:249][  0]LogProperty:Error: UStructProperty::Serialize Loading: Property 'StructProperty /Game/Blueprints/lobby/lobbyGameMode.lobbyGameMode_C:aMapVoteArrayCopy.aMapVoteArrayCopy'. Unknown structure.
+[2016.05.11-03.36.22:262][  0]LogProperty:Error: UStructProperty::Serialize Loading: Property 'StructProperty /Game/Blueprints/lobby/lobbyHUD.lobbyHUD_C:getMapBinding.CallFunc_Array_Get_Item'. Unknown structure.
+[2016.05.11-03.36.22:308][  0]LogProperty:Error: UStructProperty::Serialize Loading: Property 'StructProperty /Game/Blueprints/lobby/lobbyMapVoteMenuHUD.lobbyMapVoteMenuHUD_C:getMapBinding.CallFunc_Array_Get_Item'. Unknown structure.
+[2016.05.11-03.36.22:308][  0]LogProperty:Error: UStructProperty::Serialize Loading: Property 'StructProperty /Game/Blueprints/lobby/lobbyMapVoteMenuHUD.lobbyMapVoteMenuHUD_C:getMapBinding.CallFunc_Array_Get_Item2'. Unknown structure.
+[2016.05.11-03.36.22:565][  0]LogBlueprint:Warning: USimpleConstructionScript::FixupRootNodeParentReferences() - Couldn't find inherited parent component 'DefaultSceneRoot' for 'GateMesh' in BlueprintGeneratedClass 'REINST_Gate_C_42' (it may have been removed)
+[2016.05.11-03.36.23:568][  0]LogBlueprint:Warning: [compiler sassLobbyPlayer] Warning Input Axis Event references unknown Axis 'LookUp' for  InputAxis LookUp 
+[2016.05.11-03.36.23:568][  0]LogBlueprint:Warning: [compiler sassLobbyPlayer] Warning Input Axis Event references unknown Axis 'Turn' for  InputAxis Turn 
+[2016.05.11-03.36.23:584][  0]LogBlueprint:Warning: [compiler sassLobbyPlayer] Warning [0074.13] Compile of sassLobbyPlayer successful, but with 2 Warning(s) [in 45 ms]
+[2016.05.11-03.36.23:585][  0]LogBlueprint:Warning: [compiler sassLobbyPlayer] Warning [0074.13] Compile of sassLobbyPlayer successful, but with 3 Warning(s) [in 0 ms]
+[2016.05.11-03.36.23:585][  0]LogBlueprint:Warning: [compiler sassLobbyPlayer] Warning [0074.13] Compile of sassLobbyPlayer successful, but with 4 Warning(s) [in 0 ms]
+[2016.05.11-03.36.23:741][  0]LogBlueprint:Warning: USimpleConstructionScript::FixupRootNodeParentReferences() - Couldn't find inherited parent component 'DefaultSceneRoot' for 'CityMesh' in BlueprintGeneratedClass 'REINST_City_C_100' (it may have been removed)
+[2016.05.11-03.36.23:742][  0]LogBlueprint:Warning: USimpleConstructionScript::FixupRootNodeParentReferences() - Couldn't find inherited parent component 'DefaultSceneRoot' for 'Box' in BlueprintGeneratedClass 'REINST_City_C_100' (it may have been removed)
+[2016.05.11-03.36.24:413][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EdGraph_372.K2Node_CommutativeAssociativeBinaryOperator_2253' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.24:414][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EdGraph_372.K2Node_CallFunction_102548' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.24:414][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EdGraph_372.K2Node_VariableGet_2488' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.24:414][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EdGraph_372.K2Node_FunctionResult_0' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.24:414][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EdGraph_372.K2Node_FunctionEntry_139' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.24:765][  0]LogBlueprint:Warning: [compiler sassLobbyPlayer] Warning Input Axis Event references unknown Axis 'LookUp' for  InputAxis LookUp 
+[2016.05.11-03.36.24:765][  0]LogBlueprint:Warning: [compiler sassLobbyPlayer] Warning Input Axis Event references unknown Axis 'Turn' for  InputAxis Turn 
+[2016.05.11-03.36.24:773][  0]LogBlueprint:Warning: [compiler sassLobbyPlayer] Warning [0075.32] Compile of sassLobbyPlayer successful, but with 2 Warning(s) [in 27 ms]
+[2016.05.11-03.36.24:773][  0]LogBlueprint:Warning: [compiler sassLobbyPlayer] Warning [0075.32] Compile of sassLobbyPlayer successful, but with 3 Warning(s) [in 0 ms]
+[2016.05.11-03.36.24:774][  0]LogBlueprint:Warning: [compiler sassLobbyPlayer] Warning [0075.32] Compile of sassLobbyPlayer successful, but with 4 Warning(s) [in 0 ms]
+[2016.05.11-03.36.26:075][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateNode_1.Locomotion/Idle.AnimGraphNode_BlendSpacePlayer_9' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.26:075][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_Root_5' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.26:076][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateNode_2.Run Jump.AnimGraphNode_SequencePlayer_34' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.26:076][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateNode_3.Jump.AnimGraphNode_SequencePlayer_483' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.26:076][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateNode_7.attacking.AnimGraphNode_SequencePlayer_153' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.26:076][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.26:076][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateNode_1.Locomotion/Idle.AnimGraphNode_StateResult_20' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.26:076][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateNode_2.Run Jump.AnimGraphNode_StateResult_15' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.26:076][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateNode_3.Jump.AnimGraphNode_StateResult_55' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.26:077][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateNode_7.attacking.AnimGraphNode_StateResult_188' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.26:077][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_1.Transition.AnimGraphNode_TransitionResult_20' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.26:077][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_12.Transition.AnimGraphNode_TransitionResult_467' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.26:077][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_2.Transition.AnimGraphNode_TransitionResult_28' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.26:077][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_5.Transition.AnimGraphNode_TransitionResult_142' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.26:077][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_6.AnimationTransitionGraph_65.AnimGraphNode_TransitionResult_22' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.26:077][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_7.Transition.AnimGraphNode_TransitionResult_148' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.26:077][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_8.Transition.AnimGraphNode_TransitionResult_233' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.26:077][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateEntryNode_0' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.26:077][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateNode_1' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.26:078][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateNode_2' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.26:078][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateNode_3' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.26:078][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateNode_7' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.26:078][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_1' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.26:078][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_12' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.26:078][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_2' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.26:078][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_5' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.26:078][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_6' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.26:079][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_7' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.26:079][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_8' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.26:079][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.EdGraphNode_Comment_19' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.26:079][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.EdGraphNode_Comment_22' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.26:079][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.EdGraphNode_Comment_26' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.26:080][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_12.Transition.K2Node_CallFunction_91451' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.26:080][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_2.Transition.K2Node_CallFunction_11224' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.26:080][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_5.Transition.K2Node_CallFunction_224620' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.26:080][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_5.Transition.K2Node_CallFunction_2831' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.26:080][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_6.AnimationTransitionGraph_65.K2Node_CallFunction_92056' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.26:081][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_7.Transition.K2Node_CallFunction_225505' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.26:081][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:CanJump.K2Node_CallFunction_102548' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.26:081][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_CallFunction_108580' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.26:081][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_CallFunction_162498' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.26:081][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_CallFunction_169492' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.26:081][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_CallFunction_227144' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.26:081][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_CallFunction_29781' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.26:081][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_CallFunction_29886' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.26:082][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_CallFunction_45546' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.26:082][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_CallFunction_45889' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.26:082][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_2.Transition.K2Node_CommutativeAssociativeBinaryOperator_211' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.26:082][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_5.Transition.K2Node_CommutativeAssociativeBinaryOperator_77' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.26:082][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:CanJump.K2Node_CommutativeAssociativeBinaryOperator_2253' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.26:082][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_CommutativeAssociativeBinaryOperator_521' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.26:082][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_DynamicCast_120' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.26:083][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_DynamicCast_127' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.26:083][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_DynamicCast_99' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.26:083][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_Event_1003' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.26:083][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_Event_2429' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.26:083][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_Event_85' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.26:083][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_ExecutionSequence_180' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.26:083][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:CanJump.K2Node_FunctionEntry_139' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.26:083][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:CanJump.K2Node_FunctionResult_0' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.26:083][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_IfThenElse_332' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.26:083][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_IfThenElse_413' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.26:083][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_12.Transition.K2Node_TransitionRuleGetter_8' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.26:084][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_6.AnimationTransitionGraph_65.K2Node_TransitionRuleGetter_17' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.26:084][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_6.AnimationTransitionGraph_65.K2Node_TransitionRuleGetter_182' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.26:084][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateNode_1.Locomotion/Idle.K2Node_VariableGet_589' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.26:084][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_1.Transition.K2Node_VariableGet_208' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.26:084][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_2.Transition.K2Node_VariableGet_125' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.26:084][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_2.Transition.K2Node_VariableGet_129' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.26:084][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_5.Transition.K2Node_VariableGet_1066' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.26:084][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_5.Transition.K2Node_VariableGet_74' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.26:084][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_7.Transition.K2Node_VariableGet_1084' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.26:085][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_8.Transition.K2Node_VariableGet_624' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.26:085][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:CanJump.K2Node_VariableGet_2488' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.26:085][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_VariableGet_1007' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.26:085][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_VariableGet_1157' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.26:085][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_VariableGet_3156' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.26:085][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_VariableSet_1402' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.26:085][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_VariableSet_2289' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.26:085][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_VariableSet_2465' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.26:085][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_VariableSet_74' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.11-03.36.27:743][  0]LogAIModule: Creating AISystem for world orbit
+[2016.05.11-03.36.28:498][  0]LogEditorServer: Finished looking for orphan Actors (0.008 secs)
+[2016.05.11-03.36.28:564][  0]Cmd: MAP CHECKDEP NOCLEARLOG
+[2016.05.11-03.36.28:697][  0]MapCheck: Info Map check complete: 0 Error(s), 0 Warning(s), took 132.765ms to complete.
+[2016.05.11-03.36.28:697][  0]LogFileHelpers: Loading map 'orbit' took 9.584
+[2016.05.11-03.36.30:964][  0]LogCollectionManager: Loaded 0 collections in 0.004072 seconds
+[2016.05.11-03.36.31:168][  0]LogFileCache: Scanning file cache for directory 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Collections/' took 0.01s
+[2016.05.11-03.36.31:168][  0]LogFileCache: Scanning file cache for directory 'C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Developers/Tim/Collections/' took 0.01s
+[2016.05.11-03.36.31:169][  0]LogFileCache: Scanning file cache for directory 'C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Collections/' took 0.01s
+[2016.05.11-03.36.31:169][  0]LogCollectionManager: Rebuilt the GUID cache for 0 collections in 0.000006 seconds
+[2016.05.11-03.36.31:218][  0]LogContentBrowser: Native class hierarchy populated in 0.0473 seconds. Added 1983 classes and 343 folders.
+[2016.05.11-03.36.31:351][  0]LogStats: UGameplayTagsManager::ConstructGameplayTagTree: Construct from data asset -  0.010 s
+[2016.05.11-03.36.31:352][  0]LogStats: UGameplayTagsManager::ConstructGameplayTagTree: GameplayTagTreeChangedEvent.Broadcast -  0.000 s
+[2016.05.11-03.36.31:369][  0]LogContentBrowser: Native class hierarchy updated for 'GameplayTags' in 0.0040 seconds. Added 12 classes and 0 folders.
+[2016.05.11-03.36.31:400][  0]LogContentBrowser: Native class hierarchy updated for 'WidgetCarousel' in 0.0038 seconds. Added 0 classes and 0 folders.
+[2016.05.11-03.36.31:639][  0]LogContentBrowser: Native class hierarchy updated for 'SuperSearch' in 0.0026 seconds. Added 1 classes and 2 folders.
+[2016.05.11-03.36.32:885][  0]LogContentBrowser: Native class hierarchy updated for 'AddContentDialog' in 0.0027 seconds. Added 0 classes and 0 folders.
+[2016.05.11-03.36.33:142][  0]LogContentBrowser: Native class hierarchy updated for 'SceneOutliner' in 0.0027 seconds. Added 1 classes and 2 folders.
+[2016.05.11-03.36.33:887][  0]LogCrashTracker: Crashtracker disabled due to settings.
+[2016.05.11-03.36.34:167][  0]LogUObjectGlobals:Warning: Failed to find object 'Class None.'
+[2016.05.11-03.36.34:422][  0]LogContentBrowser: Native class hierarchy updated for 'HierarchicalLODOutliner' in 0.0027 seconds. Added 1 classes and 2 folders.
+[2016.05.11-03.36.34:422][  0]LogLoad: Full Startup: 84.97 seconds (BP compile: 2.45 seconds)
+[2016.05.11-03.36.34:423][  0]LogExternalProfiler:Warning: No registered external profiler was matched with a command-line switch (or the DLL could not be loaded).  External profiling features will not be available.
+[2016.05.11-03.36.34:833][  0]LogOcInput: OculusInput pre-init called
+[2016.05.11-03.36.35:832][  0]SourceControl: Info On branch master
+[2016.05.11-03.36.35:833][  0]SourceControl: Info Your branch is up-to-date with 'origin/master'.
+[2016.05.11-03.36.35:833][  0]SourceControl: Info Changes not staged for commit:
+[2016.05.11-03.36.35:833][  0]SourceControl: Info   (use "git add/rm <file>..." to update what will be committed)
+[2016.05.11-03.36.35:833][  0]SourceControl: Info   (use "git checkout -- <file>..." to discard changes in working directory)
+[2016.05.11-03.36.35:833][  0]SourceControl: Info 	modified:   Content/Blueprints/sassilization/Sassilization.uasset
+[2016.05.11-03.36.35:833][  0]SourceControl: Info 	modified:   Content/Blueprints/sassilization/sassGamePlayer.uasset
+[2016.05.11-03.36.35:833][  0]SourceControl: Info 	modified:   Content/Blueprints/sassilization/sassPlayerController.uasset
+[2016.05.11-03.36.35:833][  0]SourceControl: Info 	modified:   Saved/AutoScreenshot.png
+[2016.05.11-03.36.35:833][  0]SourceControl: Info 	deleted:    Saved/Backup/08_-_Default_2016-05-08-01-04-09.uasset
+[2016.05.11-03.36.35:833][  0]SourceControl: Info 	deleted:    Saved/Backup/Floor_400x400_2016-05-08-00-55-29.uasset
+[2016.05.11-03.36.35:833][  0]SourceControl: Info 	deleted:    Saved/Backup/Sassilization_2016-05-08-01-08-26.uasset
+[2016.05.11-03.36.35:833][  0]SourceControl: Info 	deleted:    Saved/Backup/archer_2016-05-08-01-00-03.uasset
+[2016.05.11-03.36.35:834][  0]SourceControl: Info 	deleted:    Saved/Backup/ballista_2016-05-08-01-00-03.uasset
+[2016.05.11-03.36.35:834][  0]SourceControl: Info 	deleted:    Saved/Backup/buildingstab_2016-05-08-01-00-03.uasset
+[2016.05.11-03.36.35:834][  0]SourceControl: Info 	deleted:    Saved/Backup/catapult_2016-05-08-01-00-03.uasset
+[2016.05.11-03.36.35:834][  0]SourceControl: Info 	deleted:    Saved/Backup/city_2016-05-08-01-00-03.uasset
+[2016.05.11-03.36.35:834][  0]SourceControl: Info 	deleted:    Saved/Backup/gate_2016-05-08-01-00-03.uasset
+[2016.05.11-03.36.35:834][  0]SourceControl: Info 	deleted:    Saved/Backup/sassGamePlayer_2016-05-08-01-04-08.uasset
+[2016.05.11-03.36.35:834][  0]SourceControl: Info 	deleted:    Saved/Backup/scallywag_2016-05-08-01-00-03.uasset
+[2016.05.11-03.36.35:834][  0]SourceControl: Info 	deleted:    Saved/Backup/shieldmonolith_2016-05-08-01-00-04.uasset
+[2016.05.11-03.36.35:834][  0]SourceControl: Info 	deleted:    Saved/Backup/shrine_2016-05-08-01-00-04.uasset
+[2016.05.11-03.36.35:834][  0]SourceControl: Info 	deleted:    Saved/Backup/soldier_2016-05-08-01-00-04.uasset
+[2016.05.11-03.36.35:834][  0]SourceControl: Info 	deleted:    Saved/Backup/tower_2016-05-08-01-00-04.uasset
+[2016.05.11-03.36.35:834][  0]SourceControl: Info 	deleted:    Saved/Backup/unitstab_2016-05-08-01-00-04.uasset
+[2016.05.11-03.36.35:834][  0]SourceControl: Info 	deleted:    Saved/Backup/wall_2016-05-08-01-00-04.uasset
+[2016.05.11-03.36.35:834][  0]SourceControl: Info 	deleted:    Saved/Backup/workshop_2016-05-08-01-00-04.uasset
+[2016.05.11-03.36.35:834][  0]SourceControl: Info 	modified:   Saved/Config/Windows/EditorPerProjectUserSettings.ini
+[2016.05.11-03.36.35:835][  0]SourceControl: Info 	modified:   Saved/Config/Windows/Engine.ini
+[2016.05.11-03.36.35:835][  0]SourceControl: Info 	modified:   Saved/Logs/SassC.log
+[2016.05.11-03.36.35:835][  0]SourceControl: Info 	modified:   Saved/Logs/SassC_2.log
+[2016.05.11-03.36.35:835][  0]SourceControl: Info no changes added to commit (use "git add" and/or "git commit -a")
+[2016.05.11-03.36.35:871][  0]LogContentStreaming: Texture pool size now 1000 MB
+[2016.05.11-03.36.37:451][  1]LogRenderer: Reallocating scene render targets to support 452x404 (Frame:2).
+[2016.05.11-03.36.39:145][  4]LogAssetRegistry: Asset discovery search completed in 42.3077 seconds
+[2016.05.11-03.36.39:220][  4]LogCollectionManager: Rebuilt the object cache for 0 collections in 0.000001 seconds (found 0 objects)
+[2016.05.11-03.36.39:228][  4]LogCollectionManager: Fixed up redirectors for 0 collections in 0.082390 seconds (updated 0 objects)
+[2016.05.11-03.36.41:680][ 62]LogRenderer: Reallocating scene render targets to support 592x564 (Frame:64).
+[2016.05.11-03.37.21:856][805]LogContentBrowser: Native class hierarchy updated for 'BlueprintGraph' in 0.0033 seconds. Added 108 classes and 0 folders.
+[2016.05.11-03.38.59:052][378]BlueprintLog: New page: Compile Sassilization
+[2016.05.11-03.38.59:577][378]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
+[2016.05.11-03.39.00:289][378]BlueprintEditorCompileResults: Info The path is never executed.  Then 1 
+[2016.05.11-03.39.00:289][378]BlueprintEditorCompileResults: Info [0230.82] Compile of Sassilization successful! [in 1,218 ms]
+[2016.05.11-03.39.03:668][723]Cmd: OBJ SAVEPACKAGE PACKAGE="/Game/Blueprints/sassilization/Sassilization" FILE="C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/Sassilization.uasset" SILENT=true
+[2016.05.11-03.39.04:189][723]LogSavePackage: Save=469.29ms
+[2016.05.11-03.39.04:190][723]LogSavePackage: Moving 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/SassilizationB0FC42BC462AB339AB9EE094F948D8B6.tmp' to 'C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/Sassilization.uasset'
+[2016.05.11-03.39.04:195][723]LogSavePackage: Total save time: 504.44ms
+[2016.05.11-03.39.04:195][723]LogSavePackage:Display: Finished SavePackage C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/Sassilization.uasset
+[2016.05.11-03.40.33:867][939]BlueprintLog: New page: Compile Sassilization
+[2016.05.11-03.40.34:469][939]BlueprintEditorCompileResults: Info The path is never executed.  Then 1 
+[2016.05.11-03.40.34:470][939]BlueprintEditorCompileResults: Info [0325.01] Compile of Sassilization successful! [in 602 ms]
+[2016.05.11-03.42.08:096][856]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
+[2016.05.11-03.42.08:228][856]Cmd: OBJ SAVEPACKAGE PACKAGE="/Game/Blueprints/sassilization/Sassilization" FILE="C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/Sassilization.uasset" SILENT=true
+[2016.05.11-03.42.08:618][856]LogSavePackage: Save=376.61ms
+[2016.05.11-03.42.08:618][856]LogSavePackage: Moving 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Sassilization2F30082A4C8DFEDF48A0499449FBD6CA.tmp' to 'C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/Sassilization.uasset'
+[2016.05.11-03.42.08:623][856]LogSavePackage: Total save time: 392.57ms
+[2016.05.11-03.42.08:623][856]LogSavePackage:Display: Finished SavePackage C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/Sassilization.uasset
+[2016.05.11-03.42.08:668][856]LogSavePackage: Save=19.72ms
+[2016.05.11-03.42.08:668][856]LogSavePackage: Moving 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/sassPlayerController0B867B1D4BF2CF74CE82B5A6C880621A.tmp' to 'C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassPlayerController.uasset'
+[2016.05.11-03.42.08:671][856]LogSavePackage: Total save time: 35.74ms
+[2016.05.11-03.42.08:672][856]LogSavePackage:Display: Finished SavePackage C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassPlayerController.uasset
+[2016.05.11-03.42.42:063][315]BlueprintLog: New page: Compile sassPlayerController
+[2016.05.11-03.42.42:253][315]LogMaterial:Warning: MaterialInstanceDynamic /Engine/Transient.World_5:PersistentLevel.sassGamePlayer_C_0.MaterialInstanceDynamic_42 is not a valid parent for MaterialInstanceDynamic /Engine/Transient.World_5:PersistentLevel.sassGamePlayer_C_0.MaterialInstanceDynamic_43. Only Materials and MaterialInstanceConstants are valid parents for a material instance.
+[2016.05.11-03.42.42:354][315]BlueprintEditorCompileResults: Info [0452.90] Compile of sassPlayerController successful! [in 290 ms]
+[2016.05.11-03.43.19:634][ 82]BlueprintLog: New page: Compile sassPlayerController
+[2016.05.11-03.43.19:656][ 82]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
+[2016.05.11-03.43.19:760][ 82]LogMaterial:Warning: MaterialInstanceDynamic /Engine/Transient.World_5:PersistentLevel.sassGamePlayer_C_0.MaterialInstanceDynamic_43 is not a valid parent for MaterialInstanceDynamic /Engine/Transient.World_5:PersistentLevel.sassGamePlayer_C_0.MaterialInstanceDynamic_44. Only Materials and MaterialInstanceConstants are valid parents for a material instance.
+[2016.05.11-03.43.19:867][ 82]BlueprintEditorCompileResults: Info [0490.41] Compile of sassPlayerController successful! [in 233 ms]
+[2016.05.11-03.43.28:050][673]BlueprintLog: New page: Compile Sassilization
+[2016.05.11-03.43.28:264][673]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
+[2016.05.11-03.43.28:384][673]LogMaterial:Warning: MaterialInstanceDynamic /Engine/Transient.World_5:PersistentLevel.sassGamePlayer_C_0.MaterialInstanceDynamic_44 is not a valid parent for MaterialInstanceDynamic /Engine/Transient.World_5:PersistentLevel.sassGamePlayer_C_0.MaterialInstanceDynamic_45. Only Materials and MaterialInstanceConstants are valid parents for a material instance.
+[2016.05.11-03.43.28:441][673]BlueprintEditorCompileResults: Info The path is never executed.  Then 1 
+[2016.05.11-03.43.28:442][673]BlueprintEditorCompileResults: Info [0498.99] Compile of Sassilization successful! [in 390 ms]
+[2016.05.11-03.43.29:139][742]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
+[2016.05.11-03.43.29:263][742]Cmd: OBJ SAVEPACKAGE PACKAGE="/Game/Blueprints/sassilization/Sassilization" FILE="C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/Sassilization.uasset" SILENT=true
+[2016.05.11-03.43.29:663][742]LogSavePackage: Save=384.95ms
+[2016.05.11-03.43.29:663][742]LogSavePackage: Moving 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Sassilization30D114364226BE63874840B481E917F2.tmp' to 'C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/Sassilization.uasset'
+[2016.05.11-03.43.29:667][742]LogSavePackage: Total save time: 401.10ms
+[2016.05.11-03.43.29:668][742]LogSavePackage:Display: Finished SavePackage C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/Sassilization.uasset
+[2016.05.11-03.43.29:716][742]LogSavePackage: Save=29.88ms
+[2016.05.11-03.43.29:716][742]LogSavePackage: Moving 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/sassPlayerController7F1CEF3A418D8BE3C78EF3AE15235111.tmp' to 'C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassPlayerController.uasset'
+[2016.05.11-03.43.29:720][742]LogSavePackage: Total save time: 42.51ms
+[2016.05.11-03.43.29:720][742]LogSavePackage:Display: Finished SavePackage C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassPlayerController.uasset
+[2016.05.11-03.43.33:955][131]Cmd: OBJ SAVEPACKAGE PACKAGE="/Game/Maps/orbit" FILE="C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap" SILENT=true AUTOSAVING=true KEEPDIRTY=true
+[2016.05.11-03.43.34:571][131]LogSavePackage: Save=564.67ms
+[2016.05.11-03.43.34:571][131]LogSavePackage: Moving 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/UEDPCorbit47441324400CA62B1A01B1B237817E90.tmp' to 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap'
+[2016.05.11-03.43.34:574][131]LogSavePackage: Total save time: 615.11ms
+[2016.05.11-03.43.34:574][131]LogSavePackage:Display: Finished SavePackage C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap
+[2016.05.11-03.44.27:204][656]Cmd: OBJ SAVEPACKAGE PACKAGE="/Game/Maps/orbit" FILE="C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap" SILENT=true AUTOSAVING=true KEEPDIRTY=true
+[2016.05.11-03.44.28:771][656]LogSavePackage: Save=1436.91ms
+[2016.05.11-03.44.28:771][656]LogSavePackage: Moving 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/UEDPCorbit4D19DE6E45B7FC03A2FCB894C5E293B9.tmp' to 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap'
+[2016.05.11-03.44.28:774][656]LogSavePackage: Total save time: 1460.92ms
+[2016.05.11-03.44.28:774][656]LogSavePackage:Display: Finished SavePackage C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap
+[2016.05.11-03.45.48:836][625]BlueprintLog: New page: Compile sassPlayerController
+[2016.05.11-03.45.51:054][625]LogMaterial:Warning: MaterialInstanceDynamic /Engine/Transient.World_5:PersistentLevel.sassGamePlayer_C_0.MaterialInstanceDynamic_45 is not a valid parent for MaterialInstanceDynamic /Engine/Transient.World_5:PersistentLevel.sassGamePlayer_C_0.MaterialInstanceDynamic_46. Only Materials and MaterialInstanceConstants are valid parents for a material instance.
+[2016.05.11-03.45.51:464][625]BlueprintEditorCompileResults: Info [0641.96] Compile of sassPlayerController successful! [in 2,544 ms]
+[2016.05.11-03.45.53:912][868]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
+[2016.05.11-03.45.54:517][868]LogSavePackage: Save=96.78ms
+[2016.05.11-03.45.54:517][868]LogSavePackage: Moving 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/sassPlayerController14A617CC4DB2456DA12DFD83BD88AA31.tmp' to 'C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassPlayerController.uasset'
+[2016.05.11-03.45.54:521][868]LogSavePackage: Total save time: 130.26ms
+[2016.05.11-03.45.54:521][868]LogSavePackage:Display: Finished SavePackage C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassPlayerController.uasset
+[2016.05.11-03.46.01:872][617]Cmd: OBJ SAVEPACKAGE PACKAGE="/Game/Maps/orbit" FILE="C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap" SILENT=true AUTOSAVING=true KEEPDIRTY=true
+[2016.05.11-03.46.02:367][617]LogSavePackage: Save=470.55ms
+[2016.05.11-03.46.02:367][617]LogSavePackage: Moving 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/UEDPCorbitACC0FA2C47EFF086BE310C8866BA3EF7.tmp' to 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap'
+[2016.05.11-03.46.02:370][617]LogSavePackage: Total save time: 483.53ms
+[2016.05.11-03.46.02:370][617]LogSavePackage:Display: Finished SavePackage C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap
+[2016.05.11-03.49.37:478][288]BlueprintLog: New page: Compile sassPlayerController
+[2016.05.11-03.49.38:764][288]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
+[2016.05.11-03.49.39:021][288]LogMaterial:Warning: MaterialInstanceDynamic /Engine/Transient.World_5:PersistentLevel.sassGamePlayer_C_0.MaterialInstanceDynamic_46 is not a valid parent for MaterialInstanceDynamic /Engine/Transient.World_5:PersistentLevel.sassGamePlayer_C_0.MaterialInstanceDynamic_47. Only Materials and MaterialInstanceConstants are valid parents for a material instance.
+[2016.05.11-03.49.39:115][288]LogMaterial:Warning: MaterialInstanceDynamic /Engine/Transient.World_5:PersistentLevel.sassGamePlayer_C_0.MaterialInstanceDynamic_47 is not a valid parent for MaterialInstanceDynamic /Engine/Transient.World_5:PersistentLevel.sassGamePlayer_C_0.MaterialInstanceDynamic_48. Only Materials and MaterialInstanceConstants are valid parents for a material instance.
+[2016.05.11-03.49.39:166][288]LogMaterial:Warning: MaterialInstanceDynamic /Engine/Transient.World_5:PersistentLevel.sassGamePlayer_C_0.MaterialInstanceDynamic_48 is not a valid parent for MaterialInstanceDynamic /Engine/Transient.World_5:PersistentLevel.sassGamePlayer_C_0.MaterialInstanceDynamic_49. Only Materials and MaterialInstanceConstants are valid parents for a material instance.
+[2016.05.11-03.49.39:296][288]BlueprintEditorCompileResults: Info [0869.84] Compile of sassPlayerController successful! [in 1,818 ms]
+[2016.05.11-03.50.23:550][153]BlueprintLog: New page: Compile sassGamePlayer
+[2016.05.11-03.50.24:288][153]LogMaterial:Warning: MaterialInstanceDynamic /Engine/Transient.World_5:PersistentLevel.sassGamePlayer_C_0.MaterialInstanceDynamic_49 is not a valid parent for MaterialInstanceDynamic /Engine/Transient.World_5:PersistentLevel.sassGamePlayer_C_0.MaterialInstanceDynamic_50. Only Materials and MaterialInstanceConstants are valid parents for a material instance.
+[2016.05.11-03.50.24:296][153]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
+[2016.05.11-03.50.24:463][153]LogMaterial:Warning: MaterialInstanceDynamic /Engine/Transient.World_5:PersistentLevel.sassGamePlayer_C_0.MaterialInstanceDynamic_50 is not a valid parent for MaterialInstanceDynamic /Engine/Transient.World_5:PersistentLevel.sassGamePlayer_C_0.MaterialInstanceDynamic_51. Only Materials and MaterialInstanceConstants are valid parents for a material instance.
+[2016.05.11-03.50.24:568][153]LogMaterial:Warning: MaterialInstanceDynamic /Engine/Transient.World_5:PersistentLevel.sassGamePlayer_C_0.MaterialInstanceDynamic_51 is not a valid parent for MaterialInstanceDynamic /Engine/Transient.World_5:PersistentLevel.sassGamePlayer_C_0.MaterialInstanceDynamic_52. Only Materials and MaterialInstanceConstants are valid parents for a material instance.
+[2016.05.11-03.50.24:578][153]BlueprintEditorCompileResults: Info [0915.12] Compile of sassGamePlayer successful! [in 1,027 ms]
+[2016.05.11-03.50.26:069][286]BlueprintLog: New page: Compile sassPlayerController
+[2016.05.11-03.50.26:142][286]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
+[2016.05.11-03.50.26:233][286]LogMaterial:Warning: MaterialInstanceDynamic /Engine/Transient.World_5:PersistentLevel.sassGamePlayer_C_0.MaterialInstanceDynamic_52 is not a valid parent for MaterialInstanceDynamic /Engine/Transient.World_5:PersistentLevel.sassGamePlayer_C_0.MaterialInstanceDynamic_53. Only Materials and MaterialInstanceConstants are valid parents for a material instance.
+[2016.05.11-03.50.26:281][286]BlueprintEditorCompileResults: Info [0916.82] Compile of sassPlayerController successful! [in 212 ms]
+[2016.05.11-03.50.29:543][606]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
+[2016.05.11-03.50.31:659][606]Cmd: OBJ SAVEPACKAGE PACKAGE="/Game/Blueprints/sassilization/sassGamePlayer" FILE="C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassGamePlayer.uasset" SILENT=true
+[2016.05.11-03.50.33:636][606]LogSavePackage: Save=1951.83ms
+[2016.05.11-03.50.33:636][606]LogSavePackage: Moving 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/sassGamePlayer352DB34247942B2F0E00BFB84D226229.tmp' to 'C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassGamePlayer.uasset'
+[2016.05.11-03.50.33:642][606]LogSavePackage: Total save time: 1979.51ms
+[2016.05.11-03.50.33:642][606]LogSavePackage:Display: Finished SavePackage C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassGamePlayer.uasset
+[2016.05.11-03.50.33:692][606]LogSavePackage: Save=27.71ms
+[2016.05.11-03.50.33:693][606]LogSavePackage: Moving 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/sassPlayerController12F1568D469AE2635C0538BE31795FC4.tmp' to 'C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassPlayerController.uasset'
+[2016.05.11-03.50.33:697][606]LogSavePackage: Total save time: 45.13ms
+[2016.05.11-03.50.33:697][606]LogSavePackage:Display: Finished SavePackage C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassPlayerController.uasset
+[2016.05.11-03.50.33:701][606]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
+[2016.05.11-03.50.33:755][606]Cmd: OBJ SAVEPACKAGE PACKAGE="/Game/Maps/orbit" FILE="C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap" SILENT=true AUTOSAVING=true KEEPDIRTY=true
+[2016.05.11-03.50.34:223][606]LogSavePackage: Save=415.29ms
+[2016.05.11-03.50.34:223][606]LogSavePackage: Moving 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/UEDPCorbitDE347E384F6E0D12FB896894695D2CFC.tmp' to 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap'
+[2016.05.11-03.50.34:226][606]LogSavePackage: Total save time: 468.40ms
+[2016.05.11-03.50.34:226][606]LogSavePackage:Display: Finished SavePackage C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap
+[2016.05.11-03.52.13:331][419]BlueprintLog: New page: Compile sassGamePlayer
+[2016.05.11-03.52.14:274][419]LogMaterial:Warning: MaterialInstanceDynamic /Engine/Transient.World_5:PersistentLevel.sassGamePlayer_C_0.MaterialInstanceDynamic_53 is not a valid parent for MaterialInstanceDynamic /Engine/Transient.World_5:PersistentLevel.sassGamePlayer_C_0.MaterialInstanceDynamic_54. Only Materials and MaterialInstanceConstants are valid parents for a material instance.
+[2016.05.11-03.52.14:283][419]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
+[2016.05.11-03.52.14:511][419]LogMaterial:Warning: MaterialInstanceDynamic /Engine/Transient.World_5:PersistentLevel.sassGamePlayer_C_0.MaterialInstanceDynamic_54 is not a valid parent for MaterialInstanceDynamic /Engine/Transient.World_5:PersistentLevel.sassGamePlayer_C_0.MaterialInstanceDynamic_55. Only Materials and MaterialInstanceConstants are valid parents for a material instance.
+[2016.05.11-03.52.14:603][419]LogMaterial:Warning: MaterialInstanceDynamic /Engine/Transient.World_5:PersistentLevel.sassGamePlayer_C_0.MaterialInstanceDynamic_55 is not a valid parent for MaterialInstanceDynamic /Engine/Transient.World_5:PersistentLevel.sassGamePlayer_C_0.MaterialInstanceDynamic_56. Only Materials and MaterialInstanceConstants are valid parents for a material instance.
+[2016.05.11-03.52.14:613][419]BlueprintEditorCompileResults: Info [1025.16] Compile of sassGamePlayer successful! [in 1,281 ms]
+[2016.05.11-03.52.19:691][799]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
+[2016.05.11-03.52.21:814][799]Cmd: OBJ SAVEPACKAGE PACKAGE="/Game/Blueprints/sassilization/sassGamePlayer" FILE="C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassGamePlayer.uasset" SILENT=true
+[2016.05.11-03.52.23:429][799]LogSavePackage: Save=1592.92ms
+[2016.05.11-03.52.23:429][799]LogSavePackage: Moving 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/sassGamePlayer554287F44477789F9E48B49808B9F864.tmp' to 'C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassGamePlayer.uasset'
+[2016.05.11-03.52.23:433][799]LogSavePackage: Total save time: 1615.48ms
+[2016.05.11-03.52.23:434][799]LogSavePackage:Display: Finished SavePackage C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassGamePlayer.uasset
+[2016.05.11-03.52.23:438][799]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
+[2016.05.11-03.52.23:494][799]Cmd: OBJ SAVEPACKAGE PACKAGE="/Game/Maps/orbit" FILE="C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap" SILENT=true AUTOSAVING=true KEEPDIRTY=true
+[2016.05.11-03.52.23:943][799]LogSavePackage: Save=430.03ms
+[2016.05.11-03.52.23:943][799]LogSavePackage: Moving 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/UEDPCorbit58A27FEE4E6DB132100EAEB49FA1538A.tmp' to 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap'
+[2016.05.11-03.52.23:945][799]LogSavePackage: Total save time: 440.53ms
+[2016.05.11-03.52.23:945][799]LogSavePackage:Display: Finished SavePackage C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap
+[2016.05.11-03.53.39:250][870]BlueprintLog: New page: Compile sassGamePlayer
+[2016.05.11-03.53.40:191][870]LogMaterial:Warning: MaterialInstanceDynamic /Engine/Transient.World_5:PersistentLevel.sassGamePlayer_C_0.MaterialInstanceDynamic_56 is not a valid parent for MaterialInstanceDynamic /Engine/Transient.World_5:PersistentLevel.sassGamePlayer_C_0.MaterialInstanceDynamic_57. Only Materials and MaterialInstanceConstants are valid parents for a material instance.
+[2016.05.11-03.53.40:197][870]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
+[2016.05.11-03.53.40:403][870]LogMaterial:Warning: MaterialInstanceDynamic /Engine/Transient.World_5:PersistentLevel.sassGamePlayer_C_0.MaterialInstanceDynamic_57 is not a valid parent for MaterialInstanceDynamic /Engine/Transient.World_5:PersistentLevel.sassGamePlayer_C_0.MaterialInstanceDynamic_58. Only Materials and MaterialInstanceConstants are valid parents for a material instance.
+[2016.05.11-03.53.40:515][870]LogMaterial:Warning: MaterialInstanceDynamic /Engine/Transient.World_5:PersistentLevel.sassGamePlayer_C_0.MaterialInstanceDynamic_58 is not a valid parent for MaterialInstanceDynamic /Engine/Transient.World_5:PersistentLevel.sassGamePlayer_C_0.MaterialInstanceDynamic_59. Only Materials and MaterialInstanceConstants are valid parents for a material instance.
+[2016.05.11-03.53.40:535][870]BlueprintEditorCompil
