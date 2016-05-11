@@ -35,8 +35,8 @@ void AsassPlayer::SetupPlayerInputComponent(class UInputComponent* InputComponen
 	InputComponent->BindAxis("MoveRight", this, &AsassPlayer::MoveRight);
 	InputComponent->BindAxis("PitchCamera", this, &AsassPlayer::PitchCamera);
 	InputComponent->BindAxis("YawCamera", this, &AsassPlayer::YawCamera);
-	//InputComponent->BindAction("Sprint", IE_Pressed, this, &AsassPlayer::SprintPressed);
-	//InputComponent->BindAction("Sprint", IE_Released, this, &AsassPlayer::SprintReleased);
+	InputComponent->BindAction("Sprint", IE_Pressed, this, &AsassPlayer::SprintPressed);
+	InputComponent->BindAction("Sprint", IE_Released, this, &AsassPlayer::SprintReleased);
 	InputComponent->BindAction("Test", IE_Pressed, this, &AsassPlayer::testFunction);
 }
 
@@ -46,49 +46,25 @@ void AsassPlayer::testFunction() {
 	
 }
 
-//Sprint Implementation, currently done in BP
-/*
-void AsassPlayer::Sprint_Implementation(bool isRunning) {
-	
-	if (isRunning) {
-		GetCharacterMovement()->MaxWalkSpeed = SprintSpeed;
-	}
-	else {
-		GetCharacterMovement()->MaxWalkSpeed = WalkSpeed;
-	}
-
-	if (Role < ROLE_Authority) {
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "not authority");
-		ServerSprint_Implementation(isRunning);
-	}
-}
-
-void AsassPlayer::ServerSprint_Implementation(bool isRunning) {
-	//Sprint_Implementation(isRunning);
-	if (Role < ROLE_Authority) {
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "not authority");
-		return;
-	}
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "authority");
-	return;
-}
-
-bool AsassPlayer::ServerSprint_Validate(bool isRunning) {
-	return true;
-}
-
 void AsassPlayer::SprintPressed() {
 	IsSprintPressed = true;
 	IsCrouchPressed = false;
-	Sprint_Implementation(IsSprintPressed);
+	ServerSprint(IsSprintPressed, GetCharacterMovement());
 }
 
 void AsassPlayer::SprintReleased() {
 	IsSprintPressed = false;
-	Sprint_Implementation(IsSprintPressed);
+	ServerSprint(IsSprintPressed, GetCharacterMovement());
 }
-*/
 
+void AsassPlayer::ServerSprint_Implementation(bool isRunning, UCharacterMovementComponent *movementComponent) {
+	if (isRunning) movementComponent->MaxWalkSpeed = SprintSpeed;
+	else movementComponent->MaxWalkSpeed = WalkSpeed;
+}
+
+bool AsassPlayer::ServerSprint_Validate(bool isRunning, UCharacterMovementComponent *movementComponent) {
+	return true;
+}
 
 void AsassPlayer::MoveForward(float AxisValue) {
 	if (Controller != NULL && AxisValue != 0.0f) {

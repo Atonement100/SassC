@@ -31,17 +31,11 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
-	
-	/*
-	UFUNCTION(BlueprintNativeEvent, Category = "Movement")
-	void Sprint(bool isRunning);
-	virtual void Sprint_Implementation(bool isRunning);
-	UFUNCTION(Server, Reliable, WithValidation)
-	void ServerSprint(bool isRunning);
-	virtual void ServerSprint_Implementation(bool isRunning);
-	virtual bool ServerSprint_Validate(bool isRunning);
-	*/
 
+	UFUNCTION(Reliable, Server, WithValidation)
+	void ServerSprint(bool isRunning, UCharacterMovementComponent *movementComponent);
+	virtual void ServerSprint_Implementation(bool isRunning, UCharacterMovementComponent *movementComponent);
+	virtual bool ServerSprint_Validate(bool isRunning, UCharacterMovementComponent *movementComponent);
 
 private:
 	bool InvertPitch = false;
