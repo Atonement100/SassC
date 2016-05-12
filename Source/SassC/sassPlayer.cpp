@@ -46,8 +46,10 @@ void AsassPlayer::SetupPlayerInputComponent(class UInputComponent* InputComponen
 	InputComponent->BindAction("Crouch", IE_Released, this, &AsassPlayer::CrouchReleased);
 	//Jump function
 	InputComponent->BindAction("Jump", IE_Pressed, this, &AsassPlayer::JumpPressed);
-	//Pause functions
+	//Pause function
 	InputComponent->BindAction("Pause", IE_Pressed, this, &AsassPlayer::PausePressed);
+	//Quit function
+	InputComponent->BindAction("ForceQuit", IE_Pressed, this, &AsassPlayer::QuitGame);
 	//test functions
 	InputComponent->BindAction("Test", IE_Pressed, this, &AsassPlayer::testFunction);
 }
@@ -56,6 +58,10 @@ void AsassPlayer::testFunction() {
 	bool ownedLocally = IsOwnedBy(UGameplayStatics::GetPlayerController(this, 0));
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, UKismetStringLibrary::Conv_BoolToString(ownedLocally));
 	
+}
+
+void AsassPlayer::QuitGame() {
+	FGenericPlatformMisc::RequestExit(false);
 }
 
 void AsassPlayer::PausePressed() {

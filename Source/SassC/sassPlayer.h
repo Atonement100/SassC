@@ -37,6 +37,8 @@ public:
 	void JumpPressed();
 	//Pause function
 	void PausePressed();
+	//Quit function
+	void QuitGame();
 	//test functions
 	void testFunction();
 
