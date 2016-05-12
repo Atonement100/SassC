@@ -60,14 +60,10 @@ public:
 	virtual bool ServerCrouch_Validate(bool isCrouching, UCharacterMovementComponent *movementComponent);
 
 	UFUNCTION(BlueprintCallable, Category = "UI")
-	void ChangeMenuWidget(TSubclassOf<UUserWidget> NewWidgetClass);
+	void ChangePauseWidget(TSubclassOf<UUserWidget> NewWidgetClass);
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Default")
 	TSubclassOf<UUserWidget> PauseWidgetClass;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	UUserWidget* PauseWidget;
-
 
 private:
 	bool InvertPitch = false;
@@ -80,5 +76,7 @@ private:
 	float CrouchSpeed = 200.0f;
 	float CrouchingEyeHeight = 40.0f;
 	float StandingEyeHeight = 80.0f;
-	
+	UUserWidget* PauseWidget;
+	FInputModeGameAndUI GameAndUI;
+	FInputModeGameOnly GameOnly;
 };

@@ -3,6 +3,7 @@
 #include "SassC.h"
 #include "sassPlayer.h"
 #include "sassPauseMenu.h"
+#include "sassPlayerController.h"
 #include "Kismet/KismetStringLibrary.h" //necessary only for debugging
 
 
@@ -58,19 +59,32 @@ void AsassPlayer::testFunction() {
 }
 
 void AsassPlayer::PausePressed() {
+	APlayerController* playerControllerPtr = UGameplayStatics::GetPlayerController(GetWorld(), 0);
 	if (!IsPaused) {
-		PauseWidget = CreateWidget<UsassPauseMenu>(GetWorld(), PauseWidgetClass);
+		if (PauseWidgetClass != nullptr) PauseWidget = CreateWidget<UsassPauseMenu>(playerControllerPtr, PauseWidgetClass);
 		if (PauseWidget != nullptr) PauseWidget->AddToViewport();
+		if (playerControllerPtr != nullptr) {
+			playerControllerPtr->SetInputMode(GameAndUI);
+			playerControllerPtr->SetIgnoreMoveInput(true);
+			playerControllerPtr->bShowMouseCursor = true;
+		}
 		IsPaused = true;
 	}
 	else {
-		PauseWidget->RemoveFromViewport();
-		PauseWidget = nullptr;
+		if (PauseWidget != nullptr) {
+			PauseWidget->RemoveFromViewport();
+			PauseWidget = nullptr;
+		}
+		if (playerControllerPtr != nullptr) {
+			playerControllerPtr->SetInputMode(GameOnly);
+			playerControllerPtr->SetIgnoreMoveInput(false);
+			playerControllerPtr->bShowMouseCursor = false;
+		}
 		IsPaused = false;
 	}
 }
 
-void AsassPlayer::ChangeMenuWidget(TSubclassOf<UUserWidget> NewWidgetClass) {
+void AsassPlayer::ChangePauseWidget(TSubclassOf<UUserWidget> NewWidgetClass) {
 	if (PauseWidget != nullptr) {
 		PauseWidget->RemoveFromViewport();
 		PauseWidget = nullptr;
