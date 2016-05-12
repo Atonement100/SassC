@@ -19,6 +19,8 @@ AsassPlayer::AsassPlayer()
 void AsassPlayer::BeginPlay()
 {
 	Super::BeginPlay();
+	CleanupHUD();
+	CreatePregameHUD();
 }
 
 // Called every frame
@@ -60,10 +62,32 @@ void AsassPlayer::testFunction() {
 	
 }
 
+void AsassPlayer::CreatePregameHUD() {
+	APlayerController* playerControllerPtr = UGameplayStatics::GetPlayerController(this, 0);
+	if (playerControllerPtr->IsLocalController() && PregameWidget == nullptr) {
+		PregameWidget = CreateWidget<UUserWidget>(playerControllerPtr, PregameWidgetClass);
+		if (PregameWidget != nullptr) { PregameWidget->AddToViewport(); }
+	}
+}
+
+void AsassPlayer::CreateGameHUD() {
+
+	//WHEN RETURNING TO THIS, MOVE ALL THIS OUT. FX IS FOR CREATING HUD
+	//PLAYER COLORING NEEDS TO BE CALLED INDEPENDENTLY.
+
+	TArray<AActor*> FoundControllers;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), PlayerControllerClass, FoundControllers);
+	for (AActor* Controller : FoundControllers) {
+		//Controller->
+	}
+}
+
+
 void AsassPlayer::QuitGame() {
 	FGenericPlatformMisc::RequestExit(false);
 }
 
+#pragma region Pause functions
 void AsassPlayer::PausePressed() {
 	APlayerController* playerControllerPtr = UGameplayStatics::GetPlayerController(GetWorld(), 0);
 	if (!IsPaused) {
@@ -100,6 +124,7 @@ void AsassPlayer::ChangePauseWidget(TSubclassOf<UUserWidget> NewWidgetClass) {
 		if (PauseWidget != nullptr) PauseWidget->AddToViewport();
 	}
 }
+#pragma endregion
 
 #pragma region Jump function
 void AsassPlayer::JumpPressed() {

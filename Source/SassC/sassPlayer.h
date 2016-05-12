@@ -64,8 +64,27 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "UI")
 	void ChangePauseWidget(TSubclassOf<UUserWidget> NewWidgetClass);
 
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "HUD")
+	void CleanupHUD();
+
+	UFUNCTION(BlueprintCallable, Category = "HUD")
+	void CreatePregameHUD();
+
+	UFUNCTION(BlueprintCallable, Category = "HUD")
+	void CreateGameHUD();
+
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Default")
 	TSubclassOf<UUserWidget> PauseWidgetClass;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Default")
+	TSubclassOf<UUserWidget> PregameWidgetClass;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Default")
+	TSubclassOf<UUserWidget> GameWidgetClass;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Default")
+	TSubclassOf<AActor> PlayerControllerClass;
+
 
 private:
 	bool InvertPitch = false;
@@ -79,6 +98,8 @@ private:
 	float CrouchingEyeHeight = 40.0f;
 	float StandingEyeHeight = 80.0f;
 	UUserWidget* PauseWidget;
+	UUserWidget* PregameWidget;
+	UUserWidget* GameWidget;
 	FInputModeGameAndUI GameAndUI;
 	FInputModeGameOnly GameOnly;
 };
