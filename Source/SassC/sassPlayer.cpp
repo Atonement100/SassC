@@ -2,6 +2,7 @@
 
 #include "SassC.h"
 #include "sassPlayer.h"
+#include "sassPauseMenu.h"
 #include "Kismet/KismetStringLibrary.h" //necessary only for debugging
 
 
@@ -17,7 +18,6 @@ AsassPlayer::AsassPlayer()
 void AsassPlayer::BeginPlay()
 {
 	Super::BeginPlay();
-	
 }
 
 // Called every frame
@@ -43,6 +43,10 @@ void AsassPlayer::SetupPlayerInputComponent(class UInputComponent* InputComponen
 	//Crouch functions
 	InputComponent->BindAction("Crouch", IE_Pressed, this, &AsassPlayer::CrouchPressed);
 	InputComponent->BindAction("Crouch", IE_Released, this, &AsassPlayer::CrouchReleased);
+	//Jump function
+	InputComponent->BindAction("Jump", IE_Pressed, this, &AsassPlayer::JumpPressed);
+	//Pause functions
+	InputComponent->BindAction("Pause", IE_Pressed, this, &AsassPlayer::PausePressed);
 	//test functions
 	InputComponent->BindAction("Test", IE_Pressed, this, &AsassPlayer::testFunction);
 }
@@ -52,6 +56,36 @@ void AsassPlayer::testFunction() {
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, UKismetStringLibrary::Conv_BoolToString(ownedLocally));
 	
 }
+
+void AsassPlayer::PausePressed() {
+	if (!IsPaused) {
+		PauseWidget = CreateWidget<UsassPauseMenu>(GetWorld(), PauseWidgetClass);
+		if (PauseWidget != nullptr) PauseWidget->AddToViewport();
+		IsPaused = true;
+	}
+	else {
+		PauseWidget->RemoveFromViewport();
+		PauseWidget = nullptr;
+		IsPaused = false;
+	}
+}
+
+void AsassPlayer::ChangeMenuWidget(TSubclassOf<UUserWidget> NewWidgetClass) {
+	if (PauseWidget != nullptr) {
+		PauseWidget->RemoveFromViewport();
+		PauseWidget = nullptr;
+	}
+	if (NewWidgetClass != nullptr) {
+		PauseWidget = CreateWidget<UUserWidget>(GetWorld(), NewWidgetClass);
+		if (PauseWidget != nullptr) PauseWidget->AddToViewport();
+	}
+}
+
+#pragma region Jump function
+void AsassPlayer::JumpPressed() {
+	Jump();
+}
+#pragma endregion
 
 #pragma region Crouch functions
 void AsassPlayer::CrouchPressed() {
