@@ -67,7 +67,6 @@ void AsassPlayer::UnitMenuPressed() {
 			PlayerControllerPtr->SetInputMode(GameAndUI);
 		}
 
-
 		IsUnitMenuOpen = true;
 	}
 	else {
@@ -258,3 +257,7 @@ void AsassPlayer::YawCamera(float AxisValue) {
 	}
 }
 #pragma endregion
+
+UUserWidget* AsassPlayer::GetGameWidget() {
+	return GameWidget;
+}

@@ -81,6 +81,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "HUD")
 	void RemoveAllWidgets();
 
+	UFUNCTION(BlueprintCallable, Category = "HUD")
+	UUserWidget* GetGameWidget();
+
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Default")
 	TSubclassOf<UUserWidget> PauseWidgetClass;
 
@@ -93,8 +96,6 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Default")
 	TSubclassOf<AActor> PlayerControllerClass;
 
-
-	
 
 
 private:
