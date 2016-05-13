@@ -19,8 +19,10 @@ AsassPlayer::AsassPlayer()
 void AsassPlayer::BeginPlay()
 {
 	Super::BeginPlay();
+	PlayerControllerPtr = UGameplayStatics::GetPlayerController(this, 0);
 	CleanupHUD();
 	CreatePregameHUD();
+
 }
 
 // Called every frame
@@ -52,8 +54,29 @@ void AsassPlayer::SetupPlayerInputComponent(class UInputComponent* InputComponen
 	InputComponent->BindAction("Pause", IE_Pressed, this, &AsassPlayer::PausePressed);
 	//Quit function
 	InputComponent->BindAction("ForceQuit", IE_Pressed, this, &AsassPlayer::QuitGame);
+	//UnitMenu function
+	InputComponent->BindAction("UnitMenu", IE_Pressed, this, &AsassPlayer::UnitMenuPressed);
 	//test functions
 	InputComponent->BindAction("Test", IE_Pressed, this, &AsassPlayer::testFunction);
+}
+
+void AsassPlayer::UnitMenuPressed() {
+	if (!IsUnitMenuOpen) {
+		if (PlayerControllerPtr != nullptr) {
+			PlayerControllerPtr->bShowMouseCursor = true;
+			PlayerControllerPtr->SetInputMode(GameAndUI);
+		}
+
+
+		IsUnitMenuOpen = true;
+	}
+	else {
+		if (PlayerControllerPtr != nullptr) {
+			PlayerControllerPtr->bShowMouseCursor = false;
+			PlayerControllerPtr->SetInputMode(GameOnly);
+		}
+		IsUnitMenuOpen = false;
+	}
 }
 
 void AsassPlayer::testFunction() {
@@ -63,25 +86,37 @@ void AsassPlayer::testFunction() {
 }
 
 void AsassPlayer::CreatePregameHUD() {
-	APlayerController* playerControllerPtr = UGameplayStatics::GetPlayerController(this, 0);
-	if (playerControllerPtr->IsLocalController() && PregameWidget == nullptr) {
-		PregameWidget = CreateWidget<UUserWidget>(playerControllerPtr, PregameWidgetClass);
-		if (PregameWidget != nullptr) { PregameWidget->AddToViewport(); }
+	if (PlayerControllerPtr->IsLocalController() && PregameWidget == nullptr) {
+		PregameWidget = CreateWidget<UUserWidget>(PlayerControllerPtr, PregameWidgetClass);
+		if (PregameWidget != nullptr) PregameWidget->AddToViewport(); 
+	}
+}
+
+void AsassPlayer::RemoveAllWidgets() {
+	for (TObjectIterator<UUserWidget> WidgetIter; WidgetIter; ++WidgetIter) {
+		UUserWidget* CurrentWidget = *WidgetIter;
+		if (!CurrentWidget->GetWorld()) continue;
+		else CurrentWidget->RemoveFromParent();
 	}
 }
 
 void AsassPlayer::CreateGameHUD() {
-
-	//WHEN RETURNING TO THIS, MOVE ALL THIS OUT. FX IS FOR CREATING HUD
-	//PLAYER COLORING NEEDS TO BE CALLED INDEPENDENTLY.
-
-	TArray<AActor*> FoundControllers;
-	UGameplayStatics::GetAllActorsOfClass(GetWorld(), PlayerControllerClass, FoundControllers);
-	for (AActor* Controller : FoundControllers) {
-		//Controller->
+	if (PlayerControllerPtr->IsLocalController() && GameWidget == nullptr) {
+		RemoveAllWidgets();
+		GameWidget = CreateWidget<UUserWidget>(PlayerControllerPtr, GameWidgetClass);
+		if (GameWidget != nullptr) GameWidget->AddToViewport();
+		PlayerControllerPtr->SetInputMode(GameOnly);
+		PlayerControllerPtr->bShowMouseCursor = false;
 	}
 }
 
+void AsassPlayer::GetAllPlayerColors() {
+	TArray<AActor*> FoundControllers;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), PlayerControllerClass, FoundControllers);
+	for (AActor* Controller : FoundControllers) {
+		
+	}
+}
 
 void AsassPlayer::QuitGame() {
 	FGenericPlatformMisc::RequestExit(false);
@@ -89,14 +124,13 @@ void AsassPlayer::QuitGame() {
 
 #pragma region Pause functions
 void AsassPlayer::PausePressed() {
-	APlayerController* playerControllerPtr = UGameplayStatics::GetPlayerController(GetWorld(), 0);
 	if (!IsPaused) {
-		if (PauseWidgetClass != nullptr) PauseWidget = CreateWidget<UsassPauseMenu>(playerControllerPtr, PauseWidgetClass);
+		if (PauseWidgetClass != nullptr) PauseWidget = CreateWidget<UsassPauseMenu>(PlayerControllerPtr, PauseWidgetClass);
 		if (PauseWidget != nullptr) PauseWidget->AddToViewport();
-		if (playerControllerPtr != nullptr) {
-			playerControllerPtr->SetInputMode(GameAndUI);
-			playerControllerPtr->SetIgnoreMoveInput(true);
-			playerControllerPtr->bShowMouseCursor = true;
+		if (PlayerControllerPtr != nullptr) {
+			PlayerControllerPtr->SetInputMode(GameAndUI);
+			PlayerControllerPtr->SetIgnoreMoveInput(true);
+			PlayerControllerPtr->bShowMouseCursor = true;
 		}
 		IsPaused = true;
 	}
@@ -105,10 +139,10 @@ void AsassPlayer::PausePressed() {
 			PauseWidget->RemoveFromViewport();
 			PauseWidget = nullptr;
 		}
-		if (playerControllerPtr != nullptr) {
-			playerControllerPtr->SetInputMode(GameOnly);
-			playerControllerPtr->SetIgnoreMoveInput(false);
-			playerControllerPtr->bShowMouseCursor = false;
+		if (PlayerControllerPtr != nullptr) {
+			PlayerControllerPtr->SetInputMode(GameOnly);
+			PlayerControllerPtr->SetIgnoreMoveInput(false);
+			PlayerControllerPtr->bShowMouseCursor = false;
 		}
 		IsPaused = false;
 	}

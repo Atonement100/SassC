@@ -39,6 +39,8 @@ public:
 	void PausePressed();
 	//Quit function
 	void QuitGame();
+	//UnitMenu function
+	void UnitMenuPressed();
 	//test functions
 	void testFunction();
 
@@ -73,6 +75,12 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "HUD")
 	void CreateGameHUD();
 
+	UFUNCTION(BlueprintCallable, Category = "HUD")
+	void GetAllPlayerColors();
+
+	UFUNCTION(BlueprintCallable, Category = "HUD")
+	void RemoveAllWidgets();
+
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Default")
 	TSubclassOf<UUserWidget> PauseWidgetClass;
 
@@ -86,12 +94,16 @@ public:
 	TSubclassOf<AActor> PlayerControllerClass;
 
 
+	
+
+
 private:
 	bool InvertPitch = false;
 	bool InvertYaw = false;
 	bool IsCrouchPressed = false;
 	bool IsSprintPressed = false;
 	bool IsPaused = false;
+	bool IsUnitMenuOpen = false;
 	float SprintSpeed = 800.0f;
 	float WalkSpeed = 400.0f;
 	float CrouchSpeed = 200.0f;
@@ -102,4 +114,5 @@ private:
 	UUserWidget* GameWidget;
 	FInputModeGameAndUI GameAndUI;
 	FInputModeGameOnly GameOnly;
+	APlayerController* PlayerControllerPtr;
 };
