@@ -1,17 +1,17 @@
-﻿Log file open, 05/13/16 16:01:17
+﻿Log file open, 05/13/16 22:53:19
 LogInit:Display: Running engine for game: SassC
 LogPlatformFile: Not using cached read wrapper
-LogInit:Display: RandInit(-1138201697) SRandInit(-1138201695).
-LogInit: Using version manifest at CL 0 with build ID 'ce549ef3-6b34-4024-8a48-9cd850930748'
+LogInit:Display: RandInit(70909807) SRandInit(70909810).
+LogInit: Using version manifest at CL 0 with build ID '8e90d1ed-82c7-44fe-b6c7-b6a9703a69c6'
 LogTaskGraph: Started task graph with 4 named threads and 7 total threads.
-LogStats: Stats thread started at 0.662549
+LogStats: Stats thread started at 0.139314
 LogInit: Version: 4.11.2-0+UE4
 LogInit: API Version: 0
-LogInit: Compiled (64-bit): May  6 2016 23:57:44
+LogInit: Compiled (64-bit): May 13 2016 19:10:11
 LogInit: Compiled with Visual C++: 19.00.23506.00
 LogInit: Build Configuration: Development
 LogInit: Branch Name: UE4
-LogInit: Command line:  /Temp/Autosaves/Game/Maps/UEDPCorbit?Listen -game -PIEVIACONSOLE -ResX=640 -ResY=480  -Multiprocess -messaging -SessionName="Play in Standalone Game" GameUserSettingsINI="C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Config/Windows/PIEGameUserSettings0.ini" -MultiprocessSaveConfig  -MultiprocessOSS WinX=5 WinY=495 SAVEWINPOS=1
+LogInit: Command line:  /Temp/Autosaves/Game/Maps/UEDPCorbit?Listen -game -PIEVIACONSOLE -ResX=640 -ResY=480  -Multiprocess -messaging -SessionName="Play in Standalone Game" GameUserSettingsINI="C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Config/Windows/PIEGameUserSettings0.ini" -MultiprocessSaveConfig  -MultiprocessOSS WinX=8 WinY=550 SAVEWINPOS=1
 LogInit: Base directory: V:/Program Files/Epic Games/UnrealEngine/Engine/Binaries/Win64/
 LogInit: Installed Engine Build: 0
 LogInit: Using libcurl 7.41.0
@@ -30,77 +30,77 @@ LogInit:  - bDontReuseConnections = false  - Libcurl will reuse connections
 LogInit:  - CertBundlePath = nullptr  - Libcurl will use whatever was configured at build time.
 LogInit: Presizing for max 16777216 objects, including 0 objects not considered by GC, pre-allocating 0 bytes for permanent pool.
 LogInit: Object subsystem initialized
-[2016.05.13-20.01.17:586][  0]LogInit: Selected Device Profile: [Windows]
-[2016.05.13-20.01.17:586][  0]LogInit: Applying CVar settings loaded from the selected device profile: [Windows]
-[2016.05.13-20.01.17:603][  0]LogInit: Computer: TIM-PC
-[2016.05.13-20.01.17:603][  0]LogInit: User: Tim
-[2016.05.13-20.01.17:603][  0]LogInit: CPU Page size=65536, Cores=4
-[2016.05.13-20.01.17:603][  0]LogInit: High frequency timer resolution =3.002244 MHz
-[2016.05.13-20.01.17:603][  0]LogMemory: Memory total: Physical=6.0GB (6GB approx)
-[2016.05.13-20.01.17:603][  0]LogMemory: Platform Memory Stats for Windows
-[2016.05.13-20.01.17:603][  0]LogMemory: Process Physical Memory: 312.09 MB used, 312.09 MB peak
-[2016.05.13-20.01.17:603][  0]LogMemory: Process Virtual Memory: 314.84 MB used, 314.84 MB peak
-[2016.05.13-20.01.17:603][  0]LogMemory: Physical Memory: 5665.45 MB used, 6135.11 MB total
-[2016.05.13-20.01.17:603][  0]LogMemory: Virtual Memory: 650.87 MB used, 134217728.00 MB total
-[2016.05.13-20.01.17:779][  0]LogTextLocalizationManager: No specific translations for ('en-US') exist, so ('en') translations will be used.
-[2016.05.13-20.01.18:578][  0]LogD3D11RHI: D3D11 adapters:
-[2016.05.13-20.01.18:628][  0]LogD3D11RHI:    0. 'NVIDIA GeForce GTX 480' (Feature Level 11_0)
-[2016.05.13-20.01.18:628][  0]LogD3D11RHI:       1488MB of dedicated video memory, 0MB of dedicated system memory, and 3067MB of shared system memory, 1 output[s]
-[2016.05.13-20.01.18:629][  0]LogD3D11RHI:    1. 'Microsoft Basic Render Driver' (Feature Level 11_0)
-[2016.05.13-20.01.18:629][  0]LogD3D11RHI:       0MB of dedicated video memory, 0MB of dedicated system memory, and 3067MB of shared system memory, 0 output[s]
-[2016.05.13-20.01.18:629][  0]LogD3D11RHI: Chosen D3D11 Adapter: 0
-[2016.05.13-20.01.18:661][  0]LogD3D11RHI: Creating new Direct3DDevice
-[2016.05.13-20.01.18:669][  0]LogD3D11RHI:     Adapter Name: NVIDIA GeForce GTX 480
-[2016.05.13-20.01.18:669][  0]LogD3D11RHI:   Driver Version: Unknown (internal Unknown)
-[2016.05.13-20.01.18:669][  0]LogD3D11RHI:      Driver Date: Unknown
-[2016.05.13-20.01.18:669][  0]LogRHI: Texture pool is 1041 MB (70% of 1488 MB)
-[2016.05.13-20.01.18:691][  0]LogD3D11RHI: Async texture creation enabled
-[2016.05.13-20.01.18:892][  0]LogShaderCompilers: Guid format shader working directory is -1 characters bigger than the processId version (C:/Users/Tim/Documents/Unreal Projects/SassC/Intermediate/Shaders/WorkingDirectory/17572/).
-[2016.05.13-20.01.18:893][  0]LogShaderCompilers: Cleaned the shader compiler working directory 'C:/Users/Tim/AppData/Local/Temp/UnrealShaderWorkingDir/BF4402844507E70C62DF1DB05A5E58C5/'.
-[2016.05.13-20.01.18:897][  0]LogShaderCompilers:Display: Using Local Shader Compiler.
-[2016.05.13-20.01.21:550][  0]LogTemp:Display: Loaded TP WindowsTargetPlatform
-[2016.05.13-20.01.21:557][  0]LogTemp:Display: Loaded TP WindowsNoEditorTargetPlatform
-[2016.05.13-20.01.21:563][  0]LogTemp:Display: Loaded TP WindowsServerTargetPlatform
-[2016.05.13-20.01.21:569][  0]LogTemp:Display: Loaded TP WindowsClientTargetPlatform
-[2016.05.13-20.01.21:575][  0]LogTemp:Display: Loaded TP AllDesktopTargetPlatform
-[2016.05.13-20.01.21:583][  0]LogTemp:Display: Loaded TP AndroidTargetPlatform
-[2016.05.13-20.01.21:589][  0]LogTemp:Display: Loaded TP Android_PVRTCTargetPlatform
-[2016.05.13-20.01.21:596][  0]LogTemp:Display: Loaded TP Android_ATCTargetPlatform
-[2016.05.13-20.01.21:602][  0]LogTemp:Display: Loaded TP Android_DXTTargetPlatform
-[2016.05.13-20.01.21:608][  0]LogTemp:Display: Loaded TP Android_ETC1TargetPlatform
-[2016.05.13-20.01.21:615][  0]LogTemp:Display: Loaded TP Android_ETC2TargetPlatform
-[2016.05.13-20.01.21:621][  0]LogTemp:Display: Loaded TP Android_ASTCTargetPlatform
-[2016.05.13-20.01.21:627][  0]LogTemp:Display: Loaded TP Android_MultiTargetPlatform
-[2016.05.13-20.01.21:630][  0]LogTemp:Display: Loaded TP HTML5TargetPlatform
-[2016.05.13-20.01.21:675][  0]LogTemp:Display: Loaded TP IOSTargetPlatform
-[2016.05.13-20.01.21:679][  0]LogTemp:Display: Loaded TP TVOSTargetPlatform
-[2016.05.13-20.01.21:679][  0]LogTargetPlatformManager:Display: Building Assets For Windows
-[2016.05.13-20.01.22:175][  0]LogDerivedDataCache:Display: Max Cache Size: 512 MB
-[2016.05.13-20.01.22:526][  0]LogDerivedDataCache: Loaded boot cache 0.35s 46MB C:/Users/Tim/Documents/Unreal Projects/SassC/DerivedDataCache/Boot.ddc.
-[2016.05.13-20.01.22:526][  0]LogDerivedDataCache:Display: Loaded Boot cache: C:/Users/Tim/Documents/Unreal Projects/SassC/DerivedDataCache/Boot.ddc
-[2016.05.13-20.01.22:526][  0]LogDerivedDataCache: FDerivedDataBackendGraph:  Pak pak cache file C:/Users/Tim/Documents/Unreal Projects/SassC/DerivedDataCache/DDC.ddp not found, will not use a pak cache.
-[2016.05.13-20.01.22:526][  0]LogDerivedDataCache: Unable to find inner node Pak for hierarchical cache Hierarchy.
-[2016.05.13-20.01.22:532][  0]LogDerivedDataCache: FDerivedDataBackendGraph:  EnginePak pak cache file ../../../Engine/DerivedDataCache/DDC.ddp not found, will not use a pak cache.
-[2016.05.13-20.01.22:532][  0]LogDerivedDataCache: Unable to find inner node EnginePak for hierarchical cache Hierarchy.
-[2016.05.13-20.01.22:565][  0]LogDerivedDataCache: Using Local data cache path ../../../Engine/DerivedDataCache: Writable
-[2016.05.13-20.01.22:565][  0]LogDerivedDataCache: Shared data cache path not found in *engine.ini, will not use an Shared cache.
-[2016.05.13-20.01.22:565][  0]LogDerivedDataCache: Unable to find inner node Shared for hierarchical cache Hierarchy.
-[2016.05.13-20.01.29:246][  0]LogInit: Selected Device Profile: [Windows]
-[2016.05.13-20.01.29:348][  0]LogMaterial: Uniform references updated for custom material expression Custom.
-[2016.05.13-20.01.29:386][  0]LogContentStreaming: Texture pool size is 1000.00 MB
-[2016.05.13-20.01.30:078][  0]LogMeshUtilities: No automatic mesh reduction module available
-[2016.05.13-20.01.30:078][  0]LogMeshUtilities: No automatic mesh merging module available
-[2016.05.13-20.01.30:078][  0]LogMeshUtilities: No distributed automatic mesh merging module available
-[2016.05.13-20.01.31:839][  0]LogInit: WinSock: version 1.1 (2.2), MaxSocks=32767, MaxUdp=65467
-[2016.05.13-20.01.33:476][  0]LogSlate: SlateFontCache - WITH_FREETYPE: 1, WITH_HARFBUZZ: 1
-[2016.05.13-20.01.33:476][  0]LogSlate: SlateFontCache - WITH_FREETYPE: 1, WITH_HARFBUZZ: 1
-[2016.05.13-20.01.35:072][  0]LogWindowsMoviePlayer: Unable to load movie: C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Movies/Default_Startup.mp4
-[2016.05.13-20.01.35:388][  0]LogUdpMessaging: Initializing bridge on interface 0.0.0.0:0 to multicast group 230.0.0.1:6666.
-[2016.05.13-20.01.35:528][  0]SourceControl: Info Source control is disabled
-[2016.05.13-20.01.35:528][  0]SourceControl: Info Source control is disabled
-[2016.05.13-20.01.35:606][  0]SourceControl: Info Source control is disabled
-[2016.05.13-20.01.40:379][  0]LogStats: FPlatformStackWalk::StackWalkAndDump -  4.277 s
-[2016.05.13-20.01.40:379][  0]LogOutputDevice:Warning: === Handled error: ===
+[2016.05.14-02.53.19:595][  0]LogInit: Selected Device Profile: [Windows]
+[2016.05.14-02.53.19:595][  0]LogInit: Applying CVar settings loaded from the selected device profile: [Windows]
+[2016.05.14-02.53.19:622][  0]LogInit: Computer: TIM-PC
+[2016.05.14-02.53.19:622][  0]LogInit: User: Tim
+[2016.05.14-02.53.19:622][  0]LogInit: CPU Page size=65536, Cores=4
+[2016.05.14-02.53.19:622][  0]LogInit: High frequency timer resolution =3.002244 MHz
+[2016.05.14-02.53.19:622][  0]LogMemory: Memory total: Physical=6.0GB (6GB approx)
+[2016.05.14-02.53.19:622][  0]LogMemory: Platform Memory Stats for Windows
+[2016.05.14-02.53.19:622][  0]LogMemory: Process Physical Memory: 312.06 MB used, 312.06 MB peak
+[2016.05.14-02.53.19:622][  0]LogMemory: Process Virtual Memory: 314.79 MB used, 314.79 MB peak
+[2016.05.14-02.53.19:622][  0]LogMemory: Physical Memory: 5769.80 MB used, 6135.11 MB total
+[2016.05.14-02.53.19:622][  0]LogMemory: Virtual Memory: 650.87 MB used, 134217728.00 MB total
+[2016.05.14-02.53.20:023][  0]LogTextLocalizationManager: No specific translations for ('en-US') exist, so ('en') translations will be used.
+[2016.05.14-02.53.20:843][  0]LogD3D11RHI: D3D11 adapters:
+[2016.05.14-02.53.20:891][  0]LogD3D11RHI:    0. 'NVIDIA GeForce GTX 480' (Feature Level 11_0)
+[2016.05.14-02.53.20:891][  0]LogD3D11RHI:       1488MB of dedicated video memory, 0MB of dedicated system memory, and 3067MB of shared system memory, 1 output[s]
+[2016.05.14-02.53.20:893][  0]LogD3D11RHI:    1. 'Microsoft Basic Render Driver' (Feature Level 11_0)
+[2016.05.14-02.53.20:893][  0]LogD3D11RHI:       0MB of dedicated video memory, 0MB of dedicated system memory, and 3067MB of shared system memory, 0 output[s]
+[2016.05.14-02.53.20:893][  0]LogD3D11RHI: Chosen D3D11 Adapter: 0
+[2016.05.14-02.53.20:907][  0]LogD3D11RHI: Creating new Direct3DDevice
+[2016.05.14-02.53.20:907][  0]LogD3D11RHI:     Adapter Name: NVIDIA GeForce GTX 480
+[2016.05.14-02.53.20:907][  0]LogD3D11RHI:   Driver Version: Unknown (internal Unknown)
+[2016.05.14-02.53.20:907][  0]LogD3D11RHI:      Driver Date: Unknown
+[2016.05.14-02.53.20:907][  0]LogRHI: Texture pool is 1041 MB (70% of 1488 MB)
+[2016.05.14-02.53.20:932][  0]LogD3D11RHI: Async texture creation enabled
+[2016.05.14-02.53.20:951][  0]LogShaderCompilers: Guid format shader working directory is -1 characters bigger than the processId version (C:/Users/Tim/Documents/Unreal Projects/SassC/Intermediate/Shaders/WorkingDirectory/22536/).
+[2016.05.14-02.53.20:951][  0]LogShaderCompilers: Cleaned the shader compiler working directory 'C:/Users/Tim/AppData/Local/Temp/UnrealShaderWorkingDir/2D394F7F4E80CED9BF1DC9BB78D3BB41/'.
+[2016.05.14-02.53.20:951][  0]LogShaderCompilers:Display: Using Local Shader Compiler.
+[2016.05.14-02.53.23:766][  0]LogTemp:Display: Loaded TP WindowsTargetPlatform
+[2016.05.14-02.53.23:772][  0]LogTemp:Display: Loaded TP WindowsNoEditorTargetPlatform
+[2016.05.14-02.53.23:777][  0]LogTemp:Display: Loaded TP WindowsServerTargetPlatform
+[2016.05.14-02.53.23:783][  0]LogTemp:Display: Loaded TP WindowsClientTargetPlatform
+[2016.05.14-02.53.23:788][  0]LogTemp:Display: Loaded TP AllDesktopTargetPlatform
+[2016.05.14-02.53.23:795][  0]LogTemp:Display: Loaded TP AndroidTargetPlatform
+[2016.05.14-02.53.23:800][  0]LogTemp:Display: Loaded TP Android_PVRTCTargetPlatform
+[2016.05.14-02.53.23:805][  0]LogTemp:Display: Loaded TP Android_ATCTargetPlatform
+[2016.05.14-02.53.23:810][  0]LogTemp:Display: Loaded TP Android_DXTTargetPlatform
+[2016.05.14-02.53.23:814][  0]LogTemp:Display: Loaded TP Android_ETC1TargetPlatform
+[2016.05.14-02.53.23:819][  0]LogTemp:Display: Loaded TP Android_ETC2TargetPlatform
+[2016.05.14-02.53.23:823][  0]LogTemp:Display: Loaded TP Android_ASTCTargetPlatform
+[2016.05.14-02.53.23:829][  0]LogTemp:Display: Loaded TP Android_MultiTargetPlatform
+[2016.05.14-02.53.23:831][  0]LogTemp:Display: Loaded TP HTML5TargetPlatform
+[2016.05.14-02.53.23:878][  0]LogTemp:Display: Loaded TP IOSTargetPlatform
+[2016.05.14-02.53.23:881][  0]LogTemp:Display: Loaded TP TVOSTargetPlatform
+[2016.05.14-02.53.23:881][  0]LogTargetPlatformManager:Display: Building Assets For Windows
+[2016.05.14-02.53.24:272][  0]LogDerivedDataCache:Display: Max Cache Size: 512 MB
+[2016.05.14-02.53.24:626][  0]LogDerivedDataCache: Loaded boot cache 0.35s 46MB C:/Users/Tim/Documents/Unreal Projects/SassC/DerivedDataCache/Boot.ddc.
+[2016.05.14-02.53.24:626][  0]LogDerivedDataCache:Display: Loaded Boot cache: C:/Users/Tim/Documents/Unreal Projects/SassC/DerivedDataCache/Boot.ddc
+[2016.05.14-02.53.24:627][  0]LogDerivedDataCache: FDerivedDataBackendGraph:  Pak pak cache file C:/Users/Tim/Documents/Unreal Projects/SassC/DerivedDataCache/DDC.ddp not found, will not use a pak cache.
+[2016.05.14-02.53.24:627][  0]LogDerivedDataCache: Unable to find inner node Pak for hierarchical cache Hierarchy.
+[2016.05.14-02.53.24:627][  0]LogDerivedDataCache: FDerivedDataBackendGraph:  EnginePak pak cache file ../../../Engine/DerivedDataCache/DDC.ddp not found, will not use a pak cache.
+[2016.05.14-02.53.24:627][  0]LogDerivedDataCache: Unable to find inner node EnginePak for hierarchical cache Hierarchy.
+[2016.05.14-02.53.24:648][  0]LogDerivedDataCache: Using Local data cache path ../../../Engine/DerivedDataCache: Writable
+[2016.05.14-02.53.24:648][  0]LogDerivedDataCache: Shared data cache path not found in *engine.ini, will not use an Shared cache.
+[2016.05.14-02.53.24:648][  0]LogDerivedDataCache: Unable to find inner node Shared for hierarchical cache Hierarchy.
+[2016.05.14-02.53.28:345][  0]LogInit: Selected Device Profile: [Windows]
+[2016.05.14-02.53.28:353][  0]LogMaterial: Uniform references updated for custom material expression Custom.
+[2016.05.14-02.53.28:354][  0]LogContentStreaming: Texture pool size is 1000.00 MB
+[2016.05.14-02.53.28:539][  0]LogMeshUtilities: No automatic mesh reduction module available
+[2016.05.14-02.53.28:539][  0]LogMeshUtilities: No automatic mesh merging module available
+[2016.05.14-02.53.28:539][  0]LogMeshUtilities: No distributed automatic mesh merging module available
+[2016.05.14-02.53.28:937][  0]LogInit: WinSock: version 1.1 (2.2), MaxSocks=32767, MaxUdp=65467
+[2016.05.14-02.53.29:682][  0]LogSlate: SlateFontCache - WITH_FREETYPE: 1, WITH_HARFBUZZ: 1
+[2016.05.14-02.53.29:682][  0]LogSlate: SlateFontCache - WITH_FREETYPE: 1, WITH_HARFBUZZ: 1
+[2016.05.14-02.53.30:995][  0]LogWindowsMoviePlayer: Unable to load movie: C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Movies/Default_Startup.mp4
+[2016.05.14-02.53.31:185][  0]LogUdpMessaging: Initializing bridge on interface 0.0.0.0:0 to multicast group 230.0.0.1:6666.
+[2016.05.14-02.53.31:326][  0]SourceControl: Info Source control is disabled
+[2016.05.14-02.53.31:326][  0]SourceControl: Info Source control is disabled
+[2016.05.14-02.53.31:370][  0]SourceControl: Info Source control is disabled
+[2016.05.14-02.53.36:161][  0]LogStats: FPlatformStackWalk::StackWalkAndDump -  4.469 s
+[2016.05.14-02.53.36:161][  0]LogOutputDevice:Warning: === Handled error: ===
 
 Ensure condition failed: !IsRunningGame() [File:V:\Program Files\Epic Games\UnrealEngine\Engine\Source\Editor\MainFrame\Private\MainFrameModule.cpp] [Line: 585]
 The MainFrame module should only be loaded when running the editor.  Code that extends the editor, adds menu items, etc... should not run when running in -game mode or in a non-WITH_EDITOR build
@@ -130,398 +130,337 @@ KERNEL32.DLL
 ntdll.dll
 ntdll.dll
 
-[2016.05.13-20.01.40:389][  0]LogStats:                SubmitErrorReport -  0.003 s
-[2016.05.13-20.01.43:256][  0]LogWindows:Warning: CreateProc failed (2) ..\..\..\Engine\Binaries/Win64/CrashReportClient.exe  -Unattended -AppName=UE4-SassC -DebugSymbols=..\..\..\Engine\Intermediate\Symbols
-[2016.05.13-20.01.43:256][  0]LogStats:                    SendNewReport -  2.867 s
-[2016.05.13-20.01.43:256][  0]LogStats:             FDebug::EnsureFailed -  7.163 s
-[2016.05.13-20.01.43:849][  0]LogWindows: GitPush: Got 1 branches.
-[2016.05.13-20.01.43:953][  0]LogWindows: GitPush: Got 1 remote hosts
-[2016.05.13-20.01.44:307][  0]LogHMD: Failed to initialize OpenVR with code 110
-[2016.05.13-20.01.44:426][  0]LogUObjectArray: 29547 objects as part of root set at end of initial load.
-[2016.05.13-20.01.44:426][  0]LogUObjectAllocator: 6224048 out of 0 bytes used by permanent object pool.
-[2016.05.13-20.01.44:426][  0]LogUObjectArray: CloseDisregardForGC: 0/0 objects in disregard for GC pool
-[2016.05.13-20.01.45:165][  0]LogEngine: Initializing Engine...
-[2016.05.13-20.01.45:426][  0]LogInit: XAudio2 using 'Speakers (High Definition Audio Device)' : 2 channels at 44.1 kHz using 16 bits per sample (channel mask 0x3)
-[2016.05.13-20.01.45:463][  0]LogInit: FAudioDevice initialized.
-[2016.05.13-20.01.45:477][  0]LogInit: Texture streaming: Enabled
-[2016.05.13-20.01.45:925][  0]LogNet: Browse: /Temp/Autosaves/Game/Maps/UEDPCorbit?Name=Player?Listen
-[2016.05.13-20.01.45:942][  0]LogLoad: LoadMap: /Temp/Autosaves/Game/Maps/UEDPCorbit?Name=Player?Listen
-[2016.05.13-20.01.46:412][  0]LogMemory: Platform Memory Stats for Windows
-[2016.05.13-20.01.46:412][  0]LogMemory: Process Physical Memory: 805.80 MB used, 812.56 MB peak
-[2016.05.13-20.01.46:412][  0]LogMemory: Process Virtual Memory: 856.65 MB used, 856.66 MB peak
-[2016.05.13-20.01.46:412][  0]LogMemory: Physical Memory: 5809.80 MB used, 6135.11 MB total
-[2016.05.13-20.01.46:412][  0]LogMemory: Virtual Memory: 1446.45 MB used, 134217728.00 MB total
-[2016.05.13-20.01.46:412][  0]LogMemory: 
-[2016.05.13-20.01.46:412][  0]Allocator Stats for TBB: (not implemented)
-[2016.05.13-20.01.47:143][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EdGraph_13.K2Node_CommutativeAssociativeBinaryOperator_2253' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.47:143][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EdGraph_13.K2Node_CallFunction_102548' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.47:143][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EdGraph_13.K2Node_VariableGet_2488' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.47:143][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EdGraph_13.K2Node_FunctionResult_0' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.47:143][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EdGraph_13.K2Node_FunctionEntry_139' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.47:186][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EdGraph_15.K2Node_CommutativeAssociativeBinaryOperator_2253' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.47:186][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EdGraph_15.K2Node_CallFunction_102548' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.47:186][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EdGraph_15.K2Node_VariableGet_2488' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.47:186][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EdGraph_15.K2Node_FunctionResult_0' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.47:186][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EdGraph_15.K2Node_FunctionEntry_139' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.47:296][  0]LogBlueprint:Warning: USimpleConstructionScript::FixupRootNodeParentReferences() - Couldn't find inherited parent component 'DefaultSceneRoot' for 'GateMesh' in BlueprintGeneratedClass 'REINST_Gate_C_21' (it may have been removed)
-[2016.05.13-20.01.47:696][  0]LogBlueprint:Warning: USimpleConstructionScript::FixupRootNodeParentReferences() - Couldn't find inherited parent component 'DefaultSceneRoot' for 'CityMesh' in BlueprintGeneratedClass 'REINST_City_C_53' (it may have been removed)
-[2016.05.13-20.01.47:696][  0]LogBlueprint:Warning: USimpleConstructionScript::FixupRootNodeParentReferences() - Couldn't find inherited parent component 'DefaultSceneRoot' for 'Box' in BlueprintGeneratedClass 'REINST_City_C_53' (it may have been removed)
-[2016.05.13-20.01.47:730][  0]LogProperty:Error: UStructProperty::Serialize Loading: Property 'StructProperty /Game/Blueprints/lobby/sassLobbyGameState.sassLobbyGameState_C:ExecuteUbergraph_sassLobbyGameState.CallFunc_Array_Get_Item'. Unknown structure.
-[2016.05.13-20.01.47:730][  0]LogProperty:Error: UStructProperty::Serialize Loading: Property 'StructProperty /Game/Blueprints/lobby/sassLobbyGameState.sassLobbyGameState_C:ExecuteUbergraph_sassLobbyGameState.K2Node_MakeStruct_mapVoteStruct'. Unknown structure.
-[2016.05.13-20.01.47:731][  0]LogProperty:Error: UStructProperty::Serialize Loading: Property 'StructProperty /Game/Blueprints/lobby/sassLobbyGameState.sassLobbyGameState_C:aMapVoteArray.aMapVoteArray'. Unknown structure.
-[2016.05.13-20.01.47:778][  0]LogProperty:Error: UStructProperty::Serialize Loading: Property 'StructProperty /Game/Blueprints/lobby/lobbyHUD.lobbyHUD_C:getMapBinding.CallFunc_Array_Get_Item'. Unknown structure.
-[2016.05.13-20.01.47:783][  0]LogProperty:Error: UStructProperty::Serialize Loading: Property 'StructProperty /Game/Blueprints/lobby/lobbyGameMode.lobbyGameMode_C:resetVoteArrays.CallFunc_Array_Get_Item'. Unknown structure.
-[2016.05.13-20.01.47:783][  0]LogProperty:Error: UStructProperty::Serialize Loading: Property 'StructProperty /Game/Blueprints/lobby/lobbyGameMode.lobbyGameMode_C:resetVoteArrays.K2Node_MakeStruct_mapVoteStruct'. Unknown structure.
-[2016.05.13-20.01.47:785][  0]LogProperty:Error: UStructProperty::Serialize Loading: Property 'StructProperty /Game/Blueprints/lobby/lobbyGameMode.lobbyGameMode_C:ExecuteUbergraph_lobbyGameMode.CallFunc_Array_Get_Item2'. Unknown structure.
-[2016.05.13-20.01.47:787][  0]LogProperty:Error: UStructProperty::Serialize Loading: Property 'StructProperty /Game/Blueprints/lobby/lobbyGameMode.lobbyGameMode_C:ExecuteUbergraph_lobbyGameMode.CallFunc_Array_Get_Item5'. Unknown structure.
-[2016.05.13-20.01.47:787][  0]LogProperty:Error: UStructProperty::Serialize Loading: Property 'StructProperty /Game/Blueprints/lobby/lobbyGameMode.lobbyGameMode_C:aMapVoteArrayCopy.aMapVoteArrayCopy'. Unknown structure.
-[2016.05.13-20.01.47:811][  0]LogProperty:Error: UStructProperty::Serialize Loading: Property 'StructProperty /Game/Blueprints/lobby/lobbyMapVoteMenuHUD.lobbyMapVoteMenuHUD_C:getMapBinding.CallFunc_Array_Get_Item'. Unknown structure.
-[2016.05.13-20.01.47:811][  0]LogProperty:Error: UStructProperty::Serialize Loading: Property 'StructProperty /Game/Blueprints/lobby/lobbyMapVoteMenuHUD.lobbyMapVoteMenuHUD_C:getMapBinding.CallFunc_Array_Get_Item2'. Unknown structure.
-[2016.05.13-20.01.48:377][  0]LogBlueprint:Warning: [compiler sassLobbyPlayer] Warning Input Axis Event references unknown Axis 'LookUp' for  InputAxis LookUp 
-[2016.05.13-20.01.48:377][  0]LogBlueprint:Warning: [compiler sassLobbyPlayer] Warning Input Axis Event references unknown Axis 'Turn' for  InputAxis Turn 
-[2016.05.13-20.01.48:385][  0]LogBlueprint:Warning: [compiler sassLobbyPlayer] Warning [0033.34] Compile of sassLobbyPlayer successful, but with 2 Warning(s) [in 23 ms]
-[2016.05.13-20.01.48:385][  0]LogBlueprint:Warning: [compiler sassLobbyPlayer] Warning [0033.34] Compile of sassLobbyPlayer successful, but with 3 Warning(s) [in 0 ms]
-[2016.05.13-20.01.48:385][  0]LogBlueprint:Warning: [compiler sassLobbyPlayer] Warning [0033.34] Compile of sassLobbyPlayer successful, but with 4 Warning(s) [in 0 ms]
-[2016.05.13-20.01.49:110][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EdGraph_412.K2Node_CommutativeAssociativeBinaryOperator_2253' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.49:110][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EdGraph_412.K2Node_CallFunction_102548' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.49:110][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EdGraph_412.K2Node_VariableGet_2488' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.49:110][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EdGraph_412.K2Node_FunctionResult_0' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.49:110][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EdGraph_412.K2Node_FunctionEntry_139' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.49:262][  0]LogBlueprint:Warning: [compiler sassLobbyPlayer] Warning Input Axis Event references unknown Axis 'LookUp' for  InputAxis LookUp 
-[2016.05.13-20.01.49:262][  0]LogBlueprint:Warning: [compiler sassLobbyPlayer] Warning Input Axis Event references unknown Axis 'Turn' for  InputAxis Turn 
-[2016.05.13-20.01.49:269][  0]LogBlueprint:Warning: [compiler sassLobbyPlayer] Warning [0034.23] Compile of sassLobbyPlayer successful, but with 2 Warning(s) [in 20 ms]
-[2016.05.13-20.01.49:270][  0]LogBlueprint:Warning: [compiler sassLobbyPlayer] Warning [0034.23] Compile of sassLobbyPlayer successful, but with 3 Warning(s) [in 0 ms]
-[2016.05.13-20.01.49:270][  0]LogBlueprint:Warning: [compiler sassLobbyPlayer] Warning [0034.23] Compile of sassLobbyPlayer successful, but with 4 Warning(s) [in 0 ms]
-[2016.05.13-20.01.50:226][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateNode_1.Locomotion/Idle.AnimGraphNode_BlendSpacePlayer_9' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.50:226][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_Root_5' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.50:226][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateNode_2.Run Jump.AnimGraphNode_SequencePlayer_34' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.50:226][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateNode_3.Jump.AnimGraphNode_SequencePlayer_483' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.50:226][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateNode_7.attacking.AnimGraphNode_SequencePlayer_153' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.50:226][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.50:226][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateNode_1.Locomotion/Idle.AnimGraphNode_StateResult_20' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.50:226][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateNode_2.Run Jump.AnimGraphNode_StateResult_15' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.50:226][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateNode_3.Jump.AnimGraphNode_StateResult_55' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.50:226][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateNode_7.attacking.AnimGraphNode_StateResult_188' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.50:226][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_1.Transition.AnimGraphNode_TransitionResult_20' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.50:226][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_12.Transition.AnimGraphNode_TransitionResult_467' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.50:226][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_2.Transition.AnimGraphNode_TransitionResult_28' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.50:226][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_5.Transition.AnimGraphNode_TransitionResult_142' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.50:226][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_6.AnimationTransitionGraph_65.AnimGraphNode_TransitionResult_22' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.50:226][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_7.Transition.AnimGraphNode_TransitionResult_148' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.50:226][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_8.Transition.AnimGraphNode_TransitionResult_233' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.50:226][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateEntryNode_0' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.50:226][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateNode_1' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.50:227][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateNode_2' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.50:227][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateNode_3' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.50:227][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateNode_7' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.50:227][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_1' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.50:227][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_12' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.50:227][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_2' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.50:227][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_5' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.50:227][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_6' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.50:227][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_7' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.50:227][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_8' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.50:227][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.EdGraphNode_Comment_19' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.50:227][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.EdGraphNode_Comment_22' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.50:227][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.EdGraphNode_Comment_26' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.50:228][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_12.Transition.K2Node_CallFunction_91451' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.50:228][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_2.Transition.K2Node_CallFunction_11224' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.50:228][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_5.Transition.K2Node_CallFunction_224620' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.50:228][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_5.Transition.K2Node_CallFunction_2831' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.50:228][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_6.AnimationTransitionGraph_65.K2Node_CallFunction_92056' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.50:228][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_7.Transition.K2Node_CallFunction_225505' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.50:228][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:CanJump.K2Node_CallFunction_102548' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.50:228][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_CallFunction_108580' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.50:228][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_CallFunction_162498' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.50:228][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_CallFunction_169492' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.50:228][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_CallFunction_227144' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.50:229][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_CallFunction_29781' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.50:229][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_CallFunction_29886' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.50:229][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_CallFunction_45546' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.50:229][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_CallFunction_45889' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.50:229][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_2.Transition.K2Node_CommutativeAssociativeBinaryOperator_211' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.50:229][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_5.Transition.K2Node_CommutativeAssociativeBinaryOperator_77' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.50:229][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:CanJump.K2Node_CommutativeAssociativeBinaryOperator_2253' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.50:229][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_CommutativeAssociativeBinaryOperator_521' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.50:229][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_DynamicCast_120' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.50:229][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_DynamicCast_127' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.50:229][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_DynamicCast_99' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.50:229][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_Event_1003' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.50:229][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_Event_2429' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.50:229][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_Event_85' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.50:229][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_ExecutionSequence_180' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.50:229][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:CanJump.K2Node_FunctionEntry_139' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.50:229][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:CanJump.K2Node_FunctionResult_0' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.50:229][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_IfThenElse_332' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.50:229][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_IfThenElse_413' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.50:229][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_12.Transition.K2Node_TransitionRuleGetter_8' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.50:229][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_6.AnimationTransitionGraph_65.K2Node_TransitionRuleGetter_17' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.50:229][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_6.AnimationTransitionGraph_65.K2Node_TransitionRuleGetter_182' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.50:229][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateNode_1.Locomotion/Idle.K2Node_VariableGet_589' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.50:229][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_1.Transition.K2Node_VariableGet_208' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.50:229][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_2.Transition.K2Node_VariableGet_125' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.50:229][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_2.Transition.K2Node_VariableGet_129' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.50:229][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_5.Transition.K2Node_VariableGet_1066' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.50:229][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_5.Transition.K2Node_VariableGet_74' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.50:230][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_7.Transition.K2Node_VariableGet_1084' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.50:230][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_8.Transition.K2Node_VariableGet_624' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.50:230][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:CanJump.K2Node_VariableGet_2488' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.50:230][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_VariableGet_1007' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.50:230][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_VariableGet_1157' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.50:230][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_VariableGet_3156' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.50:230][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_VariableSet_1402' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.50:230][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_VariableSet_2289' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.50:230][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_VariableSet_2465' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.50:230][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_VariableSet_74' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
-[2016.05.13-20.01.50:537][  0]LogAIModule: Creating AISystem for world orbit
-[2016.05.13-20.01.50:537][  0]LogWorld: Game class is 'Sassilization_C'
-[2016.05.13-20.01.50:543][  0]LogInit: WinSock: Socket queue 131072 / 131072
-[2016.05.13-20.01.50:548][  0]LogInit: WinSock: I am TIM-PC (10.24.141.160:0)
-[2016.05.13-20.01.50:548][  0]LogNet: GameNetDriver IpNetDriver_0 IpNetDriver listening on port 7777
-[2016.05.13-20.01.50:654][  0]LogWorld: Bringing World /Temp/Autosaves/Game/Maps/UEDPCorbit.orbit up for play (max tick rate 0) at 2016.05.13-16.01.50
-[2016.05.13-20.01.50:688][  0]LogWorld: Bringing up level for play took: 0.139098
-[2016.05.13-20.01.50:750][  0]LogBlueprintUserMessages: [Sassilization_C_0] Player login success, color set
-[2016.05.13-20.01.51:077][  0]LogInit:Display: Game Engine Initialized.
-[2016.05.13-20.01.51:370][  0]LogLoad: Full Startup: 36.33 seconds (BP compile: 1.48 seconds)
-[2016.05.13-20.01.51:370][  0]LogExternalProfiler:Warning: No registered external profiler was matched with a command-line switch (or the DLL could not be loaded).  External profiling features will not be available.
-[2016.05.13-20.01.51:401][  0]LogOcInput: OculusInput pre-init called
-[2016.05.13-20.01.51:668][  1]LogNet: NotifyAcceptingConnection: Server orbit accept
-[2016.05.13-20.01.51:696][  1]LogNet: NotifyAcceptedConnection: Name: orbit, TimeStamp: 05/13/16 16:01:51, [UNetConnection] RemoteAddr: 127.0.0.1:58728, Name: IpConnection_0, Driver: GameNetDriver IpNetDriver_0, IsServer: YES, PC: NULL, Owner: NULL
-[2016.05.13-20.01.51:696][  1]LogNet: AddClientConnection: Added client connection: [UNetConnection] RemoteAddr: 127.0.0.1:58728, Name: IpConnection_0, Driver: GameNetDriver IpNetDriver_0, IsServer: YES, PC: NULL, Owner: NULL
-[2016.05.13-20.01.51:867][  1]LogRenderer: Reallocating scene render targets to support 640x480 (Frame:2).
-[2016.05.13-20.01.51:867][  1]LogScript:Warning: Accessed None trying to read property testObject
+[2016.05.14-02.53.36:164][  0]LogStats:                SubmitErrorReport -  0.003 s
+[2016.05.14-02.53.39:313][  0]LogWindows:Warning: CreateProc failed (2) ..\..\..\Engine\Binaries/Win64/CrashReportClient.exe  -Unattended -AppName=UE4-SassC -DebugSymbols=..\..\..\Engine\Intermediate\Symbols
+[2016.05.14-02.53.39:314][  0]LogStats:                    SendNewReport -  3.149 s
+[2016.05.14-02.53.39:314][  0]LogStats:             FDebug::EnsureFailed -  7.621 s
+[2016.05.14-02.53.39:767][  0]LogWindows: GitPush: Got 1 branches.
+[2016.05.14-02.53.39:863][  0]LogWindows: GitPush: Got 1 remote hosts
+[2016.05.14-02.53.40:161][  0]LogHMD: Failed to initialize OpenVR with code 110
+[2016.05.14-02.53.40:226][  0]LogUObjectArray: 29547 objects as part of root set at end of initial load.
+[2016.05.14-02.53.40:226][  0]LogUObjectAllocator: 6224048 out of 0 bytes used by permanent object pool.
+[2016.05.14-02.53.40:226][  0]LogUObjectArray: CloseDisregardForGC: 0/0 objects in disregard for GC pool
+[2016.05.14-02.53.40:431][  0]LogEngine: Initializing Engine...
+[2016.05.14-02.53.40:634][  0]LogInit: XAudio2 using 'Speakers (High Definition Audio Device)' : 2 channels at 44.1 kHz using 16 bits per sample (channel mask 0x3)
+[2016.05.14-02.53.40:678][  0]LogInit: FAudioDevice initialized.
+[2016.05.14-02.53.40:692][  0]LogInit: Texture streaming: Enabled
+[2016.05.14-02.53.40:896][  0]LogNet: Browse: /Temp/Autosaves/Game/Maps/UEDPCorbit?Name=Player?Listen
+[2016.05.14-02.53.40:904][  0]LogLoad: LoadMap: /Temp/Autosaves/Game/Maps/UEDPCorbit?Name=Player?Listen
+[2016.05.14-02.53.41:245][  0]LogMemory: Platform Memory Stats for Windows
+[2016.05.14-02.53.41:245][  0]LogMemory: Process Physical Memory: 803.28 MB used, 808.73 MB peak
+[2016.05.14-02.53.41:245][  0]LogMemory: Process Virtual Memory: 853.63 MB used, 853.64 MB peak
+[2016.05.14-02.53.41:245][  0]LogMemory: Physical Memory: 5713.39 MB used, 6135.11 MB total
+[2016.05.14-02.53.41:245][  0]LogMemory: Virtual Memory: 1443.64 MB used, 134217728.00 MB total
+[2016.05.14-02.53.41:245][  0]LogMemory: 
+[2016.05.14-02.53.41:245][  0]Allocator Stats for TBB: (not implemented)
+[2016.05.14-02.53.41:642][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EdGraph_13.K2Node_CommutativeAssociativeBinaryOperator_2253' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.41:642][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EdGraph_13.K2Node_CallFunction_102548' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.41:642][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EdGraph_13.K2Node_VariableGet_2488' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.41:642][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EdGraph_13.K2Node_FunctionResult_0' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.41:642][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EdGraph_13.K2Node_FunctionEntry_139' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.41:670][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EdGraph_15.K2Node_CommutativeAssociativeBinaryOperator_2253' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.41:670][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EdGraph_15.K2Node_CallFunction_102548' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.41:670][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EdGraph_15.K2Node_VariableGet_2488' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.41:670][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EdGraph_15.K2Node_FunctionResult_0' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.41:670][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EdGraph_15.K2Node_FunctionEntry_139' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.41:770][  0]LogBlueprint:Warning: USimpleConstructionScript::FixupRootNodeParentReferences() - Couldn't find inherited parent component 'DefaultSceneRoot' for 'GateMesh' in BlueprintGeneratedClass 'REINST_Gate_C_21' (it may have been removed)
+[2016.05.14-02.53.42:204][  0]LogBlueprint:Warning: USimpleConstructionScript::FixupRootNodeParentReferences() - Couldn't find inherited parent component 'DefaultSceneRoot' for 'CityMesh' in BlueprintGeneratedClass 'REINST_City_C_53' (it may have been removed)
+[2016.05.14-02.53.42:204][  0]LogBlueprint:Warning: USimpleConstructionScript::FixupRootNodeParentReferences() - Couldn't find inherited parent component 'DefaultSceneRoot' for 'Box' in BlueprintGeneratedClass 'REINST_City_C_53' (it may have been removed)
+[2016.05.14-02.53.42:245][  0]LogProperty:Error: UStructProperty::Serialize Loading: Property 'StructProperty /Game/Blueprints/lobby/sassLobbyGameState.sassLobbyGameState_C:ExecuteUbergraph_sassLobbyGameState.CallFunc_Array_Get_Item'. Unknown structure.
+[2016.05.14-02.53.42:245][  0]LogProperty:Error: UStructProperty::Serialize Loading: Property 'StructProperty /Game/Blueprints/lobby/sassLobbyGameState.sassLobbyGameState_C:ExecuteUbergraph_sassLobbyGameState.K2Node_MakeStruct_mapVoteStruct'. Unknown structure.
+[2016.05.14-02.53.42:245][  0]LogProperty:Error: UStructProperty::Serialize Loading: Property 'StructProperty /Game/Blueprints/lobby/sassLobbyGameState.sassLobbyGameState_C:aMapVoteArray.aMapVoteArray'. Unknown structure.
+[2016.05.14-02.53.42:295][  0]LogProperty:Error: UStructProperty::Serialize Loading: Property 'StructProperty /Game/Blueprints/lobby/lobbyHUD.lobbyHUD_C:getMapBinding.CallFunc_Array_Get_Item'. Unknown structure.
+[2016.05.14-02.53.42:301][  0]LogProperty:Error: UStructProperty::Serialize Loading: Property 'StructProperty /Game/Blueprints/lobby/lobbyGameMode.lobbyGameMode_C:resetVoteArrays.CallFunc_Array_Get_Item'. Unknown structure.
+[2016.05.14-02.53.42:301][  0]LogProperty:Error: UStructProperty::Serialize Loading: Property 'StructProperty /Game/Blueprints/lobby/lobbyGameMode.lobbyGameMode_C:resetVoteArrays.K2Node_MakeStruct_mapVoteStruct'. Unknown structure.
+[2016.05.14-02.53.42:303][  0]LogProperty:Error: UStructProperty::Serialize Loading: Property 'StructProperty /Game/Blueprints/lobby/lobbyGameMode.lobbyGameMode_C:ExecuteUbergraph_lobbyGameMode.CallFunc_Array_Get_Item2'. Unknown structure.
+[2016.05.14-02.53.42:305][  0]LogProperty:Error: UStructProperty::Serialize Loading: Property 'StructProperty /Game/Blueprints/lobby/lobbyGameMode.lobbyGameMode_C:ExecuteUbergraph_lobbyGameMode.CallFunc_Array_Get_Item5'. Unknown structure.
+[2016.05.14-02.53.42:305][  0]LogProperty:Error: UStructProperty::Serialize Loading: Property 'StructProperty /Game/Blueprints/lobby/lobbyGameMode.lobbyGameMode_C:aMapVoteArrayCopy.aMapVoteArrayCopy'. Unknown structure.
+[2016.05.14-02.53.42:338][  0]LogProperty:Error: UStructProperty::Serialize Loading: Property 'StructProperty /Game/Blueprints/lobby/lobbyMapVoteMenuHUD.lobbyMapVoteMenuHUD_C:getMapBinding.CallFunc_Array_Get_Item'. Unknown structure.
+[2016.05.14-02.53.42:338][  0]LogProperty:Error: UStructProperty::Serialize Loading: Property 'StructProperty /Game/Blueprints/lobby/lobbyMapVoteMenuHUD.lobbyMapVoteMenuHUD_C:getMapBinding.CallFunc_Array_Get_Item2'. Unknown structure.
+[2016.05.14-02.53.42:616][  0]LogBlueprint:Error: [compiler sassGameState_BP] Error Could not find a function named "CreateSassHUDPlayer" in 'sassGamePlayer_C'.
+Make sure 'sassGamePlayer_C' has been compiled for  CreateSassHUDPlayer 
+[2016.05.14-02.53.42:622][  0]LogBlueprint:Warning: [compiler sassGameState_BP] Warning [0024.37] Compile of sassGameState_BP failed. 1 Fatal Issue(s) 0 Warning(s) [in 10 ms]
+[2016.05.14-02.53.42:623][  0]LogBlueprint:Warning: [compiler sassGameState_BP] Warning [0024.37] Compile of sassGameState_BP failed. 1 Fatal Issue(s) 1 Warning(s) [in 0 ms]
+[2016.05.14-02.53.42:623][  0]LogBlueprint:Warning: [compiler sassGameState_BP] Warning [0024.37] Compile of sassGameState_BP failed. 1 Fatal Issue(s) 2 Warning(s) [in 0 ms]
+[2016.05.14-02.53.42:889][  0]LogBlueprint:Warning: [compiler sassLobbyPlayer] Warning Input Axis Event references unknown Axis 'LookUp' for  InputAxis LookUp 
+[2016.05.14-02.53.42:889][  0]LogBlueprint:Warning: [compiler sassLobbyPlayer] Warning Input Axis Event references unknown Axis 'Turn' for  InputAxis Turn 
+[2016.05.14-02.53.42:896][  0]LogBlueprint:Warning: [compiler sassLobbyPlayer] Warning [0024.64] Compile of sassLobbyPlayer successful, but with 2 Warning(s) [in 26 ms]
+[2016.05.14-02.53.42:897][  0]LogBlueprint:Warning: [compiler sassLobbyPlayer] Warning [0024.64] Compile of sassLobbyPlayer successful, but with 3 Warning(s) [in 0 ms]
+[2016.05.14-02.53.42:897][  0]LogBlueprint:Warning: [compiler sassLobbyPlayer] Warning [0024.64] Compile of sassLobbyPlayer successful, but with 4 Warning(s) [in 0 ms]
+[2016.05.14-02.53.43:568][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EdGraph_420.K2Node_CommutativeAssociativeBinaryOperator_2253' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.43:568][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EdGraph_420.K2Node_CallFunction_102548' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.43:568][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EdGraph_420.K2Node_VariableGet_2488' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.43:568][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EdGraph_420.K2Node_FunctionResult_0' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.43:568][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EdGraph_420.K2Node_FunctionEntry_139' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.43:743][  0]LogBlueprint:Warning: [compiler sassLobbyPlayer] Warning Input Axis Event references unknown Axis 'LookUp' for  InputAxis LookUp 
+[2016.05.14-02.53.43:744][  0]LogBlueprint:Warning: [compiler sassLobbyPlayer] Warning Input Axis Event references unknown Axis 'Turn' for  InputAxis Turn 
+[2016.05.14-02.53.43:754][  0]LogBlueprint:Warning: [compiler sassLobbyPlayer] Warning [0025.50] Compile of sassLobbyPlayer successful, but with 2 Warning(s) [in 26 ms]
+[2016.05.14-02.53.43:754][  0]LogBlueprint:Warning: [compiler sassLobbyPlayer] Warning [0025.50] Compile of sassLobbyPlayer successful, but with 3 Warning(s) [in 0 ms]
+[2016.05.14-02.53.43:755][  0]LogBlueprint:Warning: [compiler sassLobbyPlayer] Warning [0025.50] Compile of sassLobbyPlayer successful, but with 4 Warning(s) [in 0 ms]
+[2016.05.14-02.53.44:406][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateNode_1.Locomotion/Idle.AnimGraphNode_BlendSpacePlayer_9' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.44:406][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_Root_5' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.44:406][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateNode_2.Run Jump.AnimGraphNode_SequencePlayer_34' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.44:406][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateNode_3.Jump.AnimGraphNode_SequencePlayer_483' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.44:406][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateNode_7.attacking.AnimGraphNode_SequencePlayer_153' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.44:406][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.44:406][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateNode_1.Locomotion/Idle.AnimGraphNode_StateResult_20' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.44:406][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateNode_2.Run Jump.AnimGraphNode_StateResult_15' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.44:406][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateNode_3.Jump.AnimGraphNode_StateResult_55' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.44:406][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateNode_7.attacking.AnimGraphNode_StateResult_188' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.44:406][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_1.Transition.AnimGraphNode_TransitionResult_20' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.44:406][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_12.Transition.AnimGraphNode_TransitionResult_467' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.44:406][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_2.Transition.AnimGraphNode_TransitionResult_28' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.44:406][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_5.Transition.AnimGraphNode_TransitionResult_142' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.44:406][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_6.AnimationTransitionGraph_65.AnimGraphNode_TransitionResult_22' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.44:406][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_7.Transition.AnimGraphNode_TransitionResult_148' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.44:406][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_8.Transition.AnimGraphNode_TransitionResult_233' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.44:406][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateEntryNode_0' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.44:406][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateNode_1' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.44:406][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateNode_2' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.44:407][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateNode_3' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.44:407][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateNode_7' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.44:407][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_1' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.44:407][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_12' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.44:407][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_2' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.44:407][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_5' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.44:407][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_6' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.44:407][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_7' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.44:407][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_8' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.44:407][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.EdGraphNode_Comment_19' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.44:407][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.EdGraphNode_Comment_22' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.44:407][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.EdGraphNode_Comment_26' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.44:407][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_12.Transition.K2Node_CallFunction_91451' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.44:407][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_2.Transition.K2Node_CallFunction_11224' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.44:408][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_5.Transition.K2Node_CallFunction_224620' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.44:408][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_5.Transition.K2Node_CallFunction_2831' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.44:408][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_6.AnimationTransitionGraph_65.K2Node_CallFunction_92056' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.44:408][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_7.Transition.K2Node_CallFunction_225505' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.44:408][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:CanJump.K2Node_CallFunction_102548' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.44:408][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_CallFunction_108580' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.44:408][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_CallFunction_162498' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.44:408][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_CallFunction_169492' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.44:408][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_CallFunction_227144' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.44:408][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_CallFunction_29781' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.44:408][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_CallFunction_29886' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.44:408][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_CallFunction_45546' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.44:408][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_CallFunction_45889' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.44:408][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_2.Transition.K2Node_CommutativeAssociativeBinaryOperator_211' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.44:408][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_5.Transition.K2Node_CommutativeAssociativeBinaryOperator_77' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.44:408][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:CanJump.K2Node_CommutativeAssociativeBinaryOperator_2253' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.44:408][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_CommutativeAssociativeBinaryOperator_521' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.44:408][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_DynamicCast_120' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.44:408][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_DynamicCast_127' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.44:408][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_DynamicCast_99' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.44:408][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_Event_1003' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.44:408][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_Event_2429' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.44:408][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_Event_85' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.44:408][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_ExecutionSequence_180' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.44:408][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:CanJump.K2Node_FunctionEntry_139' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.44:408][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:CanJump.K2Node_FunctionResult_0' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.44:408][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_IfThenElse_332' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.44:408][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_IfThenElse_413' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.44:409][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_12.Transition.K2Node_TransitionRuleGetter_8' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.44:409][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_6.AnimationTransitionGraph_65.K2Node_TransitionRuleGetter_17' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.44:409][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_6.AnimationTransitionGraph_65.K2Node_TransitionRuleGetter_182' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.44:409][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateNode_1.Locomotion/Idle.K2Node_VariableGet_589' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.44:409][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_1.Transition.K2Node_VariableGet_208' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.44:409][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_2.Transition.K2Node_VariableGet_125' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.44:409][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_2.Transition.K2Node_VariableGet_129' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.44:409][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_5.Transition.K2Node_VariableGet_1066' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.44:409][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_5.Transition.K2Node_VariableGet_74' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.44:409][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_7.Transition.K2Node_VariableGet_1084' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.44:409][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:AnimGraph.AnimGraphNode_StateMachine_6.Default.AnimStateTransitionNode_8.Transition.K2Node_VariableGet_624' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.44:409][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:CanJump.K2Node_VariableGet_2488' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.44:409][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_VariableGet_1007' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.44:409][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_VariableGet_1157' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.44:409][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_VariableGet_3156' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.44:409][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_VariableSet_1402' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.44:409][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_VariableSet_2289' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.44:409][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_VariableSet_2465' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.44:409][  0]LogBlueprint:Warning: Node '/Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam:EventGraph.K2Node_VariableSet_74' missing NodeGuid because of upgrade from old package version, this can cause deterministic cooking issues please resave package.
+[2016.05.14-02.53.44:616][  0]LogAIModule: Creating AISystem for world orbit
+[2016.05.14-02.53.44:616][  0]LogWorld: Game class is 'Sassilization_BP_C'
+[2016.05.14-02.53.44:636][  0]LogInit: WinSock: Socket queue 131072 / 131072
+[2016.05.14-02.53.44:640][  0]LogInit: WinSock: I am TIM-PC (10.24.141.160:0)
+[2016.05.14-02.53.44:641][  0]LogNet: GameNetDriver IpNetDriver_0 IpNetDriver listening on port 7777
+[2016.05.14-02.53.44:687][  0]LogWorld: Bringing World /Temp/Autosaves/Game/Maps/UEDPCorbit.orbit up for play (max tick rate 0) at 2016.05.13-22.53.44
+[2016.05.14-02.53.44:802][  0]LogWorld: Bringing up level for play took: 0.159687
+[2016.05.14-02.53.45:004][  0]LogBlueprintUserMessages: [Sassilization_BP_C_0] Player login success, color set
+[2016.05.14-02.53.45:314][  0]LogInit:Display: Game Engine Initialized.
+[2016.05.14-02.53.45:607][  0]LogLoad: Full Startup: 27.35 seconds (BP compile: 1.21 seconds)
+[2016.05.14-02.53.45:607][  0]LogExternalProfiler:Warning: No registered external profiler was matched with a command-line switch (or the DLL could not be loaded).  External profiling features will not be available.
+[2016.05.14-02.53.45:626][  0]LogOcInput: OculusInput pre-init called
+[2016.05.14-02.53.45:869][  1]LogScript:Warning: Accessed None trying to read property testObject
 	sassGamePlayer_C /Temp/Autosaves/Game/Maps/UEDPCorbit.orbit:PersistentLevel.sassGamePlayer_C_0
-	Function /Game/Blueprints/sassilization/sassGamePlayer.sassGamePlayer_C:ExecuteUbergraph_sassGamePlayer:385E
-[2016.05.13-20.01.51:876][  1]LogBlueprintUserMessages: [sassGamePlayer_C_0] destroyed
-[2016.05.13-20.01.51:876][  1]LogScript:Warning: Accessed None trying to read property Selection Sphere Holder
+	Function /Game/Blueprints/sassilization/sassGamePlayer.sassGamePlayer_C:ExecuteUbergraph_sassGamePlayer:3A18
+[2016.05.14-02.53.45:869][  1]LogBlueprintUserMessages: [sassGamePlayer_C_0] destroyed
+[2016.05.14-02.53.45:870][  1]LogScript:Warning: Accessed None trying to read property Selection Sphere Holder
 	sassGamePlayer_C /Temp/Autosaves/Game/Maps/UEDPCorbit.orbit:PersistentLevel.sassGamePlayer_C_0
-	Function /Game/Blueprints/sassilization/sassGamePlayer.sassGamePlayer_C:ExecuteUbergraph_sassGamePlayer:2155
-[2016.05.13-20.01.51:876][  1]LogBlueprintUserMessages: [sassGamePlayer_C_0] started
-[2016.05.13-20.01.51:876][  1]LogBlueprintUserMessages: [sassGamePlayer_C_0] done
-[2016.05.13-20.01.52:024][  4]LogNet: NotifyAcceptingChannel Control 0 server World /Temp/Autosaves/Game/Maps/UEDPCorbit.orbit: Accepted
-[2016.05.13-20.01.52:034][  4]LogNet: Remote platform little endian=1
-[2016.05.13-20.01.52:034][  4]LogNet: This platform little endian=1
-[2016.05.13-20.01.52:034][  4]LogNet: GetLocalNetworkVersion: GEngineNetVersion: 0, ProjectName: sassc, ProjectVersion: 1.0.0.0, InternalProtocolVersion: 9, LocalNetworkVersion: 14625179
-[2016.05.13-20.01.52:058][  6]LogNet: Login request: /Game/Maps/main_menu?Name=Player userId: Invalid
-[2016.05.13-20.01.52:072][  7]LogNet: Client netspeed is 10000
-[2016.05.13-20.01.56:053][250]LogNet: Join request: /Game/Maps/main_menu?Name=Player?SplitscreenCount=1
-[2016.05.13-20.01.56:114][250]LogBlueprintUserMessages: [Sassilization_C_0] Player login success, color set
-[2016.05.13-20.01.56:114][250]LogNet: Join succeeded: Player
-[2016.05.13-20.01.56:117][250]LogScript:Warning: Accessed None trying to read property testObject
+	Function /Game/Blueprints/sassilization/sassGamePlayer.sassGamePlayer_C:ExecuteUbergraph_sassGamePlayer:2958
+[2016.05.14-02.53.45:870][  1]LogBlueprintUserMessages: [sassGamePlayer_C_0] started
+[2016.05.14-02.53.45:870][  1]LogBlueprintUserMessages: [sassGamePlayer_C_0] done
+[2016.05.14-02.53.45:962][  2]LogRenderer: Reallocating scene render targets to support 640x480 (Frame:2).
+[2016.05.14-02.53.46:027][  2]LogNet: NotifyAcceptingConnection: Server orbit accept
+[2016.05.14-02.53.46:046][  2]LogNet: NotifyAcceptedConnection: Name: orbit, TimeStamp: 05/13/16 22:53:46, [UNetConnection] RemoteAddr: 127.0.0.1:56772, Name: IpConnection_0, Driver: GameNetDriver IpNetDriver_0, IsServer: YES, PC: NULL, Owner: NULL
+[2016.05.14-02.53.46:046][  2]LogNet: AddClientConnection: Added client connection: [UNetConnection] RemoteAddr: 127.0.0.1:56772, Name: IpConnection_0, Driver: GameNetDriver IpNetDriver_0, IsServer: YES, PC: NULL, Owner: NULL
+[2016.05.14-02.53.46:115][  4]LogNet: NotifyAcceptingChannel Control 0 server World /Temp/Autosaves/Game/Maps/UEDPCorbit.orbit: Accepted
+[2016.05.14-02.53.46:115][  4]LogNet: Remote platform little endian=1
+[2016.05.14-02.53.46:115][  4]LogNet: This platform little endian=1
+[2016.05.14-02.53.46:115][  4]LogNet: GetLocalNetworkVersion: GEngineNetVersion: 0, ProjectName: sassc, ProjectVersion: 1.0.0.0, InternalProtocolVersion: 9, LocalNetworkVersion: 14625179
+[2016.05.14-02.53.46:153][  6]LogNet: Login request: /Game/Maps/main_menu?Name=Player userId: Invalid
+[2016.05.14-02.53.46:172][  7]LogNet: Client netspeed is 10000
+[2016.05.14-02.53.49:727][225]LogNet: Join request: /Game/Maps/main_menu?Name=Player?SplitscreenCount=1
+[2016.05.14-02.53.49:768][225]LogBlueprintUserMessages: [Sassilization_BP_C_0] Player login success, color set
+[2016.05.14-02.53.49:768][225]LogNet: Join succeeded: Player
+[2016.05.14-02.53.49:777][225]LogScript:Warning: Accessed None trying to read property testObject
 	sassGamePlayer_C /Temp/Autosaves/Game/Maps/UEDPCorbit.orbit:PersistentLevel.sassGamePlayer_C_1
-	Function /Game/Blueprints/sassilization/sassGamePlayer.sassGamePlayer_C:ExecuteUbergraph_sassGamePlayer:385E
-[2016.05.13-20.01.56:117][250]LogBlueprintUserMessages: [sassGamePlayer_C_1] destroyed
-[2016.05.13-20.01.56:117][250]LogScript:Warning: Accessed None trying to read property Selection Sphere Holder
+	Function /Game/Blueprints/sassilization/sassGamePlayer.sassGamePlayer_C:ExecuteUbergraph_sassGamePlayer:3A18
+[2016.05.14-02.53.49:777][225]LogBlueprintUserMessages: [sassGamePlayer_C_1] destroyed
+[2016.05.14-02.53.49:777][225]LogScript:Warning: Accessed None trying to read property Selection Sphere Holder
 	sassGamePlayer_C /Temp/Autosaves/Game/Maps/UEDPCorbit.orbit:PersistentLevel.sassGamePlayer_C_1
-	Function /Game/Blueprints/sassilization/sassGamePlayer.sassGamePlayer_C:ExecuteUbergraph_sassGamePlayer:2155
-[2016.05.13-20.01.56:117][250]LogBlueprintUserMessages: [sassGamePlayer_C_1] started
-[2016.05.13-20.01.56:117][250]LogBlueprintUserMessages: [sassGamePlayer_C_1] done
-[2016.05.13-20.01.56:147][252]LogNetPackageMap:Warning: FNetGUIDCache::SupportsObject: MaterialInstanceDynamic /Temp/Autosaves/Game/Maps/UEDPCorbit.orbit:PersistentLevel.sassGamePlayer_C_1.MaterialInstanceDynamic_2 NOT Supported.
-[2016.05.13-20.01.56:147][252]LogNetPackageMap:Warning: FNetGUIDCache::SupportsObject: MaterialInstanceDynamic /Temp/Autosaves/Game/Maps/UEDPCorbit.orbit:PersistentLevel.sassGamePlayer_C_0.MaterialInstanceDynamic_1 NOT Supported.
-[2016.05.13-20.02.04:330][756]LogBlueprintUserMessages: [sassGamePlayer_C_0] Hello
-[2016.05.13-20.02.04:348][756]LogScript:Warning: Accessed None trying to read property testObject
-	sassGamePlayer_C /Temp/Autosaves/Game/Maps/UEDPCorbit.orbit:PersistentLevel.sassGamePlayer_C_0
-	Function /Game/Blueprints/sassilization/sassGamePlayer.sassGamePlayer_C:ExecuteUbergraph_sassGamePlayer:2D51
-[2016.05.13-20.02.04:372][756]LogScript:Warning: Accessed None trying to read property Selection Sphere Holder
-	sassGamePlayer_C /Temp/Autosaves/Game/Maps/UEDPCorbit.orbit:PersistentLevel.sassGamePlayer_C_0
-	Function /Game/Blueprints/sassilization/sassGamePlayer.sassGamePlayer_C:ExecuteUbergraph_sassGamePlayer:2CC2
-[2016.05.13-20.02.07:556][954]LogBlueprintUserMessages: [sassGamePlayer_C_0] Hello
-[2016.05.13-20.02.07:571][954]LogBlueprintUserMessages: [sassGamePlayer_C_0] destroyed
-[2016.05.13-20.02.08:574][ 17]LogBlueprintUserMessages: [sassGamePlayer_C_0] Hello
-[2016.05.13-20.02.08:575][ 17]LogScript:Warning: Accessed None trying to read property Selection Sphere Holder
-	sassGamePlayer_C /Temp/Autosaves/Game/Maps/UEDPCorbit.orbit:PersistentLevel.sassGamePlayer_C_0
-	Function /Game/Blueprints/sassilization/sassGamePlayer.sassGamePlayer_C:ExecuteUbergraph_sassGamePlayer:2CC2
-[2016.05.13-20.02.08:735][ 27]LogBlueprintUserMessages: [sassGamePlayer_C_0] Hello
-[2016.05.13-20.02.08:735][ 27]LogBlueprintUserMessages: [sassGamePlayer_C_0] destroyed
-[2016.05.13-20.02.09:300][ 62]LogBlueprintUserMessages: [sassGamePlayer_C_0] Hello
-[2016.05.13-20.02.09:301][ 62]LogScript:Warning: Accessed None trying to read property Selection Sphere Holder
-	sassGamePlayer_C /Temp/Autosaves/Game/Maps/UEDPCorbit.orbit:PersistentLevel.sassGamePlayer_C_0
-	Function /Game/Blueprints/sassilization/sassGamePlayer.sassGamePlayer_C:ExecuteUbergraph_sassGamePlayer:2CC2
-[2016.05.13-20.02.09:639][ 83]LogBlueprintUserMessages: [sassGamePlayer_C_0] BAD LINE TRACE
-[2016.05.13-20.02.09:655][ 84]LogBlueprintUserMessages: [sassGamePlayer_C_0] BAD LINE TRACE
-[2016.05.13-20.02.09:671][ 85]LogBlueprintUserMessages: [sassGamePlayer_C_0] BAD LINE TRACE
-[2016.05.13-20.02.09:687][ 86]LogBlueprintUserMessages: [sassGamePlayer_C_0] BAD LINE TRACE
-[2016.05.13-20.02.09:703][ 87]LogBlueprintUserMessages: [sassGamePlayer_C_0] BAD LINE TRACE
-[2016.05.13-20.02.10:179][116]LogScript:Warning: Accessed None trying to read property Selection Sphere Holder
-	sassGamePlayer_C /Temp/Autosaves/Game/Maps/UEDPCorbit.orbit:PersistentLevel.sassGamePlayer_C_0
-	Function /Game/Blueprints/sassilization/sassGamePlayer.sassGamePlayer_C:ExecuteUbergraph_sassGamePlayer:2CC2
-[2016.05.13-20.02.10:646][145]LogScript:Warning: Accessed None trying to read property Selection Sphere Holder
-	sassGamePlayer_C /Temp/Autosaves/Game/Maps/UEDPCorbit.orbit:PersistentLevel.sassGamePlayer_C_0
-	Function /Game/Blueprints/sassilization/sassGamePlayer.sassGamePlayer_C:ExecuteUbergraph_sassGamePlayer:2CC2
-[2016.05.13-20.02.14:097][352]LogScript:Warning: Accessed None trying to read property CallFunc_K2_GetPawn_ReturnValue
-	UnitAIController_C /Temp/Autosaves/Game/Maps/UEDPCorbit.orbit:PersistentLevel.UnitAIController_C_0
-	Function /Game/Blueprints/sassilization/UnitBPs/UnitAIController.UnitAIController_C:ExecuteUbergraph_UnitAIController:003A
-[2016.05.13-20.02.14:167][352]LogScript:Warning: Accessed None trying to read property Selection Sphere Holder
-	sassGamePlayer_C /Temp/Autosaves/Game/Maps/UEDPCorbit.orbit:PersistentLevel.sassGamePlayer_C_0
-	Function /Game/Blueprints/sassilization/sassGamePlayer.sassGamePlayer_C:ExecuteUbergraph_sassGamePlayer:2CC2
-[2016.05.13-20.02.16:284][483]LogScript:Warning: Accessed None trying to read property CallFunc_K2_GetPawn_ReturnValue
-	UnitAIController_C /Temp/Autosaves/Game/Maps/UEDPCorbit.orbit:PersistentLevel.UnitAIController_C_1
-	Function /Game/Blueprints/sassilization/UnitBPs/UnitAIController.UnitAIController_C:ExecuteUbergraph_UnitAIController:003A
-[2016.05.13-20.02.16:703][509]LogBlueprintUserMessages: [Sassilization_C_0] bad spawn!
-[2016.05.13-20.02.17:073][532]LogScript:Warning: Accessed None trying to read property CallFunc_K2_GetPawn_ReturnValue
-	UnitAIController_C /Temp/Autosaves/Game/Maps/UEDPCorbit.orbit:PersistentLevel.UnitAIController_C_2
-	Function /Game/Blueprints/sassilization/UnitBPs/UnitAIController.UnitAIController_C:ExecuteUbergraph_UnitAIController:003A
-[2016.05.13-20.02.17:605][565]LogScript:Warning: Accessed None trying to read property CallFunc_K2_GetPawn_ReturnValue
-	UnitAIController_C /Temp/Autosaves/Game/Maps/UEDPCorbit.orbit:PersistentLevel.UnitAIController_C_3
-	Function /Game/Blueprints/sassilization/UnitBPs/UnitAIController.UnitAIController_C:ExecuteUbergraph_UnitAIController:003A
-[2016.05.13-20.02.18:073][594]LogScript:Warning: Accessed None trying to read property CallFunc_K2_GetPawn_ReturnValue
-	UnitAIController_C /Temp/Autosaves/Game/Maps/UEDPCorbit.orbit:PersistentLevel.UnitAIController_C_4
-	Function /Game/Blueprints/sassilization/UnitBPs/UnitAIController.UnitAIController_C:ExecuteUbergraph_UnitAIController:003A
-[2016.05.13-20.02.19:836][703]LogScript:Warning: Accessed None trying to read property Selection Sphere Holder
-	sassGamePlayer_C /Temp/Autosaves/Game/Maps/UEDPCorbit.orbit:PersistentLevel.sassGamePlayer_C_0
-	Function /Game/Blueprints/sassilization/sassGamePlayer.sassGamePlayer_C:ExecuteUbergraph_sassGamePlayer:2CC2
-[2016.05.13-20.02.20:396][738]LogScript:Warning: Accessed None trying to read property Selection Sphere Holder
-	sassGamePlayer_C /Temp/Autosaves/Game/Maps/UEDPCorbit.orbit:PersistentLevel.sassGamePlayer_C_0
-	Function /Game/Blueprints/sassilization/sassGamePlayer.sassGamePlayer_C:ExecuteUbergraph_sassGamePlayer:2CC2
-[2016.05.13-20.02.22:092][839]LogBlueprintUserMessages: [sassGamePlayer_C_0] Hello
-[2016.05.13-20.02.22:092][839]LogBlueprintUserMessages: [sassGamePlayer_C_0] destroyed
-[2016.05.13-20.02.38:829][845]LogScript:Warning: Accessed None trying to read property CallFunc_K2_GetPawn_ReturnValue
-	UnitAIController_C /Temp/Autosaves/Game/Maps/UEDPCorbit.orbit:PersistentLevel.UnitAIController_C_5
-	Function /Game/Blueprints/sassilization/UnitBPs/UnitAIController.UnitAIController_C:ExecuteUbergraph_UnitAIController:003A
-[2016.05.13-20.02.39:329][876]LogScript:Warning: Accessed None trying to read property CallFunc_K2_GetPawn_ReturnValue
-	UnitAIController_C /Temp/Autosaves/Game/Maps/UEDPCorbit.orbit:PersistentLevel.UnitAIController_C_6
-	Function /Game/Blueprints/sassilization/UnitBPs/UnitAIController.UnitAIController_C:ExecuteUbergraph_UnitAIController:003A
-[2016.05.13-20.02.39:717][900]LogBlueprintUserMessages: [Sassilization_C_0] bad spawn!
-[2016.05.13-20.02.40:232][932]LogBlueprintUserMessages: [Sassilization_C_0] bad spawn!
-[2016.05.13-20.03.10:215][785]LogNet: UChannel::ReceivedSequencedBunch: Bunch.bClose == true. ChIndex == 0. Calling ConditionalCleanUp.
-[2016.05.13-20.03.10:215][785]LogNet: UChannel::CleanUp: ChIndex == 0. Closing connection. [UChannel] ChIndex: 0, Closing: 0 [UNetConnection] RemoteAddr: 127.0.0.1:58728, Name: IpConnection_0, Driver: GameNetDriver IpNetDriver_0, IsServer: YES, PC: sassPlayerController_C_1, Owner: sassPlayerController_C_1
-[2016.05.13-20.03.10:215][785]LogNet: UNetConnection::Close: [UNetConnection] RemoteAddr: 127.0.0.1:58728, Name: IpConnection_0, Driver: GameNetDriver IpNetDriver_0, IsServer: YES, PC: sassPlayerController_C_1, Owner: sassPlayerController_C_1, Channels: 20, Time: 2016.05.13-20.03.10
-[2016.05.13-20.03.10:215][785]LogNet: UChannel::Close: Sending CloseBunch. ChIndex == 0. Name: [UChannel] ChIndex: 0, Closing: 0 [UNetConnection] RemoteAddr: 127.0.0.1:58728, Name: IpConnection_0, Driver: GameNetDriver IpNetDriver_0, IsServer: YES, PC: sassPlayerController_C_1, Owner: sassPlayerController_C_1
-[2016.05.13-20.03.11:303][844]LogWindowsTextInputMethodSystem:Display: IME system now deactivated.
-[2016.05.13-20.03.11:307][844]LogEngine: All Windows Closed
-[2016.05.13-20.03.11:307][844]LogWindows: FPlatformMisc::RequestExit(0)
-[2016.05.13-20.03.12:196][845]LogNet: World NetDriver shutdown IpNetDriver_0 [GameNetDriver]
-[2016.05.13-20.03.12:196][845]LogNet: DestroyNamedNetDriver IpNetDriver_0 [GameNetDriver]
-[2016.05.13-20.03.12:196][845]LogExit: GameNetDriver IpNetDriver_0 shut down
-[2016.05.13-20.03.12:265][845]LogExit: Preparing to exit.
-[2016.05.13-20.03.13:352][845]LogExit: Game engine shut down
-[2016.05.13-20.03.13:547][845]LogObj: Freed 0b from 0 cluster array pools.
-[2016.05.13-20.03.13:548][845]LogExit: Object subsystem successfully closed.
-[2016.05.13-20.03.13:570][845]LogD3D11RHI: Shutdown
-[2016.05.13-20.03.13:570][845]LogD3D11RHI: CleanupD3DDevice
-[2016.05.13-20.03.13:573][845]LogD3D11RHI: ~FD3D11DynamicRHI
-[2016.05.13-20.03.13:641][845]LogDerivedDataCache: Shutdown
-[2016.05.13-20.03.13:642][845]LogModuleManager: Shutting down and abandoning module AndroidDeviceDetection (124)
-[2016.05.13-20.03.14:402][845]LogModuleManager: Shutting down and abandoning module AutomationController (122)
-[2016.05.13-20.03.14:402][845]LogModuleManager: Shutting down and abandoning module AutomationWorker (121)
-[2016.05.13-20.03.14:403][845]LogModuleManager: Shutting down and abandoning module CharacterAI (120)
-[2016.05.13-20.03.14:403][845]LogModuleManager: Shutting down and abandoning module AITestSuite (119)
-[2016.05.13-20.03.14:403][845]LogModuleManager: Shutting down and abandoning module GameplayDebugger (118)
-[2016.05.13-20.03.14:403][845]LogModuleManager: Shutting down and abandoning module AIModule (117)
-[2016.05.13-20.03.14:403][845]LogModuleManager: Shutting down and abandoning module MovieSceneCapture (116)
-[2016.05.13-20.03.14:403][845]LogModuleManager: Shutting down and abandoning module StreamingPauseRendering (115)
-[2016.05.13-20.03.14:403][845]LogModuleManager: Shutting down and abandoning module PortalServices (114)
-[2016.05.13-20.03.14:403][845]LogModuleManager: Shutting down and abandoning module PortalRpc (113)
-[2016.05.13-20.03.14:403][845]LogModuleManager: Shutting down and abandoning module MessagingRpc (112)
-[2016.05.13-20.03.14:403][845]LogModuleManager: Shutting down and abandoning module ProfilerService (111)
-[2016.05.13-20.03.14:404][845]LogModuleManager: Shutting down and abandoning module TaskGraph (110)
-[2016.05.13-20.03.14:404][845]LogModuleManager: Shutting down and abandoning module SlateRemote (109)
-[2016.05.13-20.03.14:404][845]LogModuleManager: Shutting down and abandoning module SteamVRController (108)
-[2016.05.13-20.03.14:404][845]LogModuleManager: Shutting down and abandoning module SteamVR (107)
-[2016.05.13-20.03.14:404][845]LogModuleManager: Shutting down and abandoning module ProceduralMeshComponent (106)
-[2016.05.13-20.03.14:404][845]LogModuleManager: Shutting down and abandoning module OculusLibrary (105)
-[2016.05.13-20.03.14:404][845]LogModuleManager: Shutting down and abandoning module OculusInput (104)
-[2016.05.13-20.03.14:404][845]LogModuleManager: Shutting down and abandoning module CustomMeshComponent (103)
-[2016.05.13-20.03.14:404][845]LogModuleManager: Shutting down and abandoning module CableComponent (102)
-[2016.05.13-20.03.14:404][845]LogModuleManager: Shutting down and abandoning module ArchVisCharacter (101)
-[2016.05.13-20.03.14:404][845]LogModuleManager: Shutting down and abandoning module MainFrame (100)
-[2016.05.13-20.03.14:404][845]LogModuleManager: Shutting down and abandoning module LevelEditor (99)
-[2016.05.13-20.03.14:405][845]LogModuleManager: Shutting down and abandoning module GitPush (98)
-[2016.05.13-20.03.14:405][845]LogModuleManager: Shutting down and abandoning module HTML5Networking (97)
-[2016.05.13-20.03.14:405][845]LogModuleManager: Shutting down and abandoning module DesktopPlatform (96)
-[2016.05.13-20.03.14:405][845]LogModuleManager: Shutting down and abandoning module DirectoryWatcher (95)
-[2016.05.13-20.03.14:406][845]LogModuleManager: Shutting down and abandoning module HotReload (94)
-[2016.05.13-20.03.14:406][845]LogModuleManager: Shutting down and abandoning module VisualStudioSourceCodeAccess (93)
-[2016.05.13-20.03.14:406][845]LogModuleManager: Shutting down and abandoning module UObjectPlugin (92)
-[2016.05.13-20.03.14:406][845]LogModuleManager: Shutting down and abandoning module SubversionSourceControl (91)
-[2016.05.13-20.03.14:406][845]LogModuleManager: Shutting down and abandoning module SourceControl (90)
-[2016.05.13-20.03.14:406][845]LogModuleManager: Shutting down and abandoning module PerforceSourceControl (89)
-[2016.05.13-20.03.14:406][845]LogModuleManager: Shutting down and abandoning module SassC (88)
-[2016.05.13-20.03.14:406][845]LogModuleManager: Shutting down and abandoning module UdpMessaging (87)
-[2016.05.13-20.03.14:507][845]LogModuleManager: Shutting down and abandoning module LightPropagationVolumeRuntime (86)
-[2016.05.13-20.03.14:507][845]LogModuleManager: Shutting down and abandoning module Paper2D (85)
-[2016.05.13-20.03.14:507][845]LogModuleManager: Shutting down and abandoning module WindowsMoviePlayer (84)
-[2016.05.13-20.03.14:507][845]LogModuleManager: Shutting down and abandoning module Media (83)
-[2016.05.13-20.03.14:507][845]LogModuleManager: Shutting down and abandoning module WmfMedia (82)
-[2016.05.13-20.03.14:508][845]LogModuleManager: Shutting down and abandoning module MediaAssets (81)
-[2016.05.13-20.03.14:508][845]LogModuleManager: Shutting down and abandoning module GameLiveStreaming (80)
-[2016.05.13-20.03.14:508][845]LogModuleManager: Shutting down and abandoning module GameplayTagsEditor (79)
-[2016.05.13-20.03.14:508][845]LogModuleManager: Shutting down and abandoning module OnlineBlueprintSupport (78)
-[2016.05.13-20.03.14:508][845]LogModuleManager: Shutting down and abandoning module GameplayTasksEditor (77)
-[2016.05.13-20.03.14:508][845]LogModuleManager: Shutting down and abandoning module PropertyEditor (76)
-[2016.05.13-20.03.14:508][845]LogModuleManager: Shutting down and abandoning module BehaviorTreeEditor (75)
-[2016.05.13-20.03.14:508][845]LogModuleManager: Shutting down and abandoning module FunctionalTesting (74)
-[2016.05.13-20.03.14:508][845]LogModuleManager: Shutting down and abandoning module CollisionAnalyzer (73)
-[2016.05.13-20.03.14:508][845]LogModuleManager: Shutting down and abandoning module WorkspaceMenuStructure (72)
-[2016.05.13-20.03.14:508][845]LogModuleManager: Shutting down and abandoning module MessageLog (71)
-[2016.05.13-20.03.14:508][845]LogModuleManager: Shutting down and abandoning module Sequencer (70)
-[2016.05.13-20.03.14:508][845]LogModuleManager: Shutting down and abandoning module AssetTools (69)
-[2016.05.13-20.03.14:511][845]LogModuleManager: Shutting down and abandoning module UMGEditor (68)
-[2016.05.13-20.03.14:525][845]LogModuleManager: Shutting down and abandoning module UMG (67)
-[2016.05.13-20.03.14:525][845]LogModuleManager: Shutting down and abandoning module SlateReflector (66)
-[2016.05.13-20.03.14:549][845]LogModuleManager: Shutting down and abandoning module Slate (65)
-[2016.05.13-20.03.14:549][845]LogModuleManager: Shutting down and abandoning module EditorStyle (64)
-[2016.05.13-20.03.14:596][845]LogModuleManager: Shutting down and abandoning module SessionServices (63)
-[2016.05.13-20.03.14:596][845]LogModuleManager: Shutting down and abandoning module SourceCodeAccess (62)
-[2016.05.13-20.03.14:596][845]LogModuleManager: Shutting down and abandoning module HeadMountedDisplay (61)
-[2016.05.13-20.03.14:596][845]LogModuleManager: Shutting down and abandoning module XAudio2 (60)
-[2016.05.13-20.03.14:596][845]LogModuleManager: Shutting down and abandoning module Networking (58)
-[2016.05.13-20.03.14:596][845]LogModuleManager: Shutting down and abandoning module Core (57)
-[2016.05.13-20.03.14:596][845]LogModuleManager: Shutting down and abandoning module KismetCompiler (56)
-[2016.05.13-20.03.14:596][845]LogModuleManager: Shutting down and abandoning module PhysXFormats (55)
-[2016.05.13-20.03.14:603][845]LogModuleManager: Shutting down and abandoning module MeshUtilities (54)
-[2016.05.13-20.03.14:621][845]LogModuleManager: Shutting down and abandoning module CookingStats (53)
-[2016.05.13-20.03.14:621][845]LogModuleManager: Shutting down and abandoning module DerivedDataCache (52)
-[2016.05.13-20.03.14:621][845]LogDerivedDataCache: Shutdown
-[2016.05.13-20.03.14:621][845]LogModuleManager: Shutting down and abandoning module MetalShaderFormat (51)
-[2016.05.13-20.03.14:631][845]LogModuleManager: Shutting down and abandoning module ShaderFormatD3D (50)
-[2016.05.13-20.03.14:652][845]LogModuleManager: Shutting down and abandoning module ShaderFormatOpenGL (49)
-[2016.05.13-20.03.14:664][845]LogModuleManager: Shutting down and abandoning module TextureFormatUncompressed (48)
-[2016.05.13-20.03.14:664][845]LogModuleManager: Shutting down and abandoning module ImageWrapper (47)
-[2016.05.13-20.03.14:664][845]LogModuleManager: Shutting down and abandoning module TextureFormatASTC (46)
-[2016.05.13-20.03.14:664][845]LogModuleManager: Shutting down and abandoning module TextureFormatPVR (45)
-[2016.05.13-20.03.14:676][845]LogModuleManager: Shutting down and abandoning module TextureFormatDXT (44)
-[2016.05.13-20.03.14:681][845]LogModuleManager: Shutting down and abandoning module TextureFormatIntelISPCTexComp (43)
-[2016.05.13-20.03.14:687][845]LogModuleManager: Shutting down and abandoning module AudioFormatOpus (42)
-[2016.05.13-20.03.14:697][845]LogModuleManager: Shutting down and abandoning module AudioFormatOgg (41)
-[2016.05.13-20.03.14:707][845]LogModuleManager: Shutting down and abandoning module AudioFormatADPCM (40)
-[2016.05.13-20.03.14:717][845]LogModuleManager: Shutting down and abandoning module TVOSTargetPlatform (39)
-[2016.05.13-20.03.14:717][845]LogModuleManager: Shutting down and abandoning module Messaging (38)
-[2016.05.13-20.03.14:717][845]LogModuleManager: Shutting down and abandoning module IOSTargetPlatform (37)
-[2016.05.13-20.03.14:717][845]LogModuleManager: Shutting down and abandoning module HTML5TargetPlatform (36)
-[2016.05.13-20.03.14:717][845]LogModuleManager: Shutting down and abandoning module Android_MultiTargetPlatform (35)
-[2016.05.13-20.03.14:731][845]LogModuleManager: Shutting down and abandoning module Android_ASTCTargetPlatform (34)
-[2016.05.13-20.03.14:731][845]LogModuleManager: Shutting down and abandoning module Android_ETC2TargetPlatform (33)
-[2016.05.13-20.03.14:731][845]LogModuleManager: Shutting down and abandoning module Android_ETC1TargetPlatform (32)
-[2016.05.13-20.03.14:731][845]LogModuleManager: Shutting down and abandoning module Android_DXTTargetPlatform (31)
-[2016.05.13-20.03.14:731][845]LogModuleManager: Shutting down and abandoning module Android_ATCTargetPlatform (30)
-[2016.05.13-20.03.14:731][845]LogModuleManager: Shutting down and abandoning module Android_PVRTCTargetPlatform (29)
-[2016.05.13-20.03.14:731][845]LogModuleManager: Shutting down and abandoning module AndroidTargetPlatform (28)
-[2016.05.13-20.03.14:731][845]LogModuleManager: Shutting down and abandoning module AllDesktopTargetPlatform (27)
-[2016.05.13-20.03.14:731][845]LogModuleManager: Shutting down and abandoning module WindowsClientTargetPlatform (26)
-[2016.05.13-20.03.14:740][845]LogModuleManager: Shutting down and abandoning module WindowsServerTargetPlatform (25)
-[2016.05.13-20.03.14:750][845]LogModuleManager: Shutting down and abandoning module WindowsNoEditorTargetPlatform (24)
-[2016.05.13-20.03.14:760][845]LogModuleManager: Shutting down and abandoning module WindowsTargetPlatform (23)
-[2016.05.13-20.03.14:760][845]LogModuleManager: Shutting down and abandoning module TargetPlatform (22)
-[2016.05.13-20.03.14:761][845]LogModuleManager: Shutting down and abandoning module InputCore (21)
-[2016.05.13-20.03.14:761][845]LogModuleManager: Shutting down and abandoning module Settings (20)
-[2016.05.13-20.03.14:761][845]LogModuleManager: Shutting down and abandoning module OnlineSubsystem (18)
-[2016.05.13-20.03.14:761][845]LogModuleManager: Shutting down and abandoning module HTTP (17)
-[2016.05.13-20.03.14:761][845]LogModuleManager: Shutting down and abandoning module OculusRift (16)
-[2016.05.13-20.03.14:781][845]LogModuleManager: Shutting down and abandoning module ExampleDeviceProfileSelector (15)
-[2016.05.13-20.03.14:781][845]LogModuleManager: Shutting down and abandoning module TextureCompressor (14)
-[2016.05.13-20.03.14:793][845]LogModuleManager: Shutting down and abandoning module ShaderCore (13)
-[2016.05.13-20.03.14:793][845]LogModuleManager: Shutting down and abandoning module Landscape (12)
-[2016.05.13-20.03.14:793][845]LogModuleManager: Shutting down and abandoning module SlateRHIRenderer (11)
-[2016.05.13-20.03.14:811][845]LogModuleManager: Shutting down and abandoning module OpenGLDrv (10)
-[2016.05.13-20.03.14:825][845]LogModuleManager: Shutting down and abandoning module D3D11RHI (9)
-[2016.05.13-20.03.14:825][845]LogModuleManager: Shutting down and abandoning module AnimGraphRuntime (8)
-[2016.05.13-20.03.14:825][845]LogModuleManager: Shutting down and abandoning module Renderer (7)
-[2016.05.13-20.03.14:825][845]LogModuleManager: Shutting down and abandoning module Engine (6)
-[2016.05.13-20.03.14:825][845]LogModuleManager: Shutting down and abandoning module CoreUObject (5)
-[2016.05.13-20.03.14:825][845]LogModuleManager: Shutting down and abandoning module NetworkFile (4)
-[2016.05.13-20.03.14:838][845]LogModuleManager: Shutting down and abandoning module StreamingFile (3)
-[2016.05.13-20.03.14:849][845]LogModuleManager: Shutting down and abandoning module SandboxFile (2)
-[2016.05.13-20.03.14:861][845]LogModuleManager: Shutting down and abandoning module PakFile (1)
-[2016.05.13-20.03.14:866][845]LogExit: Exiting.
-[2016.05.13-20.03.14:978][845]Log file closed, 05/13/16 16:03:14
+	Function /Game/Blueprints/sassilization/sassGamePlayer.sassGamePlayer_C:ExecuteUbergraph_sassGamePlayer:2958
+[2016.05.14-02.53.49:777][225]LogBlueprintUserMessages: [sassGamePlayer_C_1] started
+[2016.05.14-02.53.49:777][225]LogBlueprintUserMessages: [sassGamePlayer_C_1] done
+[2016.05.14-02.53.49:820][227]LogNetPackageMap:Warning: FNetGUIDCache::SupportsObject: MaterialInstanceDynamic /Temp/Autosaves/Game/Maps/UEDPCorbit.orbit:PersistentLevel.sassGamePlayer_C_1.MaterialInstanceDynamic_2 NOT Supported.
+[2016.05.14-02.53.49:821][227]LogNetPackageMap:Warning: FNetGUIDCache::SupportsObject: MaterialInstanceDynamic /Temp/Autosaves/Game/Maps/UEDPCorbit.orbit:PersistentLevel.sassGamePlayer_C_0.MaterialInstanceDynamic_1 NOT Supported.
+[2016.05.14-02.53.55:448][576]LogNet: UChannel::ReceivedSequencedBunch: Bunch.bClose == true. ChIndex == 0. Calling ConditionalCleanUp.
+[2016.05.14-02.53.55:448][576]LogNet: UChannel::CleanUp: ChIndex == 0. Closing connection. [UChannel] ChIndex: 0, Closing: 0 [UNetConnection] RemoteAddr: 127.0.0.1:56772, Name: IpConnection_0, Driver: GameNetDriver IpNetDriver_0, IsServer: YES, PC: sassPlayerController_BP_C_1, Owner: sassPlayerController_BP_C_1
+[2016.05.14-02.53.55:449][576]LogNet: UNetConnection::Close: [UNetConnection] RemoteAddr: 127.0.0.1:56772, Name: IpConnection_0, Driver: GameNetDriver IpNetDriver_0, IsServer: YES, PC: sassPlayerController_BP_C_1, Owner: sassPlayerController_BP_C_1, Channels: 10, Time: 2016.05.14-02.53.55
+[2016.05.14-02.53.55:449][576]LogNet: UChannel::Close: Sending CloseBunch. ChIndex == 0. Name: [UChannel] ChIndex: 0, Closing: 0 [UNetConnection] RemoteAddr: 127.0.0.1:56772, Name: IpConnection_0, Driver: GameNetDriver IpNetDriver_0, IsServer: YES, PC: sassPlayerController_BP_C_1, Owner: sassPlayerController_BP_C_1
+[2016.05.14-02.53.56:078][615]LogGenericPlatformMisc: FPlatformMisc::RequestExit(0)
+[2016.05.14-02.53.56:437][616]LogNet: World NetDriver shutdown IpNetDriver_0 [GameNetDriver]
+[2016.05.14-02.53.56:437][616]LogNet: DestroyNamedNetDriver IpNetDriver_0 [GameNetDriver]
+[2016.05.14-02.53.56:437][616]LogExit: GameNetDriver IpNetDriver_0 shut down
+[2016.05.14-02.53.56:463][616]LogWindowsTextInputMethodSystem:Display: IME system now deactivated.
+[2016.05.14-02.53.56:518][616]LogExit: Preparing to exit.
+[2016.05.14-02.53.57:394][616]LogExit: Game engine shut down
+[2016.05.14-02.53.57:721][616]LogObj: Freed 0b from 0 cluster array pools.
+[2016.05.14-02.53.57:722][616]LogExit: Object subsystem successfully closed.
+[2016.05.14-02.53.57:857][616]LogD3D11RHI: Shutdown
+[2016.05.14-02.53.57:857][616]LogD3D11RHI: CleanupD3DDevice
+[2016.05.14-02.53.58:073][616]LogD3D11RHI: ~FD3D11DynamicRHI
+[2016.05.14-02.53.58:206][616]LogDerivedDataCache: Shutdown
+[2016.05.14-02.53.58:467][616]LogModuleManager: Shutting down and abandoning module AndroidDeviceDetection (124)
+[2016.05.14-02.53.58:638][616]LogModuleManager: Shutting down and abandoning module AutomationController (122)
+[2016.05.14-02.53.58:766][616]LogModuleManager: Shutting down and abandoning module AutomationWorker (121)
+[2016.05.14-02.53.58:768][616]LogModuleManager: Shutting down and abandoning module CharacterAI (120)
+[2016.05.14-02.53.58:768][616]LogModuleManager: Shutting down and abandoning module AITestSuite (119)
+[2016.05.14-02.53.58:778][616]LogModuleManager: Shutting down and abandoning module GameplayDebugger (118)
+[2016.05.14-02.53.58:778][616]LogModuleManager: Shutting down and abandoning module AIModule (117)
+[2016.05.14-02.53.58:779][616]LogModuleManager: Shutting down and abandoning module MovieSceneCapture (116)
+[2016.05.14-02.53.58:795][616]LogModuleManager: Shutting down and abandoning module StreamingPauseRendering (115)
+[2016.05.14-02.53.58:795][616]LogModuleManager: Shutting down and abandoning module PortalServices (114)
+[2016.05.14-02.53.58:795][616]LogModuleManager: Shutting down and abandoning module PortalRpc (113)
+[2016.05.14-02.53.58:795][616]LogModuleManager: Shutting down and abandoning module MessagingRpc (112)
+[2016.05.14-02.53.58:795][616]LogModuleManager: Shutting down and abandoning module ProfilerService (111)
+[2016.05.14-02.53.58:868][616]LogModuleManager: Shutting down and abandoning module TaskGraph (110)
+[2016.05.14-02.53.58:894][616]LogModuleManager: Shutting down and abandoning module SlateRemote (109)
+[2016.05.14-02.53.58:912][616]LogModuleManager: Shutting down and abandoning module SteamVRController (108)
+[2016.05.14-02.53.58:912][616]LogModuleManager: Shutting down and abandoning module SteamVR (107)
+[2016.05.14-02.53.58:912][616]LogModuleManager: Shutting down and abandoning module ProceduralMeshComponent (106)
+[2016.05.14-02.53.58:912][616]LogModuleManager: Shutting down and abandoning module OculusLibrary (105)
+[2016.05.14-02.53.58:912][616]LogModuleManager: Shutting down and abandoning module OculusInput (104)
+[2016.05.14-02.53.58:912][616]LogModuleManager: Shutting down and abandoning module CustomMeshComponent (103)
+[2016.05.14-02.53.58:912][616]LogModuleManager: Shutting down and abandoning module CableComponent (102)
+[2016.05.14-02.53.58:912][616]LogModuleManager: Shutting down and abandoning module ArchVisCharacter (101)
+[2016.05.14-02.53.58:912][616]LogModuleManager: Shutting down and abandoning module MainFrame (100)
+[2016.05.14-02.53.58:919][616]LogModuleManager: Shutting down and abandoning module LevelEditor (99)
+[2016.05.14-02.53.58:954][616]LogModuleManager: Shutting down and abandoning module GitPush (98)
+[2016.05.14-02.53.58:954][616]LogModuleManager: Shutting down and abandoning module HTML5Networking (97)
+[2016.05.14-02.53.58:954][616]LogModuleManager: Shutting down and abandoning module DesktopPlatform (96)
+[2016.05.14-02.53.58:960][616]LogModuleManager: Shutting down and abandoning module DirectoryWatcher (95)
+[2016.05.14-02.53.58:960][616]LogModuleManager: Shutting down and abandoning module HotReload (94)
+[2016.05.14-02.53.58:961][616]LogModuleManager: Shutting down and abandoning module VisualStudioSourceCodeAccess (93)
+[2016.05.14-02.53.58:961][616]LogModuleManager: Shutting down and abandoning module UObjectPlugin (92)
+[2016.05.14-02.53.58:961][616]LogModuleManager: Shutting down and abandoning module SubversionSourceControl (91)
+[2016.05.14-02.53.58:974][616]LogModuleManager: Shutting down and abandoning module SourceControl (90)
+[2016.05.14-02.53.58:981][616]LogModuleManager: Shutting down and abandoning module PerforceSourceControl (89)
+[2016.05.14-02.53.59:000][616]LogModuleManager: Shutting down and abandoning module SassC (88)
+[2016.05.14-02.53.59:000][616]LogModuleManager: Shutting down and abandoning module UdpMessaging (87)
+[2016.05.14-02.53.59:101][616]LogModuleManager: Shutting down and abandoning module LightPropagationVolumeRuntime (86)
+[2016.05.14-02.53.59:101][616]LogModuleManager: Shutting down and abandoning module Paper2D (85)
+[2016.05.14-02.53.59:118][616]LogModuleManager: Shutting down and abandoning module WindowsMoviePlayer (84)
+[2016.05.14-02.53.59:118][616]LogModuleManager: Shutting down and abandoning module Media (83)
+[2016.05.14-02.53.59:118][616]LogModuleManager: Shutting down and abandoning module WmfMedia (82)
+[2016.05.14-02.53.59:128][616]LogModuleManager: Shutting down and abandoning module MediaAssets (81)
+[2016.05.14-02.53.59:128][616]LogModuleManager: Shutting down and abandoning module GameLiveStreaming (80)
+[2016.05.14-02.53.59:128][616]LogModuleManager: Shutting down and abandoning module GameplayTagsEditor (79)
+[2016.05.14-02.53.59:139][616]LogModuleManager: Shutting down and abandoning module OnlineBlueprintSupport (78)
+[2016.05.14-02.53.59:139][616]LogModuleManager: Shutting down and abandoning module GameplayTasksEditor (77)
+[2016.05.14-02.53.59:139][616]LogModuleManager: Shutting down and abandoning module PropertyEditor (76)
+[2016.05.14-02.53.59:139][616]LogModuleManager: Shutting down and abandoning module BehaviorTreeEditor (75)
+[2016.05.14-02.53.59:167][616]LogModuleManager: Shutting down and abandoning module FunctionalTesting (74)
+[2016.05.14-02.53.59:167][616]LogModuleManager: Shutting down and abandoning module CollisionAnalyzer (73)
+[2016.05.14-02.53.59:186][616]LogModuleManager: Shutting down and abandoning module WorkspaceMenuStructure (72)
+[2016.05.14-02.53.59:186][616]LogModuleManager: Shutting down and abandoning module MessageLog (71)
+[2016.05.14-02.53.59:186][616]LogModuleManager: Shutting down and abandoning module Sequencer (70)
+[2016.05.14-02.53.59:211][616]LogModuleManager: Shutting down and abandoning module AssetTools (69)
+[2016.05.14-02.53.59:231][616]LogModuleManager: Shutting down and abandoning module UMGEditor (68)
+[2016.05.14-02.53.59:260][616]LogModuleManager: Shutting down and abandoning module UMG (67)
+[2016.05.14-02.53.59:260][616]LogModuleManager: Shutting down and abandoning module SlateReflector (66)
+[2016.05.14-02.53.59:285][616]LogModuleManager: Shutting down and abandoning module Slate (65)
+[2016.05.14-02.53.59:285][616]LogModuleManager: Shutting down and abandoning module EditorStyle (64)
+[2016.05.14-02.53.59:311][616]LogModuleManager: Shutting down and abandoning module SessionServices (63)
+[2016.05.14-02.53.59:311][616]LogModuleManager: Shutting down and abandoning module SourceCodeAccess (62)
+[2016.05.14-02.53.59:311][616]LogModuleManager: Shutting down and abandoning module HeadMountedDisplay (61)
+[2016.05.14-02.53.59:311][616]LogModuleManager: Shutting down and abandoning module XAudio2 (60)
+[2016.05.14-02.53.59:311][616]LogModuleManager: Shutting down and abandoning module Networking (58)
+[2016.05.14-02.53.59:311][616]LogModuleManager: Shutting down and abandoning module Core (57)
+[2016.05.14-02.53.59:311][616]LogModuleManager: Shutting down and abandoning module KismetCompiler (56)
+[2016.05.14-02.53.59:311][616]LogModuleManager: Shutting down and abandoning module PhysXFormats (55)
+[2016.05.14-02.53.59:311][616]LogModuleManager: Shutting down and abandoning module MeshUtilities (54)
+[2016.05.14-02.53.59:327][616]LogModuleManager: Shutting down and abandoning module CookingStats (53)
+[2016.05.14-02.53.59:327][616]LogModuleManager: Shutting down and abandoning module DerivedDataCache (52)
+[2016.05.14-02.53.59:327][616]LogDerivedDataCache: Shutdown
+[2016.05.14-02.53.59:327][616]LogModuleManager: Shutting down and abandoning module MetalShaderFormat (51)
+[2016.05.14-02.53.59:355][616]LogModuleManager: Shutting down and abandoning module ShaderFormatD3D (50)
+[2016.05.14-02.53.59:386][616]LogModuleManager: Shutting down and abandoning module ShaderFormatOpenGL (49)
+[2016.05.14-02.53.59:392][616]LogModuleManager: Shutting down and abandoning module TextureFormatUncompressed (48)
+[2016.05.14-02.53.59:392][616]LogModuleManager: Shutting down and abandoning module ImageWrapper (47)
+[2016.05.14-02.53.59:392][616]LogModuleManager: Shutting down and abandoning module TextureFormatASTC (46)
+[2016.05.14-02.53.59:392][616]LogModuleManager: Shutting down and abandoning module TextureFormatPVR (45)
+[2016.05.14-02.53.59:396][616]LogModuleManager: Shutting down and abandoning module TextureFormatDXT (44)
+[2016.05.14-02.53.59:401][616]LogModuleManager: Shutting down and abandoning module TextureFormatIntelISPCTexComp (43)
+[2016.05.14-02.53.59:401][616]LogModuleManager: Shutting down and abandoning module AudioFormatOpus (42)
+[2016.05.14-02.53.59:409][616]LogModuleManager: Shutting down and abandoning module AudioFormatOgg (41)
+[2016.05.14-02.53.59:421][616]LogModuleManager: Shutting down and abandoning module AudioFormatADPCM (40)
+[2016.05.14-02.53.59:425][616]LogModuleManager: Shutting down and abandoning module TVOSTargetPlatform (39)
+[2016.05.14-02.53.59:426][616]LogModuleManager: Shutting down and abandoning module Messaging (38)
+[2016.05.14-02.53.59:426][616]LogModuleManager: Shutting down and abandoning module IOSTargetPlatform (37)
+[2016.05.14-02.53.59:426][616]LogModuleManager: Shutting down and abandoning module HTML5TargetPlatform (36)
+[2016.05.14-02.53.59:426][616]LogModuleManager: Shutting down and abandoning module Android_MultiTargetPlatform (35)
+[2016.05.14-02.53.59:431][616]LogModuleManager: Shutting down and abandoning module Android_ASTCTargetPlatform (34)
+[2016.05.14-02.53.59:431][616]LogModuleManager: Shutting down and abandoning module Android_ETC2TargetPlatform (33)
+[2016.05.14-02.53.59:431][616]LogModuleManager: Shutting down and abandoning module Android_ETC1TargetPlatform (32)
+[2016.05.14-02.53.59:431][616]LogModuleManager: Shutting down and abandoning module Android_DXTTargetPlatform (31)
+[2016.05.14-02.53.59:432][616]LogModuleManager: Shutting down and abandoning module Android_ATCTargetPlatform (30)
+[2016.05.14-02.53.59:432][616]LogModuleManager: Shutting down and abandoning module Android_PVRTCTargetPlatform (29)
+[2016.05.14-02.53.59:432][616]LogModuleManager: Shutting down and abandoning module AndroidTargetPlatform (28)
+[2016.05.14-02.53.59:432][616]LogModuleManager: Shutting down and abandoning module AllDesktopTargetPlatform (27)
+[2016.05.14-02.53.59:432][616]LogModuleManager: Shutting down and abandoning module WindowsClientTargetPlatform (26)
+[2016.05.14-02.53.59:432][616]LogModuleManager: Shutting down and abandoning module WindowsServerTargetPlatform (25)
+[2016.05.14-02.53.59:432][616]LogModuleManager: Shutting down and abandoning module WindowsNoEditorTargetPlatform (24)
+[2016.05.14-02.53.59:432][616]LogModuleManager: Shutting down and abandoning module WindowsTargetPlatform (23)
+[2016.05.14-02.53.59:432][616]LogModuleManager: Shutting down and abandoning module TargetPlatform (22)
+[2016.05.14-02.53.59:432][616]LogModuleManager: Shutting down and abandoning module InputCore (21)
+[2016.05.14-02.53.59:432][616]LogModuleManager: Shutting down and abandoning module Settings (20)
+[2016.05.14-02.53.59:432][616]LogModuleManager: Shutting down and abandoning module OnlineSubsystem (18)
+[2016.05.14-02.53.59:432][616]LogModuleManager: Shutting down and abandoning module HTTP (17)
+[2016.05.14-02.53.59:432][616]LogModuleManager: Shutting down and abandoning module OculusRift (16)
+[2016.05.14-02.53.59:454][616]LogModuleManager: Shutting down and abandoning module ExampleDeviceProfileSelector (15)
+[2016.05.14-02.53.59:454][616]LogModuleManager: Shutting down and abandoning module TextureCompressor (14)
+[2016.05.14-02.53.59:473][616]LogModuleManager: Shutting down and abandoning module ShaderCore (13)
+[2016.05.14-02.53.59:473][616]LogModuleManager: Shutting down and abandoning module Landscape (12)
+[2016.05.14-02.53.59:473][616]LogModuleManager: Shutting down and abandoning module SlateRHIRenderer (11)
+[2016.05.14-02.53.59:503][616]LogModuleManager: Shutting down and abandoning module OpenGLDrv (10)
+[2016.05.14-02.53.59:520][616]LogModuleManager: Shutting down and abandoning module D3D11RHI (9)
+[2016.05.14-02.53.59:520][616]LogModuleManager: Shutting down and abandoning module AnimGraphRuntime (8)
+[2016.05.14-02.53.59:532][616]LogModuleManager: Shutting down and abandoning module Renderer (7)
+[2016.05.14-02.53.59:532][616]LogModuleManager: Shutting down and abandoning module Engine (6)
+[2016.05.14-02.53.59:532][616]LogModuleManager: Shutting down and abandoning module CoreUObject (5)
+[2016.05.14-02.53.59:532][616]LogModuleManager: Shutting down and abandoning module NetworkFile (4)
+[2016.05.14-02.53.59:542][616]LogModuleManager: Shutting down and abandoning module StreamingFile (3)
+[2016.05.14-02.53.59:549][616]LogModuleManager: Shutting down and abandoning module SandboxFile (2)
+[2016.05.14-02.53.59:550][616]LogModuleManager: Shutting down and abandoning module PakFile (1)
+[2016.05.14-02.53.59:550][616]LogExit: Exiting.
+[2016.05.14-02.53.59:624][616]Log file closed, 05/13/16 22:53:59
