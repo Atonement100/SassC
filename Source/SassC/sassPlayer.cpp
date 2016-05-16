@@ -7,15 +7,12 @@
 #include "Kismet/KismetStringLibrary.h" //necessary only for debugging
 
 
-// Sets default values
 AsassPlayer::AsassPlayer()
 {
- 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
 }
 
-// Called when the game starts or when spawned
 void AsassPlayer::BeginPlay()
 {
 	Super::BeginPlay();
@@ -25,14 +22,12 @@ void AsassPlayer::BeginPlay()
 
 }
 
-// Called every frame
 void AsassPlayer::Tick( float DeltaTime )
 {
 	Super::Tick( DeltaTime );
 	
 }
 
-// Called to bind functionality to input
 void AsassPlayer::SetupPlayerInputComponent(class UInputComponent* InputComponent)
 {
 	Super::SetupPlayerInputComponent(InputComponent);
