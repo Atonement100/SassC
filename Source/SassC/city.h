@@ -15,6 +15,8 @@ class SASSC_API Acity : public AbuildingBase
 	// Sets default values for this actor's properties
 	Acity();
 
+	virtual void PostInitializeComponents() override;
+
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 

@@ -6,9 +6,18 @@
 Acity::Acity() {
 	PrimaryActorTick.bCanEverTick = true;
 	//problematic, try moving rootcomponent here from buildingbase
-	//static ConstructorHelpers::FObjectFinder<UStaticMesh> CityMesh(TEXT("StaticMesh'/Game/StarterContent/Shapes/Shape_QuadPyramid.Shape_QuadPyramid'"));
-	//if (CityMesh.Object) { BuildingMesh->SetStaticMesh(CityMesh.Object); }
-	//BuildingMesh->AttachTo(RootComponent);
+	BuildingMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("City Mesh"));
+	BuildingMesh->AttachTo(RootComponent);
+	static ConstructorHelpers::FObjectFinder<UStaticMesh> CityMesh(TEXT("StaticMesh'/Game/StarterContent/Shapes/Shape_QuadPyramid.Shape_QuadPyramid'"));
+	if (CityMesh.Succeeded()) { BuildingMesh->SetStaticMesh(CityMesh.Object); }
+	BuildingCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("City Collision"));
+	BuildingCollision->AttachTo(BuildingMesh);
+	BuildingCollision->SetBoxExtent(CollisionBounds);
+}
+
+void Acity::PostInitializeComponents() {
+	Super::PostInitializeComponents();
+	BuildingCollision->SetRelativeLocation(CollisionDisplacement);
 }
 
 void Acity::BeginPlay() {

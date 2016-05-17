@@ -31,5 +31,9 @@ protected:
 	AsassPlayerState* OwningPlayerState;
 	UPROPERTY(BlueprintReadOnly, VisibleDefaultsOnly)
 	FName ColorParameterText = "PlayerColor";
+	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly)
+	FVector CollisionBounds = FVector(50.0f, 50.0f, 50.0f);
+	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly)
+	FVector CollisionDisplacement = FVector(0.0f, 0.0f, 50.0f);
 
 };
