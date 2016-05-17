@@ -18,8 +18,11 @@ public:
 	
 	virtual void Tick( float DeltaSeconds ) override;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Building Base")
 	USceneComponent* SceneComponent;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Building Base")
 	UStaticMeshComponent* BuildingMesh;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Building Base")
 	UBoxComponent* BuildingCollision;
 
 protected:

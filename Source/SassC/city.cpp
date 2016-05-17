@@ -17,7 +17,11 @@ Acity::Acity() {
 
 void Acity::PostInitializeComponents() {
 	Super::PostInitializeComponents();
-	BuildingCollision->SetRelativeLocation(CollisionDisplacement);
+	
+	//FTransform CollisionTransform = BuildingCollision->GetRelativeTransform();
+	//CollisionTransform.SetLocation(CollisionDisplacement);
+	
+	//BuildingCollision->SetRelativeLocation(CollisionDisplacement);
 }
 
 void Acity::BeginPlay() {
