@@ -18,14 +18,20 @@ public:
 	
 	virtual void Tick( float DeltaSeconds ) override;
 
+	void UpdateMaterial(FLinearColor PlayerColor, AActor* BuildingRef);
+
+	UFUNCTION(Reliable, NetMulticast, WithValidation)
+	void ColorBldg(FLinearColor PlayerColor, AActor* BuildingRef);
+	virtual void ColorBldg_Implementation(FLinearColor PlayerColor, AActor* BuildingRef);
+	virtual bool ColorBldg_Validate(FLinearColor PlayerColor, AActor* BuildingRef);
+
+protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Building Base")
 	USceneComponent* SceneComponent;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Building Base")
 	UStaticMeshComponent* BuildingMesh;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Building Base")
 	UBoxComponent* BuildingCollision;
-
-protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Building Base")
 	float BuildingHealth;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Building Base")

@@ -23,6 +23,12 @@ class SASSC_API Acity : public AbuildingBase
 	// Called every frame
 	virtual void Tick(float DeltaSeconds) override;
 	
-	
-	
+	/*
+	void UpdateMaterial(FLinearColor PlayerColor, AActor* BuildingRef);
+
+	UFUNCTION(Reliable, NetMulticast, WithValidation)
+	void ColorBldg(FLinearColor PlayerColor, AActor* BuildingRef);
+	virtual void ColorBldg_Implementation(FLinearColor PlayerColor, AActor* BuildingRef);
+	virtual bool ColorBldg_Validate(FLinearColor PlayerColor, AActor* BuildingRef);
+	*/
 };

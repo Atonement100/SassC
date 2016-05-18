@@ -5,14 +5,17 @@
 
 Acity::Acity() {
 	PrimaryActorTick.bCanEverTick = true;
-	//problematic, try moving rootcomponent here from buildingbase
+	
 	BuildingMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("City Mesh"));
 	BuildingMesh->AttachTo(RootComponent);
 	static ConstructorHelpers::FObjectFinder<UStaticMesh> CityMesh(TEXT("StaticMesh'/Game/StarterContent/Shapes/Shape_QuadPyramid.Shape_QuadPyramid'"));
 	if (CityMesh.Succeeded()) { BuildingMesh->SetStaticMesh(CityMesh.Object); }
+	
 	BuildingCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("City Collision"));
 	BuildingCollision->AttachTo(BuildingMesh);
 	BuildingCollision->SetBoxExtent(CollisionBounds);
+
+	BldgMeshMaterialDynamic = BuildingMesh->CreateAndSetMaterialInstanceDynamic(0);
 }
 
 void Acity::PostInitializeComponents() {
@@ -32,3 +35,17 @@ void Acity::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
 }
 
+/*
+void Acity::UpdateMaterial(FLinearColor PlayerColor, AActor* BuildingRef) {
+	ColorBldg(PlayerColor, BuildingRef);
+}
+
+void Acity::ColorBldg_Implementation(FLinearColor PlayerColor, AActor* BuildingRef) {
+	BldgMeshMaterialDynamic->SetVectorParameterValue(ColorParameterText, PlayerColor);
+	((Acity*)BuildingRef)->BuildingMesh->SetMaterial(0, BldgMeshMaterialDynamic);
+}
+
+bool Acity::ColorBldg_Validate(FLinearColor PlayerColor, AActor* BuildingRef) {
+	return true;
+}
+*/

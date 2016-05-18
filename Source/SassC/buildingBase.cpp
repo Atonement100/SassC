@@ -23,3 +23,16 @@ void AbuildingBase::Tick( float DeltaTime )
 
 }
 
+void AbuildingBase::UpdateMaterial(FLinearColor PlayerColor, AActor* BuildingRef) {
+	ColorBldg(PlayerColor, BuildingRef);
+}
+
+void AbuildingBase::ColorBldg_Implementation(FLinearColor PlayerColor, AActor* BuildingRef) {
+	BldgMeshMaterialDynamic->SetVectorParameterValue(ColorParameterText, PlayerColor);
+	((AbuildingBase*)BuildingRef)->BuildingMesh->SetMaterial(0, BldgMeshMaterialDynamic);
+}
+
+bool AbuildingBase::ColorBldg_Validate(FLinearColor PlayerColor, AActor* BuildingRef) {
+	return true;
+}
+
