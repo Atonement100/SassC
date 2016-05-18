@@ -9,6 +9,10 @@ AbuildingBase::AbuildingBase()
 	SceneComponent = CreateDefaultSubobject<USceneComponent>(TEXT("Root"));
 	SceneComponent->SetRelativeLocation(FVector::ZeroVector);
 	RootComponent = SceneComponent;
+	bReplicateMovement = true;
+	bAlwaysRelevant = true;
+	bNetLoadOnClient = true;
+	bReplicates = true;
 }
 
 void AbuildingBase::BeginPlay()

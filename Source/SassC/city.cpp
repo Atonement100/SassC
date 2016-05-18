@@ -1,5 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
+
 #include "SassC.h"
 #include "city.h"
 
@@ -15,12 +16,12 @@ Acity::Acity() {
 	BuildingCollision->AttachTo(BuildingMesh);
 	BuildingCollision->SetBoxExtent(CollisionBounds);
 
-	BldgMeshMaterialDynamic = BuildingMesh->CreateAndSetMaterialInstanceDynamic(0);
 }
 
 void Acity::PostInitializeComponents() {
 	Super::PostInitializeComponents();
-	
+	BldgMeshMaterialDynamic = BuildingMesh->CreateDynamicMaterialInstance(0, BuildingMesh->GetMaterial(0));
+
 	//FTransform CollisionTransform = BuildingCollision->GetRelativeTransform();
 	//CollisionTransform.SetLocation(CollisionDisplacement);
 	
@@ -35,11 +36,6 @@ void Acity::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
 }
 
-/*
-void Acity::UpdateMaterial(FLinearColor PlayerColor, AActor* BuildingRef) {
-	ColorBldg(PlayerColor, BuildingRef);
-}
-
 void Acity::ColorBldg_Implementation(FLinearColor PlayerColor, AActor* BuildingRef) {
 	BldgMeshMaterialDynamic->SetVectorParameterValue(ColorParameterText, PlayerColor);
 	((Acity*)BuildingRef)->BuildingMesh->SetMaterial(0, BldgMeshMaterialDynamic);
@@ -48,4 +44,3 @@ void Acity::ColorBldg_Implementation(FLinearColor PlayerColor, AActor* BuildingR
 bool Acity::ColorBldg_Validate(FLinearColor PlayerColor, AActor* BuildingRef) {
 	return true;
 }
-*/

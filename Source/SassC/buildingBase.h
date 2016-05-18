@@ -18,7 +18,8 @@ public:
 	
 	virtual void Tick( float DeltaSeconds ) override;
 
-	void UpdateMaterial(FLinearColor PlayerColor, AActor* BuildingRef);
+	UFUNCTION(BlueprintCallable, Category = "Spawnables Functions")
+	virtual void UpdateMaterial(FLinearColor PlayerColor, AActor* BuildingRef);
 
 	UFUNCTION(Reliable, NetMulticast, WithValidation)
 	void ColorBldg(FLinearColor PlayerColor, AActor* BuildingRef);
