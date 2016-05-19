@@ -14,15 +14,28 @@ public:
 	// Sets default values for this character's properties
 	AunitBase();
 
-	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-	
-	// Called every frame
 	virtual void Tick( float DeltaSeconds ) override;
-
-	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
 
-	
+protected:
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
+		UMaterialInstanceDynamic* UnitDecalMaterialDynamic;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
+		UMaterialInstanceDynamic* UnitMeshMaterialDynamic;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
+		FName ColorParameterName;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
+		float Health;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
+	USkeletalMeshComponent* UnitMesh;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
+	UDecalComponent* UnderUnitDecal;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
+	UDecalComponent* SelectionCircleDecal;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
+	UStaticMeshComponent* DetectionSphere;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
+	UTextRenderComponent* TextRender;
 	
 };
