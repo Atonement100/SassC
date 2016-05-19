@@ -2,6 +2,7 @@
 
 
 #include "SassC.h"
+#include "Kismet/KismetStringLibrary.h"
 #include "city.h"
 
 Acity::Acity() {
@@ -15,7 +16,6 @@ Acity::Acity() {
 	BuildingCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("City Collision"));
 	BuildingCollision->AttachTo(BuildingMesh);
 	BuildingCollision->SetBoxExtent(CollisionBounds);
-
 }
 
 void Acity::PostInitializeComponents() {
@@ -30,10 +30,12 @@ void Acity::PostInitializeComponents() {
 
 void Acity::BeginPlay() {
 	Super::BeginPlay();
+
 }
 
 void Acity::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
+	GEngine->AddOnScreenDebugMessage(-1, DeltaTime, FColor::Red, UKismetStringLibrary::Conv_BoolToString(BuildingMesh->bOnlyOwnerSee));
 }
 
 void Acity::ColorBldg_Implementation(FLinearColor PlayerColor, AActor* BuildingRef) {

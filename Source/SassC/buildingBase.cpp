@@ -13,6 +13,7 @@ AbuildingBase::AbuildingBase()
 	bAlwaysRelevant = true;
 	bNetLoadOnClient = true;
 	bReplicates = true;
+	
 }
 
 void AbuildingBase::BeginPlay()
