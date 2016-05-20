@@ -18,15 +18,32 @@ public:
 	virtual void Tick( float DeltaSeconds ) override;
 	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
 
+	UFUNCTION()
+	virtual void OnOverlapBegin(AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+	UFUNCTION()
+	virtual void OnOverlapEnd(AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+
+	UFUNCTION(BlueprintCallable, Category = "Spawnables Functions")
+	virtual void SetDecalVisiblity(UDecalComponent* DecalRef, bool isVisible);
+
+	UFUNCTION(BlueprintCallable, Category = "Spawnables Functions")
+	virtual void UpdateMaterial(FLinearColor PlayerColor);
+
+	UFUNCTION(Reliable, NetMulticast, WithValidation)
+	void ColorUnitDecal(FLinearColor PlayerColor);
+	virtual void ColorUnitDecal_Implementation(FLinearColor PlayerColor);
+	virtual bool ColorUnitDecal_Validate(FLinearColor PlayerColor);
+
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
-		UMaterialInstanceDynamic* UnitDecalMaterialDynamic;
+	UMaterialInstanceDynamic* UnitDecalMaterialDynamic;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
-		UMaterialInstanceDynamic* UnitMeshMaterialDynamic;
+	UMaterialInstanceDynamic* UnitMeshMaterialDynamic;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
-		FName ColorParameterName;
+	FName ColorParameterName = "PlayerColor";
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
-		float Health;
+	float Health = 100.0f;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
 	USkeletalMeshComponent* UnitMesh;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")

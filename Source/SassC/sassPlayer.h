@@ -84,6 +84,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "HUD")
 	UUserWidget* GetGameWidget();
 
+	UFUNCTION(BlueprintCallable, Category = "Spawnables")
+	AActor* GetSelectionSphereHolder();
+
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Default")
 	TSubclassOf<UUserWidget> PauseWidgetClass;
 
@@ -95,8 +98,6 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Default")
 	TSubclassOf<AActor> PlayerControllerClass;
-
-
 
 private:
 	bool InvertPitch = false;
@@ -116,4 +117,5 @@ private:
 	FInputModeGameAndUI GameAndUI;
 	FInputModeGameOnly GameOnly;
 	APlayerController* PlayerControllerPtr;
+	AActor* SelectionSphereHolder;
 };

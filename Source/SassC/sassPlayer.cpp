@@ -256,3 +256,7 @@ void AsassPlayer::YawCamera(float AxisValue) {
 UUserWidget* AsassPlayer::GetGameWidget() {
 	return GameWidget;
 }
+
+AActor* AsassPlayer::GetSelectionSphereHolder() {
+	return SelectionSphereHolder;
+}
