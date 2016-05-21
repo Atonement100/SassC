@@ -20,6 +20,8 @@ public:
 	// Called every frame
 	virtual void Tick( float DeltaSeconds ) override;
 
-	
+protected:
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Selection Sphere")
+		UStaticMeshComponent* Sphere;
 	
 };

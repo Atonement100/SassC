@@ -4,6 +4,7 @@
 #include "sassPlayer.h"
 #include "sassPlayerState.h"
 #include "Kismet/GameplayStatics.h"
+#include "Kismet/KismetArrayLibrary.h"
 #include "unitBase.h"
 
 AunitBase::AunitBase()
@@ -30,10 +31,11 @@ AunitBase::AunitBase()
 void AunitBase::OnOverlapBegin(class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) {
 	AsassPlayer* PlayerCharacterRef = (AsassPlayer*)UGameplayStatics::GetPlayerCharacter(this, 0);
 
-	if (OtherActor == PlayerCharacterRef->GetSelectionSphereHolder()) {
+	if (PlayerCharacterRef != nullptr && OtherActor == PlayerCharacterRef->GetSelectionSphereHolder()) {
 		AsassPlayerState* PlayerStateRef = (AsassPlayerState*)PlayerCharacterRef->PlayerState;
-		
-		//if Playerstate->ControllerBuildings contains self, turn on decal of unit
+		if (PlayerStateRef != nullptr && PlayerStateRef->GetControlledBuildings().Contains(this)){
+			SetDecalVisiblity(SelectionCircleDecal, true);
+		}
 	}
 
 }
@@ -41,9 +43,11 @@ void AunitBase::OnOverlapBegin(class AActor* OtherActor, class UPrimitiveCompone
 void AunitBase::OnOverlapEnd(class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex) {
 	AsassPlayer* PlayerCharacterRef = (AsassPlayer*)UGameplayStatics::GetPlayerCharacter(this, 0);
 
-	if (OtherActor == PlayerCharacterRef->GetSelectionSphereHolder()) {
+	if (PlayerCharacterRef != nullptr && OtherActor == PlayerCharacterRef->GetSelectionSphereHolder()) {
 		AsassPlayerState* PlayerStateRef = (AsassPlayerState*)PlayerCharacterRef->PlayerState;
-		//if Playerstate->ControllerBuildings contains self, turn off decal of unit
+		if (PlayerStateRef != nullptr && PlayerStateRef->GetControlledBuildings().Contains(this)) {
+			SetDecalVisiblity(SelectionCircleDecal, false);
+		}
 	}
 }
 

@@ -5,15 +5,11 @@
 #include "GameFramework/GameState.h"
 #include "sassGameState.generated.h"
 
-/**
- * 
- */
+
 UCLASS()
 class SASSC_API AsassGameState : public AGameState
 {
 	GENERATED_BODY()
-	
-	
-	
+
 	
 };
