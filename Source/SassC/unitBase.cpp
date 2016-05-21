@@ -75,8 +75,13 @@ void AunitBase::UpdateMaterial(FLinearColor PlayerColor)
 }
 
 void AunitBase::ColorUnitDecal_Implementation(FLinearColor PlayerColor) {
-	UnitDecalMaterialDynamic->SetVectorParameterValue(ColorParameterName, PlayerColor);
-	UnderUnitDecal->SetDecalMaterial(UnitDecalMaterialDynamic);
+	if (UnitDecalMaterialDynamic != nullptr && UnderUnitDecal != nullptr) {
+		UnitDecalMaterialDynamic->SetVectorParameterValue(ColorParameterName, PlayerColor);
+		UnderUnitDecal->SetDecalMaterial(UnitDecalMaterialDynamic);
+	}
+	else {
+		GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Green, "decal doesn't exist");
+	}
 }
 
 bool AunitBase::ColorUnitDecal_Validate(FLinearColor PlayerColor) {
@@ -84,6 +89,6 @@ bool AunitBase::ColorUnitDecal_Validate(FLinearColor PlayerColor) {
 }
 
 void AunitBase::SetDecalVisiblity(UDecalComponent* DecalRef, bool isVisible) {
-	
+	if (DecalRef != nullptr) DecalRef->bVisible = isVisible;
 }
 

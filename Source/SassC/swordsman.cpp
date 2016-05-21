@@ -7,15 +7,6 @@ Aswordsman::Aswordsman()
 {
 	PrimaryActorTick.bCanEverTick = true;
 
-	/*
-	UnitMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Unit Mesh"));
-	UnitMesh->AttachTo(RootComponent);
-	static ConstructorHelpers::FObjectFinder<USkeletalMesh> TempMesh(TEXT("SkeletalMesh'/Game/Blueprints/sassilization/UnitModels/swordsman/swordsman.swordsman'"));
-	if (TempMesh.Succeeded()) { UnitMesh->SetSkeletalMesh(TempMesh.Object); }
-	*/ 
-	// Mesh is inherited from character, might not need to replace it.
-
-
 }
 
 void Aswordsman::BeginPlay()

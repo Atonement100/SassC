@@ -26,21 +26,21 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "PlayerState")
 	TSubclassOf<AActor> ActiveBuilding;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "PlayerState")
-		float DeltaGold;
+		float DeltaGold = 1;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "PlayerState")
-		float Gold;
+		float Gold = 50;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "PlayerState")
-		float DeltaIron;
+		float DeltaIron = 8;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "PlayerState")
-		float Iron;
+		float Iron = 50;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "PlayerState")
-		float DeltaFood;
+		float DeltaFood = 8;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "PlayerState")
-		float Food;
+		float Food = 50;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "PlayerState")
-		float PopulationLimit;
+		float PopulationLimit = 7;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "PlayerState")
-		float CurrentPopulation;
+		float CurrentPopulation = 0;
 	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadWrite, Category = "PlayerState")
 		FLinearColor PlayerColor;
 	
