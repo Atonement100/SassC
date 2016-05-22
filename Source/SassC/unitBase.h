@@ -25,7 +25,7 @@ public:
 	virtual void OnOverlapEnd(AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 
 	UFUNCTION(BlueprintCallable, Category = "Spawnables Functions")
-	virtual void SetDecalVisiblity(UDecalComponent* DecalRef, bool isVisible);
+	virtual void SetDecalVisibility(UDecalComponent* DecalRef, bool isVisible);
 
 	UFUNCTION(BlueprintCallable, Category = "Spawnables Functions")
 	virtual void UpdateMaterial(FLinearColor PlayerColor);
@@ -34,6 +34,9 @@ public:
 	void ColorUnitDecal(FLinearColor PlayerColor);
 	virtual void ColorUnitDecal_Implementation(FLinearColor PlayerColor);
 	virtual bool ColorUnitDecal_Validate(FLinearColor PlayerColor);
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
+		UDecalComponent* SelectionCircleDecal;
 
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
@@ -48,8 +51,6 @@ protected:
 	USkeletalMeshComponent* UnitMesh;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
 	UDecalComponent* UnderUnitDecal;
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
-	UDecalComponent* SelectionCircleDecal;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
 	UStaticMeshComponent* DetectionSphere;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")

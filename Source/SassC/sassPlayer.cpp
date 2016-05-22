@@ -4,6 +4,8 @@
 #include "sassPlayer.h"
 #include "sassPauseMenu.h"
 #include "sassPlayerController.h"
+#include "sassPlayerState.h"
+#include "unitBase.h"
 #include "Kismet/KismetStringLibrary.h" //necessary only for debugging
 
 
@@ -259,4 +261,25 @@ UUserWidget* AsassPlayer::GetGameWidget() {
 
 AActor* AsassPlayer::GetSelectionSphereHolder() {
 	return SelectionSphereHolder;
+}
+
+void AsassPlayer::TurnOffAllSelectionCircles()
+{
+	for (AActor* UnitIt : (((AsassPlayerState*)PlayerState)->ControlledBuildings)) {
+		AunitBase* Unit = (AunitBase*)UnitIt;
+		Unit->SetDecalVisibility(Unit->SelectionCircleDecal, false);
+	}
+}
+
+void AsassPlayer::CreateSelectedUnitsArray(TArray<FHitResult> Hits)
+{
+	SelectedUnits.Empty();
+	for (FHitResult Hit : Hits) {
+		AunitBase* Unit = (AunitBase*)(Hit.Actor.Get);
+		if (Unit != nullptr) {
+			SelectedUnits.Add(Unit);
+			Unit->SetDecalVisibility(Unit->SelectionCircleDecal, true);
+		}
+	}
+	//((AsassPlayerState*)PlayerState)->SelectedUnits = SelectedUnits;
 }

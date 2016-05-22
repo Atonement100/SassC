@@ -18,13 +18,12 @@ class SASSC_API AsassPlayerState : public APlayerState
 public:
 	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadWrite, Category = "PlayerState")
 		TArray<AActor*> ControlledBuildings;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "PlayerState")
+		TArray<AunitBase*> SelectedUnits;
 
 protected:
-
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "PlayerState")
-	TArray<AunitBase*> SelectedUnits;
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "PlayerState")
-	TSubclassOf<AActor> ActiveBuilding;
+		TSubclassOf<AActor> ActiveBuilding;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "PlayerState")
 		float DeltaGold = 1;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "PlayerState")

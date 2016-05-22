@@ -87,6 +87,12 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Spawnables")
 	AActor* GetSelectionSphereHolder();
 
+	UFUNCTION(BlueprintCallable, Category = "Spawnables")
+	void TurnOffAllSelectionCircles();
+
+	UFUNCTION(BlueprintCallable, Category = "Spawnables")
+	void CreateSelectedUnitsArray(TArray<FHitResult> Hits);
+
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Default")
 	TSubclassOf<UUserWidget> PauseWidgetClass;
 
@@ -118,4 +124,5 @@ private:
 	FInputModeGameOnly GameOnly;
 	APlayerController* PlayerControllerPtr;
 	AActor* SelectionSphereHolder;
+	TArray<AunitBase*> SelectedUnits;
 };
