@@ -16,11 +16,11 @@ class SASSC_API AsassPlayerState : public APlayerState
 	AsassPlayerState();
 
 public:
-	TArray<AActor*> GetControlledBuildings() const;
+	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadWrite, Category = "PlayerState")
+		TArray<AActor*> ControlledBuildings;
 
 protected:
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "PlayerState")
-	TArray<AActor*> ControlledBuildings;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "PlayerState")
 	TArray<AunitBase*> SelectedUnits;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "PlayerState")

@@ -12,8 +12,6 @@ void AsassPlayerState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty> &Out
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 	DOREPLIFETIME(AsassPlayerState, PlayerColor);
+	DOREPLIFETIME(AsassPlayerState, ControlledBuildings);
 }
 
-TArray<AActor*> AsassPlayerState::GetControlledBuildings() const {
-	return ControlledBuildings;
-}

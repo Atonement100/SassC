@@ -33,7 +33,7 @@ void AunitBase::OnOverlapBegin(class AActor* OtherActor, class UPrimitiveCompone
 
 	if (PlayerCharacterRef != nullptr && OtherActor == PlayerCharacterRef->GetSelectionSphereHolder()) {
 		AsassPlayerState* PlayerStateRef = (AsassPlayerState*)PlayerCharacterRef->PlayerState;
-		if (PlayerStateRef != nullptr && PlayerStateRef->GetControlledBuildings().Contains(this)){
+		if (PlayerStateRef != nullptr && PlayerStateRef->ControlledBuildings.Contains(this)){
 			SetDecalVisiblity(SelectionCircleDecal, true);
 		}
 	}
@@ -45,7 +45,7 @@ void AunitBase::OnOverlapEnd(class AActor* OtherActor, class UPrimitiveComponent
 
 	if (PlayerCharacterRef != nullptr && OtherActor == PlayerCharacterRef->GetSelectionSphereHolder()) {
 		AsassPlayerState* PlayerStateRef = (AsassPlayerState*)PlayerCharacterRef->PlayerState;
-		if (PlayerStateRef != nullptr && PlayerStateRef->GetControlledBuildings().Contains(this)) {
+		if (PlayerStateRef != nullptr && PlayerStateRef->ControlledBuildings.Contains(this)) {
 			SetDecalVisiblity(SelectionCircleDecal, false);
 		}
 	}
@@ -89,6 +89,7 @@ bool AunitBase::ColorUnitDecal_Validate(FLinearColor PlayerColor) {
 }
 
 void AunitBase::SetDecalVisiblity(UDecalComponent* DecalRef, bool isVisible) {
-	if (DecalRef != nullptr) DecalRef->bVisible = isVisible;
+	if (DecalRef != nullptr) DecalRef->SetVisibility(isVisible);
+	else { GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Orange, "decal doesn't exist (visibility)"); }
 }
 

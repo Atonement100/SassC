@@ -35,7 +35,6 @@ void Acity::BeginPlay() {
 
 void Acity::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
-	GEngine->AddOnScreenDebugMessage(-1, DeltaTime, FColor::Red, UKismetStringLibrary::Conv_BoolToString(BuildingMesh->bOnlyOwnerSee));
 }
 
 void Acity::ColorBldg_Implementation(FLinearColor PlayerColor, AActor* BuildingRef) {
