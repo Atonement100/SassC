@@ -263,6 +263,7 @@ AActor* AsassPlayer::GetSelectionSphereHolder() {
 	return SelectionSphereHolder;
 }
 
+#pragma region Unit Interaction
 void AsassPlayer::TurnOffAllSelectionCircles()
 {
 	for (AActor* UnitIt : (((AsassPlayerState*)PlayerState)->ControlledBuildings)) {
@@ -274,12 +275,19 @@ void AsassPlayer::TurnOffAllSelectionCircles()
 void AsassPlayer::CreateSelectedUnitsArray(TArray<FHitResult> Hits)
 {
 	SelectedUnits.Empty();
+	AsassPlayerState* TempPlayerState = ((AsassPlayerState*)PlayerState);
+
 	for (FHitResult Hit : Hits) {
-		AunitBase* Unit = (AunitBase*)(Hit.Actor.Get);
-		if (Unit != nullptr) {
+		AunitBase* Unit = (AunitBase*)(Hit.GetActor());
+		//TODO:
+		//When ownership of pawns is set up, change the second half of this statement
+		//to check for Unit->owner = calling player... much more efficient.
+		if (Unit != nullptr && TempPlayerState->ControlledBuildings.Contains(Unit)) {
 			SelectedUnits.Add(Unit);
 			Unit->SetDecalVisibility(Unit->SelectionCircleDecal, true);
 		}
 	}
-	//((AsassPlayerState*)PlayerState)->SelectedUnits = SelectedUnits;
+
+	TempPlayerState->SelectedUnits = SelectedUnits;
 }
+#pragma endregion

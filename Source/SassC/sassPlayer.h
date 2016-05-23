@@ -11,6 +11,8 @@
 #include "GameFramework/Character.h"
 #include "sassPlayer.generated.h"
 
+class AunitBase;
+
 UCLASS()
 class SASSC_API AsassPlayer : public ACharacter
 {
