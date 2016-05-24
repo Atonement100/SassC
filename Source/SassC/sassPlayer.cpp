@@ -6,7 +6,10 @@
 #include "sassPlayerController.h"
 #include "sassPlayerState.h"
 #include "unitBase.h"
+#include "SassCStaticLibrary.h"
 #include "Kismet/KismetStringLibrary.h" //necessary only for debugging
+
+#define MAX_BLDG_CORNER_DIFFERENCE 6.0f
 
 
 AsassPlayer::AsassPlayer()
@@ -291,3 +294,27 @@ void AsassPlayer::CreateSelectedUnitsArray(TArray<FHitResult> Hits)
 	TempPlayerState->SelectedUnits = SelectedUnits;
 }
 #pragma endregion
+
+bool AsassPlayer::CheckBldgCorners(TArray<FVector> ExtraLocs, FVector Center)
+{
+	FHitResult Hit;
+	TArray<float> TraceHeights;
+	for (FVector Loc : ExtraLocs) {	
+		if (USassCStaticLibrary::Trace(GetWorld(), this, Center + Loc, Center + Loc - FVector(0, 0, 35), Hit, WorldStatic)) {
+			TraceHeights.Add(Hit.Location.Z);
+		}
+		else {
+			GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Emerald, "SassPlayer CheckBldgCorners: TRACE MADE NO CONTACT");
+			return true;
+		}
+	}
+	float first = TraceHeights[0];
+	for (float Height : TraceHeights) {
+		if (FMath::Abs(Height - first) > MAX_BLDG_CORNER_DIFFERENCE) {
+			GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Emerald, "SassPlayer CheckBldgCorners: HEIGHTS NOT EQUAL");
+			return true;
+		}
+	}
+
+	return false;
+}

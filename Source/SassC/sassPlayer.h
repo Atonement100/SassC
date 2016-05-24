@@ -95,6 +95,11 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Spawnables")
 	void CreateSelectedUnitsArray(TArray<FHitResult> Hits);
 
+	UFUNCTION(BlueprintCallable, Category = "Spawnables")
+	bool CheckBldgCorners(TArray<FVector> ExtraLocs, FVector Center);
+
+
+
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Default")
 	TSubclassOf<UUserWidget> PauseWidgetClass;
 
@@ -127,4 +132,6 @@ private:
 	APlayerController* PlayerControllerPtr;
 	AActor* SelectionSphereHolder;
 	TArray<AunitBase*> SelectedUnits;
+	TArray<AActor*> WorldStaticObjects;
+	FCollisionObjectQueryParams WorldStatic = FCollisionObjectQueryParams(ECollisionChannel::ECC_WorldStatic);
 };

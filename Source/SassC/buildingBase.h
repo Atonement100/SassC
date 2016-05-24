@@ -26,6 +26,9 @@ public:
 	virtual void ColorBldg_Implementation(FLinearColor PlayerColor, AActor* BuildingRef);
 	virtual bool ColorBldg_Validate(FLinearColor PlayerColor, AActor* BuildingRef);
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Building Base")
+	TArray<FVector> CornerLocations;
+
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Building Base")
 	USceneComponent* SceneComponent;
@@ -45,5 +48,5 @@ protected:
 	FVector CollisionBounds = FVector(50.0f, 50.0f, 50.0f);
 	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly)
 	FVector CollisionDisplacement = FVector(0.0f, 0.0f, 50.0f);
-
+	
 };
