@@ -22,7 +22,7 @@ public:
 		TArray<AunitBase*> SelectedUnits;
 
 protected:
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "PlayerState")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "PlayerState")
 		TSubclassOf<AActor> ActiveBuilding;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "PlayerState")
 		float DeltaGold = 1;

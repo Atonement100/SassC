@@ -97,9 +97,7 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Spawnables")
 	bool CheckBldgCorners(TArray<FVector> ExtraLocs, FVector Center);
-
-
-
+	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Default")
 	TSubclassOf<UUserWidget> PauseWidgetClass;
 
