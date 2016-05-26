@@ -5,8 +5,10 @@
 #include "sassPauseMenu.h"
 #include "sassPlayerController.h"
 #include "sassPlayerState.h"
+#include "sassGameState.h"
 #include "unitBase.h"
 #include "SassCStaticLibrary.h"
+#include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetStringLibrary.h" //necessary only for debugging
 
 #define MAX_BLDG_CORNER_DIFFERENCE 6.0f
@@ -24,7 +26,7 @@ void AsassPlayer::BeginPlay()
 	PlayerControllerPtr = UGameplayStatics::GetPlayerController(this, 0);
 	CleanupHUD();
 	CreatePregameHUD();
-
+//	if (Role == ROLE_Authority) { Cast<AsassGameState>(UGameplayStatics::GetGameState(GetWorld()))->World = GetWorld(); }
 }
 
 void AsassPlayer::Tick( float DeltaTime )
