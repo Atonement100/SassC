@@ -3,8 +3,6 @@
 #include "SassC.h"
 #include "sassGameState.h"
 
-AsassGameState::AsassGameState() {
 
-}
 
 

@@ -11,6 +11,5 @@ class SASSC_API AsassGameState : public AGameState
 {
 	GENERATED_BODY()
 
-	AsassGameState();
 	
 };

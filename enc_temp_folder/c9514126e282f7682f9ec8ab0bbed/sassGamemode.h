@@ -17,14 +17,15 @@ class SASSC_API AsassGamemode : public AGameMode
 	AsassGamemode();
 
 public:
+	//UPROPERTY(Replicated, EditDefaultsOnly, BlueprintReadOnly, Category = "Gamemode")
+	float WarmUpTime = 10.0f;
+	//UPROPERTY(Replicated, EditDefaultsOnly, BlueprintReadOnly, Category = "Gamemode")
+	int GoldGoal = 800;
+	//UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, Category = "Gamemode")
+	float TimeKeeper = 0.0f;
 	UPROPERTY(BlueprintReadOnly, Category = "Gamemode")
 		TArray<AActor*> PlayerSpawns;
-
 	UFUNCTION(BlueprintCallable, Category = "Gamemode")
-		void PostLogin(APlayerController* NewPlayer);
-//	UFUNCTION(BlueprintCallable, Category = "Gamemode")
-//		AActor* FindPlayerStart(AsassPlayerController* Player, FString IncomingName);
-	UFUNCTION(BlueprintCallable, Category = "Gamemode")
-		FLinearColor ChoosePlayerColor();
+		AActor* FindPlayerStart(AsassPlayerController* Player, FString IncomingName);
 	
 };

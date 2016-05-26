@@ -20,8 +20,6 @@ public:
 		TArray<AActor*> ControlledBuildings;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "PlayerState")
 		TArray<AunitBase*> SelectedUnits;
-	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadWrite, Category = "PlayerState")
-		FLinearColor PlayerColor;
 
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "PlayerState")
@@ -42,7 +40,8 @@ protected:
 		float PopulationLimit = 7;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "PlayerState")
 		float CurrentPopulation = 0;
-
+	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadWrite, Category = "PlayerState")
+		FLinearColor PlayerColor;
 	
 	
 };
