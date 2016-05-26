@@ -7,4 +7,12 @@ AsassGameState::AsassGameState() {
 
 }
 
+void AsassGameState::Tick(float DeltaSeconds) {
+	if (PreGameActive) {
+		TimeKeeper += DeltaSeconds;
+		if (TimeKeeper > WarmUpTime) {
+			PreGameActive = false;
+		}
+	}
+}
 

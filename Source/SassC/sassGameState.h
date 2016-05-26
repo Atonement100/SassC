@@ -13,4 +13,16 @@ class SASSC_API AsassGameState : public AGameState
 
 	AsassGameState();
 	
+public:
+
+	virtual void Tick(float DeltaSeconds) override;
+	
+	UPROPERTY(Replicated, BlueprintReadWrite)
+		float TimeKeeper = 0.0f;
+	UPROPERTY(Replicated, BlueprintReadWrite)
+		float WarmUpTime = 10.0f;
+	UPROPERTY(Replicated, BlueprintReadWrite)
+		bool WinnerDeclared = false;
+	UPROPERTY(Replicated, BlueprintReadWrite)
+		bool PreGameActive = true;
 };
