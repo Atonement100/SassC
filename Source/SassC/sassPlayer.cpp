@@ -190,6 +190,18 @@ bool AsassPlayer::ServerCrouch_Validate(bool isCrouching, UCharacterMovementComp
 	return true;
 }
 
+void AsassPlayer::ColorPlayer_Implementation(FLinearColor PlayerColor)
+{
+	if (DynamicPlayerMaterial == nullptr || GetMesh() == nullptr) return;
+	DynamicPlayerMaterial->SetVectorParameterValue(ColorParameterName, PlayerColor);
+	GetMesh()->SetMaterial(0, DynamicPlayerMaterial);
+}
+
+bool AsassPlayer::ColorPlayer_Validate(FLinearColor PlayerColor)
+{
+	return true;
+}
+
 #pragma endregion
 
 #pragma region Sprint functions

@@ -60,6 +60,11 @@ public:
 	virtual void ServerCrouch_Implementation(bool isCrouching, UCharacterMovementComponent *movementComponent);
 	virtual bool ServerCrouch_Validate(bool isCrouching, UCharacterMovementComponent *movementComponent);
 
+	UFUNCTION(Reliable, NetMulticast, WithValidation)
+	void ColorPlayer(FLinearColor PlayerColor);
+	virtual void ColorPlayer_Implementation(FLinearColor PlayerColor);
+	virtual bool ColorPlayer_Validate(FLinearColor PlayerColor);
+
 	UFUNCTION(BlueprintCallable, Category = "UI")
 	void ChangePauseWidget(TSubclassOf<UUserWidget> NewWidgetClass);
 
@@ -105,7 +110,12 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Default")
 	TSubclassOf<AActor> PlayerControllerClass;
 
-private:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sass Player")
+	UMaterialInstanceDynamic* DynamicPlayerMaterial;
+
+protected:
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Sass Player")
+	FName ColorParameterName = "PlayerColor";
 	bool InvertPitch = false;
 	bool InvertYaw = false;
 	bool IsCrouchPressed = false;

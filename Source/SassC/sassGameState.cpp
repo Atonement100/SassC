@@ -3,6 +3,7 @@
 #include "SassC.h"
 #include "Net/UnrealNetwork.h"
 #include "Kismet/GameplayStatics.h"
+#include "Kismet/KismetStringLibrary.h"
 #include "sassPlayer.h"
 #include "sassPlayerState.h"
 #include "sassGameState.h"
@@ -22,6 +23,7 @@ void AsassGameState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty> &OutLi
 }
 
 void AsassGameState::Tick(float DeltaSeconds) {
+	GEngine->AddOnScreenDebugMessage(-1, DeltaSeconds, FColor::Turquoise, UKismetStringLibrary::Conv_FloatToString(TimeKeeper));
 	if (PreGameActive) {
 		TimeKeeper += DeltaSeconds;
 		if (TimeKeeper > WarmUpTime) {
@@ -33,12 +35,12 @@ void AsassGameState::Tick(float DeltaSeconds) {
 
 
 void AsassGameState::GameStart_Implementation() {
+	
 	AsassPlayer* Player = Cast<AsassPlayer>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
 	Player->CreateGameHUD();
 	//Player->GetGameWidget(); Cast to SassilizationHUD_BP; Player->SetSassHUDWidget()
 	for (TActorIterator<AsassPlayer> Player(GetWorld()); Player; ++Player) {
-		//Take Playercolor, call colorplayer for each character
-		(Cast<AsassPlayerState>(Player->PlayerState))->PlayerColor;
+		Player->ColorPlayer((Cast<AsassPlayerState>(Player->PlayerState))->PlayerColor);
 	}
 }
 
