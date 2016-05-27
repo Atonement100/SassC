@@ -4,6 +4,7 @@
 #include "Net/UnrealNetwork.h"
 #include "Kismet/GameplayStatics.h"
 #include "sassPlayer.h"
+#include "sassPlayerState.h"
 #include "sassGameState.h"
 
 AsassGameState::AsassGameState() {
@@ -20,33 +21,27 @@ void AsassGameState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty> &OutLi
 
 }
 
-/*
-UWorld* AsassGameState::GetWorld() const {
-	return World;
-}
-*/
 void AsassGameState::Tick(float DeltaSeconds) {
 	if (PreGameActive) {
 		TimeKeeper += DeltaSeconds;
 		if (TimeKeeper > WarmUpTime) {
 			PreGameActive = false;
-			//GameStart();
+			GameStart();
 		}
 	}
 }
 
-/*
-void GameStart_Implementation() {
-	if (World == nullptr) {
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, "World null"); 
-		return; 
-	}
-	for (TActorIterator<AsassPlayer> Itr(World); Itr; ++Itr) {
 
+void AsassGameState::GameStart_Implementation() {
+	AsassPlayer* Player = Cast<AsassPlayer>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+	Player->CreateGameHUD();
+	//Player->GetGameWidget(); Cast to SassilizationHUD_BP; Player->SetSassHUDWidget()
+	for (TActorIterator<AsassPlayer> Player(GetWorld()); Player; ++Player) {
+		//Take Playercolor, call colorplayer for each character
+		(Cast<AsassPlayerState>(Player->PlayerState))->PlayerColor;
 	}
 }
 
-bool GameStart_Validate() {
+bool AsassGameState::GameStart_Validate() {
 	return true;
 }
-*/

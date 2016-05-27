@@ -26,7 +26,7 @@ void AsassPlayer::BeginPlay()
 	PlayerControllerPtr = UGameplayStatics::GetPlayerController(this, 0);
 	CleanupHUD();
 	CreatePregameHUD();
-//	if (Role == ROLE_Authority) { Cast<AsassGameState>(UGameplayStatics::GetGameState(GetWorld()))->World = GetWorld(); }
+	GetWorld();
 }
 
 void AsassPlayer::Tick( float DeltaTime )
@@ -58,8 +58,12 @@ void AsassPlayer::SetupPlayerInputComponent(class UInputComponent* InputComponen
 	InputComponent->BindAction("ForceQuit", IE_Pressed, this, &AsassPlayer::QuitGame);
 	//UnitMenu function
 	InputComponent->BindAction("UnitMenu", IE_Pressed, this, &AsassPlayer::UnitMenuPressed);
-	//test functions
+	//test functions, default L
 	InputComponent->BindAction("Test", IE_Pressed, this, &AsassPlayer::testFunction);
+}
+
+void AsassPlayer::testFunction() {
+
 }
 
 void AsassPlayer::UnitMenuPressed() {
@@ -78,12 +82,6 @@ void AsassPlayer::UnitMenuPressed() {
 		}
 		IsUnitMenuOpen = false;
 	}
-}
-
-void AsassPlayer::testFunction() {
-	bool ownedLocally = IsOwnedBy(UGameplayStatics::GetPlayerController(this, 0));
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, UKismetStringLibrary::Conv_BoolToString(ownedLocally));
-	
 }
 
 void AsassPlayer::CreatePregameHUD() {

@@ -26,15 +26,13 @@ public:
 	UPROPERTY(Replicated, BlueprintReadWrite)
 		bool PreGameActive = true;
 
-	//virtual UWorld* GetWorld() const override;
-	//UPROPERTY(Transient)
-	//UWorld* World;
 
-/*
 	UFUNCTION(Reliable, NetMulticast, WithValidation)
 	void GameStart();
 	virtual void GameStart_Implementation();
 	virtual bool GameStart_Validate();
-	*/
+	
+private:
+	
 	
 	};
