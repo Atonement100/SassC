@@ -41,7 +41,6 @@ void AsassGameState::GameStart_Implementation() {
 	//Player->GetGameWidget(); Cast to SassilizationHUD_BP; Player->SetSassHUDWidget()
 	for (TActorIterator<AsassPlayer> Player(GetWorld()); Player; ++Player) {
 		Player->ColorPlayer((Cast<AsassPlayerState>(Player->PlayerState))->PlayerColor);
-		GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Green, UKismetStringLibrary::Conv_ColorToString(Cast<AsassPlayerState>(Player->PlayerState)->PlayerColor));
 	}
 }
 

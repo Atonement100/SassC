@@ -63,9 +63,16 @@ void AsassPlayer::SetupPlayerInputComponent(class UInputComponent* InputComponen
 }
 
 void AsassPlayer::testFunction() {
+	FHitResult temp;
+	TArray<FVector> temp2;
+	temp.Init();
+	temp2.Init(FVector::ZeroVector, 1);
+	
+	ServerSpawnBuilding(Cast<AsassPlayerController>(GetController()), PlayerControllerClass, temp, FVector::ZeroVector, temp2);
 
 }
 
+#pragma region HUD functions
 void AsassPlayer::UnitMenuPressed() {
 	if (!IsUnitMenuOpen) {
 		if (PlayerControllerPtr != nullptr) {
@@ -108,6 +115,12 @@ void AsassPlayer::CreateGameHUD() {
 		PlayerControllerPtr->bShowMouseCursor = false;
 	}
 }
+
+UUserWidget* AsassPlayer::GetGameWidget() {
+	return GameWidget;
+}
+
+#pragma endregion
 
 void AsassPlayer::GetAllPlayerColors() {
 	TArray<AActor*> FoundControllers;
@@ -189,19 +202,6 @@ void AsassPlayer::ServerCrouch_Implementation(bool isCrouching, UCharacterMoveme
 bool AsassPlayer::ServerCrouch_Validate(bool isCrouching, UCharacterMovementComponent *movementComponent) {
 	return true;
 }
-
-void AsassPlayer::ColorPlayer_Implementation(FLinearColor PlayerColor)
-{
-	if (DynamicPlayerMaterial == nullptr || GetMesh() == nullptr) return;
-	DynamicPlayerMaterial->SetVectorParameterValue(ColorParameterName, PlayerColor);
-	GetMesh()->SetMaterial(0, DynamicPlayerMaterial);
-}
-
-bool AsassPlayer::ColorPlayer_Validate(FLinearColor PlayerColor)
-{
-	return true;
-}
-
 #pragma endregion
 
 #pragma region Sprint functions
@@ -270,14 +270,6 @@ void AsassPlayer::YawCamera(float AxisValue) {
 }
 #pragma endregion
 
-UUserWidget* AsassPlayer::GetGameWidget() {
-	return GameWidget;
-}
-
-AActor* AsassPlayer::GetSelectionSphereHolder() {
-	return SelectionSphereHolder;
-}
-
 #pragma region Unit Interaction
 void AsassPlayer::TurnOffAllSelectionCircles()
 {
@@ -308,7 +300,35 @@ void AsassPlayer::CreateSelectedUnitsArray(TArray<FHitResult> Hits)
 
 	TempPlayerState->SelectedUnits = SelectedUnits;
 }
+
+AActor* AsassPlayer::GetSelectionSphereHolder() {
+	return SelectionSphereHolder;
+}
+
 #pragma endregion
+
+void AsassPlayer::ServerSpawnBuilding_Implementation(AsassPlayerController* PlayerController, TSubclassOf<AActor> ActorToSpawn, FHitResult Hit, const FVector &HalfHeight, const TArray<FVector> &Midpoints)
+{
+	GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Emerald, "Ahhh!!");
+	//GetWorld()->SpawnActor(SelectedSpawnableClass, NAME_None, this->GetActorLocation(), this->GetActorRotation(), NULL, false, false, this, this);
+}
+
+bool AsassPlayer::ServerSpawnBuilding_Validate(AsassPlayerController* PlayerController, TSubclassOf<AActor> ActorToSpawn, FHitResult Hit, const FVector &HalfHeight, const TArray<FVector> &Midpoints)
+{
+	return true;
+}
+
+void AsassPlayer::ColorPlayer_Implementation(FLinearColor PlayerColor)
+{
+	if (DynamicPlayerMaterial == nullptr || GetMesh() == nullptr) return;
+	DynamicPlayerMaterial->SetVectorParameterValue(ColorParameterName, PlayerColor);
+	GetMesh()->SetMaterial(0, DynamicPlayerMaterial);
+}
+
+bool AsassPlayer::ColorPlayer_Validate(FLinearColor PlayerColor)
+{
+	return true;
+}
 
 bool AsassPlayer::CheckBldgCorners(TArray<FVector> ExtraLocs, FVector Center)
 {

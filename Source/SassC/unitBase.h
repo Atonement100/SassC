@@ -36,7 +36,7 @@ public:
 	virtual bool ColorUnitDecal_Validate(FLinearColor PlayerColor);
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
-		UDecalComponent* SelectionCircleDecal;
+	UDecalComponent* SelectionCircleDecal;
 
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")

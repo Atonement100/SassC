@@ -12,6 +12,7 @@
 #include "sassPlayer.generated.h"
 
 class AunitBase;
+class AsassPlayerController;
 
 UCLASS()
 class SASSC_API AsassPlayer : public ACharacter
@@ -59,6 +60,11 @@ public:
 	void ServerCrouch(bool isCrouching, UCharacterMovementComponent *movementComponent);
 	virtual void ServerCrouch_Implementation(bool isCrouching, UCharacterMovementComponent *movementComponent);
 	virtual bool ServerCrouch_Validate(bool isCrouching, UCharacterMovementComponent *movementComponent);
+
+	UFUNCTION(Reliable, Server, WithValidation)
+	void ServerSpawnBuilding(AsassPlayerController* PlayerController, TSubclassOf<AActor> ActorToSpawn, FHitResult Hit, const FVector &HalfHeight, const TArray<FVector> &Midpoints);
+	virtual void ServerSpawnBuilding_Implementation(AsassPlayerController* PlayerController, TSubclassOf<AActor> ActorToSpawn, FHitResult Hit, const FVector &HalfHeight, const TArray<FVector> &Midpoints);
+	virtual bool ServerSpawnBuilding_Validate(AsassPlayerController* PlayerController, TSubclassOf<AActor> ActorToSpawn, FHitResult Hit, const FVector &HalfHeight, const TArray<FVector> &Midpoints);
 
 	UFUNCTION(Reliable, NetMulticast, WithValidation)
 	void ColorPlayer(FLinearColor PlayerColor);
@@ -112,6 +118,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sass Player")
 	UMaterialInstanceDynamic* DynamicPlayerMaterial;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sass Player")
+	TSubclassOf<AActor> SelectedSpawnableClass;
 
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Sass Player")
