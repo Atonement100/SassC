@@ -120,7 +120,7 @@ public:
 	UMaterialInstanceDynamic* DynamicPlayerMaterial;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sass Player")
-	TSubclassOf<AActor> SelectedSpawnableClass;
+	UClass* SelectedSpawnableClass;
 
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Sass Player")

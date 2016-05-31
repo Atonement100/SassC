@@ -310,7 +310,10 @@ AActor* AsassPlayer::GetSelectionSphereHolder() {
 void AsassPlayer::ServerSpawnBuilding_Implementation(AsassPlayerController* PlayerController, TSubclassOf<AActor> ActorToSpawn, FHitResult Hit, const FVector &HalfHeight, const TArray<FVector> &Midpoints)
 {
 	GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Emerald, "Ahhh!!");
-	//GetWorld()->SpawnActor(SelectedSpawnableClass, NAME_None, this->GetActorLocation(), this->GetActorRotation(), NULL, false, false, this, this);
+	const FActorSpawnParameters temp = FActorSpawnParameters();
+	const FVector temp1 = this->GetActorLocation();
+	const FRotator temp2 = this->GetActorRotation();
+	GetWorld()->SpawnActor(SelectedSpawnableClass, &temp1, &temp2, temp);
 }
 
 bool AsassPlayer::ServerSpawnBuilding_Validate(AsassPlayerController* PlayerController, TSubclassOf<AActor> ActorToSpawn, FHitResult Hit, const FVector &HalfHeight, const TArray<FVector> &Midpoints)
