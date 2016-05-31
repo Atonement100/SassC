@@ -63,13 +63,15 @@ void AsassPlayer::SetupPlayerInputComponent(class UInputComponent* InputComponen
 }
 
 void AsassPlayer::testFunction() {
-	FHitResult temp;
-	TArray<FVector> temp2;
-	temp.Init();
-	temp2.Init(FVector::ZeroVector, 1);
-	
-	ServerSpawnBuilding(Cast<AsassPlayerController>(GetController()), PlayerControllerClass, temp, FVector::ZeroVector, temp2);
+	if (PlayerControllerPtr == nullptr) return;
 
+	AsassPlayerState* PlayerStateRef = Cast<AsassPlayerState>(PlayerControllerPtr->PlayerState);
+	FHitResult Hit;
+	TArray<FVector> LocationsToCheck;
+	
+	PlayerControllerPtr->GetHitResultUnderCursorByChannel(UEngineTypes::ConvertToTraceType(ECC_Visibility), true, Hit);
+
+	ServerSpawnBuilding(Cast<AsassPlayerController>(PlayerControllerPtr), PlayerControllerClass, Hit, FVector::ZeroVector, LocationsToCheck);
 }
 
 #pragma region HUD functions
@@ -309,11 +311,11 @@ AActor* AsassPlayer::GetSelectionSphereHolder() {
 
 void AsassPlayer::ServerSpawnBuilding_Implementation(AsassPlayerController* PlayerController, TSubclassOf<AActor> ActorToSpawn, FHitResult Hit, const FVector &HalfHeight, const TArray<FVector> &Midpoints)
 {
-	GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Emerald, "Ahhh!!");
+	GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Emerald, UKismetStringLibrary::Conv_VectorToString(Hit.Location));
 	const FActorSpawnParameters temp = FActorSpawnParameters();
-	const FVector temp1 = this->GetActorLocation();
-	const FRotator temp2 = this->GetActorRotation();
-	GetWorld()->SpawnActor(SelectedSpawnableClass, &temp1, &temp2, temp);
+	const FVector Location = Hit.Location + FVector(0,0,50);
+	const FRotator Rotation = this->GetActorRotation();
+	GetWorld()->SpawnActor(SelectedSpawnableClass, &Location, &Rotation, temp);
 }
 
 bool AsassPlayer::ServerSpawnBuilding_Validate(AsassPlayerController* PlayerController, TSubclassOf<AActor> ActorToSpawn, FHitResult Hit, const FVector &HalfHeight, const TArray<FVector> &Midpoints)

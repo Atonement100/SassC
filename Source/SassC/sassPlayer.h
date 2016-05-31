@@ -130,6 +130,7 @@ protected:
 	bool IsCrouchPressed = false;
 	bool IsSprintPressed = false;
 	bool IsPaused = false;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Sass Player")
 	bool IsUnitMenuOpen = false;
 	float SprintSpeed = 800.0f;
 	float WalkSpeed = 400.0f;
