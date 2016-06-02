@@ -80,18 +80,19 @@ void AsassPlayer::testFunction() {
 }
 
 void AsassPlayer::LeftClickPressed() {
-
+	IsLeftMouseDown = true;
+	if (IsUnitMenuOpen){}
 }
 
 void AsassPlayer::LeftClickReleased() {
-
+	IsLeftMouseDown = false;
 }
 
 void AsassPlayer::RightClickPressed() {
 
 }
 
-void AsassPlayer::LeftClickReleased() {
+void AsassPlayer::RightClickReleased() {
 
 }
 

@@ -290,4 +290,64 @@ LogInit: Object subsystem initialized
 [2016.06.02-15.44.35:758][378]BlueprintEditorCompileResults: Info [0081.31] Compile of sassGamePlayer successful! [in 494 ms]
 [2016.06.02-15.46.44:085][312]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
 [2016.06.02-15.46.44:166][312]Cmd: OBJ SAVEPACKAGE PACKAGE="/Game/Blueprints/sassilization/sassGamePlayer" FILE="C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassGamePlayer.uasset" SILENT=true
-[20
+[2016.06.02-15.46.44:645][312]LogSavePackage: Save=454.40ms
+[2016.06.02-15.46.44:645][312]LogSavePackage: Moving 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/sassGamePlayerABDC2E824965992B908E9DA0F9E39257.tmp' to 'C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassGamePlayer.uasset'
+[2016.06.02-15.46.44:647][312]LogSavePackage: Total save time: 479.06ms
+[2016.06.02-15.46.44:647][312]LogSavePackage:Display: Finished SavePackage C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassGamePlayer.uasset
+[2016.06.02-15.48.01:036][182]LogVSAccessor:Warning: Couldn't goto line number '0' in 'C:/Users/Tim/Documents/Unreal Projects/SassC/Source/SassC/buildingBase.h'
+[2016.06.02-15.48.01:105][182]LogVSAccessor:Warning: Couldn't goto line number '0' in 'C:/Users/Tim/Documents/Unreal Projects/SassC/Source/SassC/buildingBase.cpp'
+[2016.06.02-15.48.03:373][193]LogVSAccessor:Warning: Couldn't goto line number '0' in 'C:/Users/Tim/Documents/Unreal Projects/SassC/Source/SassC/unitBase.h'
+[2016.06.02-15.48.03:441][193]LogVSAccessor:Warning: Couldn't goto line number '0' in 'C:/Users/Tim/Documents/Unreal Projects/SassC/Source/SassC/unitBase.cpp'
+[2016.06.02-15.59.43:995][905]BlueprintLog: New page: Compile sassilizationHUD_BP
+[2016.06.02-15.59.44:074][905]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
+[2016.06.02-15.59.44:166][905]BlueprintEditorCompileResults: Info The execution path doesn't end with a return node.  Is Not Valid 
+[2016.06.02-15.59.44:166][905]BlueprintEditorCompileResults: Info The execution path doesn't end with a return node.  Cast Failed 
+[2016.06.02-15.59.44:166][905]BlueprintEditorCompileResults: Info The execution path doesn't end with a return node.  Is Not Valid 
+[2016.06.02-15.59.44:166][905]BlueprintEditorCompileResults: Info The execution path doesn't end with a return node.  Cast Failed 
+[2016.06.02-15.59.44:166][905]BlueprintEditorCompileResults: Info The execution path doesn't end with a return node.  Is Not Valid 
+[2016.06.02-15.59.44:166][905]BlueprintEditorCompileResults: Info The execution path doesn't end with a return node.  Cast Failed 
+[2016.06.02-15.59.44:166][905]BlueprintEditorCompileResults: Info The execution path doesn't end with a return node.  Is Not Valid 
+[2016.06.02-15.59.44:166][905]BlueprintEditorCompileResults: Info The execution path doesn't end with a return node.  Cast Failed 
+[2016.06.02-15.59.44:167][905]BlueprintEditorCompileResults: Info The execution path doesn't end with a return node.  Is Not Valid 
+[2016.06.02-15.59.44:167][905]BlueprintEditorCompileResults: Info The execution path doesn't end with a return node.  Cast Failed 
+[2016.06.02-15.59.44:167][905]BlueprintEditorCompileResults: Info The execution path doesn't end with a return node.  Is Not Valid 
+[2016.06.02-15.59.44:167][905]BlueprintEditorCompileResults: Info The execution path doesn't end with a return node.  Cast Failed 
+[2016.06.02-15.59.44:167][905]BlueprintEditorCompileResults: Info The execution path doesn't end with a return node.  Is Not Valid 
+[2016.06.02-15.59.44:167][905]BlueprintEditorCompileResults: Info The execution path doesn't end with a return node.  Cast Failed 
+[2016.06.02-15.59.44:167][905]BlueprintEditorCompileResults: Info The execution path doesn't end with a return node.  Is Not Valid 
+[2016.06.02-15.59.44:167][905]BlueprintEditorCompileResults: Info The execution path doesn't end with a return node.  Cast Failed 
+[2016.06.02-15.59.44:167][905]BlueprintEditorCompileResults: Info The execution path doesn't end with a return node.  Is Not Valid 
+[2016.06.02-15.59.44:167][905]BlueprintEditorCompileResults: Info The execution path doesn't end with a return node.  Cast Failed 
+[2016.06.02-15.59.44:168][905]BlueprintEditorCompileResults: Info The execution path doesn't end with a return node.  Is Not Valid 
+[2016.06.02-15.59.44:168][905]BlueprintEditorCompileResults: Info The execution path doesn't end with a return node.  Cast Failed 
+[2016.06.02-15.59.44:168][905]BlueprintEditorCompileResults: Info [0989.71] Compile of sassilizationHUD_BP successful! [in 169 ms]
+[2016.06.02-15.59.51:900][772]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
+[2016.06.02-15.59.59:256][632]BlueprintLog: New page: Compile sassGamePlayer
+[2016.06.02-15.59.59:455][632]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharacterMovementComponent_0) Not registered. Aborting.
+[2016.06.02-15.59.59:598][632]BlueprintEditorCompileResults: Info [1005.15] Compile of sassGamePlayer successful! [in 341 ms]
+[2016.06.02-16.00.14:124][256]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
+[2016.06.02-16.00.15:524][421]BlueprintLog: New page: Compile sassGamePlayer
+[2016.06.02-16.00.15:704][421]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharacterMovementComponent_1) Not registered. Aborting.
+[2016.06.02-16.00.15:804][421]BlueprintEditorCompileResults: Info [1021.35] Compile of sassGamePlayer successful! [in 279 ms]
+[2016.06.02-16.00.23:735][310]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
+[2016.06.02-16.00.30:809][  1]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharacterMovementComponent_2) Not registered. Aborting.
+[2016.06.02-16.00.31:307][ 49]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharacterMovementComponent_3) Not registered. Aborting.
+[2016.06.02-16.00.40:039][ 30]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharacterMovementComponent_4) Not registered. Aborting.
+[2016.06.02-16.00.40:650][103]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharacterMovementComponent_5) Not registered. Aborting.
+[2016.06.02-16.00.42:241][288]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharacterMovementComponent_6) Not registered. Aborting.
+[2016.06.02-16.00.42:942][372]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharacterMovementComponent_7) Not registered. Aborting.
+[2016.06.02-16.00.45:759][705]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharacterMovementComponent_8) Not registered. Aborting.
+[2016.06.02-16.00.46:482][791]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharacterMovementComponent_9) Not registered. Aborting.
+[2016.06.02-16.00.50:551][262]BlueprintLog: New page: Compile sassGamePlayer
+[2016.06.02-16.00.50:731][262]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharacterMovementComponent_10) Not registered. Aborting.
+[2016.06.02-16.00.50:825][262]BlueprintEditorCompileResults: Info [1056.37] Compile of sassGamePlayer successful! [in 273 ms]
+[2016.06.02-16.00.53:110][519]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
+[2016.06.02-16.00.53:158][519]Cmd: OBJ SAVEPACKAGE PACKAGE="/Game/Blueprints/sassilization/sassGamePlayer" FILE="C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassGamePlayer.uasset" SILENT=true
+[2016.06.02-16.00.53:607][519]LogSavePackage: Save=435.88ms
+[2016.06.02-16.00.53:608][519]LogSavePackage: Moving 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/sassGamePlayer6D43ACAA4612DC3FCFCEEC9E50C56583.tmp' to 'C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassGamePlayer.uasset'
+[2016.06.02-16.00.53:610][519]LogSavePackage: Total save time: 451.17ms
+[2016.06.02-16.00.53:610][519]LogSavePackage:Display: Finished SavePackage C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassGamePlayer.uasset
+[2016.06.02-16.00.53:867][519]LogSavePackage: Save=233.03ms
+[2016.06.02-16.00.53:867][519]LogSavePackage: Moving 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/sassilizationHUD_BP1EB4572143A881E6CAEADB9164830E0D.tmp' to 'C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassilizationHUD_BP.uasset'
+[2016.06.02-16.00.53:869][519]LogSavePackage: Total save time: 250.09ms
+[2016.06.02-16.00.53:869][519]LogS
