@@ -30,6 +30,11 @@ public:
 	//Camera Movement
 	void PitchCamera(float AxisValue);
 	void YawCamera(float AxisValue);
+	//Mouse functions
+	void LeftClickPressed();
+	void LeftClickReleased();
+	void RightClickPressed();
+	void RightClickReleased();
 	//Sprint functions
 	void SprintPressed();
 	void SprintReleased();
@@ -132,11 +137,13 @@ protected:
 	bool IsPaused = false;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Sass Player")
 	bool IsUnitMenuOpen = false;
-	float SprintSpeed = 800.0f;
-	float WalkSpeed = 400.0f;
-	float CrouchSpeed = 200.0f;
-	float CrouchingEyeHeight = 40.0f;
-	float StandingEyeHeight = 80.0f;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Sass Player")
+	bool IsLeftMouseDown = false;
+	const float SprintSpeed = 800.0f;
+	const float WalkSpeed = 400.0f;
+	const float CrouchSpeed = 200.0f;
+	const float CrouchingEyeHeight = 40.0f;
+	const float StandingEyeHeight = 80.0f;
 	UUserWidget* PauseWidget;
 	UUserWidget* PregameWidget;
 	UUserWidget* GameWidget;
@@ -146,5 +153,5 @@ protected:
 	AActor* SelectionSphereHolder;
 	TArray<AunitBase*> SelectedUnits;
 	TArray<AActor*> WorldStaticObjects;
-	FCollisionObjectQueryParams WorldStatic = FCollisionObjectQueryParams(ECollisionChannel::ECC_WorldStatic);
+	FCollisionObjectQueryParams WorldStatic = FCollisionObjectQueryParams(ECollisionChannel::ECC_WorldStatic); 
 };

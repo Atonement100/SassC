@@ -44,6 +44,11 @@ void AsassPlayer::SetupPlayerInputComponent(class UInputComponent* InputComponen
 	//Camera Movement
 	InputComponent->BindAxis("PitchCamera", this, &AsassPlayer::PitchCamera);
 	InputComponent->BindAxis("YawCamera", this, &AsassPlayer::YawCamera);
+	//Mouse functions
+	InputComponent->BindAction("LeftClick", IE_Pressed, this, &AsassPlayer::LeftClickPressed);
+	InputComponent->BindAction("LeftClick", IE_Released, this, &AsassPlayer::LeftClickReleased);
+	InputComponent->BindAction("RightClick", IE_Pressed, this, &AsassPlayer::RightClickPressed);
+	InputComponent->BindAction("RightClick", IE_Released, this, &AsassPlayer::RightClickReleased);
 	//Sprint functions
 	InputComponent->BindAction("Sprint", IE_Pressed, this, &AsassPlayer::SprintPressed);
 	InputComponent->BindAction("Sprint", IE_Released, this, &AsassPlayer::SprintReleased);
@@ -72,6 +77,22 @@ void AsassPlayer::testFunction() {
 	PlayerControllerPtr->GetHitResultUnderCursorByChannel(UEngineTypes::ConvertToTraceType(ECC_Visibility), true, Hit);
 
 	ServerSpawnBuilding(Cast<AsassPlayerController>(PlayerControllerPtr), PlayerControllerClass, Hit, FVector::ZeroVector, LocationsToCheck);
+}
+
+void AsassPlayer::LeftClickPressed() {
+
+}
+
+void AsassPlayer::LeftClickReleased() {
+
+}
+
+void AsassPlayer::RightClickPressed() {
+
+}
+
+void AsassPlayer::LeftClickReleased() {
+
 }
 
 #pragma region HUD functions
