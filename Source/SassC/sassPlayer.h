@@ -127,7 +127,14 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sass Player")
 	UClass* SelectedSpawnableClass;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Sass Player")
+		UUserWidget* GameWidget;
+
 protected:
+	UFUNCTION(BlueprintNativeEvent, Category = "HUD")
+	void SetSassHUDRef();
+	virtual void SetSassHUDRef_Implementation();
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sass Player")
 	AActor* LocalObjectSpawn;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Sass Player")
@@ -148,12 +155,11 @@ protected:
 	const float StandingEyeHeight = 80.0f;
 	UUserWidget* PauseWidget;
 	UUserWidget* PregameWidget;
-	UUserWidget* GameWidget;
 	FInputModeGameAndUI GameAndUI;
 	FInputModeGameOnly GameOnly;
 	APlayerController* PlayerControllerPtr;
 	AActor* SelectionSphereHolder;
 	TArray<AunitBase*> SelectedUnits;
 	TArray<AActor*> WorldStaticObjects;
-	FCollisionObjectQueryParams WorldStatic = FCollisionObjectQueryParams(ECollisionChannel::ECC_WorldStatic); 
+	FCollisionObjectQueryParams WorldStatic = FCollisionObjectQueryParams(ECollisionChannel::ECC_WorldStatic); //const not allowed
 };

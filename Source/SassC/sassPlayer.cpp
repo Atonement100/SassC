@@ -108,14 +108,14 @@ void AsassPlayer::UnitMenuPressed() {
 			PlayerControllerPtr->SetInputMode(GameAndUI);
 		}
 
-		IsUnitMenuOpen = true;
+		//IsUnitMenuOpen = true;
 	}
 	else {
 		if (PlayerControllerPtr != nullptr) {
 			PlayerControllerPtr->bShowMouseCursor = false;
 			PlayerControllerPtr->SetInputMode(GameOnly);
 		}
-		IsUnitMenuOpen = false;
+		//IsUnitMenuOpen = false;
 	}
 }
 
@@ -141,6 +141,7 @@ void AsassPlayer::CreateGameHUD() {
 		if (GameWidget != nullptr) GameWidget->AddToViewport();
 		PlayerControllerPtr->SetInputMode(GameOnly);
 		PlayerControllerPtr->bShowMouseCursor = false;
+		SetSassHUDRef();
 	}
 }
 
@@ -383,4 +384,8 @@ bool AsassPlayer::CheckBldgCorners(TArray<FVector> ExtraLocs, FVector Center)
 	}
 
 	return false;
+}
+
+void AsassPlayer::SetSassHUDRef_Implementation()
+{
 }
