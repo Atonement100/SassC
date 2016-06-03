@@ -128,6 +128,8 @@ public:
 	UClass* SelectedSpawnableClass;
 
 protected:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sass Player")
+	AActor* LocalObjectSpawn;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Sass Player")
 	FName ColorParameterName = "PlayerColor";
 	bool InvertPitch = false;

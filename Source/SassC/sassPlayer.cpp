@@ -7,6 +7,7 @@
 #include "sassPlayerState.h"
 #include "sassGameState.h"
 #include "unitBase.h"
+#include "buildingBase.h"
 #include "SassCStaticLibrary.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetStringLibrary.h" //necessary only for debugging
@@ -68,20 +69,23 @@ void AsassPlayer::SetupPlayerInputComponent(class UInputComponent* InputComponen
 }
 
 void AsassPlayer::testFunction() {
-	if (PlayerControllerPtr == nullptr) return;
 
-	AsassPlayerState* PlayerStateRef = Cast<AsassPlayerState>(PlayerControllerPtr->PlayerState);
-	FHitResult Hit;
-	TArray<FVector> LocationsToCheck;
-	
-	PlayerControllerPtr->GetHitResultUnderCursorByChannel(UEngineTypes::ConvertToTraceType(ECC_Visibility), true, Hit);
-
-	ServerSpawnBuilding(Cast<AsassPlayerController>(PlayerControllerPtr), PlayerControllerClass, Hit, FVector::ZeroVector, LocationsToCheck);
 }
 
 void AsassPlayer::LeftClickPressed() {
 	IsLeftMouseDown = true;
-	if (IsUnitMenuOpen){}
+	if (IsUnitMenuOpen){
+		if (PlayerControllerPtr == nullptr) return;
+		FHitResult Hit;
+		TArray<FVector> LocationsToCheck;
+
+		PlayerControllerPtr->GetHitResultUnderCursorByChannel(UEngineTypes::ConvertToTraceType(ECC_Visibility), true, Hit); // Assign Hit
+		AbuildingBase* LocalBuildingRef = Cast<AbuildingBase>(LocalObjectSpawn);
+		if (LocalBuildingRef != nullptr) { LocationsToCheck = LocalBuildingRef->CornerLocations; }
+		//may need to do this for unit as well
+
+		ServerSpawnBuilding(Cast<AsassPlayerController>(PlayerControllerPtr), SelectedSpawnableClass, Hit, FVector::ZeroVector, LocationsToCheck);
+	}
 }
 
 void AsassPlayer::LeftClickReleased() {
@@ -334,10 +338,10 @@ AActor* AsassPlayer::GetSelectionSphereHolder() {
 void AsassPlayer::ServerSpawnBuilding_Implementation(AsassPlayerController* PlayerController, TSubclassOf<AActor> ActorToSpawn, FHitResult Hit, const FVector &HalfHeight, const TArray<FVector> &Midpoints)
 {
 	GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Emerald, UKismetStringLibrary::Conv_VectorToString(Hit.Location));
-	const FActorSpawnParameters temp = FActorSpawnParameters();
+	const FActorSpawnParameters SpawnParams = FActorSpawnParameters();
 	const FVector Location = Hit.Location + FVector(0,0,50);
 	const FRotator Rotation = this->GetActorRotation();
-	GetWorld()->SpawnActor(SelectedSpawnableClass, &Location, &Rotation, temp);
+	GetWorld()->SpawnActor(SelectedSpawnableClass, &Location, &Rotation, SpawnParams);
 }
 
 bool AsassPlayer::ServerSpawnBuilding_Validate(AsassPlayerController* PlayerController, TSubclassOf<AActor> ActorToSpawn, FHitResult Hit, const FVector &HalfHeight, const TArray<FVector> &Midpoints)
