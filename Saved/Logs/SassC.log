@@ -452,4 +452,524 @@ LogInit: Object subsystem initialized
 [2016.06.03-16.11.33:086][111]LogSavePackage: Total save time: 236.10ms
 [2016.06.03-16.11.33:086][111]LogSavePackage:Display: Finished SavePackage C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap
 [2016.06.03-16.14.55:006][959]Cmd: OBJ SAVEPACKAGE PACKAGE="/Game/Blueprints/sassilization/sassGamePlayer" FILE="C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassGamePlayer.uasset" SILENT=true
-[2016.06.03-16.14.55:404
+[2016.06.03-16.14.55:404][959]LogSavePackage: Save=387.55ms
+[2016.06.03-16.14.55:405][959]LogSavePackage: Moving 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/sassGamePlayer60E5F09246D745D5204211BED9969031.tmp' to 'C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassGamePlayer.uasset'
+[2016.06.03-16.14.55:407][959]LogSavePackage: Total save time: 399.47ms
+[2016.06.03-16.14.55:407][959]LogSavePackage:Display: Finished SavePackage C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassGamePlayer.uasset
+[2016.06.03-16.16.39:873][433]Cmd: OBJ SAVEPACKAGE PACKAGE="/Game/Blueprints/sassilization/sassGamePlayer" FILE="C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassGamePlayer.uasset" SILENT=true
+[2016.06.03-16.16.40:244][433]LogSavePackage: Save=359.48ms
+[2016.06.03-16.16.40:245][433]LogSavePackage: Moving 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/sassGamePlayerAC390A9A43AF8BE8E790BDB8F25F0859.tmp' to 'C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassGamePlayer.uasset'
+[2016.06.03-16.16.40:247][433]LogSavePackage: Total save time: 372.60ms
+[2016.06.03-16.16.40:248][433]LogSavePackage:Display: Finished SavePackage C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassGamePlayer.uasset
+[2016.06.03-16.16.41:310][553]BlueprintLog: New page: Compile sassGamePlayer
+[2016.06.03-16.16.41:566][553]BlueprintEditorCompileResults: Info [1458.84] Compile of sassGamePlayer successful! [in 256 ms]
+[2016.06.03-16.20.43:062][220]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
+[2016.06.03-16.20.43:112][220]Cmd: OBJ SAVEPACKAGE PACKAGE="/Game/Maps/orbit" FILE="C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap" SILENT=true AUTOSAVING=true KEEPDIRTY=true
+[2016.06.03-16.20.43:353][220]LogSavePackage: Save=225.66ms
+[2016.06.03-16.20.43:353][220]LogSavePackage: Moving 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/UEDPCorbitED26EC70480515855D60D293EB2CB014.tmp' to 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap'
+[2016.06.03-16.20.43:355][220]LogSavePackage: Total save time: 241.41ms
+[2016.06.03-16.20.43:355][220]LogSavePackage:Display: Finished SavePackage C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap
+[2016.06.03-16.22.53:412][215]BlueprintLog: New page: Compile sassGamePlayer
+[2016.06.03-16.22.53:585][215]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
+[2016.06.03-16.22.53:682][215]BlueprintEditorCompileResults: Info [1830.95] Compile of sassGamePlayer successful! [in 269 ms]
+[2016.06.03-16.22.58:498][746]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
+[2016.06.03-16.23.25:980][746]Cmd: OBJ SAVEPACKAGE PACKAGE="/Game/Blueprints/sassilization/sassGamePlayer" FILE="C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassGamePlayer.uasset" SILENT=true
+[2016.06.03-16.23.26:361][746]LogSavePackage: Save=367.97ms
+[2016.06.03-16.23.26:361][746]LogSavePackage: Moving 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/sassGamePlayerE71E80E7468091A12FD64A859D36F1D1.tmp' to 'C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassGamePlayer.uasset'
+[2016.06.03-16.23.26:363][746]LogSavePackage: Total save time: 381.96ms
+[2016.06.03-16.23.26:364][746]LogSavePackage:Display: Finished SavePackage C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassGamePlayer.uasset
+[2016.06.03-16.23.26:367][746]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
+[2016.06.03-16.23.26:416][746]Cmd: OBJ SAVEPACKAGE PACKAGE="/Game/Maps/orbit" FILE="C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap" SILENT=true AUTOSAVING=true KEEPDIRTY=true
+[2016.06.03-16.23.26:651][746]LogSavePackage: Save=226.12ms
+[2016.06.03-16.23.26:651][746]LogSavePackage: Moving 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/UEDPCorbitEA19443749198E768EF7E1BEAB7B666E.tmp' to 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap'
+[2016.06.03-16.23.26:653][746]LogSavePackage: Total save time: 235.56ms
+[2016.06.03-16.23.26:653][746]LogSavePackage:Display: Finished SavePackage C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap
+[2016.06.03-16.29.35:202][655]BlueprintLog: New page: Compile sassGamePlayer
+[2016.06.03-16.29.35:365][655]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
+[2016.06.03-16.29.35:473][655]BlueprintEditorCompileResults: Info [2232.74] Compile of sassGamePlayer successful! [in 270 ms]
+[2016.06.03-16.29.39:210][ 73]BlueprintLog: New page: Compile sassGamePlayer
+[2016.06.03-16.29.39:374][ 73]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
+[2016.06.03-16.29.39:473][ 73]BlueprintEditorCompileResults: Info [2236.74] Compile of sassGamePlayer successful! [in 262 ms]
+[2016.06.03-16.29.41:104][244]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
+[2016.06.03-16.29.42:375][244]Cmd: OBJ SAVEPACKAGE PACKAGE="/Game/Blueprints/sassilization/sassGamePlayer" FILE="C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassGamePlayer.uasset" SILENT=true
+[2016.06.03-16.29.42:776][244]LogSavePackage: Save=386.48ms
+[2016.06.03-16.29.42:776][244]LogSavePackage: Moving 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/sassGamePlayerEDF3BEF141CE9B1D5CB4C782C67D834F.tmp' to 'C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassGamePlayer.uasset'
+[2016.06.03-16.29.42:779][244]LogSavePackage: Total save time: 402.78ms
+[2016.06.03-16.29.42:779][244]LogSavePackage:Display: Finished SavePackage C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassGamePlayer.uasset
+[2016.06.03-16.29.42:782][244]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
+[2016.06.03-16.29.42:843][244]Cmd: OBJ SAVEPACKAGE PACKAGE="/Game/Maps/orbit" FILE="C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap" SILENT=true AUTOSAVING=true KEEPDIRTY=true
+[2016.06.03-16.29.43:078][244]LogSavePackage: Save=222.03ms
+[2016.06.03-16.29.43:078][244]LogSavePackage: Moving 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/UEDPCorbit542C8F2B4087833D59ED0EBE30479CB4.tmp' to 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap'
+[2016.06.03-16.29.43:080][244]LogSavePackage: Total save time: 236.14ms
+[2016.06.03-16.29.43:080][244]LogSavePackage:Display: Finished SavePackage C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap
+[2016.06.03-16.32.04:109][ 49]BlueprintLog: New page: Compile sassGamePlayer
+[2016.06.03-16.32.04:276][ 49]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
+[2016.06.03-16.32.04:367][ 49]BlueprintEditorCompileResults: Info [2381.64] Compile of sassGamePlayer successful! [in 257 ms]
+[2016.06.03-16.33.26:557][850]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
+[2016.06.03-16.33.26:577][850]LogFileHelpers: Editor autosave (incl. sublevels) for '/Game/Maps/orbit' took 0.020
+[2016.06.03-16.33.26:582][850]OBJ SavePackage: Generating thumbnails for [1] asset(s) in package [/Game/Blueprints/sassilization/sassGamePlayer] ([1] browsable assets)...
+[2016.06.03-16.33.26:603][850]OBJ SavePackage:     Rendered thumbnail for [Blueprint /Game/Blueprints/sassilization/sassGamePlayer.sassGamePlayer]
+[2016.06.03-16.33.26:603][850]OBJ SavePackage: Finished generating thumbnails for package [/Game/Blueprints/sassilization/sassGamePlayer]
+[2016.06.03-16.33.26:987][850]LogSavePackage: Save=375.51ms
+[2016.06.03-16.33.26:987][850]LogSavePackage: Moving 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/sassGamePlayer_Auto219FAB2CD48683DA05BAECC9D1A8CC9A4.tmp' to 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Blueprints/sassilization/sassGamePlayer_Auto2.uasset'
+[2016.06.03-16.33.26:989][850]LogSavePackage: Total save time: 384.99ms
+[2016.06.03-16.33.26:989][850]LogSavePackage:Display: Finished SavePackage C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Blueprints/sassilization/sassGamePlayer_Auto2.uasset
+[2016.06.03-16.33.26:990][850]LogFileHelpers: Auto-saving content packages took 0.412
+[2016.06.03-16.36.54:949][340]BlueprintLog: New page: Compile sassGamePlayer
+[2016.06.03-16.36.55:116][340]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
+[2016.06.03-16.36.55:209][340]BlueprintEditorCompileResults: Info [2672.48] Compile of sassGamePlayer successful! [in 259 ms]
+[2016.06.03-16.37.45:792][266]BlueprintLog: New page: Compile sassGamePlayer
+[2016.06.03-16.37.45:959][266]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
+[2016.06.03-16.37.46:051][266]BlueprintEditorCompileResults: Info [2723.32] Compile of sassGamePlayer successful! [in 258 ms]
+[2016.06.03-16.37.48:194][502]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
+[2016.06.03-16.37.48:259][502]Cmd: OBJ SAVEPACKAGE PACKAGE="/Game/Blueprints/sassilization/sassGamePlayer" FILE="C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassGamePlayer.uasset" SILENT=true
+[2016.06.03-16.37.48:654][502]LogSavePackage: Save=383.36ms
+[2016.06.03-16.37.48:654][502]LogSavePackage: Moving 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/sassGamePlayerB8CD31DE4B5B23D2347DBD8B28513995.tmp' to 'C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassGamePlayer.uasset'
+[2016.06.03-16.37.48:657][502]LogSavePackage: Total save time: 396.30ms
+[2016.06.03-16.37.48:657][502]LogSavePackage:Display: Finished SavePackage C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassGamePlayer.uasset
+[2016.06.03-16.38.08:484][831]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
+[2016.06.03-16.38.08:542][831]Cmd: OBJ SAVEPACKAGE PACKAGE="/Game/Maps/orbit" FILE="C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap" SILENT=true AUTOSAVING=true KEEPDIRTY=true
+[2016.06.03-16.38.08:782][831]LogSavePackage: Save=228.48ms
+[2016.06.03-16.38.08:782][831]LogSavePackage: Moving 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/UEDPCorbit1E41F1F744E63053199214BE6B89AFEC.tmp' to 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap'
+[2016.06.03-16.38.08:784][831]LogSavePackage: Total save time: 240.70ms
+[2016.06.03-16.38.08:784][831]LogSavePackage:Display: Finished SavePackage C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap
+[2016.06.03-16.41.26:482][763]BlueprintLog: New page: Compile sassilizationHUD_BP
+[2016.06.03-16.41.26:529][763]LogBlueprint:Error: [compiler sassilizationHUD_BP] Error This blueprint (self) is not a sassGamePlayer_C, therefore ' Target ' must have a connection.
+[2016.06.03-16.41.26:530][763]LogBlueprint:Error: [compiler sassilizationHUD_BP] Error This blueprint (self) is not a sassGamePlayer_C, therefore ' Target ' must have a connection.
+[2016.06.03-16.41.26:530][763]LogBlueprint:Error: [compiler sassilizationHUD_BP] Error This blueprint (self) is not a sassGamePlayer_C, therefore ' Target ' must have a connection.
+[2016.06.03-16.41.26:530][763]LogBlueprint:Error: [compiler sassilizationHUD_BP] Error This blueprint (self) is not a sassGamePlayer_C, therefore ' Target ' must have a connection.
+[2016.06.03-16.41.26:530][763]LogBlueprint:Error: [compiler sassilizationHUD_BP] Error This blueprint (self) is not a sassGamePlayer_C, therefore ' Target ' must have a connection.
+[2016.06.03-16.41.26:531][763]LogBlueprint:Error: [compiler sassilizationHUD_BP] Error Variable node  Set currentHalfHeight  uses an invalid target.  It may depend on a node that is not connected to the execution chain, and got purged.
+[2016.06.03-16.41.26:531][763]LogBlueprint:Error: [compiler sassilizationHUD_BP] Error Variable node  Set currentHalfHeight  uses an invalid target.  It may depend on a node that is not connected to the execution chain, and got purged.
+[2016.06.03-16.41.26:531][763]LogBlueprint:Error: [compiler sassilizationHUD_BP] Error Variable node  Set currentHalfHeight  uses an invalid target.  It may depend on a node that is not connected to the execution chain, and got purged.
+[2016.06.03-16.41.26:531][763]LogBlueprint:Error: [compiler sassilizationHUD_BP] Error Variable node  Set currentHalfHeight  uses an invalid target.  It may depend on a node that is not connected to the execution chain, and got purged.
+[2016.06.03-16.41.26:532][763]LogBlueprint:Error: [compiler sassilizationHUD_BP] Error Variable node  Set currentHalfHeight  uses an invalid target.  It may depend on a node that is not connected to the execution chain, and got purged.
+[2016.06.03-16.41.26:562][763]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
+[2016.06.03-16.41.26:733][763]LogBlueprint:Warning: [compiler sassilizationHUD_BP] Warning [2944.00] Compile of sassilizationHUD_BP failed. 10 Fatal Issue(s) 0 Warning(s) [in 250 ms]
+[2016.06.03-16.41.26:733][763]BlueprintEditorCompileResults:Error: Error This blueprint (self) is not a sassGamePlayer_C, therefore ' Target ' must have a connection.
+[2016.06.03-16.41.26:733][763]BlueprintEditorCompileResults:Error: Error This blueprint (self) is not a sassGamePlayer_C, therefore ' Target ' must have a connection.
+[2016.06.03-16.41.26:733][763]BlueprintEditorCompileResults:Error: Error This blueprint (self) is not a sassGamePlayer_C, therefore ' Target ' must have a connection.
+[2016.06.03-16.41.26:733][763]BlueprintEditorCompileResults:Error: Error This blueprint (self) is not a sassGamePlayer_C, therefore ' Target ' must have a connection.
+[2016.06.03-16.41.26:733][763]BlueprintEditorCompileResults:Error: Error This blueprint (self) is not a sassGamePlayer_C, therefore ' Target ' must have a connection.
+[2016.06.03-16.41.26:733][763]BlueprintEditorCompileResults:Error: Error Variable node  Set currentHalfHeight  uses an invalid target.  It may depend on a node that is not connected to the execution chain, and got purged.
+[2016.06.03-16.41.26:733][763]BlueprintEditorCompileResults:Error: Error Variable node  Set currentHalfHeight  uses an invalid target.  It may depend on a node that is not connected to the execution chain, and got purged.
+[2016.06.03-16.41.26:734][763]BlueprintEditorCompileResults:Error: Error Variable node  Set currentHalfHeight  uses an invalid target.  It may depend on a node that is not connected to the execution chain, and got purged.
+[2016.06.03-16.41.26:734][763]BlueprintEditorCompileResults:Error: Error Variable node  Set currentHalfHeight  uses an invalid target.  It may depend on a node that is not connected to the execution chain, and got purged.
+[2016.06.03-16.41.26:734][763]BlueprintEditorCompileResults:Error: Error Variable node  Set currentHalfHeight  uses an invalid target.  It may depend on a node that is not connected to the execution chain, and got purged.
+[2016.06.03-16.41.26:734][763]BlueprintEditorCompileResults: Info The execution path doesn't end with a return node.  Is Not Valid 
+[2016.06.03-16.41.26:734][763]BlueprintEditorCompileResults: Info The execution path doesn't end with a return node.  Cast Failed 
+[2016.06.03-16.41.26:734][763]BlueprintEditorCompileResults: Info The execution path doesn't end with a return node.  Is Not Valid 
+[2016.06.03-16.41.26:734][763]BlueprintEditorCompileResults: Info The execution path doesn't end with a return node.  Cast Failed 
+[2016.06.03-16.41.26:734][763]BlueprintEditorCompileResults: Info The execution path doesn't end with a return node.  Is Not Valid 
+[2016.06.03-16.41.26:734][763]BlueprintEditorCompileResults: Info The execution path doesn't end with a return node.  Cast Failed 
+[2016.06.03-16.41.26:735][763]BlueprintEditorCompileResults: Info The execution path doesn't end with a return node.  Is Not Valid 
+[2016.06.03-16.41.26:735][763]BlueprintEditorCompileResults: Info The execution path doesn't end with a return node.  Cast Failed 
+[2016.06.03-16.41.26:735][763]BlueprintEditorCompileResults: Info The execution path doesn't end with a return node.  Is Not Valid 
+[2016.06.03-16.41.26:735][763]BlueprintEditorCompileResults: Info The execution path doesn't end with a return node.  Cast Failed 
+[2016.06.03-16.41.26:735][763]BlueprintEditorCompileResults: Info The execution path doesn't end with a return node.  Is Not Valid 
+[2016.06.03-16.41.26:735][763]BlueprintEditorCompileResults: Info The execution path doesn't end with a return node.  Cast Failed 
+[2016.06.03-16.41.26:735][763]BlueprintEditorCompileResults: Info The execution path doesn't end with a return node.  Is Not Valid 
+[2016.06.03-16.41.26:735][763]BlueprintEditorCompileResults: Info The execution path doesn't end with a return node.  Cast Failed 
+[2016.06.03-16.41.26:735][763]BlueprintEditorCompileResults: Info The execution path doesn't end with a return node.  Is Not Valid 
+[2016.06.03-16.41.26:735][763]BlueprintEditorCompileResults: Info The execution path doesn't end with a return node.  Cast Failed 
+[2016.06.03-16.41.26:735][763]BlueprintEditorCompileResults: Info The execution path doesn't end with a return node.  Is Not Valid 
+[2016.06.03-16.41.26:736][763]BlueprintEditorCompileResults: Info The execution path doesn't end with a return node.  Cast Failed 
+[2016.06.03-16.41.26:736][763]BlueprintEditorCompileResults: Info The execution path doesn't end with a return node.  Is Not Valid 
+[2016.06.03-16.41.26:736][763]BlueprintEditorCompileResults: Info The execution path doesn't end with a return node.  Cast Failed 
+[2016.06.03-16.41.26:736][763]BlueprintEditorCompileResults:Warning: Warning [2944.00] Compile of sassilizationHUD_BP failed. 10 Fatal Issue(s) 0 Warning(s) [in 250 ms]
+[2016.06.03-16.41.27:216][819]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
+[2016.06.03-16.41.27:507][819]LogSavePackage: Save=227.98ms
+[2016.06.03-16.41.27:508][819]LogSavePackage: Moving 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/sassilizationHUD_BPDC7645D9450AE4EFDFCB74AB7E0D4DB1.tmp' to 'C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassilizationHUD_BP.uasset'
+[2016.06.03-16.41.27:510][819]LogSavePackage: Total save time: 244.17ms
+[2016.06.03-16.41.27:510][819]LogSavePackage:Display: Finished SavePackage C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassilizationHUD_BP.uasset
+[2016.06.03-16.41.49:217][281]BlueprintLog: New page: Compile sassilizationHUD_BP
+[2016.06.03-16.41.49:271][281]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
+[2016.06.03-16.41.49:370][281]BlueprintEditorCompileResults: Info The execution path doesn't end with a return node.  Is Not Valid 
+[2016.06.03-16.41.49:370][281]BlueprintEditorCompileResults: Info The execution path doesn't end with a return node.  Cast Failed 
+[2016.06.03-16.41.49:370][281]BlueprintEditorCompileResults: Info The execution path doesn't end with a return node.  Is Not Valid 
+[2016.06.03-16.41.49:370][281]BlueprintEditorCompileResults: Info The execution path doesn't end with a return node.  Cast Failed 
+[2016.06.03-16.41.49:370][281]BlueprintEditorCompileResults: Info The execution path doesn't end with a return node.  Is Not Valid 
+[2016.06.03-16.41.49:371][281]BlueprintEditorCompileResults: Info The execution path doesn't end with a return node.  Cast Failed 
+[2016.06.03-16.41.49:371][281]BlueprintEditorCompileResults: Info The execution path doesn't end with a return node.  Is Not Valid 
+[2016.06.03-16.41.49:371][281]BlueprintEditorCompileResults: Info The execution path doesn't end with a return node.  Cast Failed 
+[2016.06.03-16.41.49:371][281]BlueprintEditorCompileResults: Info The execution path doesn't end with a return node.  Is Not Valid 
+[2016.06.03-16.41.49:371][281]BlueprintEditorCompileResults: Info The execution path doesn't end with a return node.  Cast Failed 
+[2016.06.03-16.41.49:371][281]BlueprintEditorCompileResults: Info The execution path doesn't end with a return node.  Is Not Valid 
+[2016.06.03-16.41.49:371][281]BlueprintEditorCompileResults: Info The execution path doesn't end with a return node.  Cast Failed 
+[2016.06.03-16.41.49:371][281]BlueprintEditorCompileResults: Info The execution path doesn't end with a return node.  Is Not Valid 
+[2016.06.03-16.41.49:372][281]BlueprintEditorCompileResults: Info The execution path doesn't end with a return node.  Cast Failed 
+[2016.06.03-16.41.49:372][281]BlueprintEditorCompileResults: Info The execution path doesn't end with a return node.  Is Not Valid 
+[2016.06.03-16.41.49:372][281]BlueprintEditorCompileResults: Info The execution path doesn't end with a return node.  Cast Failed 
+[2016.06.03-16.41.49:372][281]BlueprintEditorCompileResults: Info The execution path doesn't end with a return node.  Is Not Valid 
+[2016.06.03-16.41.49:372][281]BlueprintEditorCompileResults: Info The execution path doesn't end with a return node.  Cast Failed 
+[2016.06.03-16.41.49:372][281]BlueprintEditorCompileResults: Info The execution path doesn't end with a return node.  Is Not Valid 
+[2016.06.03-16.41.49:372][281]BlueprintEditorCompileResults: Info The execution path doesn't end with a return node.  Cast Failed 
+[2016.06.03-16.41.49:372][281]BlueprintEditorCompileResults: Info [2966.64] Compile of sassilizationHUD_BP successful! [in 152 ms]
+[2016.06.03-16.41.53:064][704]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
+[2016.06.03-16.41.53:339][704]LogSavePackage: Save=219.59ms
+[2016.06.03-16.41.53:339][704]LogSavePackage: Moving 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/sassilizationHUD_BP7382E6BD473C4C2C0414AA9E35365E64.tmp' to 'C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassilizationHUD_BP.uasset'
+[2016.06.03-16.41.53:341][704]LogSavePackage: Total save time: 228.18ms
+[2016.06.03-16.41.53:342][704]LogSavePackage:Display: Finished SavePackage C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassilizationHUD_BP.uasset
+[2016.06.03-16.41.57:361][131]Cmd: OBJ SAVEPACKAGE PACKAGE="/Game/Maps/orbit" FILE="C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap" SILENT=true AUTOSAVING=true KEEPDIRTY=true
+[2016.06.03-16.41.57:598][131]LogSavePackage: Save=230.14ms
+[2016.06.03-16.41.57:598][131]LogSavePackage: Moving 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/UEDPCorbitC0EC51D24AA4F801BB8DF9956D585F7D.tmp' to 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap'
+[2016.06.03-16.41.57:600][131]LogSavePackage: Total save time: 237.18ms
+[2016.06.03-16.41.57:600][131]LogSavePackage:Display: Finished SavePackage C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap
+[2016.06.03-16.46.28:519][180]Cmd: OBJ SAVEPACKAGE PACKAGE="/Game/Maps/orbit" FILE="C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap" SILENT=true AUTOSAVING=true KEEPDIRTY=true
+[2016.06.03-16.46.28:780][180]LogSavePackage: Save=247.36ms
+[2016.06.03-16.46.28:780][180]LogSavePackage: Moving 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/UEDPCorbit51B6294E49BACD90F4F8B6972D551A17.tmp' to 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap'
+[2016.06.03-16.46.28:782][180]LogSavePackage: Total save time: 261.45ms
+[2016.06.03-16.46.28:782][180]LogSavePackage:Display: Finished SavePackage C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap
+[2016.06.03-16.48.15:316][ 31]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
+[2016.06.03-16.48.15:370][ 31]Cmd: OBJ SAVEPACKAGE PACKAGE="/Game/Blueprints/sassilization/sassGamePlayer" FILE="C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassGamePlayer.uasset" SILENT=true
+[2016.06.03-16.48.15:773][ 31]LogSavePackage: Save=388.11ms
+[2016.06.03-16.48.15:773][ 31]LogSavePackage: Moving 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/sassGamePlayerA772D57F4CD8F11D19B5E58F18202889.tmp' to 'C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassGamePlayer.uasset'
+[2016.06.03-16.48.15:775][ 31]LogSavePackage: Total save time: 404.49ms
+[2016.06.03-16.48.15:776][ 31]LogSavePackage:Display: Finished SavePackage C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassGamePlayer.uasset
+[2016.06.03-16.48.19:833][512]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
+[2016.06.03-16.48.19:874][512]Cmd: OBJ SAVEPACKAGE PACKAGE="/Game/Blueprints/sassilization/sassGamePlayer" FILE="C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassGamePlayer.uasset" SILENT=true
+[2016.06.03-16.48.20:247][512]LogSavePackage: Save=366.40ms
+[2016.06.03-16.48.20:247][512]LogSavePackage: Moving 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/sassGamePlayer1592AAF348709487C8BE60A9B8AA3035.tmp' to 'C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassGamePlayer.uasset'
+[2016.06.03-16.48.20:250][512]LogSavePackage: Total save time: 374.61ms
+[2016.06.03-16.48.20:250][512]LogSavePackage:Display: Finished SavePackage C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassGamePlayer.uasset
+[2016.06.03-16.48.20:684][562]BlueprintLog: New page: Compile sassGamePlayer
+[2016.06.03-16.48.20:969][562]BlueprintEditorCompileResults: Info [3358.24] Compile of sassGamePlayer successful! [in 284 ms]
+[2016.06.03-16.50.11:350][212]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
+[2016.06.03-16.50.12:960][381]BlueprintLog: New page: Compile sassGamePlayer
+[2016.06.03-16.50.13:136][381]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharacterMovementComponent_5) Not registered. Aborting.
+[2016.06.03-16.50.13:330][381]BlueprintEditorCompileResults: Info [3470.60] Compile of sassGamePlayer successful! [in 368 ms]
+[2016.06.03-16.50.19:510][ 50]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
+[2016.06.03-16.50.21:026][201]BlueprintLog: New page: Compile sassGamePlayer
+[2016.06.03-16.50.21:189][201]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharacterMovementComponent_6) Not registered. Aborting.
+[2016.06.03-16.50.21:373][201]BlueprintEditorCompileResults: Info [3478.64] Compile of sassGamePlayer successful! [in 346 ms]
+[2016.06.03-16.50.34:506][639]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
+[2016.06.03-16.50.35:931][775]BlueprintLog: New page: Compile sassGamePlayer
+[2016.06.03-16.50.36:027][775]LogBlueprint:Warning: [sassilizationHUD_BP] CreatePinForVariable: 'bHasUnitsSelected' variable not found. Base class was probably changed.
+[2016.06.03-16.50.36:062][775]LogBlueprint:Warning: [compiler sassilizationHUD_BP] Warning Could not find a variable named "bHasUnitsSelected" in 'sassGamePlayer_C'.
+Make sure 'sassGamePlayer_C' has been compiled for  Get bHasUnitsSelected 
+[2016.06.03-16.50.36:064][775]LogBlueprint:Error: [compiler sassilizationHUD_BP] Error The property associated with  Has Units Selected  could not be found
+[2016.06.03-16.50.36:103][775]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharacterMovementComponent_7) Not registered. Aborting.
+[2016.06.03-16.50.36:360][775]BlueprintEditorCompileResults: Info [3493.63] Compile of sassGamePlayer successful! [in 428 ms]
+[2016.06.03-16.50.37:612][909]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
+[2016.06.03-16.50.37:670][909]Cmd: OBJ SAVEPACKAGE PACKAGE="/Game/Blueprints/sassilization/sassGamePlayer" FILE="C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassGamePlayer.uasset" SILENT=true
+[2016.06.03-16.50.38:054][909]LogSavePackage: Save=375.83ms
+[2016.06.03-16.50.38:054][909]LogSavePackage: Moving 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/sassGamePlayer537C047A49050D4981EF388A6A9B859D.tmp' to 'C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassGamePlayer.uasset'
+[2016.06.03-16.50.38:057][909]LogSavePackage: Total save time: 385.45ms
+[2016.06.03-16.50.38:057][909]LogSavePackage:Display: Finished SavePackage C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassGamePlayer.uasset
+[2016.06.03-16.50.55:616][927]BlueprintLog: New page: Compile sassGamePlayer
+[2016.06.03-16.50.55:715][927]LogBlueprint:Warning: [sassilizationHUD_BP] CreatePinForVariable: 'bHasUnitsSelected' variable not found. Base class was probably changed.
+[2016.06.03-16.50.55:761][927]LogBlueprint:Warning: [compiler sassilizationHUD_BP] Warning Could not find a variable named "bHasUnitsSelected" in 'sassGamePlayer_C'.
+Make sure 'sassGamePlayer_C' has been compiled for  Get bHasUnitsSelected 
+[2016.06.03-16.50.55:765][927]LogBlueprint:Error: [compiler sassilizationHUD_BP] Error The property associated with  Has Units Selected  could not be found
+[2016.06.03-16.50.55:820][927]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
+[2016.06.03-16.50.55:996][927]BlueprintEditorCompileResults: Info [3513.26] Compile of sassGamePlayer successful! [in 378 ms]
+[2016.06.03-16.50.56:553][979]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
+[2016.06.03-16.50.56:612][979]Cmd: OBJ SAVEPACKAGE PACKAGE="/Game/Blueprints/sassilization/sassGamePlayer" FILE="C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassGamePlayer.uasset" SILENT=true
+[2016.06.03-16.50.56:991][979]LogSavePackage: Save=372.77ms
+[2016.06.03-16.50.56:992][979]LogSavePackage: Moving 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/sassGamePlayer3083DCC14A7F43597C655883F858A839.tmp' to 'C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassGamePlayer.uasset'
+[2016.06.03-16.50.56:994][979]LogSavePackage: Total save time: 380.97ms
+[2016.06.03-16.50.56:995][979]LogSavePackage:Display: Finished SavePackage C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassGamePlayer.uasset
+[2016.06.03-16.50.58:171][105]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
+[2016.06.03-16.50.58:225][105]Cmd: OBJ SAVEPACKAGE PACKAGE="/Game/Maps/orbit" FILE="C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap" SILENT=true AUTOSAVING=true KEEPDIRTY=true
+[2016.06.03-16.50.58:464][105]LogSavePackage: Save=231.72ms
+[2016.06.03-16.50.58:464][105]LogSavePackage: Moving 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/UEDPCorbitDD64B28A4C93E1DD67ED808F60C5744D.tmp' to 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap'
+[2016.06.03-16.50.58:466][105]LogSavePackage: Total save time: 238.95ms
+[2016.06.03-16.50.58:466][105]LogSavePackage:Display: Finished SavePackage C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap
+[2016.06.03-16.53.21:378][902]LogEditorTransaction: Undo Break Pin Link
+[2016.06.03-16.53.23:241][ 87]LogEditorTransaction: Undo Move Node
+[2016.06.03-16.53.23:257][ 87]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
+[2016.06.03-16.53.23:964][157]LogEditorTransaction: Undo Remove Variable
+[2016.06.03-16.53.23:971][157]LogScript:Warning: Attempted to access REINST_sassGamePlayer_C_3 via property K2Node_DynamicCast_AsCharacter, but REINST_sassGamePlayer_C_3 is pending kill
+	MixamoAnimBP_Adam_C /Engine/Transient.World_3:PersistentLevel.REINST_sassGamePlayer_C_3.CharacterMesh0.MixamoAnimBP_Adam_C_49
+	Function /Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam_C:ExecuteUbergraph_MixamoAnimBP_Adam:015D
+[2016.06.03-16.53.23:971][157]LogScript:Warning: Attempted to access REINST_sassGamePlayer_C_3 via property K2Node_DynamicCast_AsCharacter, but REINST_sassGamePlayer_C_3 is pending kill
+	MixamoAnimBP_Adam_C /Engine/Transient.World_3:PersistentLevel.REINST_sassGamePlayer_C_3.CharacterMesh0.MixamoAnimBP_Adam_C_49
+	Function /Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam_C:ExecuteUbergraph_MixamoAnimBP_Adam:01D5
+[2016.06.03-16.53.23:972][157]LogScript:Warning: Attempted to access REINST_sassGamePlayer_C_3 via property K2Node_DynamicCast_AsCharacter, but REINST_sassGamePlayer_C_3 is pending kill
+	MixamoAnimBP_Adam_C /Engine/Transient.World_3:PersistentLevel.REINST_sassGamePlayer_C_3.CharacterMesh0.MixamoAnimBP_Adam_C_49
+	Function /Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam_C:ExecuteUbergraph_MixamoAnimBP_Adam:0207
+[2016.06.03-16.53.23:989][157]LogScript:Warning: Attempted to access REINST_sassGamePlayer_C_3 via property K2Node_DynamicCast_AsCharacter, but REINST_sassGamePlayer_C_3 is pending kill
+	MixamoAnimBP_Adam_C /Engine/Transient.World_3:PersistentLevel.REINST_sassGamePlayer_C_3.CharacterMesh0.MixamoAnimBP_Adam_C_49
+	Function /Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam_C:ExecuteUbergraph_MixamoAnimBP_Adam:015D
+[2016.06.03-16.53.23:989][157]LogScript:Warning: Attempted to access REINST_sassGamePlayer_C_3 via property K2Node_DynamicCast_AsCharacter, but REINST_sassGamePlayer_C_3 is pending kill
+	MixamoAnimBP_Adam_C /Engine/Transient.World_3:PersistentLevel.REINST_sassGamePlayer_C_3.CharacterMesh0.MixamoAnimBP_Adam_C_49
+	Function /Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam_C:ExecuteUbergraph_MixamoAnimBP_Adam:01D5
+[2016.06.03-16.53.23:989][157]LogScript:Warning: Attempted to access REINST_sassGamePlayer_C_3 via property K2Node_DynamicCast_AsCharacter, but REINST_sassGamePlayer_C_3 is pending kill
+	MixamoAnimBP_Adam_C /Engine/Transient.World_3:PersistentLevel.REINST_sassGamePlayer_C_3.CharacterMesh0.MixamoAnimBP_Adam_C_49
+	Function /Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam_C:ExecuteUbergraph_MixamoAnimBP_Adam:0207
+[2016.06.03-16.53.23:990][157]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharacterMovementComponent_8) Not registered. Aborting.
+[2016.06.03-16.53.24:011][157]LogScript:Warning: Attempted to access REINST_sassGamePlayer_C_3 via property K2Node_DynamicCast_AsCharacter, but REINST_sassGamePlayer_C_3 is pending kill
+	MixamoAnimBP_Adam_C /Engine/Transient.World_3:PersistentLevel.REINST_sassGamePlayer_C_3.CharacterMesh0.MixamoAnimBP_Adam_C_49
+	Function /Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam_C:ExecuteUbergraph_MixamoAnimBP_Adam:015D
+[2016.06.03-16.53.24:011][157]LogScript:Warning: Attempted to access REINST_sassGamePlayer_C_3 via property K2Node_DynamicCast_AsCharacter, but REINST_sassGamePlayer_C_3 is pending kill
+	MixamoAnimBP_Adam_C /Engine/Transient.World_3:PersistentLevel.REINST_sassGamePlayer_C_3.CharacterMesh0.MixamoAnimBP_Adam_C_49
+	Function /Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam_C:ExecuteUbergraph_MixamoAnimBP_Adam:01D5
+[2016.06.03-16.53.24:011][157]LogScript:Warning: Attempted to access REINST_sassGamePlayer_C_3 via property K2Node_DynamicCast_AsCharacter, but REINST_sassGamePlayer_C_3 is pending kill
+	MixamoAnimBP_Adam_C /Engine/Transient.World_3:PersistentLevel.REINST_sassGamePlayer_C_3.CharacterMesh0.MixamoAnimBP_Adam_C_49
+	Function /Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam_C:ExecuteUbergraph_MixamoAnimBP_Adam:0207
+[2016.06.03-16.53.24:123][158]LogScript:Warning: Attempted to access REINST_sassGamePlayer_C_3 via property K2Node_DynamicCast_AsCharacter, but REINST_sassGamePlayer_C_3 is pending kill
+	MixamoAnimBP_Adam_C /Engine/Transient.World_3:PersistentLevel.REINST_sassGamePlayer_C_3.CharacterMesh0.MixamoAnimBP_Adam_C_49
+	Function /Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam_C:ExecuteUbergraph_MixamoAnimBP_Adam:015D
+[2016.06.03-16.53.24:124][158]LogScript:Warning: Attempted to access REINST_sassGamePlayer_C_3 via property K2Node_DynamicCast_AsCharacter, but REINST_sassGamePlayer_C_3 is pending kill
+	MixamoAnimBP_Adam_C /Engine/Transient.World_3:PersistentLevel.REINST_sassGamePlayer_C_3.CharacterMesh0.MixamoAnimBP_Adam_C_49
+	Function /Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam_C:ExecuteUbergraph_MixamoAnimBP_Adam:01D5
+[2016.06.03-16.53.24:124][158]LogScript:Warning: Attempted to access REINST_sassGamePlayer_C_3 via property K2Node_DynamicCast_AsCharacter, but REINST_sassGamePlayer_C_3 is pending kill
+	MixamoAnimBP_Adam_C /Engine/Transient.World_3:PersistentLevel.REINST_sassGamePlayer_C_3.CharacterMesh0.MixamoAnimBP_Adam_C_49
+	Function /Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam_C:ExecuteUbergraph_MixamoAnimBP_Adam:0207
+[2016.06.03-16.53.24:148][159]LogScript:Warning: Attempted to access REINST_sassGamePlayer_C_3 via property K2Node_DynamicCast_AsCharacter, but REINST_sassGamePlayer_C_3 is pending kill
+	MixamoAnimBP_Adam_C /Engine/Transient.World_3:PersistentLevel.REINST_sassGamePlayer_C_3.CharacterMesh0.MixamoAnimBP_Adam_C_49
+	Function /Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam_C:ExecuteUbergraph_MixamoAnimBP_Adam:015D
+[2016.06.03-16.53.24:149][159]LogScript:Warning: Attempted to access REINST_sassGamePlayer_C_3 via property K2Node_DynamicCast_AsCharacter, but REINST_sassGamePlayer_C_3 is pending kill
+	MixamoAnimBP_Adam_C /Engine/Transient.World_3:PersistentLevel.REINST_sassGamePlayer_C_3.CharacterMesh0.MixamoAnimBP_Adam_C_49
+	Function /Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam_C:ExecuteUbergraph_MixamoAnimBP_Adam:01D5
+[2016.06.03-16.53.24:149][159]LogScript:Warning: Attempted to access REINST_sassGamePlayer_C_3 via property K2Node_DynamicCast_AsCharacter, but REINST_sassGamePlayer_C_3 is pending kill
+	MixamoAnimBP_Adam_C /Engine/Transient.World_3:PersistentLevel.REINST_sassGamePlayer_C_3.CharacterMesh0.MixamoAnimBP_Adam_C_49
+	Function /Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam_C:ExecuteUbergraph_MixamoAnimBP_Adam:0207
+[2016.06.03-16.53.24:156][160]LogScript:Warning: Attempted to access REINST_sassGamePlayer_C_3 via property K2Node_DynamicCast_AsCharacter, but REINST_sassGamePlayer_C_3 is pending kill
+	MixamoAnimBP_Adam_C /Engine/Transient.World_3:PersistentLevel.REINST_sassGamePlayer_C_3.CharacterMesh0.MixamoAnimBP_Adam_C_49
+	Function /Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam_C:ExecuteUbergraph_MixamoAnimBP_Adam:015D
+[2016.06.03-16.53.24:156][160]LogScript:Warning: Attempted to access REINST_sassGamePlayer_C_3 via property K2Node_DynamicCast_AsCharacter, but REINST_sassGamePlayer_C_3 is pending kill
+	MixamoAnimBP_Adam_C /Engine/Transient.World_3:PersistentLevel.REINST_sassGamePlayer_C_3.CharacterMesh0.MixamoAnimBP_Adam_C_49
+	Function /Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam_C:ExecuteUbergraph_MixamoAnimBP_Adam:01D5
+[2016.06.03-16.53.24:432][193]LogEditorTransaction: Undo Remove Variable
+[2016.06.03-16.53.24:439][193]LogScript:Warning: Attempted to access REINST_sassGamePlayer_C_2 via property K2Node_DynamicCast_AsCharacter, but REINST_sassGamePlayer_C_2 is pending kill
+	MixamoAnimBP_Adam_C /Engine/Transient.World_3:PersistentLevel.REINST_sassGamePlayer_C_2.CharacterMesh0.MixamoAnimBP_Adam_C_45
+	Function /Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam_C:ExecuteUbergraph_MixamoAnimBP_Adam:015D
+[2016.06.03-16.53.24:439][193]LogScript:Warning: Attempted to access REINST_sassGamePlayer_C_2 via property K2Node_DynamicCast_AsCharacter, but REINST_sassGamePlayer_C_2 is pending kill
+	MixamoAnimBP_Adam_C /Engine/Transient.World_3:PersistentLevel.REINST_sassGamePlayer_C_2.CharacterMesh0.MixamoAnimBP_Adam_C_45
+	Function /Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam_C:ExecuteUbergraph_MixamoAnimBP_Adam:01D5
+[2016.06.03-16.53.24:439][193]LogScript:Warning: Attempted to access REINST_sassGamePlayer_C_2 via property K2Node_DynamicCast_AsCharacter, but REINST_sassGamePlayer_C_2 is pending kill
+	MixamoAnimBP_Adam_C /Engine/Transient.World_3:PersistentLevel.REINST_sassGamePlayer_C_2.CharacterMesh0.MixamoAnimBP_Adam_C_45
+	Function /Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam_C:ExecuteUbergraph_MixamoAnimBP_Adam:0207
+[2016.06.03-16.53.24:456][193]LogScript:Warning: Attempted to access REINST_sassGamePlayer_C_2 via property K2Node_DynamicCast_AsCharacter, but REINST_sassGamePlayer_C_2 is pending kill
+	MixamoAnimBP_Adam_C /Engine/Transient.World_3:PersistentLevel.REINST_sassGamePlayer_C_2.CharacterMesh0.MixamoAnimBP_Adam_C_45
+	Function /Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam_C:ExecuteUbergraph_MixamoAnimBP_Adam:015D
+[2016.06.03-16.53.24:456][193]LogScript:Warning: Attempted to access REINST_sassGamePlayer_C_2 via property K2Node_DynamicCast_AsCharacter, but REINST_sassGamePlayer_C_2 is pending kill
+	MixamoAnimBP_Adam_C /Engine/Transient.World_3:PersistentLevel.REINST_sassGamePlayer_C_2.CharacterMesh0.MixamoAnimBP_Adam_C_45
+	Function /Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam_C:ExecuteUbergraph_MixamoAnimBP_Adam:01D5
+[2016.06.03-16.53.24:456][193]LogScript:Warning: Attempted to access REINST_sassGamePlayer_C_2 via property K2Node_DynamicCast_AsCharacter, but REINST_sassGamePlayer_C_2 is pending kill
+	MixamoAnimBP_Adam_C /Engine/Transient.World_3:PersistentLevel.REINST_sassGamePlayer_C_2.CharacterMesh0.MixamoAnimBP_Adam_C_45
+	Function /Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam_C:ExecuteUbergraph_MixamoAnimBP_Adam:0207
+[2016.06.03-16.53.24:457][193]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharacterMovementComponent_9) Not registered. Aborting.
+[2016.06.03-16.53.24:478][193]LogScript:Warning: Attempted to access REINST_sassGamePlayer_C_2 via property K2Node_DynamicCast_AsCharacter, but REINST_sassGamePlayer_C_2 is pending kill
+	MixamoAnimBP_Adam_C /Engine/Transient.World_3:PersistentLevel.REINST_sassGamePlayer_C_2.CharacterMesh0.MixamoAnimBP_Adam_C_45
+	Function /Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam_C:ExecuteUbergraph_MixamoAnimBP_Adam:015D
+[2016.06.03-16.53.24:478][193]LogScript:Warning: Attempted to access REINST_sassGamePlayer_C_2 via property K2Node_DynamicCast_AsCharacter, but REINST_sassGamePlayer_C_2 is pending kill
+	MixamoAnimBP_Adam_C /Engine/Transient.World_3:PersistentLevel.REINST_sassGamePlayer_C_2.CharacterMesh0.MixamoAnimBP_Adam_C_45
+	Function /Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam_C:ExecuteUbergraph_MixamoAnimBP_Adam:01D5
+[2016.06.03-16.53.24:479][193]LogScript:Warning: Attempted to access REINST_sassGamePlayer_C_2 via property K2Node_DynamicCast_AsCharacter, but REINST_sassGamePlayer_C_2 is pending kill
+	MixamoAnimBP_Adam_C /Engine/Transient.World_3:PersistentLevel.REINST_sassGamePlayer_C_2.CharacterMesh0.MixamoAnimBP_Adam_C_45
+	Function /Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam_C:ExecuteUbergraph_MixamoAnimBP_Adam:0207
+[2016.06.03-16.53.24:583][194]LogScript:Warning: Attempted to access REINST_sassGamePlayer_C_2 via property K2Node_DynamicCast_AsCharacter, but REINST_sassGamePlayer_C_2 is pending kill
+	MixamoAnimBP_Adam_C /Engine/Transient.World_3:PersistentLevel.REINST_sassGamePlayer_C_2.CharacterMesh0.MixamoAnimBP_Adam_C_45
+	Function /Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam_C:ExecuteUbergraph_MixamoAnimBP_Adam:015D
+[2016.06.03-16.53.24:583][194]LogScript:Warning: Attempted to access REINST_sassGamePlayer_C_2 via property K2Node_DynamicCast_AsCharacter, but REINST_sassGamePlayer_C_2 is pending kill
+	MixamoAnimBP_Adam_C /Engine/Transient.World_3:PersistentLevel.REINST_sassGamePlayer_C_2.CharacterMesh0.MixamoAnimBP_Adam_C_45
+	Function /Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam_C:ExecuteUbergraph_MixamoAnimBP_Adam:01D5
+[2016.06.03-16.53.24:583][194]LogScript:Warning: Attempted to access REINST_sassGamePlayer_C_2 via property K2Node_DynamicCast_AsCharacter, but REINST_sassGamePlayer_C_2 is pending kill
+	MixamoAnimBP_Adam_C /Engine/Transient.World_3:PersistentLevel.REINST_sassGamePlayer_C_2.CharacterMesh0.MixamoAnimBP_Adam_C_45
+	Function /Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam_C:ExecuteUbergraph_MixamoAnimBP_Adam:0207
+[2016.06.03-16.53.24:592][195]LogScript:Warning: Attempted to access REINST_sassGamePlayer_C_2 via property K2Node_DynamicCast_AsCharacter, but REINST_sassGamePlayer_C_2 is pending kill
+	MixamoAnimBP_Adam_C /Engine/Transient.World_3:PersistentLevel.REINST_sassGamePlayer_C_2.CharacterMesh0.MixamoAnimBP_Adam_C_45
+	Function /Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam_C:ExecuteUbergraph_MixamoAnimBP_Adam:015D
+[2016.06.03-16.53.24:593][195]LogScript:Warning: Attempted to access REINST_sassGamePlayer_C_2 via property K2Node_DynamicCast_AsCharacter, but REINST_sassGamePlayer_C_2 is pending kill
+	MixamoAnimBP_Adam_C /Engine/Transient.World_3:PersistentLevel.REINST_sassGamePlayer_C_2.CharacterMesh0.MixamoAnimBP_Adam_C_45
+	Function /Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam_C:ExecuteUbergraph_MixamoAnimBP_Adam:01D5
+[2016.06.03-16.53.24:593][195]LogScript:Warning: Attempted to access REINST_sassGamePlayer_C_2 via property K2Node_DynamicCast_AsCharacter, but REINST_sassGamePlayer_C_2 is pending kill
+	MixamoAnimBP_Adam_C /Engine/Transient.World_3:PersistentLevel.REINST_sassGamePlayer_C_2.CharacterMesh0.MixamoAnimBP_Adam_C_45
+	Function /Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam_C:ExecuteUbergraph_MixamoAnimBP_Adam:0207
+[2016.06.03-16.53.24:600][196]LogScript:Warning: Attempted to access REINST_sassGamePlayer_C_2 via property K2Node_DynamicCast_AsCharacter, but REINST_sassGamePlayer_C_2 is pending kill
+	MixamoAnimBP_Adam_C /Engine/Transient.World_3:PersistentLevel.REINST_sassGamePlayer_C_2.CharacterMesh0.MixamoAnimBP_Adam_C_45
+	Function /Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam_C:ExecuteUbergraph_MixamoAnimBP_Adam:015D
+[2016.06.03-16.53.24:601][196]LogScript:Warning: Attempted to access REINST_sassGamePlayer_C_2 via property K2Node_DynamicCast_AsCharacter, but REINST_sassGamePlayer_C_2 is pending kill
+	MixamoAnimBP_Adam_C /Engine/Transient.World_3:PersistentLevel.REINST_sassGamePlayer_C_2.CharacterMesh0.MixamoAnimBP_Adam_C_45
+	Function /Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam_C:ExecuteUbergraph_MixamoAnimBP_Adam:01D5
+[2016.06.03-16.53.24:855][226]LogEditorTransaction: Undo Remove Variable
+[2016.06.03-16.53.24:862][226]LogScript:Warning: Attempted to access REINST_sassGamePlayer_C_1 via property K2Node_DynamicCast_AsCharacter, but REINST_sassGamePlayer_C_1 is pending kill
+	MixamoAnimBP_Adam_C /Engine/Transient.World_3:PersistentLevel.REINST_sassGamePlayer_C_1.CharacterMesh0.MixamoAnimBP_Adam_C_15
+	Function /Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam_C:ExecuteUbergraph_MixamoAnimBP_Adam:015D
+[2016.06.03-16.53.24:863][226]LogScript:Warning: Attempted to access REINST_sassGamePlayer_C_1 via property K2Node_DynamicCast_AsCharacter, but REINST_sassGamePlayer_C_1 is pending kill
+	MixamoAnimBP_Adam_C /Engine/Transient.World_3:PersistentLevel.REINST_sassGamePlayer_C_1.CharacterMesh0.MixamoAnimBP_Adam_C_15
+	Function /Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam_C:ExecuteUbergraph_MixamoAnimBP_Adam:01D5
+[2016.06.03-16.53.24:863][226]LogScript:Warning: Attempted to access REINST_sassGamePlayer_C_1 via property K2Node_DynamicCast_AsCharacter, but REINST_sassGamePlayer_C_1 is pending kill
+	MixamoAnimBP_Adam_C /Engine/Transient.World_3:PersistentLevel.REINST_sassGamePlayer_C_1.CharacterMesh0.MixamoAnimBP_Adam_C_15
+	Function /Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam_C:ExecuteUbergraph_MixamoAnimBP_Adam:0207
+[2016.06.03-16.53.24:880][226]LogScript:Warning: Attempted to access REINST_sassGamePlayer_C_1 via property K2Node_DynamicCast_AsCharacter, but REINST_sassGamePlayer_C_1 is pending kill
+	MixamoAnimBP_Adam_C /Engine/Transient.World_3:PersistentLevel.REINST_sassGamePlayer_C_1.CharacterMesh0.MixamoAnimBP_Adam_C_15
+	Function /Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam_C:ExecuteUbergraph_MixamoAnimBP_Adam:015D
+[2016.06.03-16.53.24:880][226]LogScript:Warning: Attempted to access REINST_sassGamePlayer_C_1 via property K2Node_DynamicCast_AsCharacter, but REINST_sassGamePlayer_C_1 is pending kill
+	MixamoAnimBP_Adam_C /Engine/Transient.World_3:PersistentLevel.REINST_sassGamePlayer_C_1.CharacterMesh0.MixamoAnimBP_Adam_C_15
+	Function /Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam_C:ExecuteUbergraph_MixamoAnimBP_Adam:01D5
+[2016.06.03-16.53.24:880][226]LogScript:Warning: Attempted to access REINST_sassGamePlayer_C_1 via property K2Node_DynamicCast_AsCharacter, but REINST_sassGamePlayer_C_1 is pending kill
+	MixamoAnimBP_Adam_C /Engine/Transient.World_3:PersistentLevel.REINST_sassGamePlayer_C_1.CharacterMesh0.MixamoAnimBP_Adam_C_15
+	Function /Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam_C:ExecuteUbergraph_MixamoAnimBP_Adam:0207
+[2016.06.03-16.53.24:881][226]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharacterMovementComponent_10) Not registered. Aborting.
+[2016.06.03-16.53.24:903][226]LogScript:Warning: Attempted to access REINST_sassGamePlayer_C_1 via property K2Node_DynamicCast_AsCharacter, but REINST_sassGamePlayer_C_1 is pending kill
+	MixamoAnimBP_Adam_C /Engine/Transient.World_3:PersistentLevel.REINST_sassGamePlayer_C_1.CharacterMesh0.MixamoAnimBP_Adam_C_15
+	Function /Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam_C:ExecuteUbergraph_MixamoAnimBP_Adam:015D
+[2016.06.03-16.53.24:904][226]LogScript:Warning: Attempted to access REINST_sassGamePlayer_C_1 via property K2Node_DynamicCast_AsCharacter, but REINST_sassGamePlayer_C_1 is pending kill
+	MixamoAnimBP_Adam_C /Engine/Transient.World_3:PersistentLevel.REINST_sassGamePlayer_C_1.CharacterMesh0.MixamoAnimBP_Adam_C_15
+	Function /Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam_C:ExecuteUbergraph_MixamoAnimBP_Adam:01D5
+[2016.06.03-16.53.24:904][226]LogScript:Warning: Attempted to access REINST_sassGamePlayer_C_1 via property K2Node_DynamicCast_AsCharacter, but REINST_sassGamePlayer_C_1 is pending kill
+	MixamoAnimBP_Adam_C /Engine/Transient.World_3:PersistentLevel.REINST_sassGamePlayer_C_1.CharacterMesh0.MixamoAnimBP_Adam_C_15
+	Function /Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam_C:ExecuteUbergraph_MixamoAnimBP_Adam:0207
+[2016.06.03-16.53.25:015][227]LogScript:Warning: Attempted to access REINST_sassGamePlayer_C_1 via property K2Node_DynamicCast_AsCharacter, but REINST_sassGamePlayer_C_1 is pending kill
+	MixamoAnimBP_Adam_C /Engine/Transient.World_3:PersistentLevel.REINST_sassGamePlayer_C_1.CharacterMesh0.MixamoAnimBP_Adam_C_15
+	Function /Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam_C:ExecuteUbergraph_MixamoAnimBP_Adam:015D
+[2016.06.03-16.53.25:016][227]LogScript:Warning: Attempted to access REINST_sassGamePlayer_C_1 via property K2Node_DynamicCast_AsCharacter, but REINST_sassGamePlayer_C_1 is pending kill
+	MixamoAnimBP_Adam_C /Engine/Transient.World_3:PersistentLevel.REINST_sassGamePlayer_C_1.CharacterMesh0.MixamoAnimBP_Adam_C_15
+	Function /Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam_C:ExecuteUbergraph_MixamoAnimBP_Adam:01D5
+[2016.06.03-16.53.25:016][227]LogScript:Warning: Attempted to access REINST_sassGamePlayer_C_1 via property K2Node_DynamicCast_AsCharacter, but REINST_sassGamePlayer_C_1 is pending kill
+	MixamoAnimBP_Adam_C /Engine/Transient.World_3:PersistentLevel.REINST_sassGamePlayer_C_1.CharacterMesh0.MixamoAnimBP_Adam_C_15
+	Function /Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam_C:ExecuteUbergraph_MixamoAnimBP_Adam:0207
+[2016.06.03-16.53.25:026][228]LogScript:Warning: Attempted to access REINST_sassGamePlayer_C_1 via property K2Node_DynamicCast_AsCharacter, but REINST_sassGamePlayer_C_1 is pending kill
+	MixamoAnimBP_Adam_C /Engine/Transient.World_3:PersistentLevel.REINST_sassGamePlayer_C_1.CharacterMesh0.MixamoAnimBP_Adam_C_15
+	Function /Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam_C:ExecuteUbergraph_MixamoAnimBP_Adam:015D
+[2016.06.03-16.53.25:026][228]LogScript:Warning: Attempted to access REINST_sassGamePlayer_C_1 via property K2Node_DynamicCast_AsCharacter, but REINST_sassGamePlayer_C_1 is pending kill
+	MixamoAnimBP_Adam_C /Engine/Transient.World_3:PersistentLevel.REINST_sassGamePlayer_C_1.CharacterMesh0.MixamoAnimBP_Adam_C_15
+	Function /Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam_C:ExecuteUbergraph_MixamoAnimBP_Adam:01D5
+[2016.06.03-16.53.25:026][228]LogScript:Warning: Attempted to access REINST_sassGamePlayer_C_1 via property K2Node_DynamicCast_AsCharacter, but REINST_sassGamePlayer_C_1 is pending kill
+	MixamoAnimBP_Adam_C /Engine/Transient.World_3:PersistentLevel.REINST_sassGamePlayer_C_1.CharacterMesh0.MixamoAnimBP_Adam_C_15
+	Function /Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam_C:ExecuteUbergraph_MixamoAnimBP_Adam:0207
+[2016.06.03-16.53.25:034][229]LogScript:Warning: Attempted to access REINST_sassGamePlayer_C_1 via property K2Node_DynamicCast_AsCharacter, but REINST_sassGamePlayer_C_1 is pending kill
+	MixamoAnimBP_Adam_C /Engine/Transient.World_3:PersistentLevel.REINST_sassGamePlayer_C_1.CharacterMesh0.MixamoAnimBP_Adam_C_15
+	Function /Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam_C:ExecuteUbergraph_MixamoAnimBP_Adam:015D
+[2016.06.03-16.53.25:034][229]LogScript:Warning: Attempted to access REINST_sassGamePlayer_C_1 via property K2Node_DynamicCast_AsCharacter, but REINST_sassGamePlayer_C_1 is pending kill
+	MixamoAnimBP_Adam_C /Engine/Transient.World_3:PersistentLevel.REINST_sassGamePlayer_C_1.CharacterMesh0.MixamoAnimBP_Adam_C_15
+	Function /Game/MixamoAnimPack/Mixamo_Adam/Anims/MixamoAnimBP_Adam.MixamoAnimBP_Adam_C:ExecuteUbergraph_MixamoAnimBP_Adam:01D5
+[2016.06.03-16.53.25:425][276]LogEditorTransaction: Undo Move Node
+[2016.06.03-16.53.25:442][276]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharacterMovementComponent_11) Not registered. Aborting.
+[2016.06.03-16.53.26:259][359]LogEditorTransaction: Undo Move Node
+[2016.06.03-16.53.26:275][359]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharacterMovementComponent_12) Not registered. Aborting.
+[2016.06.03-16.53.27:098][442]LogEditorTransaction: Undo Move Node
+[2016.06.03-16.53.27:115][442]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharacterMovementComponent_13) Not registered. Aborting.
+[2016.06.03-16.53.28:015][533]LogEditorTransaction: Redo Move Node
+[2016.06.03-16.53.28:031][533]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharacterMovementComponent_14) Not registered. Aborting.
+[2016.06.03-16.53.28:222][541]LogEditorTransaction: Redo Move Node
+[2016.06.03-16.53.28:241][541]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharacterMovementComponent_15) Not registered. Aborting.
+[2016.06.03-16.53.28:440][550]LogEditorTransaction: Redo Move Node
+[2016.06.03-16.53.28:459][550]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharacterMovementComponent_16) Not registered. Aborting.
+[2016.06.03-16.53.28:997][599]LogEditorTransaction: Redo Remove Variable
+[2016.06.03-16.53.29:039][599]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharacterMovementComponent_17) Not registered. Aborting.
+[2016.06.03-16.53.29:530][644]LogEditorTransaction: Undo Remove Variable
+[2016.06.03-16.53.29:553][644]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharacterMovementComponent_18) Not registered. Aborting.
+[2016.06.03-16.53.35:153][281]BlueprintLog: New page: Compile sassGamePlayer
+[2016.06.03-16.53.35:351][281]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharacterMovementComponent_19) Not registered. Aborting.
+[2016.06.03-16.53.35:638][281]BlueprintEditorCompileResults: Info [3672.91] Compile of sassGamePlayer successful! [in 485 ms]
+[2016.06.03-16.53.36:091][323]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
+[2016.06.03-16.53.36:145][323]Cmd: OBJ SAVEPACKAGE PACKAGE="/Game/Blueprints/sassilization/sassGamePlayer" FILE="C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassGamePlayer.uasset" SILENT=true
+[2016.06.03-16.53.36:540][323]LogSavePackage: Save=382.57ms
+[2016.06.03-16.53.36:540][323]LogSavePackage: Moving 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/sassGamePlayerD5E3AE8B4BFD0EF6533E9AA8DA656636.tmp' to 'C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassGamePlayer.uasset'
+[2016.06.03-16.53.36:543][323]LogSavePackage: Total save time: 397.00ms
+[2016.06.03-16.53.36:543][323]LogSavePackage:Display: Finished SavePackage C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassGamePlayer.uasset
+[2016.06.03-16.53.37:958][479]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
+[2016.06.03-16.53.38:013][479]Cmd: OBJ SAVEPACKAGE PACKAGE="/Game/Maps/orbit" FILE="C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap" SILENT=true AUTOSAVING=true KEEPDIRTY=true
+[2016.06.03-16.53.38:261][479]LogSavePackage: Save=236.24ms
+[2016.06.03-16.53.38:261][479]LogSavePackage: Moving 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/UEDPCorbitD734B5FC4AC41B6E999FAA80DE3E098D.tmp' to 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap'
+[2016.06.03-16.53.38:262][479]LogSavePackage: Total save time: 248.28ms
+[2016.06.03-16.53.38:262][479]LogSavePackage:Display: Finished SavePackage C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap
+[2016.06.03-17.02.06:990][559]BlueprintLog: New page: Compile sassGamePlayer
+[2016.06.03-17.02.07:164][559]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
+[2016.06.03-17.02.07:280][559]BlueprintEditorCompileResults: Info [4184.55] Compile of sassGamePlayer successful! [in 289 ms]
+[2016.06.03-17.02.10:358][906]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
+[2016.06.03-17.02.12:930][906]Cmd: OBJ SAVEPACKAGE PACKAGE="/Game/Blueprints/sassilization/sassGamePlayer" FILE="C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassGamePlayer.uasset" SILENT=true
+[2016.06.03-17.02.13:337][906]LogSavePackage: Save=393.96ms
+[2016.06.03-17.02.13:337][906]LogSavePackage: Moving 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/sassGamePlayer0413194549C8D38281BE7FBDDEEE6DEE.tmp' to 'C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassGamePlayer.uasset'
+[2016.06.03-17.02.13:340][906]LogSavePackage: Total save time: 408.40ms
+[2016.06.03-17.02.13:340][906]LogSavePackage:Display: Finished SavePackage C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassGamePlayer.uasset
+[2016.06.03-17.02.13:344][906]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
+[2016.06.03-17.02.13:393][906]Cmd: OBJ SAVEPACKAGE PACKAGE="/Game/Maps/orbit" FILE="C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap" SILENT=true AUTOSAVING=true KEEPDIRTY=true
+[2016.06.03-17.02.13:647][906]LogSavePackage: Save=242.47ms
+[2016.06.03-17.02.13:648][906]LogSavePackage: Moving 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/UEDPCorbit6AE62EAB4F4289ED243CE38D19C6C5B5.tmp' to 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap'
+[2016.06.03-17.02.13:649][906]LogSavePackage: Total save time: 254.99ms
+[2016.06.03-17.02.13:649][906]LogSavePackage:Display: Finished SavePackage C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap
+[2016.06.03-17.03.15:926][591]BlueprintLog: New page: Compile sassGamePlayer
+[2016.06.03-17.03.16:087][591]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
+[2016.06.03-17.03.16:206][591]BlueprintEditorCompileResults: Info [4253.48] Compile of sassGamePlayer successful! [in 280 ms]
+[2016.06.03-17.03.18:319][820]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
+[2016.06.03-17.03.21:825][820]Cmd: OBJ SAVEPACKAGE PACKAGE="/Game/Blueprints/sassilization/sassGamePlayer" FILE="C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassGamePlayer.uasset" SILENT=true
+[2016.06.03-17.03.22:221][820]LogSavePackage: Save=388.04ms
+[2016.06.03-17.03.22:221][820]LogSavePackage: Moving 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/sassGamePlayerBE0FF6D7448969BD5867A7A21B92EE0F.tmp' to 'C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassGamePlayer.uasset'
+[2016.06.03-17.03.22:224][820]LogSavePackage: Total save time: 397.84ms
+[2016.06.03-17.03.22:224][820]LogSavePackage:Display: Finished SavePackage C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassGamePlayer.uasset
+[2016.06.03-17.03.22:228][820]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
+[2016.06.03-17.03.22:276][820]Cmd: OBJ SAVEPACKAGE PACKAGE="/Game/Maps/orbit" FILE="C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap" SILENT=true AUTOSAVING=true KEEPDIRTY=true
+[2016.06.03-17.03.22:520][820]LogSavePackage: Save=238.20ms
+[2016.06.03-17.03.22:520][820]LogSavePackage: Moving 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/UEDPCorbit3D3D08B44EAFD383B3481BB150311E1D.tmp' to 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap'
+[2016.06.03-17.03.22:522][820]LogSavePackage: Total save time: 244.48ms
+[2016.06.03-17.03.22:522][820]LogSavePackage:Display: Finished SavePackage C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap
+[2016.06.03-17.04.11:111][438]LogVSAccessor:Warning: Couldn't goto line number '0' in 'C:/Users/Tim/Documents/Unreal Projects/SassC/Source/SassC/buildingBase.h'
+[2016.06.03-17.04.11:180][438]LogVSAccessor:Warning: Couldn't goto line number '0' in 'C:/Users/Tim/Documents/Unreal Projects/SassC/Source/SassC/buildingBase.cpp'
+[2016.06.03-17.08.05:385][769]BlueprintLog: New page: Compile sassGamePlayer
+[2016.06.03-17.08.05:555][769]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
+[2016.06.03-17.08.05:674][769]BlueprintEditorCompileResults: Info [4542.94] Compile of sassGamePlayer successful! [in 288 ms]
+[2016.06.03-17.08.06:262][826]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
+[2016.06.03-17.08.06:317][826]Cmd: OBJ SAVEPACKAGE PACKAGE="/Game/Blueprints/sassilization/sassGamePlayer" FILE="C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassGamePlayer.uasset" SILENT=true
+[2016.06.03-17.08.06:709][826]LogSavePackage: Save=380.96ms
+[2016.06.03-17.08.06:709][826]LogSavePackage: Moving 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/sassGamePlayer221DFD084D69105826292B981D20F3B7.tmp' to 'C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassGamePlayer.uasset'
+[2016.06.03-17.08.06:712][826]LogSavePackage: Total save time: 393.90ms
+[2016.06.03-17.08.06:713][826]LogSavePackage:Display: Finished SavePackage C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassGamePlayer.uasset
+[2016.06.03-17.08.13:216][582]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
+[2016.06.03-17.08.13:285][582]Cmd: OBJ SAVEPACKAGE PACKAGE="/Game/Maps/orbit" FILE="C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap" SILENT=true AUTOSAVING=true KEEPDIRTY=true
+[2016.06.03-17.08.13:540][582]LogSavePackage: Save=243.49ms
+[2016.06.03-17.08.13:540][582]LogSavePackage: Moving 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/UEDPCorbit3CEBC340455A55340217D4B450191283.tmp' to 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap'
+[2016.06.03-17.08.13:542][582]LogSavePackage: Total save time: 255.45ms
+[2016.06.03-17.08.13:542][582]LogSavePackage:Display: Finished SavePackage C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap
+[2016.06.03-17.09.03:301][111]Recompiling SassC...
+[2016.06.03-17.09.03:301][111]Launching UnrealBuildTool... [V:/Program Files/Epic Games/UnrealEngine/Engine/Binaries/DotNET/UnrealBuildTool.exe SassC -ModuleWithSuffix SassC 3721 Win64 Development -editorrecompile -canskiplink "C:/Users/Tim/Documents/Unreal Projects/SassC/SassC.uproject"  -2015]
+[2016.06.03-17.09.03:302][111]Warning: Starting HotReload took  0.0s.
+[2016.06.03-17.09.11:372][ 54]CompilerResultsLog: New page: Compilation - Jun 3, 2016, 8:09:11 AM
+[2016.06.03-17.09.11:372][ 54]CompilerResultsLog: Info Creating makefile for hot reloading SassC (working set of source files changed)
+[2016.06.03-17.09.11:373][ 54]CompilerResultsLog: Info Compiling game modules for hot reload
+[2016.06.03-17.09.11:373][ 54]CompilerResultsLog: Info Building UnrealHeaderTool...
+[2016.06.03-17.09.11:373][ 54]CompilerResultsLog: Info Target is up to date
+[2016.06.03-17.09.11:373][ 54]CompilerResultsLog: Info Parsing headers for SassCEditor
+[2016.06.03-17.09.11:373][ 54]CompilerResultsLog: Info   Running UnrealHeaderTool "C:\Users\Tim\Documents\Unreal Projects\SassC\SassC.uproject" "C:\Users\Tim\Documents\Unreal Projects\SassC\Intermediate\Build\Win64\SassCEditor\Development\UnrealHeaderTool.manifest" -LogCmds="loginit warning, logexit warning, logdatabase error" -Unattended -WarningsAsErrors
+[2016.06.03-17.09.11:373][ 54]CompilerResultsLog: Info Reflection code generated for SassCEditor in 3.0662327 seconds
+[2016.06.03-17.09.11:374][ 54]CompilerResultsLog: Info Performing 2 actions (4 in parallel)
+[2016.06.03-17.09.11:374][ 54]CompilerResultsLog: Info sassPlayer.cpp
+[2016.06.03-17.09.11:374][ 54]CompilerResultsLog:Error: Error C:\Users\Tim\Documents\Unreal Projects\SassC\Source\SassC\sassPlayer.cpp(368) : error C3867: 'TArray<FVector,FDefaultAllocator>::Num': non-standard syntax; use '&' to create a pointer to member
+[2016.06.03-17.09.11:374][ 54]CompilerResultsLog: Info -------- End Detailed Actions Stats -----------------------------------------------------------
+[2016.06.03-17.09.11:375][ 54]CompilerResultsLog: Info ERROR: UBT ERROR: Failed to produce item: C:\Users\Tim\Documents\Unreal Projects\SassC\Binaries\Win64\UE4Editor-SassC-3721.dll
+[2016.06.03-17.09.11:375][ 54]CompilerResultsLog: Info Total build time: 8.02 seconds
+[2016.06.03-17.09.11:375][ 54]LogMainFrame: MainFrame: Module compiling took 8.079 seconds
+[2016.06.03-17.09.11:375][ 54]Warning: HotReload failed, recompile failed
+[2016.06.03-17.10.05:536][310]Recompiling SassC...
+[2016.06.03-17.10.05:536][310]Launching UnrealBuildTool... [V:/Program Files/Epic Games/UnrealEngine/Engine/Binaries/DotNET/UnrealBuildTool.exe SassC -ModuleWithSuffix SassC 7967 Win64 Development -editorrecompile -canskiplink "C:/Users/Tim/Documents/Unreal Projects/SassC/SassC.uproject"  -2015]
+[2016.06.03-17.10.05:538][310]Warning: Starting HotReload took  0.0s.
+[2016.06.03-17.10.15:040][422]CompilerResultsLog: New page: Compilation - Jun 3, 2016, 8:10:15 AM
+[2016.06.03-17.10.15:040][422]CompilerResultsLog: Info Creating makefile for hot reloading SassC (working set of source files changed)
+[2016.06.03-17.10.15:040][422]CompilerResultsLog: Info Compiling game modules for hot reload
+[2016.06.03-17.10.15:040][422]CompilerResultsLog: Info Building UnrealHeaderTool...
+[2016.06.03-17.10.15:041][422]CompilerResultsLog: Info Target is up to date
+[2016.06.03-17.10.15:041][422]CompilerResultsLog: Info Parsing headers for SassCEditor
+[2016.06.03-17.10.15:041][422]CompilerResultsLog: Info   Running UnrealHeaderTool "C:\Users\Tim\Documents\Unreal Projects\SassC\SassC.uproject" "C:\Users\Tim\Documents\Unreal Projects\SassC\Intermediate\Build\Win64\SassCEditor\Development\UnrealHeaderTool.manifest" -LogCmds="loginit warning, logexit warning, logdatabase error" -Unattended -WarningsAsErrors
+[2016.06.03-17.10.15:041][422]CompilerResultsLog: Info Reflection code generated for SassCEditor in 3.1253771 seconds
+[2016.06.03-17.10.15:041][422]CompilerResultsLog: Info Performing 2 actions (4 in parallel)
+[2016.06.03-17.10.15:041][422]CompilerResultsLog: Info sassPlayer.cpp
+[2016.06.03-17.10.15:041][422]CompilerResultsLog: Info [2/2] Link UE4Editor-SassC-7967.dll
+[2016.06.03-17.10.15:041][422]CompilerResultsLog: Info    Creating library C:\Users\Tim\Documents\Unreal Projects\SassC\Intermediate\Build\Win64\UE4Editor\Development\UE4Editor-SassC-7967.lib and object C:\Users\Tim\Documents\Unreal Projects\SassC\Intermediate\Build\Win64\UE4Editor\Development\UE4Editor-SassC-7967.exp
+[2016.06.03-17.10.15:042][422]CompilerResultsLog: Info -------- End Detailed Actions Stats -----------------------------------------------------------
+[2016.06.03-17.10.15:042][422]CompilerResultsLog: Info Total build time: 9.45 seconds
+[2016.06.03-17.10.15:042][422]LogMainFrame: MainFrame: Module compiling took 9.510 seconds
+[2016.06.03-17.10.15:144][422]LogHotReload: Re-instancing city after hot-reload.
+[2016.06.03-17.10.15:312][422]LogHotReload: Re-instancing gate after hot-reload.
+[2016.06.03-17.10.15:453][422]LogHotReload: Re-instancing shieldMonolith after hot-reload.
+[2016.06.03-17.10.15:526][422]LogHotReload: Re-instancing shrine after hot-reload.
+[2016.06.03-17.10.15:586][422]LogHotReload: Re-instancing tower after hot-reload.
+[2016.06.03-17.10.15:732][422]LogHotReload: Re-instancing wall after hot-reload.
+[2016.06.03-17.10.15:875][422]LogHotReload: Re-instancing workshop after hot-reload.
+[2016.06.03-17.10.16:020][422]LogContentBrowser: Native class hierarchy updated for 'SassC' in 0.0018 seconds. Added 21 classes and 2 folders.
+[2016.06.03-17.10.16:023][422]Warning: HotReload successful (34 functions remapped  0 scriptstructs remapped)
+[2016.06.03-17.10.16:312][422]LogContentBrowser: Native class hierarchy populated in 0.0071 seconds. Added 2002 classes and 349 folders.
+[2016.06.03-17.10.16:312][422]Warning: HotReload took 10.8s.
+[2016.06.03-17.10.51:257][564]Cmd: OBJ SAVEPACKAGE PACKAGE="/Game/Maps/orbit" FILE="C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap" SILENT=true AUTOSAVING=true KEEPDIRTY=true
+[2016.06.03-17.10.51:518][564]LogSavePackage: Save=253.86ms
+[2016.06.03-17.10.51:518][564]LogSavePackage: Moving 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/UEDPCorbit32B9457941C0E3FEE9C929B19DB923BC.tmp' to 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap'
+[2016.06.03-17.10.51:520][564]LogSavePackage: Total save time: 261.92ms
+[2016.06.03-17.10.51:520][564]LogSavePackage:Display: Finished SavePackage C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap
+[2016.06.03-17.12.27:222][841]Recompiling SassC...
+[2016.06.03-17.12.27:222][841]Launching UnrealBuildTool... [V:/Program Files/Epic Games/UnrealEngine/Engine/Binaries/DotNET/UnrealBuildTool.exe SassC -ModuleWithSuffix SassC 9275 Win64 Development -editorrecompile -canskiplink "C:/Users/Tim/Documents/Unreal Projects/SassC/SassC.uproject"  -2015]
+[2016.06.03-17.12.27:223][841]Warning: Starting HotReload took  0.0s.
+[2016.06.03-17.12.36:541][937]CompilerResultsLog: New page: Compilation - Jun 3, 2016, 8:12:36 AM
+[2016.06.03-17.12.36:541][937]CompilerResultsLo

@@ -365,6 +365,7 @@ bool AsassPlayer::ColorPlayer_Validate(FLinearColor PlayerColor)
 
 bool AsassPlayer::CheckBldgCorners(TArray<FVector> ExtraLocs, FVector Center)
 {
+	if (ExtraLocs.Num() == 0) return false;
 	FHitResult Hit;
 	TArray<float> TraceHeights;
 	for (FVector Loc : ExtraLocs) {	
