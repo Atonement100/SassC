@@ -106,16 +106,17 @@ void AsassPlayer::UnitMenuPressed() {
 		if (PlayerControllerPtr != nullptr) {
 			PlayerControllerPtr->bShowMouseCursor = true;
 			PlayerControllerPtr->SetInputMode(GameAndUI);
+			OpenUnitMenu();
 		}
-
-		//IsUnitMenuOpen = true;
+		IsUnitMenuOpen = true;
 	}
 	else {
 		if (PlayerControllerPtr != nullptr) {
 			PlayerControllerPtr->bShowMouseCursor = false;
 			PlayerControllerPtr->SetInputMode(GameOnly);
+			CloseUnitMenu();
 		}
-		//IsUnitMenuOpen = false;
+		IsUnitMenuOpen = false;
 	}
 }
 
@@ -386,6 +387,16 @@ bool AsassPlayer::CheckBldgCorners(TArray<FVector> ExtraLocs, FVector Center)
 	return false;
 }
 
+#pragma region Blueprint Implementables
 void AsassPlayer::SetSassHUDRef_Implementation()
 {
 }
+
+void AsassPlayer::OpenUnitMenu_Implementation()
+{
+}
+
+void AsassPlayer::CloseUnitMenu_Implementation()
+{
+}
+#pragma endregion

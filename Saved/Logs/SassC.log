@@ -319,4 +319,137 @@ LogInit: Object subsystem initialized
 [2016.06.03-15.58.31:411][748]LogSavePackage: Save=384.50ms
 [2016.06.03-15.58.31:411][748]LogSavePackage: Moving 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/sassGamePlayerC57FBEC545CF6968AA3204B34ED12DC8.tmp' to 'C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassGamePlayer.uasset'
 [2016.06.03-15.58.31:414][748]LogSavePackage: Total save time: 393.79ms
-[
+[2016.06.03-15.58.31:414][748]LogSavePackage:Display: Finished SavePackage C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassGamePlayer.uasset
+[2016.06.03-16.05.19:462][213]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
+[2016.06.03-16.05.19:479][213]LogFileHelpers: Editor autosave (incl. sublevels) for '/Game/Maps/orbit' took 0.017
+[2016.06.03-16.05.19:484][213]OBJ SavePackage: Generating thumbnails for [1] asset(s) in package [/Game/Blueprints/sassilization/sassGamePlayer] ([1] browsable assets)...
+[2016.06.03-16.05.19:505][213]OBJ SavePackage:     Rendered thumbnail for [Blueprint /Game/Blueprints/sassilization/sassGamePlayer.sassGamePlayer]
+[2016.06.03-16.05.19:505][213]OBJ SavePackage: Finished generating thumbnails for package [/Game/Blueprints/sassilization/sassGamePlayer]
+[2016.06.03-16.05.19:905][213]LogSavePackage: Save=384.59ms
+[2016.06.03-16.05.19:905][213]LogSavePackage: Moving 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/sassGamePlayer_Auto12E158D1E4F619BC8984798BFD63DE458.tmp' to 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Blueprints/sassilization/sassGamePlayer_Auto1.uasset'
+[2016.06.03-16.05.19:907][213]LogSavePackage: Total save time: 399.78ms
+[2016.06.03-16.05.19:907][213]LogSavePackage:Display: Finished SavePackage C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Blueprints/sassilization/sassGamePlayer_Auto1.uasset
+[2016.06.03-16.05.19:908][213]LogFileHelpers: Auto-saving content packages took 0.428
+[2016.06.03-16.07.51:920][670]BlueprintLog: New page: Compile sassGamePlayer
+[2016.06.03-16.07.52:086][670]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
+[2016.06.03-16.07.52:165][670]BlueprintEditorCompileResults: Info [0929.43] Compile of sassGamePlayer successful! [in 244 ms]
+[2016.06.03-16.07.53:008][744]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
+[2016.06.03-16.07.53:056][744]Cmd: OBJ SAVEPACKAGE PACKAGE="/Game/Blueprints/sassilization/sassGamePlayer" FILE="C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassGamePlayer.uasset" SILENT=true
+[2016.06.03-16.07.53:458][744]LogSavePackage: Save=394.28ms
+[2016.06.03-16.07.53:458][744]LogSavePackage: Moving 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/sassGamePlayer9A5890A8459FCB457F94818F6DA3C3BB.tmp' to 'C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassGamePlayer.uasset'
+[2016.06.03-16.07.53:461][744]LogSavePackage: Total save time: 403.27ms
+[2016.06.03-16.07.53:461][744]LogSavePackage:Display: Finished SavePackage C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassGamePlayer.uasset
+[2016.06.03-16.07.56:692][111]Recompiling SassC...
+[2016.06.03-16.07.56:692][111]Building UnrealBuildTool...
+[2016.06.03-16.07.56:692][111]Building UnrealBuildTool in V:/Program Files/Epic Games/UnrealEngine/...
+[2016.06.03-16.07.56:694][111]Running: C:\WINDOWS\system32\cmd.exe /c "V:\Program Files\Epic Games\UnrealEngine\Engine\Intermediate\Build\UnrealBuildTool\BuildUBT.bat"
+[2016.06.03-16.07.57:499][111]Launching UnrealBuildTool... [V:/Program Files/Epic Games/UnrealEngine/Engine/Binaries/DotNET/UnrealBuildTool.exe SassC -ModuleWithSuffix SassC 6777 Win64 Development -editorrecompile -canskiplink "C:/Users/Tim/Documents/Unreal Projects/SassC/SassC.uproject"  -2015]
+[2016.06.03-16.07.57:501][111]Warning: Starting HotReload took  0.8s.
+[2016.06.03-16.08.12:627][917]CompilerResultsLog: New page: Compilation - Jun 3, 2016, 7:08:12 AM
+[2016.06.03-16.08.12:628][917]CompilerResultsLog: Info Creating makefile for hot reloading SassC (working set of source files changed)
+[2016.06.03-16.08.12:628][917]CompilerResultsLog: Info Compiling game modules for hot reload
+[2016.06.03-16.08.12:628][917]CompilerResultsLog: Info Building UnrealHeaderTool...
+[2016.06.03-16.08.12:628][917]CompilerResultsLog: Info Target is up to date
+[2016.06.03-16.08.12:628][917]CompilerResultsLog: Info Parsing headers for SassCEditor
+[2016.06.03-16.08.12:628][917]CompilerResultsLog: Info   Running UnrealHeaderTool "C:\Users\Tim\Documents\Unreal Projects\SassC\SassC.uproject" "C:\Users\Tim\Documents\Unreal Projects\SassC\Intermediate\Build\Win64\SassCEditor\Development\UnrealHeaderTool.manifest" -LogCmds="loginit warning, logexit warning, logdatabase error" -Unattended -WarningsAsErrors
+[2016.06.03-16.08.12:628][917]CompilerResultsLog: Info Reflection code generated for SassCEditor in 5.1426045 seconds
+[2016.06.03-16.08.12:628][917]CompilerResultsLog: Info Performing 5 actions (4 in parallel)
+[2016.06.03-16.08.12:629][917]CompilerResultsLog: Info sassGameState.cpp
+[2016.06.03-16.08.12:629][917]CompilerResultsLog: Info sassPlayer.cpp
+[2016.06.03-16.08.12:629][917]CompilerResultsLog: Info unitBase.cpp
+[2016.06.03-16.08.12:629][917]CompilerResultsLog: Info SassC.generated.cpp
+[2016.06.03-16.08.12:629][917]CompilerResultsLog: Info [5/5] Link UE4Editor-SassC-6777.dll
+[2016.06.03-16.08.12:629][917]CompilerResultsLog: Info    Creating library C:\Users\Tim\Documents\Unreal Projects\SassC\Intermediate\Build\Win64\UE4Editor\Development\UE4Editor-SassC-6777.lib and object C:\Users\Tim\Documents\Unreal Projects\SassC\Intermediate\Build\Win64\UE4Editor\Development\UE4Editor-SassC-6777.exp
+[2016.06.03-16.08.12:629][917]CompilerResultsLog: Info -------- End Detailed Actions Stats -----------------------------------------------------------
+[2016.06.03-16.08.12:629][917]CompilerResultsLog: Info Total build time: 15.07 seconds
+[2016.06.03-16.08.12:629][917]LogMainFrame: MainFrame: Module compiling took 15.942 seconds
+[2016.06.03-16.08.12:630][917]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
+[2016.06.03-16.08.12:718][917]LogClass: Could not find existing class sassPlayer in package /Script/SassC for HotReload, assuming new class
+[2016.06.03-16.08.12:718][917]LogClass: Function ChangePauseWidget is new.
+[2016.06.03-16.08.12:718][917]LogClass: Function CheckBldgCorners is new.
+[2016.06.03-16.08.12:718][917]LogClass: Function CloseUnitMenu is new.
+[2016.06.03-16.08.12:718][917]LogClass: Function ColorPlayer is new.
+[2016.06.03-16.08.12:719][917]LogClass: Function CreateGameHUD is new.
+[2016.06.03-16.08.12:719][917]LogClass: Function CreatePregameHUD is new.
+[2016.06.03-16.08.12:719][917]LogClass: Function CreateSelectedUnitsArray is new.
+[2016.06.03-16.08.12:719][917]LogClass: Function GetAllPlayerColors is new.
+[2016.06.03-16.08.12:719][917]LogClass: Function GetGameWidget is new.
+[2016.06.03-16.08.12:719][917]LogClass: Function GetSelectionSphereHolder is new.
+[2016.06.03-16.08.12:719][917]LogClass: Function OpenUnitMenu is new.
+[2016.06.03-16.08.12:720][917]LogClass: Function RemoveAllWidgets is new.
+[2016.06.03-16.08.12:720][917]LogClass: Function ServerCrouch is new.
+[2016.06.03-16.08.12:720][917]LogClass: Function ServerSpawnBuilding is new.
+[2016.06.03-16.08.12:720][917]LogClass: Function ServerSprint is new.
+[2016.06.03-16.08.12:720][917]LogClass: Function SetSassHUDRef is new.
+[2016.06.03-16.08.12:720][917]LogClass: Function TurnOffAllSelectionCircles is new.
+[2016.06.03-16.08.12:796][917]LogHotReload: Re-instancing city after hot-reload.
+[2016.06.03-16.08.12:924][917]LogHotReload: Re-instancing gate after hot-reload.
+[2016.06.03-16.08.13:034][917]LogHotReload: Re-instancing shieldMonolith after hot-reload.
+[2016.06.03-16.08.13:081][917]LogHotReload: Re-instancing shrine after hot-reload.
+[2016.06.03-16.08.13:126][917]LogHotReload: Re-instancing tower after hot-reload.
+[2016.06.03-16.08.13:239][917]LogHotReload: Re-instancing wall after hot-reload.
+[2016.06.03-16.08.13:353][917]LogHotReload: Re-instancing workshop after hot-reload.
+[2016.06.03-16.08.13:465][917]LogHotReload: Re-instancing sassPlayer after hot-reload.
+[2016.06.03-16.08.13:559][917]LogBlueprint:Error: [compiler sassGamePlayer] Error This blueprint (self) is not a HOTRELOADED_sassPlayer_0, therefore ' Target ' must have a connection.
+[2016.06.03-16.08.13:563][917]LogBlueprint:Error: [compiler sassGamePlayer] Error This blueprint (self) is not a HOTRELOADED_sassPlayer_0, therefore ' Target ' must have a connection.
+[2016.06.03-16.08.13:584][917]LogBlueprint:Warning: [compiler sassGamePlayer] Warning [0950.85] Compile of sassGamePlayer failed. 2 Fatal Issue(s) 0 Warning(s) [in 69 ms]
+[2016.06.03-16.08.13:585][917]LogBlueprint:Warning: [compiler sassGamePlayer] Warning [0950.85] Compile of sassGamePlayer failed. 2 Fatal Issue(s) 1 Warning(s) [in 1 ms]
+[2016.06.03-16.08.13:586][917]LogBlueprint:Warning: [compiler sassGamePlayer] Warning [0950.86] Compile of sassGamePlayer failed. 2 Fatal Issue(s) 2 Warning(s) [in 0 ms]
+[2016.06.03-16.08.13:586][917]LogBlueprint:Warning: [compiler sassGamePlayer] Warning [0950.86] Compile of sassGamePlayer failed. 2 Fatal Issue(s) 3 Warning(s) [in 0 ms]
+[2016.06.03-16.08.13:608][917]LogBlueprint:Warning: [compiler sassGamePlayer] Warning [0950.88] Compile of sassGamePlayer failed. 2 Fatal Issue(s) 4 Warning(s) [in 22 ms]
+[2016.06.03-16.08.13:611][917]LogBlueprint:Warning: [compiler sassGamePlayer] Warning [0950.88] Compile of sassGamePlayer failed. 2 Fatal Issue(s) 5 Warning(s) [in 3 ms]
+[2016.06.03-16.08.13:611][917]LogBlueprint:Warning: [compiler sassGamePlayer] Warning [0950.88] Compile of sassGamePlayer failed. 2 Fatal Issue(s) 6 Warning(s) [in 0 ms]
+[2016.06.03-16.08.13:790][917]LogContentBrowser: Native class hierarchy updated for 'SassC' in 0.0021 seconds. Added 21 classes and 2 folders.
+[2016.06.03-16.08.13:792][917]Warning: HotReload successful (17 functions remapped  0 scriptstructs remapped)
+[2016.06.03-16.08.14:091][917]LogContentBrowser: Native class hierarchy populated in 0.0069 seconds. Added 2002 classes and 349 folders.
+[2016.06.03-16.08.14:101][917]Warning: HotReload took 17.4s.
+[2016.06.03-16.09.15:617][898]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
+[2016.06.03-16.09.23:225][750]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharacterMovementComponent_2) Not registered. Aborting.
+[2016.06.03-16.10.41:448][ 99]LogEditorTransaction: Undo Move Nodes
+[2016.06.03-16.10.41:465][ 99]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharacterMovementComponent_3) Not registered. Aborting.
+[2016.06.03-16.11.14:508][214]BlueprintLog: New page: Compile sassGamePlayer
+[2016.06.03-16.11.14:675][214]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharacterMovementComponent_4) Not registered. Aborting.
+[2016.06.03-16.11.14:785][214]BlueprintEditorCompileResults: Info [1132.06] Compile of sassGamePlayer successful! [in 277 ms]
+[2016.06.03-16.11.15:500][285]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
+[2016.06.03-16.11.15:561][285]Cmd: OBJ SAVEPACKAGE PACKAGE="/Game/Blueprints/sassilization/sassGamePlayer" FILE="C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassGamePlayer.uasset" SILENT=true
+[2016.06.03-16.11.15:949][285]LogSavePackage: Save=375.21ms
+[2016.06.03-16.11.15:949][285]LogSavePackage: Moving 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/sassGamePlayer4796EC574DBA4A0B7138259554E82B1E.tmp' to 'C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassGamePlayer.uasset'
+[2016.06.03-16.11.15:952][285]LogSavePackage: Total save time: 389.97ms
+[2016.06.03-16.11.15:952][285]LogSavePackage:Display: Finished SavePackage C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassGamePlayer.uasset
+[2016.06.03-16.11.18:803][613]Recompiling SassC...
+[2016.06.03-16.11.18:803][613]Launching UnrealBuildTool... [V:/Program Files/Epic Games/UnrealEngine/Engine/Binaries/DotNET/UnrealBuildTool.exe SassC -ModuleWithSuffix SassC 8493 Win64 Development -editorrecompile -canskiplink "C:/Users/Tim/Documents/Unreal Projects/SassC/SassC.uproject"  -2015]
+[2016.06.03-16.11.18:804][613]Warning: Starting HotReload took  0.0s.
+[2016.06.03-16.11.28:130][710]CompilerResultsLog: New page: Compilation - Jun 3, 2016, 7:11:28 AM
+[2016.06.03-16.11.28:130][710]CompilerResultsLog: Info Creating makefile for hot reloading SassC (working set of source files changed)
+[2016.06.03-16.11.28:131][710]CompilerResultsLog: Info Compiling game modules for hot reload
+[2016.06.03-16.11.28:131][710]CompilerResultsLog: Info Building UnrealHeaderTool...
+[2016.06.03-16.11.28:131][710]CompilerResultsLog: Info Target is up to date
+[2016.06.03-16.11.28:131][710]CompilerResultsLog: Info Parsing headers for SassCEditor
+[2016.06.03-16.11.28:131][710]CompilerResultsLog: Info   Running UnrealHeaderTool "C:\Users\Tim\Documents\Unreal Projects\SassC\SassC.uproject" "C:\Users\Tim\Documents\Unreal Projects\SassC\Intermediate\Build\Win64\SassCEditor\Development\UnrealHeaderTool.manifest" -LogCmds="loginit warning, logexit warning, logdatabase error" -Unattended -WarningsAsErrors
+[2016.06.03-16.11.28:131][710]CompilerResultsLog: Info Reflection code generated for SassCEditor in 3.070856 seconds
+[2016.06.03-16.11.28:131][710]CompilerResultsLog: Info Performing 2 actions (4 in parallel)
+[2016.06.03-16.11.28:131][710]CompilerResultsLog: Info sassPlayer.cpp
+[2016.06.03-16.11.28:132][710]CompilerResultsLog: Info [2/2] Link UE4Editor-SassC-8493.dll
+[2016.06.03-16.11.28:132][710]CompilerResultsLog: Info    Creating library C:\Users\Tim\Documents\Unreal Projects\SassC\Intermediate\Build\Win64\UE4Editor\Development\UE4Editor-SassC-8493.lib and object C:\Users\Tim\Documents\Unreal Projects\SassC\Intermediate\Build\Win64\UE4Editor\Development\UE4Editor-SassC-8493.exp
+[2016.06.03-16.11.28:132][710]CompilerResultsLog: Info -------- End Detailed Actions Stats -----------------------------------------------------------
+[2016.06.03-16.11.28:132][710]CompilerResultsLog: Info Total build time: 9.28 seconds
+[2016.06.03-16.11.28:132][710]LogMainFrame: MainFrame: Module compiling took 9.333 seconds
+[2016.06.03-16.11.28:132][710]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
+[2016.06.03-16.11.28:234][710]LogHotReload: Re-instancing city after hot-reload.
+[2016.06.03-16.11.28:383][710]LogHotReload: Re-instancing gate after hot-reload.
+[2016.06.03-16.11.28:514][710]LogHotReload: Re-instancing shieldMonolith after hot-reload.
+[2016.06.03-16.11.28:570][710]LogHotReload: Re-instancing shrine after hot-reload.
+[2016.06.03-16.11.28:626][710]LogHotReload: Re-instancing tower after hot-reload.
+[2016.06.03-16.11.28:762][710]LogHotReload: Re-instancing wall after hot-reload.
+[2016.06.03-16.11.28:896][710]LogHotReload: Re-instancing workshop after hot-reload.
+[2016.06.03-16.11.29:029][710]LogContentBrowser: Native class hierarchy updated for 'SassC' in 0.0019 seconds. Added 21 classes and 2 folders.
+[2016.06.03-16.11.29:032][710]Warning: HotReload successful (34 functions remapped  0 scriptstructs remapped)
+[2016.06.03-16.11.29:278][710]LogContentBrowser: Native class hierarchy populated in 0.0070 seconds. Added 2002 classes and 349 folders.
+[2016.06.03-16.11.29:278][710]Warning: HotReload took 10.5s.
+[2016.06.03-16.11.32:848][111]Cmd: OBJ SAVEPACKAGE PACKAGE="/Game/Maps/orbit" FILE="C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap" SILENT=true AUTOSAVING=true KEEPDIRTY=true
+[2016.06.03-16.11.33:084][111]LogSavePackage: Save=223.29ms
+[2016.06.03-16.11.33:084][111]LogSavePackage: Moving 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/UEDPCorbit5636136B44170017895AEEBFA1A4D8A4.tmp' to 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap'
+[2016.06.03-16.11.33:086][111]LogSavePackage: Total save time: 236.10ms
+[2016.06.03-16.11.33:086][111]LogSavePackage:Display: Finished SavePackage C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap
+[2016.06.03-16.14.55:006][959]Cmd: OBJ SAVEPACKAGE PACKAGE="/Game/Blueprints/sassilization/sassGamePlayer" FILE="C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassGamePlayer.uasset" SILENT=true
+[2016.06.03-16.14.55:404

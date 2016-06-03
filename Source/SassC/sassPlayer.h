@@ -134,6 +134,12 @@ protected:
 	UFUNCTION(BlueprintNativeEvent, Category = "HUD")
 	void SetSassHUDRef();
 	virtual void SetSassHUDRef_Implementation();
+	UFUNCTION(BlueprintNativeEVent, Category = "HUD")
+	void OpenUnitMenu();
+	virtual void OpenUnitMenu_Implementation();
+	UFUNCTION(BlueprintNativeEvent, Category = "HUD")
+	void CloseUnitMenu();
+	virtual void CloseUnitMenu_Implementation();
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sass Player")
 	AActor* LocalObjectSpawn;
