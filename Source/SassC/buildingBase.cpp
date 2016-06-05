@@ -34,6 +34,8 @@ void AbuildingBase::UpdateMaterial(FLinearColor PlayerColor, AActor* BuildingRef
 
 void AbuildingBase::ColorBldg_Implementation(FLinearColor PlayerColor, AActor* BuildingRef) {
 	BldgMeshMaterialDynamic->SetVectorParameterValue(ColorParameterText, PlayerColor);
+	//@TODO: Try this instead
+	//this->BuildingMesh->SetMaterial(0, BldgMeshMaterialDynamic);
 	((AbuildingBase*)BuildingRef)->BuildingMesh->SetMaterial(0, BldgMeshMaterialDynamic);
 }
 

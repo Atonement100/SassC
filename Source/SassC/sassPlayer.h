@@ -167,5 +167,6 @@ protected:
 	AActor* SelectionSphereHolder;
 	TArray<AunitBase*> SelectedUnits;
 	TArray<AActor*> WorldStaticObjects;
+	TArray<TEnumAsByte<EObjectTypeQuery>> BoxTraceObjectTypes; // need to define this
 	FCollisionObjectQueryParams WorldStatic = FCollisionObjectQueryParams(ECollisionChannel::ECC_WorldStatic); //const not allowed
 };

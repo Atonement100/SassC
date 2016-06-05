@@ -9,6 +9,7 @@
 #include "unitBase.h"
 #include "buildingBase.h"
 #include "SassCStaticLibrary.h"
+#include "Kismet/KismetSystemLibrary.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetStringLibrary.h" //necessary only for debugging
 
@@ -18,7 +19,7 @@
 AsassPlayer::AsassPlayer()
 {
 	PrimaryActorTick.bCanEverTick = true;
-
+	
 }
 
 void AsassPlayer::BeginPlay()
@@ -341,9 +342,56 @@ void AsassPlayer::ServerSpawnBuilding_Implementation(AsassPlayerController* Play
 {
 	GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Emerald, UKismetStringLibrary::Conv_VectorToString(Hit.Location));
 	const FActorSpawnParameters SpawnParams = FActorSpawnParameters();
-	const FVector Location = Hit.Location + FVector(0,0,50);
+	//@TODO: Location should be replaced by Hit.Location + HalfHeight when halfheights are set up!
+	const FVector Location = Hit.Location + FVector(0, 0, 10);
 	const FRotator Rotation = this->GetActorRotation();
-	GetWorld()->SpawnActor(SelectedSpawnableClass, &Location, &Rotation, SpawnParams);
+
+	if (Hit.Normal.Z >= .990) {
+		const TArray<AActor*> BoxIgnore;
+		FHitResult BoxHit;
+		if (!(UKismetSystemLibrary::BoxTraceSingleForObjects(GetWorld(), Hit.Location + FVector(0, 0, 10.0f), Hit.Location + FVector(0, 0, 50.f), FVector(50.0f, 50.0f, 10.0f), FRotator::ZeroRotator, BoxTraceObjectTypes, true, BoxIgnore, EDrawDebugTrace::ForDuration, BoxHit, true))) {
+			//if there is no hit (good)
+			if (!CheckBldgCorners(Midpoints, Hit.Location)) {
+				//if there is no obstruction (good)
+				AActor* NewSpawn = GetWorld()->SpawnActor(SelectedSpawnableClass, &Location, &Rotation, SpawnParams);
+				if (NewSpawn == nullptr) {
+					GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "SassPlayer ServerSpawnBuilding: Could not spawn, unknown reason");
+					return;
+				}
+				AsassPlayerState* SassPlayerState = Cast<AsassPlayerState>(PlayerState);
+				if (SassPlayerState != nullptr) { 
+					SassPlayerState->ControlledBuildings.Add(NewSpawn); 
+					NewSpawn->SetOwner(PlayerController);
+				}
+
+				//@TODO: Should find a way to consolidate these... hard with units being ACharacter, buildings being AActor to give them a common parent
+				//try unit (more likely)
+				AunitBase* NewUnit = Cast<AunitBase>(NewSpawn);
+				if (NewUnit != nullptr) { NewUnit->UpdateMaterial(SassPlayerState->PlayerColor); }
+				//try building
+				else {
+					AbuildingBase* NewBuilding = Cast<AbuildingBase>(NewSpawn);
+					if (NewBuilding != nullptr) { NewBuilding->UpdateMaterial(SassPlayerState->PlayerColor, NewBuilding); }
+				}
+			
+
+			}
+			else {
+				//Bad Spawn
+				GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "SassPlayer ServerSpawnBuilding: Could not spawn because corners were obstructed");
+			}
+		}
+		else {
+			//Bad Spawn
+			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "SassPlayer ServerSpawnBuilding: Could not spawn because trace hit something");
+		}
+	}
+	else {
+		//Bad Spawn
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "SassPlayer ServerSpawnBuilding: Could not spawn because location uneven");
+	}
+	
+	//GetWorld()->SpawnActor(SelectedSpawnableClass, &Location, &Rotation, SpawnParams);
 }
 
 bool AsassPlayer::ServerSpawnBuilding_Validate(AsassPlayerController* PlayerController, TSubclassOf<AActor> ActorToSpawn, FHitResult Hit, const FVector &HalfHeight, const TArray<FVector> &Midpoints)
