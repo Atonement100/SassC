@@ -372,6 +372,7 @@ void AsassPlayer::ServerSpawnBuilding_Implementation(AsassPlayerController* Play
 				else {
 					AbuildingBase* NewBuilding = Cast<AbuildingBase>(NewSpawn);
 					if (NewBuilding != nullptr) { NewBuilding->UpdateMaterial(SassPlayerState->PlayerColor, NewBuilding); }
+					else { GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "SassPlayer ServerSpawnBuilding: Could not spawn, server could not determine what spawn was being asked for"); }
 				}
 			
 
