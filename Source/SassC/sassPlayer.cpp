@@ -7,9 +7,11 @@
 #include "sassPlayerState.h"
 #include "sassGameState.h"
 #include "unitBase.h"
+#include "selectionSphere.h"
 #include "buildingBase.h"
 #include "SassCStaticLibrary.h"
 #include "Kismet/KismetSystemLibrary.h"
+#include "Kismet/KismetMathLibrary.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetStringLibrary.h" //necessary only for debugging
 
@@ -34,7 +36,45 @@ void AsassPlayer::BeginPlay()
 void AsassPlayer::Tick( float DeltaTime )
 {
 	Super::Tick( DeltaTime );
-	
+	if (IsUnitMenuOpen) {
+
+	}
+	//Unit Menu not open
+	else {
+		if (ActorDestroyLatch && LocalObjectSpawn != nullptr) {
+			LocalObjectSpawn->Destroy();
+			ActorSpawnLatch = true;
+		}
+		if (IsLeftMouseDown) {
+			const TArray<AActor*> RaycastIgnore;
+			if (SphereSpawnLatch) {
+				FHitResult InitRaycastHit;
+				const FActorSpawnParameters SpawnParams = FActorSpawnParameters();
+				UKismetSystemLibrary::LineTraceSingleForObjects(GetWorld(), GetMesh()->GetComponentLocation() + FVector(0, 0, BaseEyeHeight + 80.0f), GetMesh()->GetComponentLocation() + FVector(0, 0, BaseEyeHeight + 80.0f) + UKismetMathLibrary::GetForwardVector(PlayerControllerPtr->GetControlRotation())*10000.0f, StaticObjectTypes, true, RaycastIgnore, EDrawDebugTrace::ForOneFrame, InitRaycastHit, true);
+				InitialHit = InitRaycastHit.Location;
+				FTransform Transform = FTransform(FRotator::ZeroRotator, InitialHit, FVector(1));
+				SelectionSphereHolder = (AselectionSphere*)(GetWorld()->SpawnActor(SelectionSphereClass, &Transform, SpawnParams));
+				TurnOffAllSelectionCircles();
+				SphereDestroyLatch = true;
+				ActorSpawnLatch = true;
+			}
+			FHitResult RaycastHit;
+			UKismetSystemLibrary::LineTraceSingleForObjects(GetWorld(), GetMesh()->GetComponentLocation() + FVector(0, 0, BaseEyeHeight + 80.0f), GetMesh()->GetComponentLocation() + FVector(0, 0, BaseEyeHeight + 80.0f) + UKismetMathLibrary::GetForwardVector(PlayerControllerPtr->GetControlRotation())*10000.0f, StaticObjectTypes, true, RaycastIgnore, EDrawDebugTrace::ForOneFrame, RaycastHit, true);
+			CurrentHit = RaycastHit.Location;
+			SphereTraceRadius = (CurrentHit - InitialHit).Size()/2; //i.e. get half length of spanning vector as the radius
+			FVector SphereCenter = FVector((CurrentHit.X + InitialHit.X) / 2, (CurrentHit.Y + InitialHit.Y) / 2, (CurrentHit.Z + InitialHit.Z) / 2);
+			UKismetSystemLibrary::SphereTraceMultiForObjects(GetWorld(), SphereCenter, SphereCenter + FVector(0, 0, 10), SphereTraceRadius, DynamicObjectTypes, false, RaycastIgnore, EDrawDebugTrace::ForOneFrame, SphereTraceHits, true);
+			SelectionSphereHolder->SetActorTransform(FTransform(FRotator::ZeroRotator, SphereCenter, FVector(SphereTraceRadius / 100)));
+
+		}
+		//Left Mouse button not pressed
+		else if (SphereDestroyLatch) {
+			SelectionSphereHolder->Destroy();
+			CreateSelectedUnitsArray(SphereTraceHits);
+			ActorSpawnLatch = true;
+			SphereSpawnLatch = true;
+		}
+	}
 }
 
 void AsassPlayer::SetupPlayerInputComponent(class UInputComponent* InputComponent)
@@ -349,7 +389,7 @@ void AsassPlayer::ServerSpawnBuilding_Implementation(AsassPlayerController* Play
 	if (Hit.Normal.Z >= .990) {
 		const TArray<AActor*> BoxIgnore;
 		FHitResult BoxHit;
-		if (!(UKismetSystemLibrary::BoxTraceSingleForObjects(GetWorld(), Hit.Location + FVector(0, 0, 10.0f), Hit.Location + FVector(0, 0, 50.f), FVector(50.0f, 50.0f, 10.0f), FRotator::ZeroRotator, BoxTraceObjectTypes, true, BoxIgnore, EDrawDebugTrace::ForDuration, BoxHit, true))) {
+		if (!(UKismetSystemLibrary::BoxTraceSingleForObjects(GetWorld(), Hit.Location + FVector(0, 0, 10.0f), Hit.Location + FVector(0, 0, 50.f), FVector(50.0f, 50.0f, 10.0f), FRotator::ZeroRotator, DynamicAndStaticObjectTypes, true, BoxIgnore, EDrawDebugTrace::ForDuration, BoxHit, true))) {
 			//if there is no hit (good)
 			if (!CheckBldgCorners(Midpoints, Hit.Location)) {
 				//if there is no obstruction (good)
@@ -374,8 +414,6 @@ void AsassPlayer::ServerSpawnBuilding_Implementation(AsassPlayerController* Play
 					if (NewBuilding != nullptr) { NewBuilding->UpdateMaterial(SassPlayerState->PlayerColor, NewBuilding); }
 					else { GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "SassPlayer ServerSpawnBuilding: Could not spawn, server could not determine what spawn was being asked for"); }
 				}
-			
-
 			}
 			else {
 				//Bad Spawn

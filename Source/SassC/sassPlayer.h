@@ -150,10 +150,23 @@ protected:
 	bool IsCrouchPressed = false;
 	bool IsSprintPressed = false;
 	bool IsPaused = false;
+#pragma region Tick Variables
+	bool ActorDestroyLatch = false;
+	bool ActorSpawnLatch = true;
+	bool SphereDestroyLatch = false;
+	bool SphereSpawnLatch = true;
+	bool TickRaycastLatch = true;
+	TArray<FHitResult> SphereTraceHits;
+	FVector CurrentHit;
+	FVector InitialHit;
+	float SphereTraceRadius;
+#pragma endregion
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Sass Player")
 	bool IsUnitMenuOpen = false;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Sass Player")
 	bool IsLeftMouseDown = false;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Sass Player")
+	UClass* SelectionSphereClass;
 	const float SprintSpeed = 800.0f;
 	const float WalkSpeed = 400.0f;
 	const float CrouchSpeed = 200.0f;
@@ -167,6 +180,11 @@ protected:
 	AActor* SelectionSphereHolder;
 	TArray<AunitBase*> SelectedUnits;
 	TArray<AActor*> WorldStaticObjects;
-	TArray<TEnumAsByte<EObjectTypeQuery>> BoxTraceObjectTypes; // need to define this
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Sass Player")
+	TArray<TEnumAsByte<EObjectTypeQuery>> DynamicAndStaticObjectTypes; // need to define this <<<< world static AND world dynamic
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Sass Player")
+	TArray<TEnumAsByte<EObjectTypeQuery>> StaticObjectTypes;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Sass Player")
+	TArray<TEnumAsByte<EObjectTypeQuery>> DynamicObjectTypes;
 	FCollisionObjectQueryParams WorldStatic = FCollisionObjectQueryParams(ECollisionChannel::ECC_WorldStatic); //const not allowed
 };
