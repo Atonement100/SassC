@@ -258,4 +258,98 @@ LogInit: Object subsystem initialized
 [2016.06.08-17.20.36:540][  0]LogEditorServer: Finished looking for orphan Actors (0.000 secs)
 [2016.06.08-17.20.36:541][  0]Cmd: MAP CHECKDEP NOCLEARLOG
 [2016.06.08-17.20.36:581][  0]MapCheck: Info Map check complete: 0 Error(s), 0 Warning(s), took 40.607ms to complete.
-[2016.06.08-17.20.36:582][  0]LogFileHelpers: Loading map 'or
+[2016.06.08-17.20.36:582][  0]LogFileHelpers: Loading map 'orbit' took 1.477
+[2016.06.08-17.20.36:689][  0]LogCollectionManager: Loaded 0 collections in 0.000995 seconds
+[2016.06.08-17.20.36:730][  0]LogFileCache: Scanning file cache for directory 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Collections/' took 0.01s
+[2016.06.08-17.20.36:730][  0]LogFileCache: Scanning file cache for directory 'C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Developers/Tim/Collections/' took 0.01s
+[2016.06.08-17.20.36:730][  0]LogFileCache: Scanning file cache for directory 'C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Collections/' took 0.01s
+[2016.06.08-17.20.36:730][  0]LogCollectionManager: Rebuilt the GUID cache for 0 collections in 0.000002 seconds
+[2016.06.08-17.20.36:738][  0]LogContentBrowser: Native class hierarchy populated in 0.0075 seconds. Added 1999 classes and 343 folders.
+[2016.06.08-17.20.36:740][  0]LogStats: UGameplayTagsManager::ConstructGameplayTagTree: Construct from data asset -  0.000 s
+[2016.06.08-17.20.36:740][  0]LogStats: UGameplayTagsManager::ConstructGameplayTagTree: GameplayTagTreeChangedEvent.Broadcast -  0.000 s
+[2016.06.08-17.20.36:742][  0]LogContentBrowser: Native class hierarchy updated for 'GameplayTags' in 0.0020 seconds. Added 12 classes and 0 folders.
+[2016.06.08-17.20.36:747][  0]LogContentBrowser: Native class hierarchy updated for 'WidgetCarousel' in 0.0023 seconds. Added 0 classes and 0 folders.
+[2016.06.08-17.20.36:759][  0]LogContentBrowser: Native class hierarchy updated for 'SuperSearch' in 0.0022 seconds. Added 1 classes and 2 folders.
+[2016.06.08-17.20.36:789][  0]LogContentBrowser: Native class hierarchy updated for 'AddContentDialog' in 0.0017 seconds. Added 0 classes and 0 folders.
+[2016.06.08-17.20.36:817][  0]LogContentBrowser: Native class hierarchy updated for 'SceneOutliner' in 0.0017 seconds. Added 1 classes and 2 folders.
+[2016.06.08-17.20.36:876][  0]LogCrashTracker: Crashtracker disabled due to settings.
+[2016.06.08-17.20.36:881][  0]LogUObjectGlobals:Warning: Failed to find object 'Class None.'
+[2016.06.08-17.20.36:916][  0]LogContentBrowser: Native class hierarchy updated for 'HierarchicalLODOutliner' in 0.0017 seconds. Added 1 classes and 2 folders.
+[2016.06.08-17.20.36:916][  0]LogLoad: Full Startup: 6.98 seconds (BP compile: 0.47 seconds)
+[2016.06.08-17.20.36:916][  0]LogExternalProfiler:Warning: No registered external profiler was matched with a command-line switch (or the DLL could not be loaded).  External profiling features will not be available.
+[2016.06.08-17.20.36:927][  0]LogOcInput: OculusInput pre-init called
+[2016.06.08-17.20.36:961][  0]LogContentStreaming: Texture pool size now 1000 MB
+[2016.06.08-17.20.37:062][  1]LogAssetRegistry: Asset discovery search completed in 3.6641 seconds
+[2016.06.08-17.20.37:063][  1]LogCollectionManager: Rebuilt the object cache for 0 collections in 0.000000 seconds (found 0 objects)
+[2016.06.08-17.20.37:063][  1]LogCollectionManager: Fixed up redirectors for 0 collections in 0.000137 seconds (updated 0 objects)
+[2016.06.08-17.20.37:074][  2]LogRenderer: Reallocating scene render targets to support 692x596 (Frame:2).
+[2016.06.08-17.20.39:431][236]Cmd: OBJ SAVEPACKAGE PACKAGE="/Game/Maps/orbit" FILE="C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap" SILENT=true AUTOSAVING=true KEEPDIRTY=true
+[2016.06.08-17.20.39:684][236]LogSavePackage: Save=245.29ms
+[2016.06.08-17.20.39:684][236]LogSavePackage: Moving 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/UEDPCorbit9D576B284EAE8D48631151B154EBBC4D.tmp' to 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap'
+[2016.06.08-17.20.39:685][236]LogSavePackage: Total save time: 253.42ms
+[2016.06.08-17.20.39:685][236]LogSavePackage:Display: Finished SavePackage C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap
+[2016.06.08-17.27.52:727][889]Recompiling SassC...
+[2016.06.08-17.27.52:727][889]Building UnrealBuildTool...
+[2016.06.08-17.27.52:728][889]Building UnrealBuildTool in V:/Program Files/Epic Games/UnrealEngine/...
+[2016.06.08-17.27.52:729][889]Running: C:\WINDOWS\system32\cmd.exe /c "V:\Program Files\Epic Games\UnrealEngine\Engine\Intermediate\Build\UnrealBuildTool\BuildUBT.bat"
+[2016.06.08-17.27.53:477][889]Launching UnrealBuildTool... [V:/Program Files/Epic Games/UnrealEngine/Engine/Binaries/DotNET/UnrealBuildTool.exe SassC -ModuleWithSuffix SassC 6837 Win64 Development -editorrecompile -canskiplink "C:/Users/Tim/Documents/Unreal Projects/SassC/SassC.uproject"  -2015]
+[2016.06.08-17.27.53:478][889]Warning: Starting HotReload took  0.8s.
+[2016.06.08-17.28.02:441][ 65]CompilerResultsLog: New page: Compilation - Jun 8, 2016, 8:28:02 AM
+[2016.06.08-17.28.02:441][ 65]CompilerResultsLog: Info Creating makefile for hot reloading SassC (working set of source files changed)
+[2016.06.08-17.28.02:441][ 65]CompilerResultsLog: Info Compiling game modules for hot reload
+[2016.06.08-17.28.02:442][ 65]CompilerResultsLog: Info Building UnrealHeaderTool...
+[2016.06.08-17.28.02:442][ 65]CompilerResultsLog: Info Target is up to date
+[2016.06.08-17.28.02:442][ 65]CompilerResultsLog: Info Parsing headers for SassCEditor
+[2016.06.08-17.28.02:442][ 65]CompilerResultsLog: Info   Running UnrealHeaderTool "C:\Users\Tim\Documents\Unreal Projects\SassC\SassC.uproject" "C:\Users\Tim\Documents\Unreal Projects\SassC\Intermediate\Build\Win64\SassCEditor\Development\UnrealHeaderTool.manifest" -LogCmds="loginit warning, logexit warning, logdatabase error" -Unattended -WarningsAsErrors
+[2016.06.08-17.28.02:442][ 65]CompilerResultsLog: Info Reflection code generated for SassCEditor in 2.815905 seconds
+[2016.06.08-17.28.02:443][ 65]CompilerResultsLog: Info Performing 2 actions (4 in parallel)
+[2016.06.08-17.28.02:443][ 65]CompilerResultsLog: Info sassPlayer.cpp
+[2016.06.08-17.28.02:443][ 65]CompilerResultsLog: Info [2/2] Link UE4Editor-SassC-6837.dll
+[2016.06.08-17.28.02:443][ 65]CompilerResultsLog: Info    Creating library C:\Users\Tim\Documents\Unreal Projects\SassC\Intermediate\Build\Win64\UE4Editor\Development\UE4Editor-SassC-6837.lib and object C:\Users\Tim\Documents\Unreal Projects\SassC\Intermediate\Build\Win64\UE4Editor\Development\UE4Editor-SassC-6837.exp
+[2016.06.08-17.28.02:443][ 65]CompilerResultsLog: Info -------- End Detailed Actions Stats -----------------------------------------------------------
+[2016.06.08-17.28.02:443][ 65]CompilerResultsLog: Info Total build time: 8.79 seconds
+[2016.06.08-17.28.02:443][ 65]LogMainFrame: MainFrame: Module compiling took 9.720 seconds
+[2016.06.08-17.28.02:498][ 65]LogHotReload: Re-instancing city after hot-reload.
+[2016.06.08-17.28.02:579][ 65]LogHotReload: Re-instancing gate after hot-reload.
+[2016.06.08-17.28.02:644][ 65]LogHotReload: Re-instancing shieldMonolith after hot-reload.
+[2016.06.08-17.28.02:676][ 65]LogHotReload: Re-instancing shrine after hot-reload.
+[2016.06.08-17.28.02:704][ 65]LogHotReload: Re-instancing tower after hot-reload.
+[2016.06.08-17.28.02:770][ 65]LogHotReload: Re-instancing wall after hot-reload.
+[2016.06.08-17.28.02:835][ 65]LogHotReload: Re-instancing workshop after hot-reload.
+[2016.06.08-17.28.02:902][ 65]LogContentBrowser: Native class hierarchy updated for 'SassC' in 0.0017 seconds. Added 21 classes and 2 folders.
+[2016.06.08-17.28.02:903][ 65]Warning: HotReload successful (34 functions remapped  0 scriptstructs remapped)
+[2016.06.08-17.28.02:999][ 65]LogContentBrowser: Native class hierarchy populated in 0.0067 seconds. Added 2002 classes and 349 folders.
+[2016.06.08-17.28.02:999][ 65]Warning: HotReload took 10.3s.
+[2016.06.08-17.28.31:807][270]Cmd: OBJ SAVEPACKAGE PACKAGE="/Game/Maps/orbit" FILE="C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap" SILENT=true AUTOSAVING=true KEEPDIRTY=true
+[2016.06.08-17.28.32:013][270]LogSavePackage: Save=193.54ms
+[2016.06.08-17.28.32:013][270]LogSavePackage: Moving 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/UEDPCorbit28D529124FCAB86D422B30BB919C265C.tmp' to 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap'
+[2016.06.08-17.28.32:015][270]LogSavePackage: Total save time: 206.36ms
+[2016.06.08-17.28.32:015][270]LogSavePackage:Display: Finished SavePackage C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap
+[2016.06.08-17.30.44:684][180]LogContentBrowser: Native class hierarchy updated for 'BlueprintGraph' in 0.0028 seconds. Added 108 classes and 0 folders.
+[2016.06.08-17.41.13:068][671]Recompiling SassC...
+[2016.06.08-17.41.13:069][671]Launching UnrealBuildTool... [V:/Program Files/Epic Games/UnrealEngine/Engine/Binaries/DotNET/UnrealBuildTool.exe SassC -ModuleWithSuffix SassC 8553 Win64 Development -editorrecompile -canskiplink "C:/Users/Tim/Documents/Unreal Projects/SassC/SassC.uproject"  -2015]
+[2016.06.08-17.41.13:070][671]Warning: Starting HotReload took  0.0s.
+[2016.06.08-17.41.22:032][985]CompilerResultsLog: New page: Compilation - Jun 8, 2016, 8:41:22 AM
+[2016.06.08-17.41.22:032][985]CompilerResultsLog: Info Creating makefile for hot reloading SassC (working set of source files changed)
+[2016.06.08-17.41.22:032][985]CompilerResultsLog: Info Compiling game modules for hot reload
+[2016.06.08-17.41.22:032][985]CompilerResultsLog: Info Building UnrealHeaderTool...
+[2016.06.08-17.41.22:032][985]CompilerResultsLog: Info Target is up to date
+[2016.06.08-17.41.22:033][985]CompilerResultsLog: Info Parsing headers for SassCEditor
+[2016.06.08-17.41.22:033][985]CompilerResultsLog: Info   Running UnrealHeaderTool "C:\Users\Tim\Documents\Unreal Projects\SassC\SassC.uproject" "C:\Users\Tim\Documents\Unreal Projects\SassC\Intermediate\Build\Win64\SassCEditor\Development\UnrealHeaderTool.manifest" -LogCmds="loginit warning, logexit warning, logdatabase error" -Unattended -WarningsAsErrors
+[2016.06.08-17.41.22:033][985]CompilerResultsLog: Info Reflection code generated for SassCEditor in 2.7418737 seconds
+[2016.06.08-17.41.22:033][985]CompilerResultsLog: Info Performing 2 actions (4 in parallel)
+[2016.06.08-17.41.22:033][985]CompilerResultsLog: Info sassPlayer.cpp
+[2016.06.08-17.41.22:033][985]CompilerResultsLog:Error: Error C:\Users\Tim\Documents\Unreal Projects\SassC\Source\SassC\sassPlayer.cpp(51) : warning C4996: 'FActorSpawnParameters::bNoCollisionFail': bNoCollisionFail is deprecated. Use SpawnCollisionHandlingOverride to override the actor class's spawn collision handling setting. Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile.
+[2016.06.08-17.41.22:033][985]CompilerResultsLog:Error: Error V:\Program Files\Epic Games\UnrealEngine\Engine\Source\Runtime\Engine\Classes\Engine/World.h(423) : note: see declaration of 'FActorSpawnParameters::bNoCollisionFail'
+[2016.06.08-17.41.22:033][985]CompilerResultsLog: Info [2/2] Link UE4Editor-SassC-8553.dll
+[2016.06.08-17.41.22:033][985]CompilerResultsLog: Info    Creating library C:\Users\Tim\Documents\Unreal Projects\SassC\Intermediate\Build\Win64\UE4Editor\Development\UE4Editor-SassC-8553.lib and object C:\Users\Tim\Documents\Unreal Projects\SassC\Intermediate\Build\Win64\UE4Editor\Development\UE4Editor-SassC-8553.exp
+[2016.06.08-17.41.22:034][985]CompilerResultsLog: Info -------- End Detailed Actions Stats -----------------------------------------------------------
+[2016.06.08-17.41.22:034][985]CompilerResultsLog: Info Total build time: 8.74 seconds
+[2016.06.08-17.41.22:034][985]LogMainFrame: MainFrame: Module compiling took 8.969 seconds
+[2016.06.08-17.41.22:034][985]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
+[2016.06.08-17.41.22:116][985]LogHotReload: Re-instancing city after hot-reload.
+[2016.06.08-17.41.22:240][985]LogHotReload: Re-instancing gate after hot-reload.
+[2016.06.08-17.41.22:347][985]LogHotReload: Re-instancing shieldMonolith after hot-reload.
+[2016.06.08-17.41.22:394][985]LogHotReload: Re-instancing shrine after hot-reload.
+[2016.06.08-17.41.22:441][985]LogHotReload: Re-instancing tower after hot-reload.
+[2016.06.08-17.41.22:560][985]LogHotReload: Re-instancing wall after hot-rel

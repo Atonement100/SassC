@@ -45,7 +45,12 @@ void AsassPlayer::Tick( float DeltaTime )
 	Super::Tick( DeltaTime );
 	if (IsUnitMenuOpen) {
 		FHitResult CursorHit;
-		const FActorSpawnParameters SpawnParams = FActorSpawnParameters();
+
+		//@TODO: Find a better solution for this. Perhaps custom constructor taking in bNoCollisionFail value.
+		FActorSpawnParameters TempParams = FActorSpawnParameters();
+		TempParams.bNoCollisionFail = true;
+		const FActorSpawnParameters SpawnParams = FActorSpawnParameters(TempParams);
+		
 
 		if (LocalObjectSpawn != nullptr && !UKismetMathLibrary::EqualEqual_ClassClass(SelectedSpawnableClass, LocalObjectClass)) {
 			LocalObjectSpawn->Destroy();
@@ -55,6 +60,7 @@ void AsassPlayer::Tick( float DeltaTime )
 		if (ActorSpawnLatch) {
 			if (PlayerControllerPtr) PlayerControllerPtr->GetHitResultUnderCursorByChannel(UEngineTypes::ConvertToTraceType(ECC_Visibility), true, CursorHit);
 			FTransform Transform = FTransform(FRotator::ZeroRotator, CursorHit.Location + FVector(0,0,50.0), FVector(1));
+
 			LocalObjectSpawn = GetWorld()->SpawnActor(SelectedSpawnableClass, &Transform, SpawnParams);
 			if (LocalObjectSpawn != nullptr) {
 				LocalObjectSpawn->SetOwner(PlayerControllerPtr);
@@ -87,8 +93,8 @@ void AsassPlayer::Tick( float DeltaTime )
 	}
 	//Unit Menu not open
 	else {
-		if (ActorDestroyLatch && LocalObjectSpawn != nullptr) {
-			LocalObjectSpawn->Destroy();
+		if (ActorDestroyLatch) { //Do not combine into one if statement, still want to reset latch if object is nullptr
+			if (LocalObjectSpawn) LocalObjectSpawn->Destroy(); 
 			ActorSpawnLatch = true;
 			ActorDestroyLatch = false;
 		}
