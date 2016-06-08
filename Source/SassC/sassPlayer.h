@@ -156,11 +156,15 @@ protected:
 	bool SphereDestroyLatch = false;
 	bool SphereSpawnLatch = true;
 	bool TickRaycastLatch = true;
+	bool IsBadSpawn = true;
 	TArray<FHitResult> SphereTraceHits;
 	FVector CurrentHit;
 	FVector InitialHit;
 	float SphereTraceRadius;
+	UClass* LocalObjectClass;
 #pragma endregion
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sass Player")
+	FVector CurrentHalfHeight;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Sass Player")
 	bool IsUnitMenuOpen = false;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Sass Player")

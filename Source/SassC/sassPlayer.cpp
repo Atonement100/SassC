@@ -37,13 +37,53 @@ void AsassPlayer::Tick( float DeltaTime )
 {
 	Super::Tick( DeltaTime );
 	if (IsUnitMenuOpen) {
+		FHitResult CursorHit;
+		const FActorSpawnParameters SpawnParams = FActorSpawnParameters();
 
+		if (LocalObjectSpawn != nullptr && !UKismetMathLibrary::EqualEqual_ClassClass(SelectedSpawnableClass, LocalObjectClass)) {
+			LocalObjectSpawn->Destroy();
+			ActorSpawnLatch = true;
+		}
+		
+		if (ActorSpawnLatch) {
+			if (PlayerControllerPtr) PlayerControllerPtr->GetHitResultUnderCursorByChannel(UEngineTypes::ConvertToTraceType(ECC_Visibility), true, CursorHit);
+			FTransform Transform = FTransform(FRotator::ZeroRotator, CursorHit.Location + FVector(0,0,50.0), FVector(1));
+			LocalObjectSpawn = GetWorld()->SpawnActor(SelectedSpawnableClass, &Transform, SpawnParams);
+			if (LocalObjectSpawn != nullptr) {
+				LocalObjectSpawn->SetOwner(PlayerControllerPtr);
+				LocalObjectSpawn->SetActorEnableCollision(false);
+			}
+			else { GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Green, "SassPlayer Tick LocalObject didn't spawn"); }
+			LocalObjectClass = SelectedSpawnableClass;
+			if (SelectionSphereHolder) SelectionSphereHolder->Destroy();
+			SphereSpawnLatch = true;
+			ActorDestroyLatch = true;
+			ActorSpawnLatch = false;
+		}
+		
+		if (PlayerControllerPtr != nullptr) PlayerControllerPtr->GetHitResultUnderCursorByChannel(UEngineTypes::ConvertToTraceType(ECC_Visibility), true, CursorHit);
+		if (LocalObjectSpawn != nullptr) LocalObjectSpawn->SetActorLocation(CursorHit.Location + CurrentHalfHeight);
+		
+		if (CursorHit.Normal.Z > .990) {
+			FHitResult BoxTraceHit;
+			TArray<AActor*> ActorsToIgnore;
+			ActorsToIgnore.Add(LocalObjectSpawn);
+			IsBadSpawn = UKismetSystemLibrary::BoxTraceSingleForObjects(GetWorld(), CursorHit.Location + FVector(0, 0, 10.0f), CursorHit.Location + FVector(0, 0, 50.0f), FVector(50.0f, 50.0f, 10.0f), FRotator::ZeroRotator, DynamicAndStaticObjectTypes, true, ActorsToIgnore, EDrawDebugTrace::ForOneFrame, BoxTraceHit, true);
+			if (AbuildingBase* BuildingCast = Cast<AbuildingBase>(LocalObjectSpawn)) { IsBadSpawn = CheckBldgCorners(BuildingCast->CornerLocations, CursorHit.Location); }
+		}
+		else { IsBadSpawn = true; }
+
+		FLinearColor NewColor = IsBadSpawn? FLinearColor(.7f, 0.0f, .058f) : FLinearColor(.093f, .59f, .153f);
+
+		if (AbuildingBase* BuildingCast = Cast<AbuildingBase>(LocalObjectSpawn)) { BuildingCast->UpdateMaterial(NewColor, BuildingCast); }
+		else if (AunitBase* UnitCast = Cast<AunitBase>(LocalObjectSpawn)) { UnitCast->UpdateMaterial(NewColor); }
 	}
 	//Unit Menu not open
 	else {
 		if (ActorDestroyLatch && LocalObjectSpawn != nullptr) {
 			LocalObjectSpawn->Destroy();
 			ActorSpawnLatch = true;
+			ActorDestroyLatch = false;
 		}
 		if (IsLeftMouseDown) {
 			const TArray<AActor*> RaycastIgnore;
@@ -51,12 +91,14 @@ void AsassPlayer::Tick( float DeltaTime )
 				FHitResult InitRaycastHit;
 				const FActorSpawnParameters SpawnParams = FActorSpawnParameters();
 				UKismetSystemLibrary::LineTraceSingleForObjects(GetWorld(), GetMesh()->GetComponentLocation() + FVector(0, 0, BaseEyeHeight + 80.0f), GetMesh()->GetComponentLocation() + FVector(0, 0, BaseEyeHeight + 80.0f) + UKismetMathLibrary::GetForwardVector(PlayerControllerPtr->GetControlRotation())*10000.0f, StaticObjectTypes, true, RaycastIgnore, EDrawDebugTrace::ForOneFrame, InitRaycastHit, true);
+				//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Cyan, UKismetStringLibrary::Conv_VectorToString(InitRaycastHit.Location));
 				InitialHit = InitRaycastHit.Location;
 				FTransform Transform = FTransform(FRotator::ZeroRotator, InitialHit, FVector(1));
 				SelectionSphereHolder = (AselectionSphere*)(GetWorld()->SpawnActor(SelectionSphereClass, &Transform, SpawnParams));
 				TurnOffAllSelectionCircles();
 				SphereDestroyLatch = true;
 				ActorSpawnLatch = true;
+				SphereSpawnLatch = false;
 			}
 			FHitResult RaycastHit;
 			UKismetSystemLibrary::LineTraceSingleForObjects(GetWorld(), GetMesh()->GetComponentLocation() + FVector(0, 0, BaseEyeHeight + 80.0f), GetMesh()->GetComponentLocation() + FVector(0, 0, BaseEyeHeight + 80.0f) + UKismetMathLibrary::GetForwardVector(PlayerControllerPtr->GetControlRotation())*10000.0f, StaticObjectTypes, true, RaycastIgnore, EDrawDebugTrace::ForOneFrame, RaycastHit, true);
@@ -64,15 +106,16 @@ void AsassPlayer::Tick( float DeltaTime )
 			SphereTraceRadius = (CurrentHit - InitialHit).Size()/2; //i.e. get half length of spanning vector as the radius
 			FVector SphereCenter = FVector((CurrentHit.X + InitialHit.X) / 2, (CurrentHit.Y + InitialHit.Y) / 2, (CurrentHit.Z + InitialHit.Z) / 2);
 			UKismetSystemLibrary::SphereTraceMultiForObjects(GetWorld(), SphereCenter, SphereCenter + FVector(0, 0, 10), SphereTraceRadius, DynamicObjectTypes, false, RaycastIgnore, EDrawDebugTrace::ForOneFrame, SphereTraceHits, true);
-			SelectionSphereHolder->SetActorTransform(FTransform(FRotator::ZeroRotator, SphereCenter, FVector(SphereTraceRadius / 100)));
+			if (SelectionSphereHolder)SelectionSphereHolder->SetActorTransform(FTransform(FRotator::ZeroRotator, SphereCenter, FVector(SphereTraceRadius / 100)));
 
 		}
 		//Left Mouse button not pressed
 		else if (SphereDestroyLatch) {
-			SelectionSphereHolder->Destroy();
+			if (SelectionSphereHolder) SelectionSphereHolder->Destroy();
 			CreateSelectedUnitsArray(SphereTraceHits);
 			ActorSpawnLatch = true;
 			SphereSpawnLatch = true;
+			SphereDestroyLatch = false;
 		}
 	}
 }
