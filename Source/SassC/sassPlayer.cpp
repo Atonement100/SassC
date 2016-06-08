@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "SassC.h"
+#include "UnrealNetwork.h"
 #include "sassPlayer.h"
 #include "sassPauseMenu.h"
 #include "sassPlayerController.h"
@@ -31,6 +32,12 @@ void AsassPlayer::BeginPlay()
 	CleanupHUD();
 	CreatePregameHUD();
 	GetWorld();
+}
+
+void AsassPlayer::GetLifetimeReplicatedProps(TArray<FLifetimeProperty> &OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+	DOREPLIFETIME(AsassPlayer, SelectedSpawnableClass);
 }
 
 void AsassPlayer::Tick( float DeltaTime )

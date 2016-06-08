@@ -53,6 +53,7 @@ public:
 	void testFunction();
 
 	virtual void BeginPlay() override;
+	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const;
 	virtual void Tick( float DeltaSeconds ) override;
 	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
 
@@ -124,7 +125,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sass Player")
 	UMaterialInstanceDynamic* DynamicPlayerMaterial;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sass Player")
+	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, Category = "Sass Player")
 	UClass* SelectedSpawnableClass;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Sass Player")
