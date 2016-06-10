@@ -155,6 +155,9 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Sass Player")
 	UUserWidget* GameWidget;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sass Player")
+	AActor* SelectionSphereHolder;
+
 protected:
 	/*(Blueprint Native) Sets reference to game hud, so it can be used in code*/
 	UFUNCTION(BlueprintNativeEvent, Category = "HUD")
@@ -209,7 +212,7 @@ protected:
 	FInputModeGameAndUI GameAndUI;
 	FInputModeGameOnly GameOnly;
 	APlayerController* PlayerControllerPtr;
-	AActor* SelectionSphereHolder;
+
 	TArray<AunitBase*> SelectedUnits;
 	TArray<AActor*> WorldStaticObjects;
 	/*Enum array of world dynamic and world static object types, for traces*/
