@@ -318,4 +318,125 @@ LogInit: Object subsystem initialized
 [2016.06.10-21.57.11:639][812]CompilerResultsLog:Error: Error C:\Users\Tim\Documents\Unreal Projects\SassC\Source\SassC\sassPlayer.cpp(51) : warning C4996: 'FActorSpawnParameters::bNoCollisionFail': bNoCollisionFail is deprecated. Use SpawnCollisionHandlingOverride to override the actor class's spawn collision handling setting. Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile.
 [2016.06.10-21.57.11:640][812]CompilerResultsLog:Error: Error V:\Program Files\Epic Games\UnrealEngine\Engine\Source\Runtime\Engine\Classes\Engine/World.h(423) : note: see declaration of 'FActorSpawnParameters::bNoCollisionFail'
 [2016.06.10-21.57.11:640][812]CompilerResultsLog: Info [2/2] Link UE4Editor-SassC-6466.dll
-[2016.06.10-21.57.11:640][812]CompilerResultsLog: Info    Creating 
+[2016.06.10-21.57.11:640][812]CompilerResultsLog: Info    Creating library C:\Users\Tim\Documents\Unreal Projects\SassC\Intermediate\Build\Win64\UE4Editor\Development\UE4Editor-SassC-6466.lib and object C:\Users\Tim\Documents\Unreal Projects\SassC\Intermediate\Build\Win64\UE4Editor\Development\UE4Editor-SassC-6466.exp
+[2016.06.10-21.57.11:640][812]CompilerResultsLog: Info -------- End Detailed Actions Stats -----------------------------------------------------------
+[2016.06.10-21.57.11:640][812]CompilerResultsLog: Info Total build time: 9.75 seconds
+[2016.06.10-21.57.11:640][812]LogMainFrame: MainFrame: Module compiling took 10.589 seconds
+[2016.06.10-21.57.11:641][812]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
+[2016.06.10-21.57.11:716][812]LogHotReload: Re-instancing city after hot-reload.
+[2016.06.10-21.57.11:831][812]LogHotReload: Re-instancing gate after hot-reload.
+[2016.06.10-21.57.11:928][812]LogHotReload: Re-instancing shieldMonolith after hot-reload.
+[2016.06.10-21.57.11:970][812]LogHotReload: Re-instancing shrine after hot-reload.
+[2016.06.10-21.57.12:012][812]LogHotReload: Re-instancing tower after hot-reload.
+[2016.06.10-21.57.12:109][812]LogHotReload: Re-instancing wall after hot-reload.
+[2016.06.10-21.57.12:205][812]LogHotReload: Re-instancing workshop after hot-reload.
+[2016.06.10-21.57.12:312][812]LogContentBrowser: Native class hierarchy updated for 'SassC' in 0.0018 seconds. Added 21 classes and 2 folders.
+[2016.06.10-21.57.12:315][812]Warning: HotReload successful (34 functions remapped  0 scriptstructs remapped)
+[2016.06.10-21.57.12:589][812]LogContentBrowser: Native class hierarchy populated in 0.0066 seconds. Added 2002 classes and 349 folders.
+[2016.06.10-21.57.12:589][812]Warning: HotReload took 11.6s.
+[2016.06.10-21.57.15:198][105]Cmd: OBJ SAVEPACKAGE PACKAGE="/Game/Maps/orbit" FILE="C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap" SILENT=true AUTOSAVING=true KEEPDIRTY=true
+[2016.06.10-21.57.15:435][105]LogSavePackage: Save=222.95ms
+[2016.06.10-21.57.15:435][105]LogSavePackage: Moving 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/UEDPCorbitE445052C42026CECC735579735F99D4A.tmp' to 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap'
+[2016.06.10-21.57.15:437][105]LogSavePackage: Total save time: 236.62ms
+[2016.06.10-21.57.15:437][105]LogSavePackage:Display: Finished SavePackage C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap
+[2016.06.10-22.01.21:936][606]LogFileHelpers: Editor autosave (incl. sublevels) for '/Game/Maps/orbit' took 0.021
+[2016.06.10-22.01.21:946][606]OBJ SavePackage: Generating thumbnails for [0] asset(s) in package [/Game/Blueprints/sassilization/sassPlayer_BP] ([1] browsable assets)...
+[2016.06.10-22.01.21:946][606]OBJ SavePackage: Finished generating thumbnails for package [/Game/Blueprints/sassilization/sassPlayer_BP]
+[2016.06.10-22.01.22:110][606]LogSavePackage: Save=151.22ms
+[2016.06.10-22.01.22:110][606]LogSavePackage: Moving 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/sassPlayer_BP_Auto173658FE5436F0B9DA27029814B4FB07C.tmp' to 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Blueprints/sassilization/sassPlayer_BP_Auto1.uasset'
+[2016.06.10-22.01.22:111][606]LogSavePackage: Total save time: 163.47ms
+[2016.06.10-22.01.22:112][606]LogSavePackage:Display: Finished SavePackage C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Blueprints/sassilization/sassPlayer_BP_Auto1.uasset
+[2016.06.10-22.01.22:112][606]LogFileHelpers: Auto-saving content packages took 0.170
+[2016.06.10-22.02.15:797][991]Cmd: OBJ SAVEPACKAGE PACKAGE="/Game/Blueprints/sassilization/sassPlayer_BP" FILE="C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassPlayer_BP.uasset" SILENT=true
+[2016.06.10-22.02.15:955][991]LogSavePackage: Save=150.43ms
+[2016.06.10-22.02.15:955][991]LogSavePackage: Moving 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/sassPlayer_BP6B4703FF4556A47F78248D9C83B7911D.tmp' to 'C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassPlayer_BP.uasset'
+[2016.06.10-22.02.15:957][991]LogSavePackage: Total save time: 158.59ms
+[2016.06.10-22.02.15:958][991]LogSavePackage:Display: Finished SavePackage C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassPlayer_BP.uasset
+[2016.06.10-22.02.40:710][843]BlueprintLog: New page: Compile sassPlayerController_BP
+[2016.06.10-22.02.40:740][843]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
+[2016.06.10-22.02.40:864][843]BlueprintEditorCompileResults: Info [1426.43] Compile of sassPlayerController_BP successful! [in 154 ms]
+[2016.06.10-22.02.42:723][ 56]LogSavePackage: Save=10.06ms
+[2016.06.10-22.02.42:724][ 56]LogSavePackage: Moving 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/sassPlayerController_BP12405C1E409168C0D2B479A5400BF339.tmp' to 'C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassPlayerController_BP.uasset'
+[2016.06.10-22.02.42:726][ 56]LogSavePackage: Total save time: 22.38ms
+[2016.06.10-22.02.42:727][ 56]LogSavePackage:Display: Finished SavePackage C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassPlayerController_BP.uasset
+[2016.06.10-22.02.58:371][843]LogRenderer: Reallocating scene render targets to support 720x696 (Frame:10267).
+[2016.06.10-22.03.48:877][698]BlueprintLog: New page: Compile sassGamemode_BP
+[2016.06.10-22.03.48:923][698]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
+[2016.06.10-22.03.48:999][698]BlueprintEditorCompileResults: Info The path is never executed.  Then 1 
+[2016.06.10-22.03.48:999][698]BlueprintEditorCompileResults: Info [1494.56] Compile of sassGamemode_BP successful! [in 121 ms]
+[2016.06.10-22.03.55:541][460]BlueprintLog: New page: Compile sassGamemode_BP
+[2016.06.10-22.03.55:696][460]BlueprintEditorCompileResults: Info The path is never executed.  Then 1 
+[2016.06.10-22.03.55:697][460]BlueprintEditorCompileResults: Info [1501.26] Compile of sassGamemode_BP successful! [in 154 ms]
+[2016.06.10-22.03.56:145][513]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
+[2016.06.10-22.03.56:200][513]Cmd: OBJ SAVEPACKAGE PACKAGE="/Game/Blueprints/sassilization/sassGamemode_BP" FILE="C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassGamemode_BP.uasset" SILENT=true
+[2016.06.10-22.03.56:372][513]LogSavePackage: Save=159.06ms
+[2016.06.10-22.03.56:372][513]LogSavePackage: Moving 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/sassGamemode_BPE3CBFA3847BE7EDC8505DB9B444DB3C0.tmp' to 'C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassGamemode_BP.uasset'
+[2016.06.10-22.03.56:374][513]LogSavePackage: Total save time: 172.80ms
+[2016.06.10-22.03.56:374][513]LogSavePackage:Display: Finished SavePackage C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassGamemode_BP.uasset
+[2016.06.10-22.03.57:464][625]Cmd: OBJ SAVEPACKAGE PACKAGE="/Game/Maps/orbit" FILE="C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap" SILENT=true AUTOSAVING=true KEEPDIRTY=true
+[2016.06.10-22.03.57:708][625]LogSavePackage: Save=231.79ms
+[2016.06.10-22.03.57:708][625]LogSavePackage: Moving 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/UEDPCorbit1A93C2E14A76F90C59DC5CA68B825297.tmp' to 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap'
+[2016.06.10-22.03.57:710][625]LogSavePackage: Total save time: 244.53ms
+[2016.06.10-22.03.57:710][625]LogSavePackage:Display: Finished SavePackage C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap
+[2016.06.10-22.05.01:995][469]BlueprintLog: New page: Compile sassGamemode_BP
+[2016.06.10-22.05.02:186][469]BlueprintEditorCompileResults: Info The path is never executed.  Then 1 
+[2016.06.10-22.05.02:186][469]BlueprintEditorCompileResults: Info [1567.75] Compile of sassGamemode_BP successful! [in 191 ms]
+[2016.06.10-22.05.03:146][582]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
+[2016.06.10-22.05.03:197][582]Cmd: OBJ SAVEPACKAGE PACKAGE="/Game/Blueprints/sassilization/sassGamemode_BP" FILE="C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassGamemode_BP.uasset" SILENT=true
+[2016.06.10-22.05.03:296][582]LogSavePackage: Save=90.08ms
+[2016.06.10-22.05.03:296][582]LogSavePackage: Moving 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/sassGamemode_BPD9E7A8E94E898664019113A4ED1B85B9.tmp' to 'C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassGamemode_BP.uasset'
+[2016.06.10-22.05.03:299][582]LogSavePackage: Total save time: 99.50ms
+[2016.06.10-22.05.03:299][582]LogSavePackage:Display: Finished SavePackage C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassGamemode_BP.uasset
+[2016.06.10-22.05.41:781][ 81]BlueprintLog: New page: Compile sassGamemode_BP
+[2016.06.10-22.05.41:917][ 81]BlueprintEditorCompileResults: Info The path is never executed.  Then 1 
+[2016.06.10-22.05.41:918][ 81]BlueprintEditorCompileResults: Info [1607.48] Compile of sassGamemode_BP successful! [in 136 ms]
+[2016.06.10-22.05.42:795][185]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
+[2016.06.10-22.05.42:848][185]Cmd: OBJ SAVEPACKAGE PACKAGE="/Game/Blueprints/sassilization/sassGamemode_BP" FILE="C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassGamemode_BP.uasset" SILENT=true
+[2016.06.10-22.05.42:941][185]LogSavePackage: Save=85.39ms
+[2016.06.10-22.05.42:941][185]LogSavePackage: Moving 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/sassGamemode_BPC7B9B1404EE8136CCBA7F5ACA60940B6.tmp' to 'C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassGamemode_BP.uasset'
+[2016.06.10-22.05.42:944][185]LogSavePackage: Total save time: 94.46ms
+[2016.06.10-22.05.42:944][185]LogSavePackage:Display: Finished SavePackage C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassGamemode_BP.uasset
+[2016.06.10-22.05.44:084][307]Cmd: OBJ SAVEPACKAGE PACKAGE="/Game/Maps/orbit" FILE="C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap" SILENT=true AUTOSAVING=true KEEPDIRTY=true
+[2016.06.10-22.05.44:319][307]LogSavePackage: Save=228.44ms
+[2016.06.10-22.05.44:320][307]LogSavePackage: Moving 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/UEDPCorbit271DC99140D5FFEDA1203BB8BE41FB60.tmp' to 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap'
+[2016.06.10-22.05.44:321][307]LogSavePackage: Total save time: 235.52ms
+[2016.06.10-22.05.44:321][307]LogSavePackage:Display: Finished SavePackage C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap
+[2016.06.10-22.06.42:915][951]Cmd: OBJ SAVEPACKAGE PACKAGE="/Game/Blueprints/sassilization/sassGamemode_BP" FILE="C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassGamemode_BP.uasset" SILENT=true
+[2016.06.10-22.06.42:985][951]LogSavePackage: Save=60.97ms
+[2016.06.10-22.06.42:985][951]LogSavePackage: Moving 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/sassGamemode_BPF8FB0E144C29FADE0C6CFBB8E253AC88.tmp' to 'C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassGamemode_BP.uasset'
+[2016.06.10-22.06.42:987][951]LogSavePackage: Total save time: 71.57ms
+[2016.06.10-22.06.42:988][951]LogSavePackage:Display: Finished SavePackage C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassGamemode_BP.uasset
+[2016.06.10-22.06.43:496][ 12]BlueprintLog: New page: Compile sassGamemode_BP
+[2016.06.10-22.06.43:620][ 12]BlueprintEditorCompileResults: Info The path is never executed.  Then 1 
+[2016.06.10-22.06.43:621][ 12]BlueprintEditorCompileResults: Info [1669.18] Compile of sassGamemode_BP successful! [in 123 ms]
+[2016.06.10-22.07.35:461][ 33]BlueprintLog: New page: Compile buildingBase_BP
+[2016.06.10-22.07.35:464][ 33]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
+[2016.06.10-22.07.35:588][ 33]BlueprintEditorCompileResults: Info [1721.15] Compile of buildingBase_BP successful! [in 126 ms]
+[2016.06.10-22.07.37:818][289]LogSavePackage: Save=8.32ms
+[2016.06.10-22.07.37:818][289]LogSavePackage: Moving 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/buildingBase_BP4E5D9166472C98F613974CBC884EE3A4.tmp' to 'C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/BuildingBPs/buildingBase_BP.uasset'
+[2016.06.10-22.07.37:821][289]LogSavePackage: Total save time: 20.48ms
+[2016.06.10-22.07.37:821][289]LogSavePackage:Display: Finished SavePackage C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/BuildingBPs/buildingBase_BP.uasset
+[2016.06.10-22.09.09:999][973]BlueprintLog: New page: Compile city_BP
+[2016.06.10-22.09.10:169][973]BlueprintEditorCompileResults: Info [1815.73] Compile of city_BP successful! [in 169 ms]
+[2016.06.10-22.09.14:606][476]LogSavePackage: Save=94.99ms
+[2016.06.10-22.09.14:607][476]LogSavePackage: Moving 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/city_BP7A23A7204A55BAB1C90D688070CDA903.tmp' to 'C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/BuildingBPs/city_BP.uasset'
+[2016.06.10-22.09.14:610][476]LogSavePackage: Total save time: 108.79ms
+[2016.06.10-22.09.14:610][476]LogSavePackage:Display: Finished SavePackage C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/BuildingBPs/city_BP.uasset
+[2016.06.10-22.09.31:841][480]BlueprintLog: New page: Compile city_BP
+[2016.06.10-22.09.31:924][480]BlueprintEditorCompileResults: Info [1837.49] Compile of city_BP successful! [in 83 ms]
+[2016.06.10-22.09.32:696][562]LogSavePackage: Save=15.88ms
+[2016.06.10-22.09.32:696][562]LogSavePackage: Moving 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/city_BPC5AD41984EFDBA17D06A1DB5C092270D.tmp' to 'C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/BuildingBPs/city_BP.uasset'
+[2016.06.10-22.09.32:699][562]LogSavePackage: Total save time: 24.31ms
+[2016.06.10-22.09.32:699][562]LogSavePackage:Display: Finished SavePackage C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/BuildingBPs/city_BP.uasset
+[2016.06.10-22.09.33:631][657]Cmd: OBJ SAVEPACKAGE PACKAGE="/Game/Maps/orbit" FILE="C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap" SILENT=true AUTOSAVING=true KEEPDIRTY=true
+[2016.06.10-22.09.33:875][657]LogSavePackage: Save=231.32ms
+[2016.06.10-22.09.33:875][657]LogSavePackage: Moving 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/UEDPCorbit0185925D4CF2B54DF47FAE94CEAEC1E8.tmp' to 'C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap'
+[2016.06.10-22.09.33:877][657]LogSavePackage: Total save time: 243.45ms
+[2016.06.10-22.09.33:877][657]LogSavePackage:Display: Finished SavePackage C:/Users/Tim/Documents/Unreal Projects/SassC/Saved/Autosaves/Game/Maps/UEDPCorbit.umap
+[2016.06.10-22.14.02:095][873]LogActorComponent: UnregisterComponent: (/Engine/Transient.EditorFloorComp) Not registered. Aborting.
+[2016.06.10-22.14.05:246][216]LogActorComponent: UnregisterComponent: (/Engine/Transient.EditorFloorComp) Not registered. Aborting.
+[2016.06.10-22.14.52:755][795]BlueprintLog: New page: Compile sassGamemode_BP
+[2016.06.10-22.14.52:946][795]BlueprintEditorCompileResults: Info The path is never executed.  Then 1 
+[2016.06.10-22.14.52:946][795]BlueprintEditorCompileResults: Info [2158.51] Compile of sassGamemode_BP successful! [in 190 ms]
+[2016.06.10-22.14.53:852][896]Cmd: OBJ SAVEPACKAGE PACKAGE="/Game/Blueprints/sassilization/sassGamemode_BP" FILE="C:/Users/Tim/Documents/Unreal Projects/SassC/Content/Blueprints/sassilization/sassGamemode_BP.uasset" SILENT=true
+[2016.06.10-22.14.53:921][896]LogSavePackage
