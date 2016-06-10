@@ -212,7 +212,7 @@ protected:
 	FInputModeGameAndUI GameAndUI;
 	FInputModeGameOnly GameOnly;
 	APlayerController* PlayerControllerPtr;
-
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Sass Player")
 	TArray<AunitBase*> SelectedUnits;
 	TArray<AActor*> WorldStaticObjects;
 	/*Enum array of world dynamic and world static object types, for traces*/

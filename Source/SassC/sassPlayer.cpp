@@ -449,7 +449,7 @@ void AsassPlayer::ServerSpawnBuilding_Implementation(AsassPlayerController* Play
 			//if there is no hit (good)
 			if (!CheckBldgCorners(Midpoints, Hit.Location)) {
 				//if there is no obstruction (good)
-				AActor* NewSpawn = GetWorld()->SpawnActor(SelectedSpawnableClass, &Location, &Rotation, SpawnParams);
+				AActor* NewSpawn = GetWorld()->SpawnActor(ActorToSpawn, &Location, &Rotation, SpawnParams);
 				if (NewSpawn == nullptr) {
 					GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "SassPlayer ServerSpawnBuilding: Could not spawn, unknown reason");
 					return;
