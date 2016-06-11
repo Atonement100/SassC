@@ -59,6 +59,12 @@ public:
 	virtual void Tick( float DeltaSeconds ) override;
 	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
 
+	/*Dispatches units on server*/
+	UFUNCTION(Reliable, Server, WithValidation)
+	void CommandUnits(const TArray<AunitBase*> &SelectedUnits);
+	virtual void CommandUnits_Implementation(const TArray<AunitBase*> &SelectedUnits);
+	virtual bool CommandUnits_Validate(const TArray<AunitBase*> &SelectedUnits);
+
 	/*Registers sprinting movement with server*/
 	UFUNCTION(Reliable, Server, WithValidation)
 	void ServerSprint(bool isRunning, UCharacterMovementComponent *movementComponent);

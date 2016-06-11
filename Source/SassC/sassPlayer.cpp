@@ -10,6 +10,7 @@
 #include "unitBase.h"
 #include "selectionSphere.h"
 #include "buildingBase.h"
+#include "unitController.h"
 #include "SassCStaticLibrary.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "Kismet/KismetMathLibrary.h"
@@ -48,7 +49,7 @@ void AsassPlayer::Tick( float DeltaTime )
 
 		//@TODO: Find a better solution for this. Perhaps custom constructor taking in bNoCollisionFail value.
 		FActorSpawnParameters TempParams = FActorSpawnParameters();
-		TempParams.bNoCollisionFail = true;
+		TempParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 		const FActorSpawnParameters SpawnParams = FActorSpawnParameters(TempParams);
 		
 
@@ -190,11 +191,29 @@ void AsassPlayer::LeftClickReleased() {
 }
 
 void AsassPlayer::RightClickPressed() {
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Cyan, "dispatch1");
 
+	CommandUnits(SelectedUnits);
 }
 
 void AsassPlayer::RightClickReleased() {
 
+}
+
+void AsassPlayer::CommandUnits_Implementation(const TArray<AunitBase*> &SelectedUnits) {
+	if (SelectedUnits.Num() > 0) {
+		FHitResult RaycastHit;
+		const TArray<AActor*> RaycastIgnores;
+
+		UKismetSystemLibrary::LineTraceSingleForObjects(GetWorld(), GetMesh()->GetComponentLocation() + FVector(0, 0, BaseEyeHeight + 80.0f), GetMesh()->GetComponentLocation() + FVector(0, 0, BaseEyeHeight + 80.0f) + UKismetMathLibrary::GetForwardVector(PlayerControllerPtr->GetControlRotation())*10000.0f, StaticObjectTypes, true, RaycastIgnores, EDrawDebugTrace::ForOneFrame, RaycastHit, true);
+		if (AunitController* temp = Cast<AunitController>(Cast<AunitBase>(SelectedUnits[0])->GetController())) temp->MoveToLocation(RaycastHit.Location, 5.0f, false, true, false, true, 0, false);
+		else GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Cyan, "dispatchNOOOO");
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Cyan, "dispatch");
+	}
+}
+
+bool AsassPlayer::CommandUnits_Validate(const TArray<AunitBase*> &SelectedUnits) {
+	return true;
 }
 
 #pragma region HUD functions
