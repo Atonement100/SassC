@@ -4,9 +4,9 @@
 #include "unitController.h"
 
 void AunitController::OnPossess() {
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Turquoise, "possessedf!!!!");
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Turquoise, "UnitController OnPossess");
 }
 
 void AunitController::BeginPlay() {
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Turquoise, "pdddddddddddossessedf!!!!");
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Turquoise, "UnitController BeginPlay");
 }

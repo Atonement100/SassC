@@ -191,8 +191,6 @@ void AsassPlayer::LeftClickReleased() {
 }
 
 void AsassPlayer::RightClickPressed() {
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Cyan, "dispatch1");
-
 	CommandUnits(SelectedUnits);
 }
 
@@ -206,9 +204,22 @@ void AsassPlayer::CommandUnits_Implementation(const TArray<AunitBase*> &Selected
 		const TArray<AActor*> RaycastIgnores;
 
 		UKismetSystemLibrary::LineTraceSingleForObjects(GetWorld(), GetMesh()->GetComponentLocation() + FVector(0, 0, BaseEyeHeight + 80.0f), GetMesh()->GetComponentLocation() + FVector(0, 0, BaseEyeHeight + 80.0f) + UKismetMathLibrary::GetForwardVector(PlayerControllerPtr->GetControlRotation())*10000.0f, StaticObjectTypes, true, RaycastIgnores, EDrawDebugTrace::ForOneFrame, RaycastHit, true);
-		if (AunitController* temp = Cast<AunitController>(Cast<AunitBase>(SelectedUnits[0])->GetController())) temp->MoveToLocation(RaycastHit.Location, 5.0f, false, true, false, true, 0, false);
-		else GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Cyan, "dispatchNOOOO");
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Cyan, "dispatch");
+		if (AunitController* temp = Cast<AunitController>(Cast<AunitBase>(SelectedUnits[0])->GetController())) { 
+
+			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, UKismetStringLibrary::Conv_VectorToString(RaycastHit.Location));
+
+			EPathFollowingRequestResult::Type worked = temp->MoveToLocation(RaycastHit.Location, -1, false, false, false, true, 0, false);
+			if (worked == EPathFollowingRequestResult::Failed) {
+				GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Cyan, "SassPlayer CommandUnits Dispatch Failed");
+			}
+			else if (worked == EPathFollowingRequestResult::AlreadyAtGoal) {
+				GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Cyan, "SassPlayer CommandUnits Already at goal");
+			}
+			else if (worked == EPathFollowingRequestResult::RequestSuccessful) {
+				GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Cyan, "SassPlayer CommandUnits Dispatch success");
+			}
+		}
+		else { GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Cyan, "SassPlayer CommandUnits Cast Failed"); }
 	}
 }
 
@@ -482,7 +493,11 @@ void AsassPlayer::ServerSpawnBuilding_Implementation(AsassPlayerController* Play
 				//@TODO: Should find a way to consolidate these... hard with units being ACharacter, buildings being AActor to give them a common parent
 				//try unit (more likely)
 				AunitBase* NewUnit = Cast<AunitBase>(NewSpawn);
-				if (NewUnit != nullptr) { NewUnit->UpdateMaterial(SassPlayerState->PlayerColor); }
+				if (NewUnit != nullptr) { 
+					NewUnit->UpdateMaterial(SassPlayerState->PlayerColor); 
+					NewUnit->SpawnDefaultController();
+
+				}
 				//try building
 				else {
 					AbuildingBase* NewBuilding = Cast<AbuildingBase>(NewSpawn);
