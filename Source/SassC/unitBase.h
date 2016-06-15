@@ -66,5 +66,9 @@ protected:
 	FVector OrderDirection;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
 	bool ProcessingOrder;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
+	float MaxTimeToMove;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
+	float TimeSinceOrdered;
 	
 };

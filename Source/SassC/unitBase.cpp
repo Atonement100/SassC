@@ -65,7 +65,8 @@ void AunitBase::Tick( float DeltaTime )
 	Super::Tick( DeltaTime );
 	if (ProcessingOrder) {
 		AddMovementInput(OrderDirection, 1.0f);
-		if ((OrderDestination - GetActorLocation()).Size2D() < 5.0f){
+		TimeSinceOrdered += DeltaTime;
+		if ((OrderDestination - GetActorLocation()).Size2D() < 5.0f || TimeSinceOrdered > MaxTimeToMove){
 			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Cyan, "UnitBase Movement Complete");
 			ProcessingOrder = false;
 		}
@@ -81,7 +82,11 @@ void AunitBase::SetupPlayerInputComponent(class UInputComponent* InputComponent)
 void AunitBase::MoveToDest_Implementation(FVector Destination) {
 	OrderDestination = Destination;
 	OrderDirection = Destination - GetActorLocation();
+	TimeSinceOrdered = 0;
+	MaxTimeToMove = OrderDirection.Size() / GetMovementComponent()->GetMaxSpeed();
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Cyan, "UnitBase MaxTimeToMove = " + UKismetStringLibrary::Conv_FloatToString(MaxTimeToMove));
 	ProcessingOrder = true;
+	
 	
 	/*
 	if (AAIController* Controller = Cast<AAIController>(GetController())) {
