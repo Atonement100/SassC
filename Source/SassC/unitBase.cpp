@@ -15,7 +15,7 @@ AunitBase::AunitBase()
 
 	UnderUnitDecal = CreateDefaultSubobject<UDecalComponent>(TEXT("Under Unit Decal"));
 	UnderUnitDecal->AttachTo(RootComponent);
-
+	
 	SelectionCircleDecal = CreateDefaultSubobject<UDecalComponent>(TEXT("Selection Circle Decal"));
 	SelectionCircleDecal->AttachTo(RootComponent);
 	SelectionCircleDecal->bVisible = false;
@@ -28,6 +28,7 @@ AunitBase::AunitBase()
 
 	DetectionSphere->OnComponentBeginOverlap.AddDynamic(this, &AunitBase::OnOverlapBegin);
 	DetectionSphere->OnComponentEndOverlap.AddDynamic(this, &AunitBase::OnOverlapEnd);
+
 }
 
 void AunitBase::OnOverlapBegin(class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) {
@@ -62,7 +63,13 @@ void AunitBase::BeginPlay()
 void AunitBase::Tick( float DeltaTime )
 {
 	Super::Tick( DeltaTime );
-	GEngine->AddOnScreenDebugMessage(-1, DeltaTime, FColor::Orange, UKismetStringLibrary::Conv_VectorToString(GetActorLocation()));
+	if (ProcessingOrder) {
+		AddMovementInput(OrderDirection, 1.0f);
+		if ((OrderDestination - GetActorLocation()).Size2D() < 5.0f){
+			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Cyan, "UnitBase Movement Complete");
+			ProcessingOrder = false;
+		}
+	}
 }
 
 void AunitBase::SetupPlayerInputComponent(class UInputComponent* InputComponent)
@@ -72,7 +79,11 @@ void AunitBase::SetupPlayerInputComponent(class UInputComponent* InputComponent)
 }
 
 void AunitBase::MoveToDest_Implementation(FVector Destination) {
+	OrderDestination = Destination;
+	OrderDirection = Destination - GetActorLocation();
+	ProcessingOrder = true;
 	
+	/*
 	if (AAIController* Controller = Cast<AAIController>(GetController())) {
 			
 		EPathFollowingRequestResult::Type PathingResult = Controller->MoveToLocation(Destination, 2.0f, true, false, true, true, 0, true);
@@ -90,6 +101,7 @@ void AunitBase::MoveToDest_Implementation(FVector Destination) {
 	else {
 		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "UnitBase MoveToLocation: Cast to aicontroller failed");
 	}
+	*/
 	/*
 	FVector Direction = Destination - GetActorLocation();
 	for (int i = 0; i < 100000; i++) {

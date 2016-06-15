@@ -60,5 +60,11 @@ protected:
 	UStaticMeshComponent* DetectionSphere;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
 	UTextRenderComponent* TextRender;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
+	FVector OrderDestination;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
+	FVector OrderDirection;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
+	bool ProcessingOrder;
 	
 };

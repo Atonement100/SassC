@@ -167,12 +167,7 @@ void AsassPlayer::SetupPlayerInputComponent(class UInputComponent* InputComponen
 }
 
 void AsassPlayer::testFunction() {
-	FHitResult RaycastHit;
-	const TArray<AActor*> RaycastIgnores;
 
-	UKismetSystemLibrary::LineTraceSingleForObjects(GetWorld(), GetMesh()->GetComponentLocation() + FVector(0, 0, BaseEyeHeight + 80.0f), GetMesh()->GetComponentLocation() + FVector(0, 0, BaseEyeHeight + 80.0f) + UKismetMathLibrary::GetForwardVector(PlayerControllerPtr->GetControlRotation())*10000.0f, StaticObjectTypes, true, RaycastIgnores, EDrawDebugTrace::ForOneFrame, RaycastHit, true);
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, UKismetStringLibrary::Conv_VectorToString(RaycastHit.Location));
-	SelectedUnits[0]->MoveToDest(RaycastHit.Location);
 }
 
 void AsassPlayer::LeftClickPressed() {
@@ -209,7 +204,11 @@ void AsassPlayer::CommandUnits_Implementation(const TArray<AunitBase*> &Selected
 		const TArray<AActor*> RaycastIgnores;
 
 		UKismetSystemLibrary::LineTraceSingleForObjects(GetWorld(), GetMesh()->GetComponentLocation() + FVector(0, 0, BaseEyeHeight + 80.0f), GetMesh()->GetComponentLocation() + FVector(0, 0, BaseEyeHeight + 80.0f) + UKismetMathLibrary::GetForwardVector(PlayerControllerPtr->GetControlRotation())*10000.0f, StaticObjectTypes, true, RaycastIgnores, EDrawDebugTrace::ForOneFrame, RaycastHit, true);
-		if (SelectedUnits[0]) { 
+		
+		for (AunitBase* Unit : SelectedUnits) {
+			Unit->MoveToDest(RaycastHit.Location);
+		}
+		/*if (SelectedUnits[0]) { 
 
 			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, UKismetStringLibrary::Conv_VectorToString(RaycastHit.Location));
 			SelectedUnits[0]->MoveToDest(RaycastHit.Location);
@@ -229,8 +228,9 @@ void AsassPlayer::CommandUnits_Implementation(const TArray<AunitBase*> &Selected
 				GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Cyan, "SassPlayer CommandUnits Dispatch success");
 			}
 			*/
-		}
-		else { GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Cyan, "SassPlayer CommandUnits Cast Failed"); }
+		//}
+		//else { GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Cyan, "SassPlayer CommandUnits Cast Failed"); }
+		
 	}
 }
 
