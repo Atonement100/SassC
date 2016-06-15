@@ -3,7 +3,9 @@
 #include "SassC.h"
 #include "sassPlayer.h"
 #include "sassPlayerState.h"
+#include "unitController.h"
 #include "Kismet/GameplayStatics.h"
+#include "Kismet/KismetStringLibrary.h"
 #include "Kismet/KismetArrayLibrary.h"
 #include "unitBase.h"
 
@@ -60,7 +62,7 @@ void AunitBase::BeginPlay()
 void AunitBase::Tick( float DeltaTime )
 {
 	Super::Tick( DeltaTime );
-
+	GEngine->AddOnScreenDebugMessage(-1, DeltaTime, FColor::Orange, UKismetStringLibrary::Conv_VectorToString(GetActorLocation()));
 }
 
 void AunitBase::SetupPlayerInputComponent(class UInputComponent* InputComponent)
@@ -69,14 +71,34 @@ void AunitBase::SetupPlayerInputComponent(class UInputComponent* InputComponent)
 
 }
 
-void AunitBase::MoveToLocation_Implementation(FVector Destination) {
+void AunitBase::MoveToDest_Implementation(FVector Destination) {
+	
+	if (AAIController* Controller = Cast<AAIController>(GetController())) {
+			
+		EPathFollowingRequestResult::Type PathingResult = Controller->MoveToLocation(Destination, 2.0f, true, false, true, true, 0, true);
+		if (PathingResult == EPathFollowingRequestResult::Failed) {
+			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Cyan, "UnitBase MoveToLocation Dispatch Failed");
+		}
+		else if (PathingResult == EPathFollowingRequestResult::AlreadyAtGoal) {
+			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Cyan, "UnitBase MoveToLocation Already at goal");
+		}
+		else if (PathingResult == EPathFollowingRequestResult::RequestSuccessful) {
+			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Cyan, "UnitBase MoveToLocation Dispatch success");
+		}
+
+	}
+	else {
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "UnitBase MoveToLocation: Cast to aicontroller failed");
+	}
+	/*
 	FVector Direction = Destination - GetActorLocation();
 	for (int i = 0; i < 100000; i++) {
 		AddMovementInput(Direction, 1.0f);
 	}
+	*/
 }
 
-bool AunitBase::MoveToLocation_Validate(FVector Destination) {
+bool AunitBase::MoveToDest_Validate(FVector Destination) {
 	return true;
 }
 

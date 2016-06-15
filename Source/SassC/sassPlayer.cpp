@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+	// Fill out your copyright notice in the Description page of Project Settings.
 
 #include "SassC.h"
 #include "UnrealNetwork.h"
@@ -167,7 +167,12 @@ void AsassPlayer::SetupPlayerInputComponent(class UInputComponent* InputComponen
 }
 
 void AsassPlayer::testFunction() {
+	FHitResult RaycastHit;
+	const TArray<AActor*> RaycastIgnores;
 
+	UKismetSystemLibrary::LineTraceSingleForObjects(GetWorld(), GetMesh()->GetComponentLocation() + FVector(0, 0, BaseEyeHeight + 80.0f), GetMesh()->GetComponentLocation() + FVector(0, 0, BaseEyeHeight + 80.0f) + UKismetMathLibrary::GetForwardVector(PlayerControllerPtr->GetControlRotation())*10000.0f, StaticObjectTypes, true, RaycastIgnores, EDrawDebugTrace::ForOneFrame, RaycastHit, true);
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, UKismetStringLibrary::Conv_VectorToString(RaycastHit.Location));
+	SelectedUnits[0]->MoveToDest(RaycastHit.Location);
 }
 
 void AsassPlayer::LeftClickPressed() {
@@ -207,7 +212,7 @@ void AsassPlayer::CommandUnits_Implementation(const TArray<AunitBase*> &Selected
 		if (SelectedUnits[0]) { 
 
 			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, UKismetStringLibrary::Conv_VectorToString(RaycastHit.Location));
-			SelectedUnits[0]->MoveToLocation(RaycastHit.Location);
+			SelectedUnits[0]->MoveToDest(RaycastHit.Location);
 			
 
 			//UNavigationSystem::SimpleMoveToLocation(temp, RaycastHit.Location);
@@ -502,7 +507,6 @@ void AsassPlayer::ServerSpawnBuilding_Implementation(AsassPlayerController* Play
 				if (NewUnit != nullptr) { 
 					NewUnit->UpdateMaterial(SassPlayerState->PlayerColor); 
 					NewUnit->SpawnDefaultController();
-
 				}
 				//try building
 				else {

@@ -35,10 +35,10 @@ public:
 	virtual void ColorUnitDecal_Implementation(FLinearColor PlayerColor);
 	virtual bool ColorUnitDecal_Validate(FLinearColor PlayerColor);
 
-	UFUNCTION(Reliable, NetMulticast, WithValidation)
-		void MoveToLocation(FVector Destination);
-	virtual void MoveToLocation_Implementation(FVector Destination);
-	virtual bool MoveToLocation_Validate(FVector Destination);
+	UFUNCTION(Reliable, Server, WithValidation)
+		void MoveToDest(FVector Destination);
+	virtual void MoveToDest_Implementation(FVector Destination);
+	virtual bool MoveToDest_Validate(FVector Destination);
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
 	UDecalComponent* SelectionCircleDecal;
