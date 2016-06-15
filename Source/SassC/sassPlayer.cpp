@@ -204,11 +204,16 @@ void AsassPlayer::CommandUnits_Implementation(const TArray<AunitBase*> &Selected
 		const TArray<AActor*> RaycastIgnores;
 
 		UKismetSystemLibrary::LineTraceSingleForObjects(GetWorld(), GetMesh()->GetComponentLocation() + FVector(0, 0, BaseEyeHeight + 80.0f), GetMesh()->GetComponentLocation() + FVector(0, 0, BaseEyeHeight + 80.0f) + UKismetMathLibrary::GetForwardVector(PlayerControllerPtr->GetControlRotation())*10000.0f, StaticObjectTypes, true, RaycastIgnores, EDrawDebugTrace::ForOneFrame, RaycastHit, true);
-		if (AunitController* temp = Cast<AunitController>(Cast<AunitBase>(SelectedUnits[0])->GetController())) { 
+		if (SelectedUnits[0]) { 
 
 			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, UKismetStringLibrary::Conv_VectorToString(RaycastHit.Location));
+			SelectedUnits[0]->MoveToLocation(RaycastHit.Location);
+			
 
-			EPathFollowingRequestResult::Type worked = temp->MoveToLocation(RaycastHit.Location, -1, false, false, false, true, 0, false);
+			//UNavigationSystem::SimpleMoveToLocation(temp, RaycastHit.Location);
+
+			/*
+			//EPathFollowingRequestResult::Type worked = temp->MoveToLocation(RaycastHit.Location, -1, false, false, false, true, 0, false);
 			if (worked == EPathFollowingRequestResult::Failed) {
 				GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Cyan, "SassPlayer CommandUnits Dispatch Failed");
 			}
@@ -218,6 +223,7 @@ void AsassPlayer::CommandUnits_Implementation(const TArray<AunitBase*> &Selected
 			else if (worked == EPathFollowingRequestResult::RequestSuccessful) {
 				GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Cyan, "SassPlayer CommandUnits Dispatch success");
 			}
+			*/
 		}
 		else { GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Cyan, "SassPlayer CommandUnits Cast Failed"); }
 	}

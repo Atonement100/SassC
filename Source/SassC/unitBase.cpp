@@ -69,6 +69,18 @@ void AunitBase::SetupPlayerInputComponent(class UInputComponent* InputComponent)
 
 }
 
+void AunitBase::MoveToLocation_Implementation(FVector Destination) {
+	FVector Direction = Destination - GetActorLocation();
+	for (int i = 0; i < 100000; i++) {
+		AddMovementInput(Direction, 1.0f);
+	}
+}
+
+bool AunitBase::MoveToLocation_Validate(FVector Destination) {
+	return true;
+}
+
+
 void AunitBase::UpdateMaterial(FLinearColor PlayerColor)
 {
 	ColorUnitDecal(PlayerColor);
