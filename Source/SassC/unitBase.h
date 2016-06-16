@@ -35,10 +35,17 @@ public:
 	virtual void ColorUnitDecal_Implementation(FLinearColor PlayerColor);
 	virtual bool ColorUnitDecal_Validate(FLinearColor PlayerColor);
 
+	/*Move selected units towards a world or enemy building destination*/
 	UFUNCTION(Reliable, Server, WithValidation)
-		void MoveToDest(FVector Destination);
+	void MoveToDest(FVector Destination);
 	virtual void MoveToDest_Implementation(FVector Destination);
 	virtual bool MoveToDest_Validate(FVector Destination);
+
+	/*Move selected units towards an enemy unit*/
+	UFUNCTION(Reliable, Server, WithValidation)
+	void MoveToUnit(AActor* UnitToAttack);
+	virtual void MoveToUnit_Implementation(AActor* UnitToAttack);
+	virtual bool MoveToUnit_Validate(AActor* UnitToAttack);
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
 	UDecalComponent* SelectionCircleDecal;
@@ -65,7 +72,11 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
 	FVector OrderDirection;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
-	bool ProcessingOrder;
+	AActor* ActorToFollow;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
+	bool ProcessingMoveToWorldOrder;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
+	bool ProcessingMoveToUnitOrder;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
 	float MaxTimeToMove;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")

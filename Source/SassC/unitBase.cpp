@@ -62,12 +62,22 @@ void AunitBase::BeginPlay()
 void AunitBase::Tick( float DeltaTime )
 {
 	Super::Tick( DeltaTime );
-	if (ProcessingOrder) {
+	if (ProcessingMoveToWorldOrder) {
 		AddMovementInput(OrderDirection, 1.0f);
 		TimeSinceOrdered += DeltaTime;
 		if ((OrderDestination - GetActorLocation()).Size2D() < 5.0f || TimeSinceOrdered > MaxTimeToMove){
 			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Cyan, "UnitBase Movement Complete");
-			ProcessingOrder = false;
+			ProcessingMoveToWorldOrder = false;
+		}
+	}
+	else if (ProcessingMoveToUnitOrder) {
+		if (ActorToFollow) {
+			OrderDirection = ActorToFollow->GetActorLocation() - GetActorLocation();
+			AddMovementInput(OrderDirection, 1.0f);
+		}
+		else {
+			ProcessingMoveToUnitOrder = false;
+			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Silver, "UnitBase Unit Attack Chase Complete");
 		}
 	}
 }
@@ -84,10 +94,23 @@ void AunitBase::MoveToDest_Implementation(FVector Destination) {
 	TimeSinceOrdered = 0;
 	MaxTimeToMove = OrderDirection.Size() / GetMovementComponent()->GetMaxSpeed();
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Cyan, "UnitBase MaxTimeToMove = " + UKismetStringLibrary::Conv_FloatToString(MaxTimeToMove));
-	ProcessingOrder = true;
+	ProcessingMoveToWorldOrder = true;
+	ProcessingMoveToUnitOrder = false;
 }
 
 bool AunitBase::MoveToDest_Validate(FVector Destination) {
+	return true;
+}
+
+void AunitBase::MoveToUnit_Implementation(AActor* UnitToAttack)
+{
+	ActorToFollow = UnitToAttack;
+	ProcessingMoveToUnitOrder = true;
+	ProcessingMoveToWorldOrder = false;
+}
+
+bool AunitBase::MoveToUnit_Validate(AActor* UnitToAttack)
+{
 	return true;
 }
 
