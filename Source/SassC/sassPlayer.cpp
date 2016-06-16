@@ -191,50 +191,25 @@ void AsassPlayer::LeftClickReleased() {
 }
 
 void AsassPlayer::RightClickPressed() {
-	CommandUnits(SelectedUnits);
+	FHitResult RaycastHit;
+	const TArray<AActor*> RaycastIgnores;
+
+	UKismetSystemLibrary::LineTraceSingleForObjects(GetWorld(), GetMesh()->GetComponentLocation() + FVector(0, 0, BaseEyeHeight + 80.0f), GetMesh()->GetComponentLocation() + FVector(0, 0, BaseEyeHeight + 80.0f) + UKismetMathLibrary::GetForwardVector(PlayerControllerPtr->GetControlRotation())*10000.0f, StaticObjectTypes, true, RaycastIgnores, EDrawDebugTrace::ForOneFrame, RaycastHit, true);
+
+	CommandUnits(SelectedUnits, RaycastHit);
 }
 
 void AsassPlayer::RightClickReleased() {
 
 }
 
-void AsassPlayer::CommandUnits_Implementation(const TArray<AunitBase*> &SelectedUnits) {
-	if (SelectedUnits.Num() > 0) {
-		FHitResult RaycastHit;
-		const TArray<AActor*> RaycastIgnores;
-
-		UKismetSystemLibrary::LineTraceSingleForObjects(GetWorld(), GetMesh()->GetComponentLocation() + FVector(0, 0, BaseEyeHeight + 80.0f), GetMesh()->GetComponentLocation() + FVector(0, 0, BaseEyeHeight + 80.0f) + UKismetMathLibrary::GetForwardVector(PlayerControllerPtr->GetControlRotation())*10000.0f, StaticObjectTypes, true, RaycastIgnores, EDrawDebugTrace::ForOneFrame, RaycastHit, true);
-		
-		for (AunitBase* Unit : SelectedUnits) {
-			Unit->MoveToDest(RaycastHit.Location);
-		}
-		/*if (SelectedUnits[0]) { 
-
-			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, UKismetStringLibrary::Conv_VectorToString(RaycastHit.Location));
-			SelectedUnits[0]->MoveToDest(RaycastHit.Location);
-			
-
-			//UNavigationSystem::SimpleMoveToLocation(temp, RaycastHit.Location);
-
-			/*
-			//EPathFollowingRequestResult::Type worked = temp->MoveToLocation(RaycastHit.Location, -1, false, false, false, true, 0, false);
-			if (worked == EPathFollowingRequestResult::Failed) {
-				GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Cyan, "SassPlayer CommandUnits Dispatch Failed");
-			}
-			else if (worked == EPathFollowingRequestResult::AlreadyAtGoal) {
-				GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Cyan, "SassPlayer CommandUnits Already at goal");
-			}
-			else if (worked == EPathFollowingRequestResult::RequestSuccessful) {
-				GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Cyan, "SassPlayer CommandUnits Dispatch success");
-			}
-			*/
-		//}
-		//else { GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Cyan, "SassPlayer CommandUnits Cast Failed"); }
-		
-	}
+void AsassPlayer::CommandUnits_Implementation(const TArray<AunitBase*> &SelectedUnits, FHitResult RaycastHit) {
+	for (AunitBase* Unit : SelectedUnits) {
+		Unit->MoveToDest(RaycastHit.Location);
+	}		
 }
 
-bool AsassPlayer::CommandUnits_Validate(const TArray<AunitBase*> &SelectedUnits) {
+bool AsassPlayer::CommandUnits_Validate(const TArray<AunitBase*> &SelectedUnits, FHitResult RaycastHit) {
 	return true;
 }
 

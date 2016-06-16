@@ -61,9 +61,9 @@ public:
 
 	/*Dispatches units on server*/
 	UFUNCTION(Reliable, Server, WithValidation)
-	void CommandUnits(const TArray<AunitBase*> &SelectedUnits);
-	virtual void CommandUnits_Implementation(const TArray<AunitBase*> &SelectedUnits);
-	virtual bool CommandUnits_Validate(const TArray<AunitBase*> &SelectedUnits);
+	void CommandUnits(const TArray<AunitBase*> &SelectedUnits, FHitResult RaycastHit);
+	virtual void CommandUnits_Implementation(const TArray<AunitBase*> &SelectedUnits, FHitResult RaycastHit);
+	virtual bool CommandUnits_Validate(const TArray<AunitBase*> &SelectedUnits, FHitResult RaycastHit);
 
 	/*Registers sprinting movement with server*/
 	UFUNCTION(Reliable, Server, WithValidation)

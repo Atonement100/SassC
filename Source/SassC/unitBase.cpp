@@ -86,33 +86,6 @@ void AunitBase::MoveToDest_Implementation(FVector Destination) {
 	MaxTimeToMove = OrderDirection.Size() / GetMovementComponent()->GetMaxSpeed();
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Cyan, "UnitBase MaxTimeToMove = " + UKismetStringLibrary::Conv_FloatToString(MaxTimeToMove));
 	ProcessingOrder = true;
-	
-	
-	/*
-	if (AAIController* Controller = Cast<AAIController>(GetController())) {
-			
-		EPathFollowingRequestResult::Type PathingResult = Controller->MoveToLocation(Destination, 2.0f, true, false, true, true, 0, true);
-		if (PathingResult == EPathFollowingRequestResult::Failed) {
-			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Cyan, "UnitBase MoveToLocation Dispatch Failed");
-		}
-		else if (PathingResult == EPathFollowingRequestResult::AlreadyAtGoal) {
-			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Cyan, "UnitBase MoveToLocation Already at goal");
-		}
-		else if (PathingResult == EPathFollowingRequestResult::RequestSuccessful) {
-			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Cyan, "UnitBase MoveToLocation Dispatch success");
-		}
-
-	}
-	else {
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "UnitBase MoveToLocation: Cast to aicontroller failed");
-	}
-	*/
-	/*
-	FVector Direction = Destination - GetActorLocation();
-	for (int i = 0; i < 100000; i++) {
-		AddMovementInput(Direction, 1.0f);
-	}
-	*/
 }
 
 bool AunitBase::MoveToDest_Validate(FVector Destination) {
