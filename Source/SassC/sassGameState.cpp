@@ -9,7 +9,7 @@
 #include "sassGameState.h"
 
 AsassGameState::AsassGameState() {
-
+	
 }
 
 void AsassGameState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty> &OutLifetimeProps) const
@@ -19,6 +19,7 @@ void AsassGameState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty> &OutLi
 	DOREPLIFETIME(AsassGameState, WarmUpTime);
 	DOREPLIFETIME(AsassGameState, WinnerDeclared);
 	DOREPLIFETIME(AsassGameState, PreGameActive);
+	DOREPLIFETIME(AsassGameState, GoldGoal);
 
 }
 

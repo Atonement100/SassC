@@ -25,6 +25,8 @@ public:
 		bool WinnerDeclared = false;
 	UPROPERTY(Replicated, BlueprintReadWrite)
 		bool PreGameActive = true;
+	UPROPERTY(Replicated, BlueprintReadWrite)
+		float GoldGoal = 800.0f;
 
 
 	UFUNCTION(Reliable, NetMulticast, WithValidation)
