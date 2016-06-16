@@ -45,6 +45,8 @@ Binaries/*
 
 #Temp and logs
 enc_temp_folder/*
+Saved/Logs/*.log
+Saved/Config/Windows/EditorPerProjectUserSettings.ini
 
 # StarterContent
 Content/StarterContent/*
