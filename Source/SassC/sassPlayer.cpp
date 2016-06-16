@@ -194,22 +194,36 @@ void AsassPlayer::RightClickPressed() {
 	FHitResult RaycastHit;
 	const TArray<AActor*> RaycastIgnores;
 
-	UKismetSystemLibrary::LineTraceSingleForObjects(GetWorld(), GetMesh()->GetComponentLocation() + FVector(0, 0, BaseEyeHeight + 80.0f), GetMesh()->GetComponentLocation() + FVector(0, 0, BaseEyeHeight + 80.0f) + UKismetMathLibrary::GetForwardVector(PlayerControllerPtr->GetControlRotation())*10000.0f, StaticObjectTypes, true, RaycastIgnores, EDrawDebugTrace::ForOneFrame, RaycastHit, true);
-
-	CommandUnits(SelectedUnits, RaycastHit);
+	UKismetSystemLibrary::LineTraceSingleForObjects(GetWorld(), GetMesh()->GetComponentLocation() + FVector(0, 0, BaseEyeHeight + 80.0f), GetMesh()->GetComponentLocation() + FVector(0, 0, BaseEyeHeight + 80.0f) + UKismetMathLibrary::GetForwardVector(PlayerControllerPtr->GetControlRotation())*10000.0f, DynamicAndStaticObjectTypes, true, RaycastIgnores, EDrawDebugTrace::ForOneFrame, RaycastHit, true);
+	AActor* HitActor = RaycastHit.GetActor();
+	ETypeOfOrder OrderType = ETypeOfOrder::ORDER_WORLD;
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Magenta, HitActor->GetName());
+	if (HitActor->IsA(AunitBase::StaticClass()) || HitActor->IsA(AselectionSphere::StaticClass())) { OrderType = ETypeOfOrder::ORDER_UNIT; }
+	if (HitActor->IsA(AbuildingBase::StaticClass())) { OrderType = ETypeOfOrder::ORDER_BUILDING; }
+	CommandUnits(SelectedUnits, RaycastHit, OrderType);
 }
 
 void AsassPlayer::RightClickReleased() {
 
 }
 
-void AsassPlayer::CommandUnits_Implementation(const TArray<AunitBase*> &SelectedUnits, FHitResult RaycastHit) {
-	for (AunitBase* Unit : SelectedUnits) {
-		Unit->MoveToDest(RaycastHit.Location);
-	}		
+void AsassPlayer::CommandUnits_Implementation(const TArray<AunitBase*> &SelectedUnits, FHitResult RaycastHit, ETypeOfOrder OrderType) {
+	switch (OrderType) {
+	case ETypeOfOrder::ORDER_UNIT:
+		GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Emerald, "SassPlayer CommandUnits: Attack a unit");
+		break;
+	case ETypeOfOrder::ORDER_BUILDING:
+		GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Emerald, "SassPlayer CommandUnits: Attack a building");
+		break;
+	case ETypeOfOrder::ORDER_WORLD:
+	default:
+		for (AunitBase* Unit : SelectedUnits) { Unit->MoveToDest(RaycastHit.Location); }
+		break;
+	}
+
 }
 
-bool AsassPlayer::CommandUnits_Validate(const TArray<AunitBase*> &SelectedUnits, FHitResult RaycastHit) {
+bool AsassPlayer::CommandUnits_Validate(const TArray<AunitBase*> &SelectedUnits, FHitResult RaycastHit, ETypeOfOrder OrderType) {
 	return true;
 }
 

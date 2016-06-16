@@ -14,6 +14,13 @@
 class AunitBase;
 class AsassPlayerController;
 
+UENUM()
+enum class ETypeOfOrder : uint8 {
+	ORDER_UNIT			UMETA(DisplayName = "Unit"),
+	ORDER_BUILDING		UMETA(DisplayName = "Building"),
+	ORDER_WORLD			UMETA(DisplayName = "World")
+};
+
 UCLASS()
 class SASSC_API AsassPlayer : public ACharacter
 {
@@ -61,9 +68,9 @@ public:
 
 	/*Dispatches units on server*/
 	UFUNCTION(Reliable, Server, WithValidation)
-	void CommandUnits(const TArray<AunitBase*> &SelectedUnits, FHitResult RaycastHit);
-	virtual void CommandUnits_Implementation(const TArray<AunitBase*> &SelectedUnits, FHitResult RaycastHit);
-	virtual bool CommandUnits_Validate(const TArray<AunitBase*> &SelectedUnits, FHitResult RaycastHit);
+	void CommandUnits(const TArray<AunitBase*> &SelectedUnits, FHitResult RaycastHit, ETypeOfOrder OrderType);
+	virtual void CommandUnits_Implementation(const TArray<AunitBase*> &SelectedUnits, FHitResult RaycastHit, ETypeOfOrder OrderType);
+	virtual bool CommandUnits_Validate(const TArray<AunitBase*> &SelectedUnits, FHitResult RaycastHit, ETypeOfOrder OrderType);
 
 	/*Registers sprinting movement with server*/
 	UFUNCTION(Reliable, Server, WithValidation)

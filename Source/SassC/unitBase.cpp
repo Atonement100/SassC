@@ -57,7 +57,6 @@ void AunitBase::OnOverlapEnd(class AActor* OtherActor, class UPrimitiveComponent
 void AunitBase::BeginPlay()
 {
 	Super::BeginPlay();
-	
 }
 
 void AunitBase::Tick( float DeltaTime )
