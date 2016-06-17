@@ -198,7 +198,7 @@ void AsassPlayer::RightClickPressed() {
 	AActor* HitActor = RaycastHit.GetActor();
 	ETypeOfOrder OrderType = ETypeOfOrder::ORDER_WORLD;
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Magenta, HitActor->GetName());
-	if (HitActor->IsA(AunitBase::StaticClass()) || HitActor->IsA(AselectionSphere::StaticClass())) { OrderType = ETypeOfOrder::ORDER_UNIT; }
+	if ((HitActor->IsA(AunitBase::StaticClass()) || HitActor->IsA(AselectionSphere::StaticClass())) && !Cast<AsassPlayerState>(PlayerState)->ControlledBuildings.Contains(HitActor)) { OrderType = ETypeOfOrder::ORDER_UNIT; }
 	if (HitActor->IsA(AbuildingBase::StaticClass())) { OrderType = ETypeOfOrder::ORDER_BUILDING; }
 	CommandUnits(SelectedUnits, RaycastHit, OrderType);
 }
