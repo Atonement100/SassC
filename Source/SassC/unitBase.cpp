@@ -136,8 +136,13 @@ bool AunitBase::ColorUnitDecal_Validate(FLinearColor PlayerColor) {
 
 void AunitBase::SetDecalVisibility(UDecalComponent* DecalRef, bool isVisible) {
 	//@TODO:
+	//Update calls of this function to only take in bool isVisible
+	if (SelectionCircleDecal) SelectionCircleDecal->SetVisibility(isVisible);
+
+
+	//@TODO:
 	//change this function to only intake bool and automatically get self underunitdecal reference
 	//propagate this change to remaining calls of the function
-	if (DecalRef != nullptr) DecalRef->SetVisibility(isVisible);
-	else { GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Orange, "decal doesn't exist (visibility)"); }
+	//if (DecalRef != nullptr) DecalRef->SetVisibility(isVisible);
+	//else { GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Orange, "decal doesn't exist (visibility)"); }
 }
