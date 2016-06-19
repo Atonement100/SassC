@@ -25,7 +25,7 @@ public:
 	virtual void OnOverlapEnd(AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 
 	UFUNCTION(BlueprintCallable, Category = "Spawnables Functions")
-	virtual void SetDecalVisibility(UDecalComponent* DecalRef, bool isVisible);
+	virtual void SetDecalVisibility(bool isVisible);
 
 	UFUNCTION(BlueprintCallable, Category = "Spawnables Functions")
 	virtual void UpdateMaterial(FLinearColor PlayerColor);

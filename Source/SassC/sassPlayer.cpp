@@ -436,7 +436,7 @@ void AsassPlayer::TurnOffAllSelectionCircles()
 	if (PlayerState == nullptr) { return; }
 	for (AActor* UnitIt : (((AsassPlayerState*)PlayerState)->ControlledBuildings)) {
 		AunitBase* Unit = Cast<AunitBase>(UnitIt);
-		if (Unit != nullptr) { Unit->SetDecalVisibility(Unit->SelectionCircleDecal, false); }
+		if (Unit != nullptr) { Unit->SetDecalVisibility(false); }
 	}
 }
 
@@ -454,7 +454,7 @@ void AsassPlayer::CreateSelectedUnitsArray(TArray<FHitResult> Hits)
 		//to check for Unit->owner = calling player... much more efficient.
 		if (Unit != nullptr && TempPlayerState->ControlledBuildings.Contains(Unit)) {
 			SelectedUnits.Add(Unit);
-			Unit->SetDecalVisibility(Unit->SelectionCircleDecal, true);
+			Unit->SetDecalVisibility(true);
 		}
 	}
 
