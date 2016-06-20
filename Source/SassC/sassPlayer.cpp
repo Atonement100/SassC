@@ -181,7 +181,7 @@ void AsassPlayer::LeftClickPressed() {
 		PlayerControllerPtr->GetHitResultUnderCursorByChannel(UEngineTypes::ConvertToTraceType(ECC_Visibility), true, Hit); // Assign Hit
 		AbuildingBase* LocalBuildingRef = Cast<AbuildingBase>(LocalObjectSpawn);
 		if (LocalBuildingRef != nullptr) { LocationsToCheck = LocalBuildingRef->CornerLocations; }
-		//may need to do this for unit as well
+		//may need to do this for unit as well (namely scallywag, ballista, catapult)
 
 		ServerSpawnBuilding(Cast<AsassPlayerController>(PlayerControllerPtr), SelectedSpawnableClass, Hit, FVector::ZeroVector, LocationsToCheck);
 	}
@@ -223,7 +223,6 @@ void AsassPlayer::CommandUnits_Implementation(const TArray<AunitBase*> &Selected
 		for (AunitBase* Unit : SelectedUnits) { Unit->MoveToDest(RaycastHit.Location); }
 		break;
 	}
-
 }
 
 bool AsassPlayer::CommandUnits_Validate(const TArray<AunitBase*> &SelectedUnits, FHitResult RaycastHit, ETypeOfOrder OrderType) {
@@ -279,7 +278,6 @@ void AsassPlayer::CreateGameHUD() {
 UUserWidget* AsassPlayer::GetGameWidget() {
 	return GameWidget;
 }
-
 #pragma endregion
 
 void AsassPlayer::GetAllPlayerColors() {
@@ -444,12 +442,12 @@ void AsassPlayer::CreateSelectedUnitsArray(TArray<FHitResult> Hits)
 {
 	SelectedUnits.Empty();
 	AsassPlayerState* TempPlayerState = ((AsassPlayerState*)PlayerState);
-
+	
 	if (TempPlayerState == nullptr) { return; } //Shouldn't happen
 
 	for (FHitResult Hit : Hits) {
 		AunitBase* Unit = Cast<AunitBase>(Hit.GetActor());
-		//TODO:
+		//@TODO:
 		//When ownership of pawns is set up, change the second half of this statement
 		//to check for Unit->owner = calling player... much more efficient.
 		if (Unit != nullptr && TempPlayerState->ControlledBuildings.Contains(Unit)) {
@@ -493,7 +491,7 @@ void AsassPlayer::ServerSpawnBuilding_Implementation(AsassPlayerController* Play
 					NewSpawn->SetOwner(PlayerController);
 				}
 
-				//@TODO: Should find a way to consolidate these... hard with units being ACharacter, buildings being AActor to give them a common parent
+				//@TODO: Should find a way to consolidate these... hard with units being ACharacter, buildings being AActor to give them a common unit
 				//try unit (more likely)
 				AunitBase* NewUnit = Cast<AunitBase>(NewSpawn);
 				if (NewUnit != nullptr) { 
@@ -521,8 +519,6 @@ void AsassPlayer::ServerSpawnBuilding_Implementation(AsassPlayerController* Play
 		//Bad Spawn
 		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "SassPlayer ServerSpawnBuilding: Could not spawn because location uneven");
 	}
-	
-	//GetWorld()->SpawnActor(SelectedSpawnableClass, &Location, &Rotation, SpawnParams);
 }
 
 bool AsassPlayer::ServerSpawnBuilding_Validate(AsassPlayerController* PlayerController, TSubclassOf<AActor> ActorToSpawn, FHitResult Hit, const FVector &HalfHeight, const TArray<FVector> &Midpoints)
@@ -533,6 +529,7 @@ bool AsassPlayer::ServerSpawnBuilding_Validate(AsassPlayerController* PlayerCont
 void AsassPlayer::ColorPlayer_Implementation(FLinearColor PlayerColor)
 {
 	if (DynamicPlayerMaterial == nullptr || GetMesh() == nullptr) return;
+	GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Blue, "ColorPlayer should set");
 	DynamicPlayerMaterial->SetVectorParameterValue(ColorParameterName, PlayerColor);
 	GetMesh()->SetMaterial(0, DynamicPlayerMaterial);
 }

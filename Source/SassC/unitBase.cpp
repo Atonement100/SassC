@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Fill out your copyright notic in the Description page of Project Settings.
 
 #include "SassC.h"
 #include "sassPlayer.h"
@@ -85,7 +85,6 @@ void AunitBase::Tick( float DeltaTime )
 void AunitBase::SetupPlayerInputComponent(class UInputComponent* InputComponent)
 {
 	Super::SetupPlayerInputComponent(InputComponent);
-
 }
 
 void AunitBase::MoveToDest_Implementation(FVector Destination) {

@@ -34,7 +34,6 @@ void AsassGameState::Tick(float DeltaSeconds) {
 	}
 }
 
-
 void AsassGameState::GameStart_Implementation() {
 	
 	AsassPlayer* Player = Cast<AsassPlayer>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));

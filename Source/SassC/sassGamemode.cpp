@@ -3,6 +3,7 @@
 #include "SassC.h"
 #include "sassPlayerController.h"
 #include "sassPlayerState.h"
+#include "sassGameState.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "sassGamemode.h"
 
@@ -14,6 +15,10 @@ void AsassGamemode::PostLogin(APlayerController* NewPlayer) {
 	Super::PostLogin(NewPlayer);
 	AsassPlayerState* PlayerState = Cast<AsassPlayerState>(NewPlayer->PlayerState);
 	PlayerState->PlayerColor = ChoosePlayerColor();
+	AsassGameState* SassGameStateRef = Cast<AsassGameState>(GameState);
+	if (!SassGameStateRef->PreGameActive) {
+		SassGameStateRef->GameStart();
+	}
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Turquoise, PlayerState->PlayerName + "login success, color set");
 }
 

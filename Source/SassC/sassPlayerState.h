@@ -22,7 +22,7 @@ public:
 	/*Currently selected units*/
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "PlayerState")
 		TArray<AunitBase*> SelectedUnits;
-	/*Playercolor that is set on server join*/
+	/*Playercolor that is set on server join, set in postlogin gamemode*/
 	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadWrite, Category = "PlayerState")
 		FLinearColor PlayerColor;
 
