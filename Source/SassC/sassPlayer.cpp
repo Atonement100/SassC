@@ -528,8 +528,11 @@ bool AsassPlayer::ServerSpawnBuilding_Validate(AsassPlayerController* PlayerCont
 
 void AsassPlayer::ColorPlayer_Implementation(FLinearColor PlayerColor)
 {
-	if (DynamicPlayerMaterial == nullptr || GetMesh() == nullptr) return;
-	GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Blue, "ColorPlayer should set");
+	if (DynamicPlayerMaterial == nullptr || GetMesh() == nullptr) {
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, "PlayerMaterial or Mesh bad");
+		return;
+	}
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, "ColorPlayer should set");
 	DynamicPlayerMaterial->SetVectorParameterValue(ColorParameterName, PlayerColor);
 	GetMesh()->SetMaterial(0, DynamicPlayerMaterial);
 }

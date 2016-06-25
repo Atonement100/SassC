@@ -20,7 +20,7 @@ public:
 	UPROPERTY(Replicated, BlueprintReadWrite)
 		float TimeKeeper = 0.0f;
 	UPROPERTY(Replicated, BlueprintReadWrite)
-		float WarmUpTime = 10.0f;
+		float WarmUpTime = 2.0f;
 	UPROPERTY(Replicated, BlueprintReadWrite)
 		bool WinnerDeclared = false;
 	UPROPERTY(Replicated, BlueprintReadWrite)

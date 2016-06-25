@@ -19,7 +19,7 @@ void AsassGamemode::PostLogin(APlayerController* NewPlayer) {
 	if (!SassGameStateRef->PreGameActive) {
 		SassGameStateRef->GameStart();
 	}
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Turquoise, PlayerState->PlayerName + "login success, color set");
+	//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Turquoise, PlayerState->PlayerName + "login success, color set");
 }
 
 FLinearColor AsassGamemode::ChoosePlayerColor()
