@@ -11,6 +11,7 @@ AsassGamemode::AsassGamemode() {
 
 }
 
+/*Here, we want to assign players their color, and draw their HUD to catch them up if they are late*/
 void AsassGamemode::PostLogin(APlayerController* NewPlayer) {
 	Super::PostLogin(NewPlayer);
 	AsassPlayerState* PlayerState = Cast<AsassPlayerState>(NewPlayer->PlayerState);

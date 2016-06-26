@@ -265,7 +265,7 @@ void AsassPlayer::RemoveAllWidgets() {
 }
 
 void AsassPlayer::CreateGameHUD() {
-	if (PlayerControllerPtr->IsLocalController() && GameWidget == nullptr) {
+	if (PlayerControllerPtr->IsLocalController()) {
 		RemoveAllWidgets();
 		GameWidget = CreateWidget<UUserWidget>(PlayerControllerPtr, GameWidgetClass);
 		if (GameWidget != nullptr) GameWidget->AddToViewport();
