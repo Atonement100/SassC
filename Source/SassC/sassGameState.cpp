@@ -35,15 +35,32 @@ void AsassGameState::Tick(float DeltaSeconds) {
 }
 
 void AsassGameState::GameStart_Implementation() {
-	
 	AsassPlayer* Player = Cast<AsassPlayer>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
 	Player->CreateGameHUD();
+
 	//Player->GetGameWidget(); Cast to SassilizationHUD_BP; Player->SetSassHUDWidget()
-	for (TActorIterator<AsassPlayer> Player(GetWorld()); Player; ++Player) {
-		Player->ColorPlayer((Cast<AsassPlayerState>(Player->PlayerState))->PlayerColor);
+	for (TActorIterator<AsassPlayer> PlayerItr(GetWorld()); PlayerItr; ++PlayerItr) {
+		PlayerItr->ColorPlayer((Cast<AsassPlayerState>(PlayerItr->PlayerState))->PlayerColor);
 	}
 }
 
 bool AsassGameState::GameStart_Validate() {
+	return true;
+}
+
+void AsassGameState::LateStart_Implementation(APlayerController* NewPlayer)
+{
+	AsassPlayer* Player = Cast<AsassPlayer>(NewPlayer->GetPawn());
+	if (Player) {
+		Player->CreateGameHUD();
+		for (TActorIterator<AsassPlayer> PlayerItr(GetWorld()); PlayerItr; ++PlayerItr) {
+			PlayerItr->ColorPlayer((Cast<AsassPlayerState>(PlayerItr->PlayerState))->PlayerColor);	
+			GEngine->AddOnScreenDebugMessage(-1, 4.0f, FColor::Emerald, "Late Start Color");
+		}
+	}
+}
+
+bool AsassGameState::LateStart_Validate(APlayerController* NewPlayer)
+{
 	return true;
 }

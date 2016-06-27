@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "SassC.h"
+#include "sassPlayer.h"
 #include "sassPlayerController.h"
 #include "sassPlayerState.h"
 #include "sassGameState.h"
@@ -19,8 +20,10 @@ void AsassGamemode::PostLogin(APlayerController* NewPlayer) {
 	AsassGameState* SassGameStateRef = Cast<AsassGameState>(GameState);
 	if (!SassGameStateRef->PreGameActive) {
 		SassGameStateRef->GameStart();
+		Cast<AsassPlayer>(NewPlayer->GetPawn())->LateStart(NewPlayer);
+		//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Turquoise, GetDebugName(NewPlayer) + " gamestart called for player");
 	}
-	//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Turquoise, PlayerState->PlayerName + "login success, color set");
+
 }
 
 FLinearColor AsassGamemode::ChoosePlayerColor()

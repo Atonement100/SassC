@@ -19,13 +19,13 @@ public:
 	
 	UPROPERTY(Replicated, BlueprintReadWrite)
 		float TimeKeeper = 0.0f;
-	UPROPERTY(Replicated, BlueprintReadWrite)
-		float WarmUpTime = 1.0f;
+	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite)
+		float WarmUpTime = 10.0f;
 	UPROPERTY(Replicated, BlueprintReadWrite)
 		bool WinnerDeclared = false;
 	UPROPERTY(Replicated, BlueprintReadWrite)
 		bool PreGameActive = true;
-	UPROPERTY(Replicated, BlueprintReadWrite)
+	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite)
 		float GoldGoal = 800.0f;
 
 
@@ -33,6 +33,12 @@ public:
 	void GameStart();
 	virtual void GameStart_Implementation();
 	virtual bool GameStart_Validate();
+
+	UFUNCTION(Reliable, Client, WithValidation)
+	void LateStart(APlayerController* NewPlayer);
+	virtual void LateStart_Implementation(APlayerController* NewPlayer);
+	virtual bool LateStart_Validate(APlayerController* NewPlayer);
+
 	
 private:
 	

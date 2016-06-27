@@ -567,6 +567,18 @@ bool AsassPlayer::CheckBldgCorners(TArray<FVector> ExtraLocs, FVector Center)
 	return false;
 }
 
+void AsassPlayer::LateStart_Implementation(APlayerController* NewPlayer)
+{
+
+}
+
+bool AsassPlayer::LateStart_Validate(APlayerController* NewPlayer)
+{
+	return true;
+}
+
+
+
 #pragma region Blueprint Implementables
 void AsassPlayer::SetSassHUDRef_Implementation()
 {

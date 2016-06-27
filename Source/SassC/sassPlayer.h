@@ -96,6 +96,11 @@ public:
 	virtual void ColorPlayer_Implementation(FLinearColor PlayerColor);
 	virtual bool ColorPlayer_Validate(FLinearColor PlayerColor);
 
+	UFUNCTION(Reliable, Client, WithValidation)
+	void LateStart(APlayerController* NewPlayer);
+	virtual void LateStart_Implementation(APlayerController* NewPlayer);
+	virtual bool LateStart_Validate(APlayerController* NewPlayer);
+
 	/*Handles toggling of pause menu*/
 	UFUNCTION(BlueprintCallable, Category = "UI")
 	void ChangePauseWidget(TSubclassOf<UUserWidget> NewWidgetClass);
