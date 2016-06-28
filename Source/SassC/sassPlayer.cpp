@@ -32,7 +32,7 @@ void AsassPlayer::BeginPlay()
 	PlayerControllerPtr = UGameplayStatics::GetPlayerController(this, 0);
 	CleanupHUD();
 	if ((Cast<AsassGameState>(GetWorld()->GetGameState()))->PreGameActive) { CreatePregameHUD(); }
-	else { CreateGameHUD(); }
+	//else { CreateGameHUD(); }
 	GetWorld();
 }
 
