@@ -35,6 +35,9 @@ void AsassGameState::Tick(float DeltaSeconds) {
 }
 
 void AsassGameState::GameStart_Implementation() {
+	GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Turquoise, "Gamestart Called");
+
+
 	AsassPlayer* Player = Cast<AsassPlayer>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
 	Player->CreateGameHUD();
 
@@ -48,19 +51,12 @@ bool AsassGameState::GameStart_Validate() {
 	return true;
 }
 
-void AsassGameState::LateStart_Implementation(APlayerController* NewPlayer)
+void AsassGameState::LateStart_Implementation()
 {
-	AsassPlayer* Player = Cast<AsassPlayer>(NewPlayer->GetPawn());
-	if (Player) {
-		Player->CreateGameHUD();
-		for (TActorIterator<AsassPlayer> PlayerItr(GetWorld()); PlayerItr; ++PlayerItr) {
-			PlayerItr->ColorPlayer((Cast<AsassPlayerState>(PlayerItr->PlayerState))->PlayerColor);	
-			GEngine->AddOnScreenDebugMessage(-1, 4.0f, FColor::Emerald, "Late Start Color");
-		}
-	}
+	GameStart();
 }
 
-bool AsassGameState::LateStart_Validate(APlayerController* NewPlayer)
+bool AsassGameState::LateStart_Validate()
 {
 	return true;
 }

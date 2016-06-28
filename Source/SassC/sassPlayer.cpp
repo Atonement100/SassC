@@ -31,8 +31,17 @@ void AsassPlayer::BeginPlay()
 	Super::BeginPlay();
 	PlayerControllerPtr = UGameplayStatics::GetPlayerController(this, 0);
 	CleanupHUD();
-	if ((Cast<AsassGameState>(GetWorld()->GetGameState()))->PreGameActive) { CreatePregameHUD(); }
-	//else { CreateGameHUD(); }
+
+	AsassGameState* SassGameStateRef = Cast<AsassGameState>(GetWorld()->GetGameState());
+	if (!SassGameStateRef->PreGameActive) {
+		CreateGameHUD();
+		//SassGameStateRef->LateStart();
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Turquoise, " late game start called ");
+	}
+	else {
+		CreatePregameHUD();
+	}
+
 	GetWorld();
 }
 

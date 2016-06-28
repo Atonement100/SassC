@@ -17,13 +17,6 @@ void AsassGamemode::PostLogin(APlayerController* NewPlayer) {
 	Super::PostLogin(NewPlayer);
 	AsassPlayerState* PlayerState = Cast<AsassPlayerState>(NewPlayer->PlayerState);
 	PlayerState->PlayerColor = ChoosePlayerColor();
-	AsassGameState* SassGameStateRef = Cast<AsassGameState>(GameState);
-	if (!SassGameStateRef->PreGameActive) {
-		SassGameStateRef->GameStart();
-		Cast<AsassPlayer>(NewPlayer->GetPawn())->LateStart(NewPlayer);
-		//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Turquoise, GetDebugName(NewPlayer) + " gamestart called for player");
-	}
-
 }
 
 FLinearColor AsassGamemode::ChoosePlayerColor()

@@ -34,10 +34,10 @@ public:
 	virtual void GameStart_Implementation();
 	virtual bool GameStart_Validate();
 
-	UFUNCTION(Reliable, Client, WithValidation)
-	void LateStart(APlayerController* NewPlayer);
-	virtual void LateStart_Implementation(APlayerController* NewPlayer);
-	virtual bool LateStart_Validate(APlayerController* NewPlayer);
+	UFUNCTION(Reliable, Server, WithValidation)
+	void LateStart();
+	virtual void LateStart_Implementation();
+	virtual bool LateStart_Validate();
 
 	
 private:
