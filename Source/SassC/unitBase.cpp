@@ -25,6 +25,7 @@ AunitBase::AunitBase()
 	DetectionSphere->AttachTo(RootComponent);
 
 	AggroSphere = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Aggro Sphere"));
+	AggroSphere->ComponentTags.Add(NoAggroTag);
 	AggroSphere->AttachTo(RootComponent);
 
 	TextRender = CreateDefaultSubobject<UTextRenderComponent>(TEXT("Text Render"));
@@ -61,11 +62,16 @@ void AunitBase::OnOverlapEnd_DetectionSphere(class AActor* OtherActor, class UPr
 }
 
 void AunitBase::OnOverlapBegin_AggroSphere(class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) {
-
+	//need to add friendly unit check
+	if (OtherActor != this && OtherActor->IsA(AunitBase::StaticClass()) && !OtherComp->ComponentHasTag(NoAggroTag)) {
+		EnemiesInRange.Add(Cast<AunitBase>(OtherActor));
+	}
 }
 
 void AunitBase::OnOverlapEnd_AggroSphere(class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex) {
-
+	if (EnemiesInRange.Contains(OtherActor)) {
+		EnemiesInRange.Remove(Cast<AunitBase>(OtherActor));
+	}
 }
 
 void AunitBase::BeginPlay()
@@ -93,7 +99,7 @@ void AunitBase::Tick( float DeltaTime )
 			if (OrderDirection.Size() < AttackRange && TimeSinceAttack > AttackDelay) {
 				GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, "Attack!!");
 				TimeSinceAttack = 0.0f;
-				//play animation, audio queue
+				//@TODO: play animation, audio queue
 				const FDamageEvent DamageInfo = FDamageEvent();
 
 				ActorToFollow->TakeDamage(AttackDamage, DamageInfo, nullptr, this);
@@ -105,7 +111,12 @@ void AunitBase::Tick( float DeltaTime )
 		}
 	}
 	else {
-
+		if (EnemiesInRange.Num() > 0 && TimeSinceAttack > AttackDelay) {
+			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, "Proximity attack");
+			const FDamageEvent DamageInfo = FDamageEvent();
+			EnemiesInRange[0]->TakeDamage(AttackDamage, DamageInfo, nullptr, this);
+			TimeSinceAttack = 0.0f;
+		}
 	}
 }
 

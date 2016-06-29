@@ -97,6 +97,9 @@ protected:
 	float AttackRange = 20.0f;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Unit Base")
 	float AttackDamage = 15.0f;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
+	TArray<AunitBase*> EnemiesInRange;
 
+	const FName NoAggroTag = "NULLIFY_OVERLAP";
 	
 };
