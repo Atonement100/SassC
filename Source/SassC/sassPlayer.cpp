@@ -35,8 +35,6 @@ void AsassPlayer::BeginPlay()
 	AsassGameState* SassGameStateRef = Cast<AsassGameState>(GetWorld()->GetGameState());
 	if (!SassGameStateRef->PreGameActive) {
 		CreateGameHUD();
-		//SassGameStateRef->LateStart();
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Turquoise, " late game start called ");
 	}
 	else {
 		CreatePregameHUD();
@@ -281,6 +279,9 @@ void AsassPlayer::CreateGameHUD() {
 		PlayerControllerPtr->SetInputMode(GameOnly);
 		PlayerControllerPtr->bShowMouseCursor = false;
 		SetSassHUDRef();
+	}
+	else {
+		GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Red, "SassPlayer Creategamehud - local controller not found");
 	}
 }
 

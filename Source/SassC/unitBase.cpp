@@ -4,6 +4,7 @@
 #include "sassPlayer.h"
 #include "sassPlayerState.h"
 #include "unitController.h"
+#include "Kismet/KismetSystemLibrary.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetStringLibrary.h"
 #include "Kismet/KismetArrayLibrary.h"
@@ -62,6 +63,7 @@ void AunitBase::BeginPlay()
 void AunitBase::Tick( float DeltaTime )
 {
 	Super::Tick( DeltaTime );
+	TimeSinceAttack += DeltaTime;
 	if (ProcessingMoveToWorldOrder) {
 		AddMovementInput(OrderDirection, 1.0f);
 		TimeSinceOrdered += DeltaTime;
@@ -74,6 +76,15 @@ void AunitBase::Tick( float DeltaTime )
 		if (ActorToFollow) {
 			OrderDirection = ActorToFollow->GetActorLocation() - GetActorLocation();
 			AddMovementInput(OrderDirection, 1.0f);
+
+			if (OrderDirection.Size() < AttackRange && TimeSinceAttack > AttackDelay) {
+				GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, "Attack!!");
+				TimeSinceAttack = 0.0f;
+				//play animation, audio queue
+				const FDamageEvent DamageInfo = FDamageEvent();
+
+				ActorToFollow->TakeDamage(AttackDamage, DamageInfo, nullptr, this);
+			}
 		}
 		else {
 			ProcessingMoveToUnitOrder = false;
@@ -111,6 +122,17 @@ void AunitBase::MoveToUnit_Implementation(AActor* UnitToAttack)
 bool AunitBase::MoveToUnit_Validate(AActor* UnitToAttack)
 {
 	return true;
+}
+
+float AunitBase::TakeDamage(float DamageAmount, FDamageEvent const & DamageEvent, AController * EventInstigator, AActor * DamageCauser)
+{
+	Health -= DamageAmount;
+	if (Health <= 0.0f) {
+		SetLifeSpan(0.001f);
+		//need to call for bloodsplat decal here :0
+		GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red, UKismetStringLibrary::Conv_FloatToString(Health));
+	}
+	return DamageAmount;
 }
 
 
