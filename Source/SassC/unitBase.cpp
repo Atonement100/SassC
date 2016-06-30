@@ -36,7 +36,10 @@ AunitBase::AunitBase()
 
 	AggroSphere->OnComponentBeginOverlap.AddDynamic(this, &AunitBase::OnOverlapBegin_AggroSphere);
 	AggroSphere->OnComponentEndOverlap.AddDynamic(this, &AunitBase::OnOverlapEnd_AggroSphere);
-	AggroSphere->SetWorldScale3D(FVector(AttackRange / 100));
+	AggroSphere->SetWorldScale3D(FVector(AttackRange / SelectionSphereScaleMod));
+	//Decide if I want to have smaller aggro radius than attack range for idle characters... This would cause some issues with aggroing 
+	//In situations where someone on the offensive sends units /near/ and enemy but does not click him. Maybe lower aggro radius after
+	//A period of idle time to offset this?
 }
 
 void AunitBase::OnOverlapBegin_DetectionSphere(class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) {

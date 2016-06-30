@@ -101,5 +101,6 @@ protected:
 	TArray<AunitBase*> EnemiesInRange;
 
 	const FName NoAggroTag = "NULLIFY_OVERLAP";
+	const int SelectionSphereScaleMod = 100; //this should never ever be changed
 	
 };

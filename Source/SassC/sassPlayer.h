@@ -243,4 +243,6 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Sass Player")
 	TArray<TEnumAsByte<EObjectTypeQuery>> DynamicObjectTypes;
 	FCollisionObjectQueryParams WorldStatic = FCollisionObjectQueryParams(ECollisionChannel::ECC_WorldStatic); //const not allowed
+
+	const int SelectionSphereScaleMod = 100; // this should never ever be changed
 };
