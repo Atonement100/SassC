@@ -73,7 +73,7 @@ void AunitBase::OnOverlapEnd_DetectionSphere(class AActor* OtherActor, class UPr
 
 void AunitBase::OnOverlapBegin_AggroSphere(class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) {
 	//need to add friendly unit check
-	if (OtherActor != this && OtherActor->IsA(AunitBase::StaticClass()) && !OtherComp->ComponentHasTag(NoAggroTag)) {
+	if (OtherActor != this && OtherActor->IsA(AunitBase::StaticClass()) && Cast<AunitBase>(OtherActor)->OwningPlayerID != OwningPlayerID && !OtherComp->ComponentHasTag(NoAggroTag)) {
 		EnemiesInRange.Add(Cast<AunitBase>(OtherActor));
 	}
 }
@@ -106,13 +106,18 @@ void AunitBase::Tick( float DeltaTime )
 			OrderDirection = ActorToFollow->GetActorLocation() - GetActorLocation();
 			AddMovementInput(OrderDirection, 1.0f);
 
-			if (OrderDirection.Size() < AttackRange && TimeSinceAttack > AttackDelay) {
+			if (OrderDirection.Size() < AttackRange && TimeSinceAttack > AttackDelay) { //No need to check if unit is friendly or hostile for this attack, as "ActorToFollow" can only ever be hostile.
 				GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, "Attack!!");
 				TimeSinceAttack = 0.0f;
 				//@TODO: play animation, audio queue
 				const FDamageEvent DamageInfo = FDamageEvent();
+				if(Cast<AunitBase>(ActorToFollow)->GetHealth() > 0) ActorToFollow->TakeDamage(AttackDamage, DamageInfo, nullptr, this);
+				else { 
+					ActorToFollow = nullptr;
+					ProcessingMoveToUnitOrder = false;
+					GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Silver, "UnitBase Unit Attack Chase Complete (target has been killed)");
 
-				ActorToFollow->TakeDamage(AttackDamage, DamageInfo, nullptr, this);
+				}
 			}
 		}
 		else {
@@ -140,7 +145,7 @@ void AunitBase::MoveToDest_Implementation(FVector Destination) {
 	OrderDirection = Destination - GetActorLocation();
 	TimeSinceOrdered = 0;
 	MaxTimeToMove = OrderDirection.Size() / GetMovementComponent()->GetMaxSpeed();
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Cyan, "UnitBase MaxTimeToMove = " + UKismetStringLibrary::Conv_FloatToString(MaxTimeToMove));
+	//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Cyan, "UnitBase MaxTimeToMove = " + UKismetStringLibrary::Conv_FloatToString(MaxTimeToMove));
 	ProcessingMoveToWorldOrder = true;
 	ProcessingMoveToUnitOrder = false;
 }
@@ -194,4 +199,8 @@ bool AunitBase::ColorUnitDecal_Validate(FLinearColor PlayerColor) {
 
 void AunitBase::SetDecalVisibility(bool isVisible) {
 	if (SelectionCircleDecal) SelectionCircleDecal->SetVisibility(isVisible);
+}
+
+float AunitBase::GetHealth() {
+	return Health;
 }
