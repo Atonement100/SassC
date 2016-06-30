@@ -134,7 +134,7 @@ void AsassPlayer::Tick( float DeltaTime )
 		//Left Mouse button not pressed
 		else if (SphereDestroyLatch) {
 			if (SelectionSphereHolder) SelectionSphereHolder->Destroy();
-			CreateSelectedUnitsArray(SphereTraceHits);
+			CreateSelectedUnitsArray(SphereTraceHits, PlayerState->PlayerId);
 			ActorSpawnLatch = true;
 			SphereSpawnLatch = true;
 			SphereDestroyLatch = false;
@@ -190,7 +190,7 @@ void AsassPlayer::LeftClickPressed() {
 		if (LocalBuildingRef != nullptr) { LocationsToCheck = LocalBuildingRef->CornerLocations; }
 		//may need to do this for unit as well (namely scallywag, ballista, catapult)
 
-		ServerSpawnBuilding(Cast<AsassPlayerController>(PlayerControllerPtr), SelectedSpawnableClass, Hit, FVector::ZeroVector, LocationsToCheck);
+		ServerSpawnBuilding(Cast<AsassPlayerController>(PlayerControllerPtr), SelectedSpawnableClass, Hit, FVector::ZeroVector, LocationsToCheck, PlayerState->PlayerId);
 	}
 }
 
@@ -448,7 +448,7 @@ void AsassPlayer::TurnOffAllSelectionCircles()
 	}
 }
 
-void AsassPlayer::CreateSelectedUnitsArray(TArray<FHitResult> Hits)
+void AsassPlayer::CreateSelectedUnitsArray(TArray<FHitResult> Hits, int32 PlayerID)
 {
 	SelectedUnits.Empty();
 	AsassPlayerState* TempPlayerState = ((AsassPlayerState*)PlayerState);
@@ -457,10 +457,9 @@ void AsassPlayer::CreateSelectedUnitsArray(TArray<FHitResult> Hits)
 
 	for (FHitResult Hit : Hits) {
 		AunitBase* Unit = Cast<AunitBase>(Hit.GetActor());
-		//@TODO:
-		//When ownership of pawns is set up, change the second half of this statement
-		//to check for Unit->owner = calling player... much more efficient.
-		if (Unit != nullptr && TempPlayerState->ControlledBuildings.Contains(Unit)) {
+
+
+		if (Unit != nullptr && (Unit->OwningPlayerID == PlayerID)) {
 			SelectedUnits.Add(Unit);
 			Unit->SetDecalVisibility(true);
 		}
@@ -475,7 +474,7 @@ AActor* AsassPlayer::GetSelectionSphereHolder() {
 
 #pragma endregion
 
-void AsassPlayer::ServerSpawnBuilding_Implementation(AsassPlayerController* PlayerController, TSubclassOf<AActor> ActorToSpawn, FHitResult Hit, const FVector &HalfHeight, const TArray<FVector> &Midpoints)
+void AsassPlayer::ServerSpawnBuilding_Implementation(AsassPlayerController* PlayerController, TSubclassOf<AActor> ActorToSpawn, FHitResult Hit, const FVector &HalfHeight, const TArray<FVector> &Midpoints, int32 PlayerID)
 {
 	GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Emerald, UKismetStringLibrary::Conv_VectorToString(Hit.Location));
 	const FActorSpawnParameters SpawnParams = FActorSpawnParameters();
@@ -507,11 +506,15 @@ void AsassPlayer::ServerSpawnBuilding_Implementation(AsassPlayerController* Play
 				if (NewUnit != nullptr) { 
 					NewUnit->UpdateMaterial(SassPlayerState->PlayerColor); 
 					NewUnit->SpawnDefaultController();
+					NewUnit->OwningPlayerID = PlayerID;
 				}
 				//try building
 				else {
 					AbuildingBase* NewBuilding = Cast<AbuildingBase>(NewSpawn);
-					if (NewBuilding != nullptr) { NewBuilding->UpdateMaterial(SassPlayerState->PlayerColor, NewBuilding); }
+					if (NewBuilding != nullptr) { 
+						NewBuilding->UpdateMaterial(SassPlayerState->PlayerColor, NewBuilding); 
+						NewBuilding->OwningPlayerID = PlayerID;
+					}
 					else { GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "SassPlayer ServerSpawnBuilding: Could not spawn, server could not determine what spawn was being asked for"); }
 				}
 			}
@@ -531,7 +534,7 @@ void AsassPlayer::ServerSpawnBuilding_Implementation(AsassPlayerController* Play
 	}
 }
 
-bool AsassPlayer::ServerSpawnBuilding_Validate(AsassPlayerController* PlayerController, TSubclassOf<AActor> ActorToSpawn, FHitResult Hit, const FVector &HalfHeight, const TArray<FVector> &Midpoints)
+bool AsassPlayer::ServerSpawnBuilding_Validate(AsassPlayerController* PlayerController, TSubclassOf<AActor> ActorToSpawn, FHitResult Hit, const FVector &HalfHeight, const TArray<FVector> &Midpoints, int32 PlayerID)
 {
 	return true;
 }

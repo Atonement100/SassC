@@ -29,6 +29,9 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Building Base")
 	TArray<FVector> CornerLocations;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Unit Base")
+		int32 OwningPlayerID;
+
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Building Base")
 	USceneComponent* SceneComponent;
@@ -48,5 +51,6 @@ protected:
 	FVector CollisionBounds = FVector(50.0f, 50.0f, 50.0f);
 	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly)
 	FVector CollisionDisplacement = FVector(0.0f, 0.0f, 50.0f);
+
 	
 };

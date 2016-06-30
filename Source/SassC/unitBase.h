@@ -56,6 +56,12 @@ public:
 	UFUNCTION()
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, class AActor* DamageCauser);
 
+	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadOnly, Category = "Unit Base")
+	int32 OwningPlayerID;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
+	UTextRenderComponent* TextRender;
+
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
 	UMaterialInstanceDynamic* UnitDecalMaterialDynamic;
@@ -73,8 +79,6 @@ protected:
 	UStaticMeshComponent* DetectionSphere;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
 	UStaticMeshComponent* AggroSphere;
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
-	UTextRenderComponent* TextRender;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
 	FVector OrderDestination;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
@@ -99,6 +103,7 @@ protected:
 	float AttackDamage = 15.0f;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
 	TArray<AunitBase*> EnemiesInRange;
+
 
 	const FName NoAggroTag = "NULLIFY_OVERLAP";
 	const int SelectionSphereScaleMod = 100; //this should never ever be changed

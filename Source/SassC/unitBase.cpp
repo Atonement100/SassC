@@ -4,6 +4,7 @@
 #include "sassPlayer.h"
 #include "sassPlayerState.h"
 #include "unitController.h"
+#include "Net/UnrealNetwork.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetStringLibrary.h"
@@ -40,6 +41,12 @@ AunitBase::AunitBase()
 	//Decide if I want to have smaller aggro radius than attack range for idle characters... This would cause some issues with aggroing 
 	//In situations where someone on the offensive sends units /near/ and enemy but does not click him. Maybe lower aggro radius after
 	//A period of idle time to offset this?
+}
+
+void AunitBase::GetLifetimeReplicatedProps(TArray<FLifetimeProperty> &OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+	DOREPLIFETIME(AunitBase, OwningPlayerID);
 }
 
 void AunitBase::OnOverlapBegin_DetectionSphere(class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) {
