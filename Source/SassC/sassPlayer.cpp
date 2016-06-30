@@ -218,16 +218,16 @@ void AsassPlayer::RightClickReleased() {
 void AsassPlayer::CommandUnits_Implementation(const TArray<AunitBase*> &SelectedUnits, FHitResult RaycastHit, ETypeOfOrder OrderType) {
 	switch (OrderType) {
 	case ETypeOfOrder::ORDER_UNIT:
-		for (AunitBase* Unit : SelectedUnits) { Unit->MoveToUnit(RaycastHit.GetActor()); }
+		for (AunitBase* Unit : SelectedUnits) { if(Unit) Unit->MoveToUnit(RaycastHit.GetActor()); }
 		GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Emerald, "SassPlayer CommandUnits: Attack a unit");
 		break;
 	case ETypeOfOrder::ORDER_BUILDING:
-		for (AunitBase* Unit : SelectedUnits) { Unit->MoveToDest(RaycastHit.Location); }
+		for (AunitBase* Unit : SelectedUnits) { if(Unit) Unit->MoveToDest(RaycastHit.Location); }
 		GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Emerald, "SassPlayer CommandUnits: Attack a building");
 		break;
 	case ETypeOfOrder::ORDER_WORLD:
 	default:
-		for (AunitBase* Unit : SelectedUnits) { Unit->MoveToDest(RaycastHit.Location); }
+		for (AunitBase* Unit : SelectedUnits) { if(Unit) Unit->MoveToDest(RaycastHit.Location); }
 		break;
 	}
 }

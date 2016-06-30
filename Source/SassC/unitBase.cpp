@@ -124,7 +124,7 @@ void AunitBase::Tick( float DeltaTime )
 		if (EnemiesInRange.Num() > 0 && TimeSinceAttack > AttackDelay) {
 			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, "Proximity attack");
 			const FDamageEvent DamageInfo = FDamageEvent();
-			EnemiesInRange[0]->TakeDamage(AttackDamage, DamageInfo, nullptr, this);
+			if (EnemiesInRange[0]) { EnemiesInRange[0]->TakeDamage(AttackDamage, DamageInfo, nullptr, this); }
 			TimeSinceAttack = 0.0f;
 		}
 	}
