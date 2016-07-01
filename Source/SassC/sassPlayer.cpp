@@ -117,7 +117,7 @@ void AsassPlayer::Tick( float DeltaTime )
 				InitialHit = InitRaycastHit.Location;
 				FTransform Transform = FTransform(FRotator::ZeroRotator, InitialHit, FVector(1));
 				SelectionSphereHolder = (AselectionSphere*)(GetWorld()->SpawnActor(SelectionSphereClass, &Transform, SpawnParams));
-				TurnOffAllSelectionCircles();
+				if(!ShouldAddToSelection) TurnOffAllSelectionCircles();
 				SphereDestroyLatch = true;
 				ActorSpawnLatch = true;
 				SphereSpawnLatch = false;
@@ -134,7 +134,7 @@ void AsassPlayer::Tick( float DeltaTime )
 		//Left Mouse button not pressed
 		else if (SphereDestroyLatch) {
 			if (SelectionSphereHolder) SelectionSphereHolder->Destroy();
-			CreateSelectedUnitsArray(SphereTraceHits, PlayerState->PlayerId);
+			CreateSelectedUnitsArray(SphereTraceHits, PlayerState->PlayerId, ShouldAddToSelection);
 			ActorSpawnLatch = true;
 			SphereSpawnLatch = true;
 			SphereDestroyLatch = false;
@@ -177,6 +177,7 @@ void AsassPlayer::SetupPlayerInputComponent(class UInputComponent* InputComponen
 void AsassPlayer::testFunction() {
 
 }
+
 
 void AsassPlayer::LeftClickPressed() {
 	IsLeftMouseDown = true;
@@ -348,18 +349,15 @@ void AsassPlayer::JumpPressed() {
 
 #pragma region Crouch functions
 void AsassPlayer::CrouchPressed() {
-	IsCrouchPressed = true;
-	IsSprintPressed = false;
 	BaseEyeHeight = CrouchingEyeHeight;
 	GetCharacterMovement()->MaxWalkSpeed = CrouchSpeed;
-	ServerCrouch(IsCrouchPressed, GetCharacterMovement());
+	ServerCrouch(true, GetCharacterMovement());
 }
 
 void AsassPlayer::CrouchReleased() {
-	IsCrouchPressed = false;
 	BaseEyeHeight = StandingEyeHeight;
 	GetCharacterMovement()->MaxWalkSpeed = WalkSpeed;
-	ServerCrouch(IsCrouchPressed, GetCharacterMovement());
+	ServerCrouch(false, GetCharacterMovement());
 }
 
 void AsassPlayer::ServerCrouch_Implementation(bool isCrouching, UCharacterMovementComponent *movementComponent) {
@@ -374,16 +372,15 @@ bool AsassPlayer::ServerCrouch_Validate(bool isCrouching, UCharacterMovementComp
 
 #pragma region Sprint functions
 void AsassPlayer::SprintPressed() {
-	IsSprintPressed = true;
-	IsCrouchPressed = false;
+	ShouldAddToSelection = true;
 	GetCharacterMovement()->MaxWalkSpeed = SprintSpeed;
-	ServerSprint(IsSprintPressed, GetCharacterMovement());
+	ServerSprint(true, GetCharacterMovement());
 }
 
 void AsassPlayer::SprintReleased() {
-	IsSprintPressed = false;
+	ShouldAddToSelection = false;
 	GetCharacterMovement()->MaxWalkSpeed = WalkSpeed;
-	ServerSprint(IsSprintPressed, GetCharacterMovement());
+	ServerSprint(false, GetCharacterMovement());
 }
 
 void AsassPlayer::ServerSprint_Implementation(bool isRunning, UCharacterMovementComponent *movementComponent) {
@@ -448,9 +445,12 @@ void AsassPlayer::TurnOffAllSelectionCircles()
 	}
 }
 
-void AsassPlayer::CreateSelectedUnitsArray(TArray<FHitResult> Hits, int32 PlayerID)
+void AsassPlayer::CreateSelectedUnitsArray(TArray<FHitResult> Hits, int32 PlayerID, bool AddToSelection)
 {
-	SelectedUnits.Empty();
+	if (!AddToSelection) { 
+		TurnOffAllSelectionCircles(); 
+		SelectedUnits.Empty(); 
+	}
 	AsassPlayerState* TempPlayerState = ((AsassPlayerState*)PlayerState);
 	
 	if (TempPlayerState == nullptr) { return; } //Shouldn't happen

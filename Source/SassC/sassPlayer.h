@@ -139,7 +139,7 @@ public:
 
 	/*Creates array used for dispatching units*/
 	UFUNCTION(BlueprintCallable, Category = "Spawnables")
-	void CreateSelectedUnitsArray(TArray<FHitResult> Hits, int32 PlayerID);
+	void CreateSelectedUnitsArray(TArray<FHitResult> Hits, int32 PlayerID, bool AddToSelection);
 
 	/*Verifies that the corners around a building are open for spawning*/
 	UFUNCTION(BlueprintCallable, Category = "Spawnables")
@@ -218,6 +218,7 @@ protected:
 	bool IsUnitMenuOpen = false;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Sass Player")
 	bool IsLeftMouseDown = false;
+	bool ShouldAddToSelection = false;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Sass Player")
 	UClass* SelectionSphereClass;
 	const float SprintSpeed = 800.0f;
