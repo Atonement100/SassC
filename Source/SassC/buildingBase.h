@@ -30,7 +30,10 @@ public:
 	TArray<FVector> CornerLocations;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Unit Base")
-		int32 OwningPlayerID;
+	int32 OwningPlayerID;
+
+	UFUNCTION()
+	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, class AActor* DamageCauser);
 
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Building Base")
