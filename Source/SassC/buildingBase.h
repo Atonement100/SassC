@@ -40,7 +40,7 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Building Base")
 	UBoxComponent* BuildingCollision;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Building Base")
-	float BuildingHealth;
+	float Health;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Building Base")
 	UMaterialInstanceDynamic* BldgMeshMaterialDynamic;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Building Base")

@@ -245,5 +245,6 @@ protected:
 	TArray<TEnumAsByte<EObjectTypeQuery>> DynamicObjectTypes;
 	FCollisionObjectQueryParams WorldStatic = FCollisionObjectQueryParams(ECollisionChannel::ECC_WorldStatic); //const not allowed
 
+	const FName NoAggroTag = "NULLIFY_OVERLAP"; // this should never ever be changed unless also changed in unit base
 	const int SelectionSphereScaleMod = 100; // this should never ever be changed
 };

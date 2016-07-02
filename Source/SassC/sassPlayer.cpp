@@ -459,7 +459,7 @@ void AsassPlayer::CreateSelectedUnitsArray(TArray<FHitResult> Hits, int32 Player
 		AunitBase* Unit = Cast<AunitBase>(Hit.GetActor());
 
 
-		if (Unit != nullptr && (Unit->OwningPlayerID == PlayerID)) {
+		if (Unit && !Hit.GetComponent()->ComponentHasTag(NoAggroTag) && (Unit->OwningPlayerID == PlayerID)) {
 			SelectedUnits.Add(Unit);
 			Unit->SetDecalVisibility(true);
 		}
