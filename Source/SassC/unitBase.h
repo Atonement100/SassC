@@ -106,6 +106,8 @@ protected:
 	float AttackDamage = 15.0f;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
 	TArray<AunitBase*> EnemiesInRange;
+	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
+	bool IsAttacking;
 
 
 	const FName NoAggroTag = "NULLIFY_OVERLAP";

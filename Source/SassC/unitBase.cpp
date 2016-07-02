@@ -8,6 +8,7 @@
 #include "Kismet/KismetSystemLibrary.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetStringLibrary.h"
+#include "Kismet/KismetMathLibrary.h"
 #include "Kismet/KismetArrayLibrary.h"
 #include "unitBase.h"
 
@@ -47,6 +48,7 @@ void AunitBase::GetLifetimeReplicatedProps(TArray<FLifetimeProperty> &OutLifetim
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 	DOREPLIFETIME(AunitBase, OwningPlayerID);
+	DOREPLIFETIME(AunitBase, IsAttacking);
 }
 
 void AunitBase::OnOverlapBegin_DetectionSphere(class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) {
@@ -92,6 +94,7 @@ void AunitBase::BeginPlay()
 void AunitBase::Tick( float DeltaTime )
 {
 	Super::Tick( DeltaTime );
+	
 	TimeSinceAttack += DeltaTime;
 	if (ProcessingMoveToWorldOrder) {
 		AddMovementInput(OrderDirection, 1.0f);
@@ -99,6 +102,7 @@ void AunitBase::Tick( float DeltaTime )
 		if ((OrderDestination - GetActorLocation()).Size2D() < 5.0f || TimeSinceOrdered > MaxTimeToMove){
 			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Cyan, "UnitBase Movement Complete");
 			ProcessingMoveToWorldOrder = false;
+			IsAttacking = false;
 		}
 	}
 	else if (ProcessingMoveToUnitOrder) {
@@ -109,28 +113,37 @@ void AunitBase::Tick( float DeltaTime )
 			if (OrderDirection.Size() < AttackRange && TimeSinceAttack > AttackDelay) { //No need to check if unit is friendly or hostile for this attack, as "ActorToFollow" can only ever be hostile.
 				GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, "Attack!!");
 				TimeSinceAttack = 0.0f;
-				//@TODO: play animation, audio queue
+				
 				const FDamageEvent DamageInfo = FDamageEvent();
-				if(Cast<AunitBase>(ActorToFollow)->GetHealth() > 0) ActorToFollow->TakeDamage(AttackDamage, DamageInfo, nullptr, this);
+				if (Cast<AunitBase>(ActorToFollow)->GetHealth() > 0) {
+					ActorToFollow->TakeDamage(AttackDamage, DamageInfo, nullptr, this);
+					IsAttacking = true;
+				}
 				else { 
 					ActorToFollow = nullptr;
 					ProcessingMoveToUnitOrder = false;
 					GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Silver, "UnitBase Unit Attack Chase Complete (target has been killed)");
-
+					IsAttacking = false;
 				}
 			}
 		}
 		else {
 			ProcessingMoveToUnitOrder = false;
 			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Silver, "UnitBase Unit Attack Chase Complete");
+			IsAttacking = false;
 		}
 	}
 	else {
-		if (EnemiesInRange.Num() > 0 && TimeSinceAttack > AttackDelay) {
-			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, "Proximity attack");
-			const FDamageEvent DamageInfo = FDamageEvent();
-			if (EnemiesInRange[0]) { EnemiesInRange[0]->TakeDamage(AttackDamage, DamageInfo, nullptr, this); }
-			TimeSinceAttack = 0.0f;
+		if (EnemiesInRange.Num() > 0 && TimeSinceAttack > AttackDelay && EnemiesInRange[0]) {
+				GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, "Proximity attack");
+				const FDamageEvent DamageInfo = FDamageEvent();
+				EnemiesInRange[0]->TakeDamage(AttackDamage, DamageInfo, nullptr, this); 
+				SetActorRotation(FRotator(0,UKismetMathLibrary::FindLookAtRotation(GetActorLocation(), EnemiesInRange[0]->GetActorLocation()).Yaw,0));
+				TimeSinceAttack = 0.0f;
+				IsAttacking = true;
+		}
+		else if (EnemiesInRange.Num() == 0){
+			IsAttacking = false;
 		}
 	}
 }
