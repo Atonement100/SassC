@@ -1,6 +1,7 @@
 // Fill out your copyright notic in the Description page of Project Settings.
 
 #include "SassC.h"
+#include "buildingBase.h"
 #include "sassPlayer.h"
 #include "sassPlayerState.h"
 #include "unitController.h"
@@ -22,6 +23,9 @@ AunitBase::AunitBase()
 	SelectionCircleDecal = CreateDefaultSubobject<UDecalComponent>(TEXT("Selection Circle Decal"));
 	SelectionCircleDecal->AttachTo(RootComponent);
 	SelectionCircleDecal->bVisible = false;
+
+	SelectionBlendDecal = CreateDefaultSubobject<UDecalComponent>(TEXT("Selection Blend Decal"));
+	SelectionBlendDecal->AttachTo(RootComponent);
 
 	DetectionSphere = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Detection Sphere"));
 	DetectionSphere->AttachTo(RootComponent);
@@ -75,14 +79,20 @@ void AunitBase::OnOverlapEnd_DetectionSphere(class AActor* OtherActor, class UPr
 
 void AunitBase::OnOverlapBegin_AggroSphere(class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) {
 	//need to add friendly unit check
-	if (OtherActor != this && OtherActor->IsA(AunitBase::StaticClass()) && Cast<AunitBase>(OtherActor)->OwningPlayerID != OwningPlayerID && !OtherComp->ComponentHasTag(NoAggroTag)) {
-		EnemiesInRange.Add(Cast<AunitBase>(OtherActor));
+	if (OtherActor != this && !OtherComp->ComponentHasTag(NoAggroTag) && ((OtherActor->IsA(AunitBase::StaticClass()) && Cast<AunitBase>(OtherActor)->OwningPlayerID != OwningPlayerID) || (OtherActor->IsA(AbuildingBase::StaticClass()) && OwningPlayerID != OwningPlayerID))) {
+		EnemiesInRange.Add(OtherActor);
+		if (OtherActor == BuildingToAttack) {
+			ReachedBuilding = true;
+		}
 	}
 }
 
 void AunitBase::OnOverlapEnd_AggroSphere(class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex) {
 	if (EnemiesInRange.Contains(OtherActor)) {
-		EnemiesInRange.Remove(Cast<AunitBase>(OtherActor));
+		EnemiesInRange.Remove(OtherActor);
+		if (OtherActor == BuildingToAttack) {
+			ReachedBuilding = false;
+		}
 	}
 }
 
@@ -133,6 +143,33 @@ void AunitBase::Tick( float DeltaTime )
 			IsAttacking = false;
 		}
 	}
+	else if (ProcessingMoveToBuildingOrder) {
+		if (BuildingToAttack) {
+			if (!ReachedBuilding) {
+				AddMovementInput(OrderDirection, 1.0f);
+				IsAttacking = false;
+			}
+			else if (TimeSinceAttack > AttackDelay) {
+				if (Cast<AbuildingBase>(BuildingToAttack)->GetHealth() > 0) {
+					GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, "City attack");
+					const FDamageEvent DamageInfo = FDamageEvent();
+					BuildingToAttack->TakeDamage(AttackDamage, DamageInfo, nullptr, this);
+					SetActorRotation(FRotator(0, UKismetMathLibrary::FindLookAtRotation(GetActorLocation(), EnemiesInRange[0]->GetActorLocation()).Yaw, 0));
+					TimeSinceAttack = 0.0f;
+					IsAttacking = true;
+				}
+				else {
+					IsAttacking = false;
+					ProcessingMoveToBuildingOrder = false;
+					BuildingToAttack = nullptr;
+					GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Orange, "UnitBase Building Attack Complete (target has been killed)");
+				}
+			}
+		}
+		else {
+			IsAttacking = false;
+		}
+	}
 	else {
 		if (EnemiesInRange.Num() > 0 && TimeSinceAttack > AttackDelay && EnemiesInRange[0]) {
 				GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, "Proximity attack");
@@ -161,6 +198,7 @@ void AunitBase::MoveToDest_Implementation(FVector Destination) {
 	//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Cyan, "UnitBase MaxTimeToMove = " + UKismetStringLibrary::Conv_FloatToString(MaxTimeToMove));
 	ProcessingMoveToWorldOrder = true;
 	ProcessingMoveToUnitOrder = false;
+	ProcessingMoveToBuildingOrder = false;
 }
 
 bool AunitBase::MoveToDest_Validate(FVector Destination) {
@@ -172,9 +210,23 @@ void AunitBase::MoveToUnit_Implementation(AActor* UnitToAttack)
 	ActorToFollow = UnitToAttack;
 	ProcessingMoveToUnitOrder = true;
 	ProcessingMoveToWorldOrder = false;
+	ProcessingMoveToBuildingOrder = false;
 }
 
 bool AunitBase::MoveToUnit_Validate(AActor* UnitToAttack)
+{
+	return true;
+}
+
+void AunitBase::MoveToBuilding_Implementation(AActor* BuildingToTarget)
+{
+	OrderDirection = BuildingToTarget->GetActorLocation() - GetActorLocation();
+	BuildingToAttack = BuildingToTarget;
+	ProcessingMoveToBuildingOrder = true;
+	ProcessingMoveToUnitOrder = false;
+	ProcessingMoveToWorldOrder = false;
+}
+bool AunitBase::MoveToBuilding_Validate(AActor* BuildingToTarget)
 {
 	return true;
 }

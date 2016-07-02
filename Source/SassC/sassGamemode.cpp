@@ -24,6 +24,7 @@ FLinearColor AsassGamemode::ChoosePlayerColor()
 	return UKismetMathLibrary::MakeColor(
 		UKismetMathLibrary::RandomFloatInRange(0, 1),
 		UKismetMathLibrary::RandomFloatInRange(0, 1),
-		UKismetMathLibrary::RandomFloatInRange(0, 1));
+		UKismetMathLibrary::RandomFloatInRange(0, 1),
+		1.0f);
 }
 

@@ -53,3 +53,7 @@ float AbuildingBase::TakeDamage(float DamageAmount, FDamageEvent const & DamageE
 	}
 	return DamageAmount;
 }
+
+float AbuildingBase::GetHealth() {
+	return Health;
+}

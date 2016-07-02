@@ -50,6 +50,11 @@ public:
 	virtual void MoveToUnit_Implementation(AActor* UnitToAttack);
 	virtual bool MoveToUnit_Validate(AActor* UnitToAttack);
 
+	UFUNCTION(Reliable, Server, WithValidation)
+	void MoveToBuilding(AActor* BuildingToTarget);
+	virtual void MoveToBuilding_Implementation(AActor* BuildingToTarget);
+	virtual bool MoveToBuilding_Validate(AActor* BuildingToTarget);
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
 	UDecalComponent* SelectionCircleDecal;
 
@@ -79,6 +84,8 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
 	UDecalComponent* UnderUnitDecal;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
+	UDecalComponent* SelectionBlendDecal;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
 	UStaticMeshComponent* DetectionSphere;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
 	UStaticMeshComponent* AggroSphere;
@@ -89,9 +96,15 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
 	AActor* ActorToFollow;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
-	bool ProcessingMoveToWorldOrder;
+	AActor* BuildingToAttack;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
-	bool ProcessingMoveToUnitOrder;
+	bool ReachedBuilding;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
+	bool ProcessingMoveToWorldOrder = false;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
+	bool ProcessingMoveToUnitOrder = false;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
+	bool ProcessingMoveToBuildingOrder = false;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
 	float MaxTimeToMove;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
@@ -105,7 +118,7 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Unit Base")
 	float AttackDamage = 15.0f;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
-	TArray<AunitBase*> EnemiesInRange;
+	TArray<AActor*> EnemiesInRange;
 	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
 	bool IsAttacking;
 

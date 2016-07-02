@@ -223,7 +223,7 @@ void AsassPlayer::CommandUnits_Implementation(const TArray<AunitBase*> &Selected
 		GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Emerald, "SassPlayer CommandUnits: Attack a unit");
 		break;
 	case ETypeOfOrder::ORDER_BUILDING:
-		for (AunitBase* Unit : SelectedUnits) { if(Unit) Unit->MoveToDest(RaycastHit.Location); }
+		for (AunitBase* Unit : SelectedUnits) { if(Unit) Unit->MoveToBuilding(RaycastHit.GetActor()); }
 		GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Emerald, "SassPlayer CommandUnits: Attack a building");
 		break;
 	case ETypeOfOrder::ORDER_WORLD:
