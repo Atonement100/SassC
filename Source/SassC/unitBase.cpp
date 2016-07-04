@@ -53,6 +53,7 @@ void AunitBase::GetLifetimeReplicatedProps(TArray<FLifetimeProperty> &OutLifetim
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 	DOREPLIFETIME(AunitBase, OwningPlayerID);
 	DOREPLIFETIME(AunitBase, IsAttacking);
+	DOREPLIFETIME(AunitBase, Health);
 }
 
 void AunitBase::OnOverlapBegin_DetectionSphere(class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) {
@@ -79,10 +80,13 @@ void AunitBase::OnOverlapEnd_DetectionSphere(class AActor* OtherActor, class UPr
 
 void AunitBase::OnOverlapBegin_AggroSphere(class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) {
 	//need to add friendly unit check
-	if (OtherActor != this && !OtherComp->ComponentHasTag(NoAggroTag) && ((OtherActor->IsA(AunitBase::StaticClass()) && Cast<AunitBase>(OtherActor)->OwningPlayerID != OwningPlayerID) || (OtherActor->IsA(AbuildingBase::StaticClass()) && OwningPlayerID != OwningPlayerID))) {
-		EnemiesInRange.Add(OtherActor);
-		if (OtherActor == BuildingToAttack) {
-			ReachedBuilding = true;
+	if (OtherActor != this && !OtherComp->ComponentHasTag(NoAggroTag)) {
+		if (OtherActor->IsA(AunitBase::StaticClass()) && Cast<AunitBase>(OtherActor)->OwningPlayerID != OwningPlayerID) {
+			EnemiesInRange.Add(OtherActor);
+		}
+		else if (OtherActor->IsA(AbuildingBase::StaticClass()) && Cast<AbuildingBase>(OtherActor)->OwningPlayerID != OwningPlayerID) {
+			EnemiesInRange.Add(OtherActor);
+			if (OtherActor == BuildingToAttack) { ReachedBuilding = true; }
 		}
 	}
 }
@@ -125,7 +129,7 @@ void AunitBase::Tick( float DeltaTime )
 				TimeSinceAttack = 0.0f;
 				
 				const FDamageEvent DamageInfo = FDamageEvent();
-				if (Cast<AunitBase>(ActorToFollow)->GetHealth() > 0) {
+				if (ActorToFollow->GetHealth() > 0) {
 					ActorToFollow->TakeDamage(AttackDamage, DamageInfo, nullptr, this);
 					IsAttacking = true;
 				}
@@ -144,13 +148,13 @@ void AunitBase::Tick( float DeltaTime )
 		}
 	}
 	else if (ProcessingMoveToBuildingOrder) {
-		if (BuildingToAttack) {
+		if (BuildingToAttack && BuildingToAttack->GetHealth() > 0) {
 			if (!ReachedBuilding) {
 				AddMovementInput(OrderDirection, 1.0f);
 				IsAttacking = false;
 			}
 			else if (TimeSinceAttack > AttackDelay) {
-				if (Cast<AbuildingBase>(BuildingToAttack)->GetHealth() > 0) {
+				if (BuildingToAttack->GetHealth() > 0) {
 					GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, "City attack");
 					const FDamageEvent DamageInfo = FDamageEvent();
 					BuildingToAttack->TakeDamage(AttackDamage, DamageInfo, nullptr, this);
@@ -207,7 +211,7 @@ bool AunitBase::MoveToDest_Validate(FVector Destination) {
 
 void AunitBase::MoveToUnit_Implementation(AActor* UnitToAttack)
 {
-	ActorToFollow = UnitToAttack;
+	ActorToFollow = Cast<AunitBase>(UnitToAttack);
 	ProcessingMoveToUnitOrder = true;
 	ProcessingMoveToWorldOrder = false;
 	ProcessingMoveToBuildingOrder = false;
@@ -221,7 +225,7 @@ bool AunitBase::MoveToUnit_Validate(AActor* UnitToAttack)
 void AunitBase::MoveToBuilding_Implementation(AActor* BuildingToTarget)
 {
 	OrderDirection = BuildingToTarget->GetActorLocation() - GetActorLocation();
-	BuildingToAttack = BuildingToTarget;
+	BuildingToAttack = Cast<AbuildingBase>(BuildingToTarget);
 	ProcessingMoveToBuildingOrder = true;
 	ProcessingMoveToUnitOrder = false;
 	ProcessingMoveToWorldOrder = false;

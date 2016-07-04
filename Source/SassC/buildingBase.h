@@ -45,8 +45,8 @@ protected:
 	UStaticMeshComponent* BuildingMesh;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Building Base")
 	UBoxComponent* BuildingCollision;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Building Base")
-	float Health;
+	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, Category = "Building Base")
+	float Health = 500.0f;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Building Base")
 	UMaterialInstanceDynamic* BldgMeshMaterialDynamic;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Building Base")

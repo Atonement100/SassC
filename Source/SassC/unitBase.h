@@ -5,6 +5,8 @@
 #include "GameFramework/Character.h"
 #include "unitBase.generated.h"
 
+class AbuildingBase;
+
 UCLASS()
 class SASSC_API AunitBase : public ACharacter
 {
@@ -77,7 +79,7 @@ protected:
 	UMaterialInstanceDynamic* UnitMeshMaterialDynamic;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
 	FName ColorParameterName = "PlayerColor";
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
+	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
 	float Health = 100.0f;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
 	USkeletalMeshComponent* UnitMesh;
@@ -94,9 +96,9 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
 	FVector OrderDirection;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
-	AActor* ActorToFollow;
+	AunitBase* ActorToFollow;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
-	AActor* BuildingToAttack;
+	AbuildingBase* BuildingToAttack;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
 	bool ReachedBuilding;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
