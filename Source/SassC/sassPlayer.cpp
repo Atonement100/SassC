@@ -480,7 +480,7 @@ void AsassPlayer::ServerSpawnBuilding_Implementation(AsassPlayerController* Play
 	const FActorSpawnParameters SpawnParams = FActorSpawnParameters();
 	//@TODO: Location should be replaced by Hit.Location + HalfHeight when halfheights are set up!
 	const FVector Location = Hit.Location + FVector(0, 0, 10);
-	const FRotator Rotation = this->GetActorRotation();
+	const FRotator Rotation = FRotator::ZeroRotator;
 
 	if (Hit.Normal.Z >= .990) {
 		const TArray<AActor*> BoxIgnore;
@@ -565,14 +565,14 @@ bool AsassPlayer::CheckBldgCorners(TArray<FVector> ExtraLocs, FVector Center)
 			TraceHeights.Add(Hit.Location.Z);
 		}
 		else {
-			GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Emerald, "SassPlayer CheckBldgCorners: TRACE MADE NO CONTACT");
+			GEngine->AddOnScreenDebugMessage(-1, .5f, FColor::Emerald, "SassPlayer CheckBldgCorners: TRACE MADE NO CONTACT");
 			return true;
 		}
 	}
 	float first = TraceHeights[0];
 	for (float Height : TraceHeights) {
 		if (FMath::Abs(Height - first) > MAX_BLDG_CORNER_DIFFERENCE) {
-			GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Emerald, "SassPlayer CheckBldgCorners: HEIGHTS NOT EQUAL");
+			GEngine->AddOnScreenDebugMessage(-1, .5f, FColor::Emerald, "SassPlayer CheckBldgCorners: HEIGHTS NOT EQUAL");
 			return true;
 		}
 	}

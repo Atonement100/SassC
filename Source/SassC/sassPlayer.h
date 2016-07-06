@@ -141,7 +141,7 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Spawnables")
 	void CreateSelectedUnitsArray(TArray<FHitResult> Hits, int32 PlayerID, bool AddToSelection);
 
-	/*Verifies that the corners around a building are open for spawning*/
+	/*Returns true if there is an issue with the spawn corners*/
 	UFUNCTION(BlueprintCallable, Category = "Spawnables")
 	bool CheckBldgCorners(TArray<FVector> ExtraLocs, FVector Center);
 	
