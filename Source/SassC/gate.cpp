@@ -37,14 +37,7 @@ void Agate::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
 }
 
-void Agate::ColorBldg_Implementation(FLinearColor PlayerColor, AActor* BuildingRef) {
-	BldgMeshMaterialDynamic->SetVectorParameterValue(ColorParameterText, PlayerColor);
-	((Agate*)BuildingRef)->BuildingMesh->SetMaterial(0, BldgMeshMaterialDynamic);
-}
 
-bool Agate::ColorBldg_Validate(FLinearColor PlayerColor, AActor* BuildingRef) {
-	return true;
-}
 
 
 

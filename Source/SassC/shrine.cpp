@@ -35,13 +35,4 @@ void Ashrine::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
 }
 
-void Ashrine::ColorBldg_Implementation(FLinearColor PlayerColor, AActor* BuildingRef) {
-	BldgMeshMaterialDynamic->SetVectorParameterValue(ColorParameterText, PlayerColor);
-	((Ashrine*)BuildingRef)->BuildingMesh->SetMaterial(0, BldgMeshMaterialDynamic);
-}
-
-bool Ashrine::ColorBldg_Validate(FLinearColor PlayerColor, AActor* BuildingRef) {
-	return true;
-}
-
 

@@ -35,13 +35,4 @@ void Aworkshop::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
 }
 
-void Aworkshop::ColorBldg_Implementation(FLinearColor PlayerColor, AActor* BuildingRef) {
-	BldgMeshMaterialDynamic->SetVectorParameterValue(ColorParameterText, PlayerColor);
-	((Aworkshop*)BuildingRef)->BuildingMesh->SetMaterial(0, BldgMeshMaterialDynamic);
-}
-
-bool Aworkshop::ColorBldg_Validate(FLinearColor PlayerColor, AActor* BuildingRef) {
-	return true;
-}
-
 

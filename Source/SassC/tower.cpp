@@ -35,13 +35,4 @@ void Atower::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
 }
 
-void Atower::ColorBldg_Implementation(FLinearColor PlayerColor, AActor* BuildingRef) {
-	BldgMeshMaterialDynamic->SetVectorParameterValue(ColorParameterText, PlayerColor);
-	((Atower*)BuildingRef)->BuildingMesh->SetMaterial(0, BldgMeshMaterialDynamic);
-}
-
-bool Atower::ColorBldg_Validate(FLinearColor PlayerColor, AActor* BuildingRef) {
-	return true;
-}
-
 

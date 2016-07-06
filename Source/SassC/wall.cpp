@@ -35,13 +35,4 @@ void Awall::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
 }
 
-void Awall::ColorBldg_Implementation(FLinearColor PlayerColor, AActor* BuildingRef) {
-	BldgMeshMaterialDynamic->SetVectorParameterValue(ColorParameterText, PlayerColor);
-	((Awall*)BuildingRef)->BuildingMesh->SetMaterial(0, BldgMeshMaterialDynamic);
-}
-
-bool Awall::ColorBldg_Validate(FLinearColor PlayerColor, AActor* BuildingRef) {
-	return true;
-}
-
 

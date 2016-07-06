@@ -36,12 +36,3 @@ void Acity::BeginPlay() {
 void Acity::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
 }
-
-void Acity::ColorBldg_Implementation(FLinearColor PlayerColor, AActor* BuildingRef) {
-	BldgMeshMaterialDynamic->SetVectorParameterValue(ColorParameterText, PlayerColor);
-	((Acity*)BuildingRef)->BuildingMesh->SetMaterial(0, BldgMeshMaterialDynamic);
-}
-
-bool Acity::ColorBldg_Validate(FLinearColor PlayerColor, AActor* BuildingRef) {
-	return true;
-}

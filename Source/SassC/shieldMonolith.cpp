@@ -35,13 +35,4 @@ void AshieldMonolith::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
 }
 
-void AshieldMonolith::ColorBldg_Implementation(FLinearColor PlayerColor, AActor* BuildingRef) {
-	BldgMeshMaterialDynamic->SetVectorParameterValue(ColorParameterText, PlayerColor);
-	((AshieldMonolith*)BuildingRef)->BuildingMesh->SetMaterial(0, BldgMeshMaterialDynamic);
-}
-
-bool AshieldMonolith::ColorBldg_Validate(FLinearColor PlayerColor, AActor* BuildingRef) {
-	return true;
-}
-
 
