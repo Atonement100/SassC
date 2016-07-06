@@ -19,12 +19,12 @@ public:
 	virtual void Tick( float DeltaSeconds ) override;
 
 	UFUNCTION(BlueprintCallable, Category = "Spawnables Functions")
-	virtual void UpdateMaterial(FLinearColor PlayerColor, AActor* BuildingRef);
+	virtual void UpdateMaterial(FLinearColor PlayerColor);
 
 	UFUNCTION(Reliable, NetMulticast, WithValidation)
-	void ColorBldg(FLinearColor PlayerColor, AActor* BuildingRef);
-	virtual void ColorBldg_Implementation(FLinearColor PlayerColor, AActor* BuildingRef);
-	virtual bool ColorBldg_Validate(FLinearColor PlayerColor, AActor* BuildingRef);
+	void ColorBldg(FLinearColor PlayerColor);
+	virtual void ColorBldg_Implementation(FLinearColor PlayerColor);
+	virtual bool ColorBldg_Validate(FLinearColor PlayerColor);
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Building Base")
 	TArray<FVector> CornerLocations;

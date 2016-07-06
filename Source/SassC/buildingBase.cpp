@@ -36,18 +36,16 @@ void AbuildingBase::Tick( float DeltaTime )
 
 }
 
-void AbuildingBase::UpdateMaterial(FLinearColor PlayerColor, AActor* BuildingRef) {
-	ColorBldg(PlayerColor, BuildingRef);
+void AbuildingBase::UpdateMaterial(FLinearColor PlayerColor) {
+	ColorBldg(PlayerColor);
 }
 
-void AbuildingBase::ColorBldg_Implementation(FLinearColor PlayerColor, AActor* BuildingRef) {
+void AbuildingBase::ColorBldg_Implementation(FLinearColor PlayerColor) {
 	BldgMeshMaterialDynamic->SetVectorParameterValue(ColorParameterText, PlayerColor);
-	//@TODO: Try this instead
-	//this->BuildingMesh->SetMaterial(0, BldgMeshMaterialDynamic);
-	((AbuildingBase*)BuildingRef)->BuildingMesh->SetMaterial(0, BldgMeshMaterialDynamic);
+	this->BuildingMesh->SetMaterial(0, BldgMeshMaterialDynamic);
 }
 
-bool AbuildingBase::ColorBldg_Validate(FLinearColor PlayerColor, AActor* BuildingRef) {
+bool AbuildingBase::ColorBldg_Validate(FLinearColor PlayerColor) {
 	return true;
 }
 

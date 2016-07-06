@@ -97,7 +97,7 @@ void AsassPlayer::Tick( float DeltaTime )
 
 		FLinearColor NewColor = IsBadSpawn? FLinearColor(.7f, 0.0f, .058f) : FLinearColor(.093f, .59f, .153f);
 
-		if (AbuildingBase* BuildingCast = Cast<AbuildingBase>(LocalObjectSpawn)) { BuildingCast->UpdateMaterial(NewColor, BuildingCast); }
+		if (AbuildingBase* BuildingCast = Cast<AbuildingBase>(LocalObjectSpawn)) { BuildingCast->UpdateMaterial(NewColor); }
 		else if (AunitBase* UnitCast = Cast<AunitBase>(LocalObjectSpawn)) { UnitCast->UpdateMaterial(NewColor); }
 	}
 	//Unit Menu not open
@@ -512,7 +512,7 @@ void AsassPlayer::ServerSpawnBuilding_Implementation(AsassPlayerController* Play
 				else {
 					AbuildingBase* NewBuilding = Cast<AbuildingBase>(NewSpawn);
 					if (NewBuilding != nullptr) { 
-						NewBuilding->UpdateMaterial(SassPlayerState->PlayerColor, NewBuilding); 
+						NewBuilding->UpdateMaterial(SassPlayerState->PlayerColor); 
 						NewBuilding->OwningPlayerID = PlayerID;
 					}
 					else { GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "SassPlayer ServerSpawnBuilding: Could not spawn, server could not determine what spawn was being asked for"); }
