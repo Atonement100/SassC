@@ -72,6 +72,12 @@ public:
 	UFUNCTION()
 	float GetHealth();
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Unit Base")
+	FVector TraceSize = FVector(5, 5, 10);
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Unit Base")
+	FVector HalfHeight = FVector(0, 0, 11);
+
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
 	UMaterialInstanceDynamic* UnitDecalMaterialDynamic;
@@ -123,6 +129,7 @@ protected:
 	TArray<AActor*> EnemiesInRange;
 	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
 	bool IsAttacking;
+
 
 
 	const FName NoAggroTag = "NULLIFY_OVERLAP"; //this should never ever be changed unless also changed in sassplayer

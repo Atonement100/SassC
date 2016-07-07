@@ -29,7 +29,7 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Building Base")
 	TArray<FVector> CornerLocations;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Unit Base")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Building Base")
 	int32 OwningPlayerID;
 
 	UFUNCTION()
@@ -37,6 +37,12 @@ public:
 
 	UFUNCTION()
 	float GetHealth();
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Building Base")
+	FVector TraceSize = FVector(50, 50, 10);
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Building Base")
+	FVector HalfHeight = FVector(0, 0, 25);
 
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Building Base")
@@ -57,6 +63,7 @@ protected:
 	FVector CollisionBounds = FVector(50.0f, 50.0f, 50.0f);
 	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly)
 	FVector CollisionDisplacement = FVector(0.0f, 0.0f, 50.0f);
+
 
 	
 };

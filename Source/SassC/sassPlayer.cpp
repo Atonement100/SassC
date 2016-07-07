@@ -87,10 +87,22 @@ void AsassPlayer::Tick( float DeltaTime )
 		if (LocalObjectSpawn != nullptr) LocalObjectSpawn->SetActorLocation(CursorHit.Location + CurrentHalfHeight);
 		
 		if (CursorHit.Normal.Z > .990) {
+			//@TODO: This will only ever change when spawnable changes. Instead of checking this on tick, check it when spawnable is switched.
+			FVector HalfHeight, TraceSize;
+			if (AbuildingBase* BuildingCast = Cast<AbuildingBase>(LocalObjectSpawn)) { 
+				HalfHeight = BuildingCast->HalfHeight; 
+				TraceSize = BuildingCast->TraceSize; 
+			}
+			else if (AunitBase* UnitCast = Cast<AunitBase>(LocalObjectSpawn)) {
+				HalfHeight = UnitCast->HalfHeight;
+				TraceSize = UnitCast->TraceSize;
+			}
+
+			v:
 			FHitResult BoxTraceHit;
 			TArray<AActor*> ActorsToIgnore;
 			ActorsToIgnore.Add(LocalObjectSpawn);
-			IsBadSpawn = UKismetSystemLibrary::BoxTraceSingleForObjects(GetWorld(), CursorHit.Location + FVector(0, 0, 10.0f), CursorHit.Location + FVector(0, 0, 50.0f), FVector(50.0f, 50.0f, 10.0f), FRotator::ZeroRotator, DynamicAndStaticObjectTypes, true, ActorsToIgnore, EDrawDebugTrace::ForOneFrame, BoxTraceHit, true);
+			IsBadSpawn = UKismetSystemLibrary::BoxTraceSingleForObjects(GetWorld(), CursorHit.Location + FVector(0, 0, 10.0f), CursorHit.Location + FVector(0,0,10.0f) + 2 * HalfHeight, TraceSize / 2, FRotator::ZeroRotator, DynamicAndStaticObjectTypes, true, ActorsToIgnore, EDrawDebugTrace::ForOneFrame, BoxTraceHit, true);
 			if (AbuildingBase* BuildingCast = Cast<AbuildingBase>(LocalObjectSpawn)) { IsBadSpawn = CheckBldgCorners(BuildingCast->CornerLocations, CursorHit.Location); }
 		}
 		else { IsBadSpawn = true; }
@@ -185,13 +197,21 @@ void AsassPlayer::LeftClickPressed() {
 		if (PlayerControllerPtr == nullptr) return;
 		FHitResult Hit;
 		TArray<FVector> LocationsToCheck;
+		FVector TraceSize, HalfHeight;
 
 		PlayerControllerPtr->GetHitResultUnderCursorByChannel(UEngineTypes::ConvertToTraceType(ECC_Visibility), true, Hit); // Assign Hit
-		AbuildingBase* LocalBuildingRef = Cast<AbuildingBase>(LocalObjectSpawn);
-		if (LocalBuildingRef != nullptr) { LocationsToCheck = LocalBuildingRef->CornerLocations; }
-		//may need to do this for unit as well (namely scallywag, ballista, catapult)
+		if (AbuildingBase* LocalBuildingRef = Cast<AbuildingBase>(LocalObjectSpawn)) { 
+			LocationsToCheck = LocalBuildingRef->CornerLocations; 
+			TraceSize = LocalBuildingRef->TraceSize;
+			HalfHeight = LocalBuildingRef->HalfHeight;
+		}
+		else if (AunitBase* LocalUnitRef = Cast<AunitBase>(LocalObjectSpawn)) {
+			TraceSize = LocalUnitRef->TraceSize;
+			HalfHeight = LocalUnitRef->HalfHeight;
+		}
 
-		ServerSpawnBuilding(Cast<AsassPlayerController>(PlayerControllerPtr), SelectedSpawnableClass, Hit, FVector::ZeroVector, LocationsToCheck, PlayerState->PlayerId);
+
+		ServerSpawnBuilding(Cast<AsassPlayerController>(PlayerControllerPtr), SelectedSpawnableClass, Hit, FVector::ZeroVector, LocationsToCheck, TraceSize, PlayerState->PlayerId);
 	}
 }
 
@@ -474,24 +494,24 @@ AActor* AsassPlayer::GetSelectionSphereHolder() {
 
 #pragma endregion
 
-void AsassPlayer::ServerSpawnBuilding_Implementation(AsassPlayerController* PlayerController, TSubclassOf<AActor> ActorToSpawn, FHitResult Hit, const FVector &HalfHeight, const TArray<FVector> &Midpoints, int32 PlayerID)
+void AsassPlayer::ServerSpawnBuilding_Implementation(AsassPlayerController* PlayerController, TSubclassOf<AActor> ActorToSpawn, FHitResult Hit, const FVector &HalfHeight, const TArray<FVector> &Midpoints, const FVector &TraceSize, int32 PlayerID)
 {
-	GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Emerald, UKismetStringLibrary::Conv_VectorToString(Hit.Location));
+	//GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Emerald, UKismetStringLibrary::Conv_VectorToString(Hit.Location));
 	const FActorSpawnParameters SpawnParams = FActorSpawnParameters();
 	//@TODO: Location should be replaced by Hit.Location + HalfHeight when halfheights are set up!
-	const FVector Location = Hit.Location + FVector(0, 0, 10);
+	const FVector Location = Hit.Location + HalfHeight;
 	const FRotator Rotation = FRotator::ZeroRotator;
 
 	if (Hit.Normal.Z >= .990) {
 		const TArray<AActor*> BoxIgnore;
 		FHitResult BoxHit;
-		if (!(UKismetSystemLibrary::BoxTraceSingleForObjects(GetWorld(), Hit.Location + FVector(0, 0, 10.0f), Hit.Location + FVector(0, 0, 50.f), FVector(50.0f, 50.0f, 10.0f), FRotator::ZeroRotator, DynamicAndStaticObjectTypes, true, BoxIgnore, EDrawDebugTrace::ForDuration, BoxHit, true))) {
+		if (!(UKismetSystemLibrary::BoxTraceSingleForObjects(GetWorld(), Hit.Location + FVector(0, 0, 10.0f), Hit.Location + FVector(0, 0, 10.0f) + 2 * HalfHeight, TraceSize / 2, FRotator::ZeroRotator, DynamicAndStaticObjectTypes, true, BoxIgnore, EDrawDebugTrace::ForDuration, BoxHit, true))) {
 			//if there is no hit (good)
 			if (!CheckBldgCorners(Midpoints, Hit.Location)) {
 				//if there is no obstruction (good)
 				AActor* NewSpawn = GetWorld()->SpawnActor(ActorToSpawn, &Location, &Rotation, SpawnParams);
 				if (NewSpawn == nullptr) {
-					GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "SassPlayer ServerSpawnBuilding: Could not spawn, unknown reason");
+					GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red, "SassPlayer ServerSpawnBuilding: Could not spawn, unknown reason");
 					return;
 				}
 				AsassPlayerState* SassPlayerState = Cast<AsassPlayerState>(PlayerState);
@@ -515,26 +535,26 @@ void AsassPlayer::ServerSpawnBuilding_Implementation(AsassPlayerController* Play
 						NewBuilding->UpdateMaterial(SassPlayerState->PlayerColor); 
 						NewBuilding->OwningPlayerID = PlayerID;
 					}
-					else { GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "SassPlayer ServerSpawnBuilding: Could not spawn, server could not determine what spawn was being asked for"); }
+					else { GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red, "SassPlayer ServerSpawnBuilding: Could not spawn, server could not determine what spawn was being asked for"); }
 				}
 			}
 			else {
 				//Bad Spawn
-				GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "SassPlayer ServerSpawnBuilding: Could not spawn because corners were obstructed");
+				GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red, "SassPlayer ServerSpawnBuilding: Could not spawn because corners were obstructed");
 			}
 		}
 		else {
 			//Bad Spawn
-			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "SassPlayer ServerSpawnBuilding: Could not spawn because trace hit something");
+			GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red, "SassPlayer ServerSpawnBuilding: Could not spawn because trace hit something");
 		}
 	}
 	else {
 		//Bad Spawn
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "SassPlayer ServerSpawnBuilding: Could not spawn because location uneven");
+		GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red, "SassPlayer ServerSpawnBuilding: Could not spawn because location uneven");
 	}
 }
 
-bool AsassPlayer::ServerSpawnBuilding_Validate(AsassPlayerController* PlayerController, TSubclassOf<AActor> ActorToSpawn, FHitResult Hit, const FVector &HalfHeight, const TArray<FVector> &Midpoints, int32 PlayerID)
+bool AsassPlayer::ServerSpawnBuilding_Validate(AsassPlayerController* PlayerController, TSubclassOf<AActor> ActorToSpawn, FHitResult Hit, const FVector &HalfHeight, const TArray<FVector> &Midpoints, const FVector &TraceSize, int32 PlayerID)
 {
 	return true;
 }
