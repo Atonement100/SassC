@@ -101,7 +101,7 @@ void AsassPlayer::Tick( float DeltaTime )
 			FHitResult BoxTraceHit;
 			TArray<AActor*> ActorsToIgnore;
 			ActorsToIgnore.Add(LocalObjectSpawn);
-			IsBadSpawn = UKismetSystemLibrary::BoxTraceSingleForObjects(GetWorld(), CursorHit.Location + FVector(0, 0, 10.0f), CursorHit.Location + FVector(0,0,10.0f) + 2 * HalfHeight, TraceSize / 2, FRotator::ZeroRotator, DynamicAndStaticObjectTypes, true, ActorsToIgnore, EDrawDebugTrace::ForOneFrame, BoxTraceHit, true);
+			IsBadSpawn = UKismetSystemLibrary::BoxTraceSingleForObjects(GetWorld(), CursorHit.Location + FVector(0,0,2), CursorHit.Location + 2 * HalfHeight, FVector(TraceSize.X, TraceSize.Y, 0), FRotator::ZeroRotator, DynamicAndStaticObjectTypes, true, ActorsToIgnore, EDrawDebugTrace::ForOneFrame, BoxTraceHit, true);
 			if (AbuildingBase* BuildingCast = Cast<AbuildingBase>(LocalObjectSpawn)) { IsBadSpawn = CheckBldgCorners(BuildingCast->CornerLocations, CursorHit.Location); }
 		}
 		else { IsBadSpawn = true; }
@@ -210,7 +210,7 @@ void AsassPlayer::LeftClickPressed() {
 		}
 
 
-		ServerSpawnBuilding(Cast<AsassPlayerController>(PlayerControllerPtr), SelectedSpawnableClass, Hit, FVector::ZeroVector, LocationsToCheck, TraceSize, PlayerState->PlayerId);
+		ServerSpawnBuilding(Cast<AsassPlayerController>(PlayerControllerPtr), SelectedSpawnableClass, Hit, HalfHeight, LocationsToCheck, TraceSize, PlayerState->PlayerId);
 	}
 }
 
@@ -501,10 +501,13 @@ void AsassPlayer::ServerSpawnBuilding_Implementation(AsassPlayerController* Play
 	const FVector Location = Hit.Location + HalfHeight;
 	const FRotator Rotation = FRotator::ZeroRotator;
 
+
 	if (Hit.Normal.Z >= .990) {
 		const TArray<AActor*> BoxIgnore;
 		FHitResult BoxHit;
-		if (!(UKismetSystemLibrary::BoxTraceSingleForObjects(GetWorld(), Hit.Location + FVector(0, 0, 10.0f), Hit.Location + FVector(0, 0, 10.0f) + 2 * HalfHeight, TraceSize / 2, FRotator::ZeroRotator, DynamicAndStaticObjectTypes, true, BoxIgnore, EDrawDebugTrace::ForDuration, BoxHit, true))) {
+	
+		if (!(UKismetSystemLibrary::BoxTraceSingleForObjects(GetWorld(), Hit.Location + FVector(0, 0, 2), Hit.Location + 2 * HalfHeight, FVector(TraceSize.X, TraceSize.Y, 0), FRotator::ZeroRotator, DynamicAndStaticObjectTypes, true, BoxIgnore, EDrawDebugTrace::ForDuration, BoxHit, true))) {
+			GEngine->AddOnScreenDebugMessage(-1, 4.0f, FColor::Red, UKismetStringLibrary::Conv_VectorToString(Location));
 			//if there is no hit (good)
 			if (!CheckBldgCorners(Midpoints, Hit.Location)) {
 				//if there is no obstruction (good)
