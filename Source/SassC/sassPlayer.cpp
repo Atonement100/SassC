@@ -98,7 +98,6 @@ void AsassPlayer::Tick( float DeltaTime )
 				TraceSize = UnitCast->TraceSize;
 			}
 
-			v:
 			FHitResult BoxTraceHit;
 			TArray<AActor*> ActorsToIgnore;
 			ActorsToIgnore.Add(LocalObjectSpawn);
