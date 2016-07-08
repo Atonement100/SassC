@@ -512,11 +512,13 @@ void AsassPlayer::ServerSpawnBuilding_Implementation(AsassPlayerController* Play
 			if (!CheckBldgCorners(Midpoints, Hit.Location)) {
 				//if there is no obstruction (good)
 				AActor* NewSpawn = GetWorld()->SpawnActor(ActorToSpawn, &Location, &Rotation, SpawnParams);
-				if (NewSpawn->IsA(AbuildingBase::StaticClass())) { NewSpawn->SetActorLocation(Hit.Location); }
+
 				if (NewSpawn == nullptr) {
 					GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red, "SassPlayer ServerSpawnBuilding: Could not spawn, unknown reason");
 					return;
 				}
+
+				if (NewSpawn->IsA(AbuildingBase::StaticClass())) { NewSpawn->SetActorLocation(Hit.Location); }
 				AsassPlayerState* SassPlayerState = Cast<AsassPlayerState>(PlayerState);
 				if (SassPlayerState != nullptr) { 
 					SassPlayerState->ControlledBuildings.Add(NewSpawn); 
@@ -525,18 +527,17 @@ void AsassPlayer::ServerSpawnBuilding_Implementation(AsassPlayerController* Play
 
 				//@TODO: Should find a way to consolidate these... hard with units being ACharacter, buildings being AActor to give them a common unit
 				//try unit (more likely)
-				AunitBase* NewUnit = Cast<AunitBase>(NewSpawn);
-				if (NewUnit != nullptr) { 
+				if (AunitBase* NewUnit = Cast<AunitBase>(NewSpawn)) {
 					NewUnit->UpdateMaterial(SassPlayerState->PlayerColor); 
 					NewUnit->SpawnDefaultController();
 					NewUnit->OwningPlayerID = PlayerID;
 				}
 				//try building
 				else {
-					AbuildingBase* NewBuilding = Cast<AbuildingBase>(NewSpawn);
-					if (NewBuilding != nullptr) { 
+
+					if (AbuildingBase* NewBuilding = Cast<AbuildingBase>(NewSpawn)) {
 						NewBuilding->UpdateMaterial(SassPlayerState->PlayerColor); 
-						NewBuilding->OwningPlayerID = PlayerID;
+						NewBuilding->OwningPlayerID = PlayerID
 					}
 					else { GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red, "SassPlayer ServerSpawnBuilding: Could not spawn, server could not determine what spawn was being asked for"); }
 				}
