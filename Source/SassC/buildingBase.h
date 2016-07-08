@@ -44,6 +44,11 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Building Base")
 	FVector HalfHeight = FVector(0, 0, 25);
 
+	UFUNCTION(Reliable, NetMulticast, WithValidation)
+	void PostCreation();
+	virtual void PostCreation_Implementation();
+	virtual bool PostCreation_Validate();
+
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Building Base")
 	USceneComponent* SceneComponent;

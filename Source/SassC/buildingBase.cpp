@@ -62,3 +62,12 @@ float AbuildingBase::TakeDamage(float DamageAmount, FDamageEvent const & DamageE
 float AbuildingBase::GetHealth() {
 	return Health;
 }
+
+void AbuildingBase::PostCreation_Implementation()
+{
+}
+
+bool AbuildingBase::PostCreation_Validate()
+{
+	return true;
+}

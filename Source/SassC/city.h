@@ -18,7 +18,8 @@ class SASSC_API Acity : public AbuildingBase
 	virtual void PostInitializeComponents() override;
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaSeconds) override;
-	
+	virtual void PostCreation_Implementation() override;
+	virtual bool PostCreation_Validate() override;
 
 
 };

@@ -36,3 +36,11 @@ void Acity::BeginPlay() {
 void Acity::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
 }
+
+void Acity::PostCreation_Implementation() {
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, "City has been spawned for a player");
+}
+
+bool Acity::PostCreation_Validate() {
+	return true;
+}
