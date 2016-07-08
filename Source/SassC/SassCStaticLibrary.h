@@ -98,7 +98,7 @@ public:
 		) 
 	{
 		if (!World)
-		{
+		{ 
 			return false;
 		}
 
@@ -110,4 +110,9 @@ public:
 		World->LineTraceSingleByChannel(HitOut, Start, End, CollisionChannel, TraceParams);
 		return (HitOut.GetActor() != NULL);
 	}
+
+	static FName NoAggroTag() {
+		return "NULLIFY_OVERLAP";
+	}
+	
 };
