@@ -6,6 +6,7 @@
 #include "sassPlayerState.h"
 #include "unitController.h"
 #include "Net/UnrealNetwork.h"
+#include "SassCStaticLibrary.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetStringLibrary.h"
@@ -31,7 +32,7 @@ AunitBase::AunitBase()
 	DetectionSphere->AttachTo(RootComponent);
 
 	AggroSphere = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Aggro Sphere"));
-	AggroSphere->ComponentTags.Add(NoAggroTag);
+	AggroSphere->ComponentTags.Add(USassCStaticLibrary::NoAggroTag());
 	AggroSphere->AttachTo(RootComponent);
 
 	TextRender = CreateDefaultSubobject<UTextRenderComponent>(TEXT("Text Render"));
@@ -80,7 +81,7 @@ void AunitBase::OnOverlapEnd_DetectionSphere(class AActor* OtherActor, class UPr
 
 void AunitBase::OnOverlapBegin_AggroSphere(class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) {
 	//need to add friendly unit check
-	if (OtherActor != this && !OtherComp->ComponentHasTag(NoAggroTag)) {
+	if (OtherActor != this && !OtherComp->ComponentHasTag(USassCStaticLibrary::NoAggroTag())) {
 		if (OtherActor->IsA(AunitBase::StaticClass()) && Cast<AunitBase>(OtherActor)->OwningPlayerID != OwningPlayerID) {
 			EnemiesInRange.Add(OtherActor);
 		}

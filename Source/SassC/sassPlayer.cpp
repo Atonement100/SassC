@@ -222,7 +222,8 @@ void AsassPlayer::RightClickPressed() {
 	FHitResult RaycastHit;
 	const TArray<AActor*> RaycastIgnores;
 
-	UKismetSystemLibrary::LineTraceSingleForObjects(GetWorld(), GetMesh()->GetComponentLocation() + FVector(0, 0, BaseEyeHeight + 80.0f), GetMesh()->GetComponentLocation() + FVector(0, 0, BaseEyeHeight + 80.0f) + UKismetMathLibrary::GetForwardVector(PlayerControllerPtr->GetControlRotation())*10000.0f, DynamicAndStaticObjectTypes, true, RaycastIgnores, EDrawDebugTrace::ForOneFrame, RaycastHit, true);
+	UKismetSystemLibrary::LineTraceSingleForObjects(GetWorld(), GetMesh()->GetComponentLocation() + FVector(0, 0, BaseEyeHeight + 80.0f), GetMesh()->GetComponentLocation() + FVector(0, 0, BaseEyeHeight + 80.0f) + UKismetMathLibrary::GetForwardVector(PlayerControllerPtr->GetControlRotation())*10000.0f, DynamicAndStaticObjectTypes, true, RaycastIgnores, EDrawDebugTrace::ForDuration, RaycastHit, true);
+	if (RaycastHit.GetComponent()->ComponentHasTag(USassCStaticLibrary::NoAggroTag())) { UKismetSystemLibrary::LineTraceSingleForObjects(GetWorld(), RaycastHit.Location, RaycastHit.Location + UKismetMathLibrary::GetForwardVector(PlayerControllerPtr->GetControlRotation())*10000.0f, DynamicAndStaticObjectTypes, true, RaycastIgnores, EDrawDebugTrace::ForDuration, RaycastHit, true);}
 	AActor* HitActor = RaycastHit.GetActor();
 	ETypeOfOrder OrderType = ETypeOfOrder::ORDER_WORLD;
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Magenta, HitActor->GetName());
@@ -478,7 +479,7 @@ void AsassPlayer::CreateSelectedUnitsArray(TArray<FHitResult> Hits, int32 Player
 		AunitBase* Unit = Cast<AunitBase>(Hit.GetActor());
 
 
-		if (Unit && !Hit.GetComponent()->ComponentHasTag(NoAggroTag) && (Unit->OwningPlayerID == PlayerID)) {
+		if (Unit && !Hit.GetComponent()->ComponentHasTag(USassCStaticLibrary::NoAggroTag()) && (Unit->OwningPlayerID == PlayerID)) {
 			SelectedUnits.Add(Unit);
 			Unit->SetDecalVisibility(true);
 		}

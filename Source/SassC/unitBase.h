@@ -130,9 +130,6 @@ protected:
 	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
 	bool IsAttacking;
 
-
-
-	const FName NoAggroTag = "NULLIFY_OVERLAP"; //this should never ever be changed unless also changed in sassplayer
 	const int SelectionSphereScaleMod = 100; //this should never ever be changed
 	
 };
