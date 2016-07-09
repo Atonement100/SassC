@@ -2,6 +2,7 @@
 
 
 #include "SassC.h"
+#include "SassCStaticLibrary.h"
 #include "Kismet/KismetStringLibrary.h"
 #include "city.h"
 
@@ -16,6 +17,11 @@ Acity::Acity() {
 	BuildingCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("City Collision"));
 	BuildingCollision->AttachTo(BuildingMesh);
 	BuildingCollision->SetBoxExtent(CollisionBounds);
+
+	AreaOfInfluence = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Area of Influence"));
+	AreaOfInfluence->AttachTo(RootComponent);
+	AreaOfInfluence->ComponentTags.Add(USassCStaticLibrary::NoAggroTag());
+	AreaOfInfluence->SetWorldScale3D(FVector(0, 0, 0));
 }
 
 void Acity::PostInitializeComponents() {
@@ -39,6 +45,8 @@ void Acity::Tick(float DeltaTime) {
 
 void Acity::PostCreation_Implementation() {
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, "City has been spawned for a player");
+	AreaOfInfluence->SetRelativeScale3D(FVector(2.5, 2.5, .5));
+	
 }
 
 bool Acity::PostCreation_Validate() {

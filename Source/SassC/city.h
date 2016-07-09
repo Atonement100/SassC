@@ -21,5 +21,9 @@ class SASSC_API Acity : public AbuildingBase
 	virtual void PostCreation_Implementation() override;
 	virtual bool PostCreation_Validate() override;
 
+protected:
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Building Base")
+	UStaticMeshComponent* AreaOfInfluence;
 
+	const FName NoAggroTag = "NULLIFY_OVERLAP"; //this should never ever be changed unless also changed in sassplayer
 };
