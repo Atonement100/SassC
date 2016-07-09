@@ -45,9 +45,9 @@ public:
 	FVector HalfHeight = FVector(0, 0, 25);
 
 	UFUNCTION(Reliable, NetMulticast, WithValidation)
-	void PostCreation();
-	virtual void PostCreation_Implementation();
-	virtual bool PostCreation_Validate();
+	void PostCreation(FLinearColor PlayerColor);
+	virtual void PostCreation_Implementation(FLinearColor PlayerColor);
+	virtual bool PostCreation_Validate(FLinearColor PlayerColor);
 
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Building Base")
@@ -68,6 +68,7 @@ protected:
 	FVector CollisionBounds = FVector(50.0f, 50.0f, 50.0f);
 	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly)
 	FVector CollisionDisplacement = FVector(0.0f, 0.0f, 50.0f);
+
 
 
 	

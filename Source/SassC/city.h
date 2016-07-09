@@ -18,12 +18,13 @@ class SASSC_API Acity : public AbuildingBase
 	virtual void PostInitializeComponents() override;
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaSeconds) override;
-	virtual void PostCreation_Implementation() override;
-	virtual bool PostCreation_Validate() override;
+	virtual void PostCreation_Implementation(FLinearColor PlayerColor) override;
+	virtual bool PostCreation_Validate(FLinearColor PlayerColor) override;
 
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Building Base")
 	UStaticMeshComponent* AreaOfInfluence;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
+	UDecalComponent* InfluenceDecal;
 
-	const FName NoAggroTag = "NULLIFY_OVERLAP"; //this should never ever be changed unless also changed in sassplayer
 };

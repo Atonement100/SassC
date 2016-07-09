@@ -63,11 +63,11 @@ float AbuildingBase::GetHealth() {
 	return Health;
 }
 
-void AbuildingBase::PostCreation_Implementation()
+void AbuildingBase::PostCreation_Implementation(FLinearColor PlayerColor)
 {
 }
 
-bool AbuildingBase::PostCreation_Validate()
+bool AbuildingBase::PostCreation_Validate(FLinearColor PlayerColor)
 {
 	return true;
 }

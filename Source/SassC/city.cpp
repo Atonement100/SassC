@@ -22,11 +22,16 @@ Acity::Acity() {
 	AreaOfInfluence->AttachTo(RootComponent);
 	AreaOfInfluence->ComponentTags.Add(USassCStaticLibrary::NoAggroTag());
 	AreaOfInfluence->SetWorldScale3D(FVector(0, 0, 0));
+
+	InfluenceDecal = CreateDefaultSubobject<UDecalComponent>(TEXT("Area of Influence Decal"));
+	InfluenceDecal->AttachTo(RootComponent);
+	InfluenceDecal->SetVisibility(false);
 }
 
 void Acity::PostInitializeComponents() {
 	Super::PostInitializeComponents();
 	BldgMeshMaterialDynamic = BuildingMesh->CreateDynamicMaterialInstance(0, BuildingMesh->GetMaterial(0));
+
 
 	//FTransform CollisionTransform = BuildingCollision->GetRelativeTransform();
 	//CollisionTransform.SetLocation(CollisionDisplacement);
@@ -43,12 +48,17 @@ void Acity::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
 }
 
-void Acity::PostCreation_Implementation() {
+void Acity::PostCreation_Implementation(FLinearColor PlayerColor) {
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, "City has been spawned for a player");
 	AreaOfInfluence->SetRelativeScale3D(FVector(2.5, 2.5, .5));
-	
+
+	UMaterialInstanceDynamic* DynamicDecal = InfluenceDecal->CreateDynamicMaterialInstance();
+	DynamicDecal->SetVectorParameterValue("PlayerColor", PlayerColor);
+	InfluenceDecal->SetDecalMaterial(DynamicDecal);
+	InfluenceDecal->SetVisibility(true);
+
 }
 
-bool Acity::PostCreation_Validate() {
+bool Acity::PostCreation_Validate(FLinearColor PlayerColor) {
 	return true;
 }
