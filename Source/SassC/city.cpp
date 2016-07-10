@@ -13,19 +13,24 @@ Acity::Acity() {
 	BuildingMesh->AttachTo(RootComponent);
 	static ConstructorHelpers::FObjectFinder<UStaticMesh> CityMesh(TEXT("StaticMesh'/Game/StarterContent/Shapes/Shape_QuadPyramid.Shape_QuadPyramid'"));
 	if (CityMesh.Succeeded()) { BuildingMesh->SetStaticMesh(CityMesh.Object); }
+	BuildingMesh->SetRelativeLocation(FVector(0, 0, 1));
 	
 	BuildingCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("City Collision"));
 	BuildingCollision->AttachTo(BuildingMesh);
 	BuildingCollision->SetBoxExtent(CollisionBounds);
+	BuildingCollision->SetRelativeLocation(FVector(0, 0, 50));
 
 	AreaOfInfluence = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Area of Influence"));
 	AreaOfInfluence->AttachTo(RootComponent);
 	AreaOfInfluence->ComponentTags.Add(USassCStaticLibrary::NoAggroTag());
 	AreaOfInfluence->SetWorldScale3D(FVector(0, 0, 0));
+	AreaOfInfluence->SetRelativeLocation(FVector(0, 0, 1));
 
 	InfluenceDecal = CreateDefaultSubobject<UDecalComponent>(TEXT("Area of Influence Decal"));
 	InfluenceDecal->AttachTo(RootComponent);
 	InfluenceDecal->SetVisibility(false);
+	InfluenceDecal->SetRelativeRotation(FQuat(FRotator(0, -90, 0)));
+	InfluenceDecal->SetRelativeLocation(FVector(.5, 3.5, 3.5));
 }
 
 void Acity::PostInitializeComponents() {
@@ -50,7 +55,7 @@ void Acity::Tick(float DeltaTime) {
 
 void Acity::PostCreation_Implementation(FLinearColor PlayerColor) {
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, "City has been spawned for a player");
-	AreaOfInfluence->SetRelativeScale3D(FVector(2.5, 2.5, .5));
+	AreaOfInfluence->SetRelativeScale3D(FVector(3.5, 3.5, .5));
 
 	UMaterialInstanceDynamic* DynamicDecal = InfluenceDecal->CreateDynamicMaterialInstance();
 	DynamicDecal->SetVectorParameterValue("PlayerColor", PlayerColor);
