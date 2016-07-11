@@ -143,7 +143,7 @@ public:
 
 	/*Returns true if there is an issue with the spawn corners*/
 	UFUNCTION(BlueprintCallable, Category = "Spawnables")
-	bool CheckBldgCorners(TArray<FVector> ExtraLocs, FVector Center);
+	bool CheckBldgCorners(TArray<FVector> ExtraLocs, FVector Center, int32 PlayerID);
 	
 	/*Blueprint-set class of the pause widget*/
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Default")

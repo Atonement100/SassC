@@ -102,7 +102,7 @@ void AsassPlayer::Tick( float DeltaTime )
 			TArray<AActor*> ActorsToIgnore;
 			ActorsToIgnore.Add(LocalObjectSpawn);
 			IsBadSpawn = UKismetSystemLibrary::BoxTraceSingleForObjects(GetWorld(), CursorHit.Location + FVector(0,0,2), CursorHit.Location + 2 * HalfHeight, FVector(TraceSize.X, TraceSize.Y, 0), FRotator::ZeroRotator, DynamicAndStaticObjectTypes, true, ActorsToIgnore, EDrawDebugTrace::ForOneFrame, BoxTraceHit, true);
-			if (AbuildingBase* BuildingCast = Cast<AbuildingBase>(LocalObjectSpawn)) { IsBadSpawn = CheckBldgCorners(BuildingCast->CornerLocations, CursorHit.Location); }
+			if (AbuildingBase* BuildingCast = Cast<AbuildingBase>(LocalObjectSpawn)) { IsBadSpawn = CheckBldgCorners(BuildingCast->CornerLocations, CursorHit.Location, PlayerState->PlayerId); }
 		}
 		else { IsBadSpawn = true; }
 
@@ -511,10 +511,7 @@ void AsassPlayer::ServerSpawnBuilding_Implementation(AsassPlayerController* Play
 		if (!(UKismetSystemLibrary::BoxTraceSingleForObjects(GetWorld(), Hit.Location + FVector(0, 0, 2), Hit.Location + 2 * HalfHeight, FVector(TraceSize.X, TraceSize.Y, 0), FRotator::ZeroRotator, DynamicAndStaticObjectTypes, true, BoxIgnore, EDrawDebugTrace::ForDuration, BoxHit, true))) {
 			GEngine->AddOnScreenDebugMessage(-1, 4.0f, FColor::Red, UKismetStringLibrary::Conv_VectorToString(Location));
 			//if there is no hit (good)
-			if (!CheckBldgCorners(Midpoints, Hit.Location)) {
-				if ()) {
-					SpawningBuilding = true;
-				}
+			if (!CheckBldgCorners(Midpoints, Hit.Location, PlayerID)) {
 				//if there is no obstruction (good)
 				AActor* NewSpawn = GetWorld()->SpawnActor(ActorToSpawn, &Location, &Rotation, SpawnParams);
 
@@ -585,7 +582,7 @@ bool AsassPlayer::ColorPlayer_Validate(FLinearColor PlayerColor)
 	return true;
 }
 
-bool AsassPlayer::CheckBldgCorners(TArray<FVector> ExtraLocs, FVector Center)
+bool AsassPlayer::CheckBldgCorners(TArray<FVector> ExtraLocs, FVector Center, int32 PlayerID)
 {
 	if (ExtraLocs.Num() == 0) return false;
 	FHitResult Hit;
@@ -607,6 +604,16 @@ bool AsassPlayer::CheckBldgCorners(TArray<FVector> ExtraLocs, FVector Center)
 			return true;
 		}
 	}
+
+	for (FVector Loc : ExtraLocs) {
+		if (UKismetSystemLibrary::LineTraceSingleForObjects(GetWorld(), Center + Loc + FVector(0, 0, 40.0f), Center + Loc - FVector(0, 0, 15.0f), DynamicObjectTypes, true, Ignore, EDrawDebugTrace::ForDuration, Hit, true)) {
+			if (Cast<AbuildingBase>(Hit.GetActor())->OwningPlayerID != PlayerID) {
+				GEngine->AddOnScreenDebugMessage(-1, .5f, FColor::Emerald, "SassPlayer CheckBldgCorners: OVERLAPS ENEMY TERRITORY");
+				return true;
+			}
+		}
+	}
+
 	return false;
 }
 
