@@ -498,10 +498,11 @@ void AsassPlayer::ServerSpawnBuilding_Implementation(AsassPlayerController* Play
 {
 	//GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Emerald, UKismetStringLibrary::Conv_VectorToString(Hit.Location));
 	const FActorSpawnParameters SpawnParams = FActorSpawnParameters();
-	//@TODO: Location should be replaced by Hit.Location + HalfHeight when halfheights are set up!
+
 	const FVector Location = Hit.Location + HalfHeight;
 	const FRotator Rotation = FRotator::ZeroRotator;
 
+	bool SpawningBuilding = ActorToSpawn.GetDefaultObject()->IsA(AbuildingBase::StaticClass());
 
 	if (Hit.Normal.Z >= .990) {
 		const TArray<AActor*> BoxIgnore;
@@ -511,6 +512,9 @@ void AsassPlayer::ServerSpawnBuilding_Implementation(AsassPlayerController* Play
 			GEngine->AddOnScreenDebugMessage(-1, 4.0f, FColor::Red, UKismetStringLibrary::Conv_VectorToString(Location));
 			//if there is no hit (good)
 			if (!CheckBldgCorners(Midpoints, Hit.Location)) {
+				if ()) {
+					SpawningBuilding = true;
+				}
 				//if there is no obstruction (good)
 				AActor* NewSpawn = GetWorld()->SpawnActor(ActorToSpawn, &Location, &Rotation, SpawnParams);
 
@@ -519,7 +523,7 @@ void AsassPlayer::ServerSpawnBuilding_Implementation(AsassPlayerController* Play
 					return;
 				}
 
-				if (NewSpawn->IsA(AbuildingBase::StaticClass())) { NewSpawn->SetActorLocation(Hit.Location); }
+				if (SpawningBuilding) { NewSpawn->SetActorLocation(Hit.Location); }
 				AsassPlayerState* SassPlayerState = Cast<AsassPlayerState>(PlayerState);
 				if (SassPlayerState != nullptr) { 
 					SassPlayerState->ControlledBuildings.Add(NewSpawn); 
@@ -535,7 +539,6 @@ void AsassPlayer::ServerSpawnBuilding_Implementation(AsassPlayerController* Play
 				}
 				//try building
 				else {
-
 					if (AbuildingBase* NewBuilding = Cast<AbuildingBase>(NewSpawn)) {
 						NewBuilding->UpdateMaterial(SassPlayerState->PlayerColor); 
 						NewBuilding->OwningPlayerID = PlayerID;
@@ -587,8 +590,9 @@ bool AsassPlayer::CheckBldgCorners(TArray<FVector> ExtraLocs, FVector Center)
 	if (ExtraLocs.Num() == 0) return false;
 	FHitResult Hit;
 	TArray<float> TraceHeights;
+	TArray<AActor*> Ignore;
 	for (FVector Loc : ExtraLocs) {	
-		if (USassCStaticLibrary::Trace(GetWorld(), this, Center + Loc, Center + Loc - FVector(0, 0, 35), Hit, WorldStatic)) {
+		if (UKismetSystemLibrary::LineTraceSingleForObjects(GetWorld(), Center + Loc + FVector(0,0,15.0f), Center + Loc - FVector(0,0,15.0f), StaticObjectTypes, true, Ignore, EDrawDebugTrace::ForDuration, Hit, true)) {
 			TraceHeights.Add(Hit.Location.Z);
 		}
 		else {
@@ -603,7 +607,6 @@ bool AsassPlayer::CheckBldgCorners(TArray<FVector> ExtraLocs, FVector Center)
 			return true;
 		}
 	}
-
 	return false;
 }
 

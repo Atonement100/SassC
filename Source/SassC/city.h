@@ -24,7 +24,7 @@ class SASSC_API Acity : public AbuildingBase
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Building Base")
 	UStaticMeshComponent* AreaOfInfluence;
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "City")
 	UDecalComponent* InfluenceDecal;
 
 };
