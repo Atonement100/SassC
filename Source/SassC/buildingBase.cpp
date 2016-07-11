@@ -22,6 +22,7 @@ void AbuildingBase::GetLifetimeReplicatedProps(TArray<FLifetimeProperty> &OutLif
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 	DOREPLIFETIME(AbuildingBase, Health);
+	DOREPLIFETIME(AbuildingBase, OwningPlayerID);
 }
 
 void AbuildingBase::BeginPlay()

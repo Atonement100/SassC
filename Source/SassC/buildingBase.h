@@ -29,7 +29,7 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Building Base")
 	TArray<FVector> CornerLocations;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Building Base")
+	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadOnly, Category = "Building Base")
 	int32 OwningPlayerID;
 
 	UFUNCTION()
