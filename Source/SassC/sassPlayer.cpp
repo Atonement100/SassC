@@ -87,7 +87,7 @@ void AsassPlayer::Tick( float DeltaTime )
 		if (LocalObjectSpawn != nullptr) LocalObjectSpawn->SetActorLocation(CursorHit.Location + CurrentHalfHeight);
 		
 		if (CursorHit.Normal.Z > .990) {
-			//@TODO: This will only ever change when spawnable changes. Instead of checking this on tick, check it when spawnable is switched.
+			//@TODO: HalfHeight and TraceSize will only ever change when spawnable changes. Instead of checking this on tick, check it when spawnable is switched.
 			FVector HalfHeight, TraceSize;
 			if (AbuildingBase* BuildingCast = Cast<AbuildingBase>(LocalObjectSpawn)) { 
 				HalfHeight = BuildingCast->HalfHeight; 
@@ -102,7 +102,11 @@ void AsassPlayer::Tick( float DeltaTime )
 			TArray<AActor*> ActorsToIgnore;
 			ActorsToIgnore.Add(LocalObjectSpawn);
 			IsBadSpawn = UKismetSystemLibrary::BoxTraceSingleForObjects(GetWorld(), CursorHit.Location + FVector(0,0,2), CursorHit.Location + 2 * HalfHeight, FVector(TraceSize.X, TraceSize.Y, 0), FRotator::ZeroRotator, DynamicAndStaticObjectTypes, true, ActorsToIgnore, EDrawDebugTrace::ForOneFrame, BoxTraceHit, true);
-			if (AbuildingBase* BuildingCast = Cast<AbuildingBase>(LocalObjectSpawn)) { IsBadSpawn = CheckBldgCorners(BuildingCast->CornerLocations, CursorHit.Location, PlayerState->PlayerId); }
+			if (!IsBadSpawn) { 
+				if (AbuildingBase* BuildingCast = Cast<AbuildingBase>(LocalObjectSpawn)) { 
+					IsBadSpawn = CheckBldgCorners(BuildingCast->CornerLocations, CursorHit.Location, PlayerState->PlayerId); 
+				} 
+			}
 		}
 		else { IsBadSpawn = true; }
 
@@ -606,9 +610,10 @@ bool AsassPlayer::CheckBldgCorners(TArray<FVector> ExtraLocs, FVector Center, in
 	}
 
 	for (FVector Loc : ExtraLocs) {
-		if (UKismetSystemLibrary::LineTraceSingleForObjects(GetWorld(), Center + Loc + FVector(0, 0, 40.0f), Center + Loc - FVector(0, 0, 15.0f), DynamicObjectTypes, true, Ignore, EDrawDebugTrace::ForDuration, Hit, true)) {
-			if (Cast<AbuildingBase>(Hit.GetActor())->OwningPlayerID != PlayerID) {
-				GEngine->AddOnScreenDebugMessage(-1, .5f, FColor::Emerald, "SassPlayer CheckBldgCorners: OVERLAPS ENEMY TERRITORY");
+		if (UKismetSystemLibrary::LineTraceSingleForObjects(GetWorld(), Center + Loc + FVector(0, 0, 65.0f), Center + Loc - FVector(0, 0, 15.0f), DynamicObjectTypes, true, Ignore, EDrawDebugTrace::ForOneFrame, Hit, true)) {
+			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, Hit.GetActor()->GetName());
+			if ((Cast<AbuildingBase>(Hit.GetActor()))->OwningPlayerID != PlayerID) {
+				GEngine->AddOnScreenDebugMessage(-1, .1f, FColor::Emerald, "SassPlayer CheckBldgCorners: OVERLAPS ENEMY TERRITORY");
 				return true;
 			}
 		}
