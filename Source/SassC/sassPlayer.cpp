@@ -610,9 +610,11 @@ bool AsassPlayer::CheckBldgCorners(TArray<FVector> ExtraLocs, FVector Center, in
 	for (FVector Loc : ExtraLocs) {
 		if (UKismetSystemLibrary::LineTraceSingleForObjects(GetWorld(), Center + Loc + FVector(0, 0, 65.0f), Center + Loc - FVector(0, 0, 15.0f), DynamicObjectTypes, true, Ignore, EDrawDebugTrace::ForOneFrame, Hit, true)) {
 			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, Hit.GetActor()->GetName());
-			if ((Cast<AbuildingBase>(Hit.GetActor()))->OwningPlayerID != PlayerID) {
-				GEngine->AddOnScreenDebugMessage(-1, .1f, FColor::Emerald, "SassPlayer CheckBldgCorners: OVERLAPS ENEMY TERRITORY");
-				return true;
+			if (AbuildingBase* Bldg = Cast<AbuildingBase>(Hit.GetActor())) {
+				if (Bldg->OwningPlayerID != PlayerID) {
+					GEngine->AddOnScreenDebugMessage(-1, .1f, FColor::Emerald, "SassPlayer CheckBldgCorners: OVERLAPS ENEMY TERRITORY");
+					return true;
+				}
 			}
 		}
 	}
