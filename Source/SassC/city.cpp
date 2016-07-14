@@ -55,7 +55,8 @@ void Acity::Tick(float DeltaTime) {
 
 void Acity::PostCreation_Implementation(FLinearColor PlayerColor) {
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, "City has been spawned for a player");
-	AreaOfInfluence->SetRelativeScale3D(FVector(3.5, 3.5, .5));
+	AreaOfInfluence->SetWorldScale3D(FVector(3.5, 3.5, .5));
+	
 
 	UMaterialInstanceDynamic* DynamicDecal = InfluenceDecal->CreateDynamicMaterialInstance();
 	DynamicDecal->SetVectorParameterValue("PlayerColor", PlayerColor);
