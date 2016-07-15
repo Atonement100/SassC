@@ -224,8 +224,17 @@ void AsassPlayer::RightClickPressed() {
 	FHitResult RaycastHit;
 	const TArray<AActor*> RaycastIgnores;
 
-	UKismetSystemLibrary::LineTraceSingleForObjects(GetWorld(), GetMesh()->GetComponentLocation() + FVector(0, 0, BaseEyeHeight + 80.0f), GetMesh()->GetComponentLocation() + FVector(0, 0, BaseEyeHeight + 80.0f) + UKismetMathLibrary::GetForwardVector(PlayerControllerPtr->GetControlRotation())*10000.0f, DynamicAndStaticObjectTypes, true, RaycastIgnores, EDrawDebugTrace::ForDuration, RaycastHit, true);
-	if (RaycastHit.GetComponent()->ComponentHasTag(USassCStaticLibrary::NoAggroTag())) { UKismetSystemLibrary::LineTraceSingleForObjects(GetWorld(), RaycastHit.Location, RaycastHit.Location + UKismetMathLibrary::GetForwardVector(PlayerControllerPtr->GetControlRotation())*10000.0f, DynamicAndStaticObjectTypes, true, RaycastIgnores, EDrawDebugTrace::ForDuration, RaycastHit, true);}
+	UKismetSystemLibrary::LineTraceSingle_NEW(GetWorld(), 
+		GetMesh()->GetComponentLocation() + FVector(0, 0, BaseEyeHeight + 80.0f), 
+		GetMesh()->GetComponentLocation() + FVector(0, 0, BaseEyeHeight + 80.0f) + UKismetMathLibrary::GetForwardVector(PlayerControllerPtr->GetControlRotation())*10000.0f,
+		UEngineTypes::ConvertToTraceType(ECC_Visibility), 
+		true,
+		RaycastIgnores, 
+		EDrawDebugTrace::ForDuration,
+		RaycastHit, 
+		true);
+//UKismetSystemLibrary::LineTraceSingleForObjects(GetWorld(), GetMesh()->GetComponentLocation() + FVector(0, 0, BaseEyeHeight + 80.0f), GetMesh()->GetComponentLocation() + FVector(0, 0, BaseEyeHeight + 80.0f) + UKismetMathLibrary::GetForwardVector(PlayerControllerPtr->GetControlRotation())*10000.0f, DynamicAndStaticObjectTypes, true, RaycastIgnores, EDrawDebugTrace::ForDuration, RaycastHit, true);
+	if (RaycastHit.GetComponent()->ComponentHasTag(USassCStaticLibrary::NoAggroTag())) { UKismetSystemLibrary::LineTraceSingle_NEW(GetWorld(), GetMesh()->GetComponentLocation() + FVector(0, 0, BaseEyeHeight + 80.0f), GetMesh()->GetComponentLocation() + FVector(0, 0, BaseEyeHeight + 80.0f) + UKismetMathLibrary::GetForwardVector(PlayerControllerPtr->GetControlRotation())*10000.0f, UEngineTypes::ConvertToTraceType(ECC_Visibility), true, RaycastIgnores, EDrawDebugTrace::ForDuration, RaycastHit, true);}
 	AActor* HitActor = RaycastHit.GetActor();
 	ETypeOfOrder OrderType = ETypeOfOrder::ORDER_WORLD;
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Magenta, HitActor->GetName());
