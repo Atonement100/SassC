@@ -8,6 +8,7 @@
 #include "sassPlayerState.h"
 #include "sassGameState.h"
 #include "unitBase.h"
+#include "city.h"
 #include "selectionSphere.h"
 #include "buildingBase.h"
 #include "unitController.h"
@@ -103,7 +104,7 @@ void AsassPlayer::Tick( float DeltaTime )
 			ActorsToIgnore.Add(LocalObjectSpawn);
 			IsBadSpawn = UKismetSystemLibrary::BoxTraceSingleForObjects(GetWorld(), CursorHit.Location + FVector(0,0,2), CursorHit.Location + 2 * HalfHeight, FVector(TraceSize.X, TraceSize.Y, 0), FRotator::ZeroRotator, DynamicAndStaticObjectTypes, true, ActorsToIgnore, EDrawDebugTrace::ForOneFrame, BoxTraceHit, true);
 			if (AbuildingBase* BuildingCast = Cast<AbuildingBase>(LocalObjectSpawn)) { 
-				IsBadSpawn = IsBadSpawn | CheckBldgCorners(BuildingCast->CornerLocations, CursorHit.Location, PlayerState->PlayerId);
+				IsBadSpawn = IsBadSpawn | CheckBldgCorners(BuildingCast->CornerLocations, CursorHit.Location, PlayerState->PlayerId, (Cast<Acity>(LocalObjectSpawn)?true:false));
 			} 
 		}
 		else { IsBadSpawn = true; }
@@ -224,16 +225,7 @@ void AsassPlayer::RightClickPressed() {
 	FHitResult RaycastHit;
 	const TArray<AActor*> RaycastIgnores;
 
-	UKismetSystemLibrary::LineTraceSingle_NEW(GetWorld(), 
-		GetMesh()->GetComponentLocation() + FVector(0, 0, BaseEyeHeight + 80.0f), 
-		GetMesh()->GetComponentLocation() + FVector(0, 0, BaseEyeHeight + 80.0f) + UKismetMathLibrary::GetForwardVector(PlayerControllerPtr->GetControlRotation())*10000.0f,
-		UEngineTypes::ConvertToTraceType(ECC_Visibility), 
-		true,
-		RaycastIgnores, 
-		EDrawDebugTrace::ForDuration,
-		RaycastHit, 
-		true);
-//UKismetSystemLibrary::LineTraceSingleForObjects(GetWorld(), GetMesh()->GetComponentLocation() + FVector(0, 0, BaseEyeHeight + 80.0f), GetMesh()->GetComponentLocation() + FVector(0, 0, BaseEyeHeight + 80.0f) + UKismetMathLibrary::GetForwardVector(PlayerControllerPtr->GetControlRotation())*10000.0f, DynamicAndStaticObjectTypes, true, RaycastIgnores, EDrawDebugTrace::ForDuration, RaycastHit, true);
+	UKismetSystemLibrary::LineTraceSingle_NEW(GetWorld(), GetMesh()->GetComponentLocation() + FVector(0, 0, BaseEyeHeight + 80.0f), GetMesh()->GetComponentLocation() + FVector(0, 0, BaseEyeHeight + 80.0f) + UKismetMathLibrary::GetForwardVector(PlayerControllerPtr->GetControlRotation())*10000.0f,UEngineTypes::ConvertToTraceType(ECC_Visibility), true, RaycastIgnores, EDrawDebugTrace::ForDuration, RaycastHit, true);
 	if (RaycastHit.GetComponent()->ComponentHasTag(USassCStaticLibrary::NoAggroTag())) { UKismetSystemLibrary::LineTraceSingle_NEW(GetWorld(), GetMesh()->GetComponentLocation() + FVector(0, 0, BaseEyeHeight + 80.0f), GetMesh()->GetComponentLocation() + FVector(0, 0, BaseEyeHeight + 80.0f) + UKismetMathLibrary::GetForwardVector(PlayerControllerPtr->GetControlRotation())*10000.0f, UEngineTypes::ConvertToTraceType(ECC_Visibility), true, RaycastIgnores, EDrawDebugTrace::ForDuration, RaycastHit, true);}
 	AActor* HitActor = RaycastHit.GetActor();
 	ETypeOfOrder OrderType = ETypeOfOrder::ORDER_WORLD;
@@ -522,7 +514,7 @@ void AsassPlayer::ServerSpawnBuilding_Implementation(AsassPlayerController* Play
 		if (!(UKismetSystemLibrary::BoxTraceSingleForObjects(GetWorld(), Hit.Location + FVector(0, 0, 2), Hit.Location + 2 * HalfHeight, FVector(TraceSize.X, TraceSize.Y, 0), FRotator::ZeroRotator, DynamicAndStaticObjectTypes, true, BoxIgnore, EDrawDebugTrace::ForDuration, BoxHit, true))) {
 			GEngine->AddOnScreenDebugMessage(-1, 4.0f, FColor::Red, UKismetStringLibrary::Conv_VectorToString(Location));
 			//if there is no hit (good)
-			if (!CheckBldgCorners(Midpoints, Hit.Location, PlayerID)) {
+			if (!CheckBldgCorners(Midpoints, Hit.Location, PlayerID, ActorToSpawn.GetDefaultObject()->IsA(Acity::StaticClass()))) {
 				//if there is no obstruction (good)
 				AActor* NewSpawn = GetWorld()->SpawnActor(ActorToSpawn, &Location, &Rotation, SpawnParams);
 
@@ -593,7 +585,7 @@ bool AsassPlayer::ColorPlayer_Validate(FLinearColor PlayerColor)
 	return true;
 }
 
-bool AsassPlayer::CheckBldgCorners(TArray<FVector> ExtraLocs, FVector Center, int32 PlayerID)
+bool AsassPlayer::CheckBldgCorners(TArray<FVector> ExtraLocs, FVector Center, int32 PlayerID, bool isCity)
 {
 	if (ExtraLocs.Num() == 0) return false;
 	FHitResult Hit;
@@ -627,6 +619,10 @@ bool AsassPlayer::CheckBldgCorners(TArray<FVector> ExtraLocs, FVector Center, in
 					return true;
 				}
 			}
+		}
+		else if (!isCity) { //Trace did not hit
+			GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Green, "SassPlayer CheckBldgCorners: TERRITORY TRACE DID NOT MAKE CONTACT");
+			return true;
 		}
 	}
 
