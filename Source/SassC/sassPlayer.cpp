@@ -592,36 +592,34 @@ bool AsassPlayer::CheckBldgCorners(TArray<FVector> ExtraLocs, FVector Center, in
 	TArray<float> TraceHeights;
 	TArray<AActor*> Ignore;
 	for (FVector Loc : ExtraLocs) {	
-		if (UKismetSystemLibrary::LineTraceSingleForObjects(GetWorld(), Center + Loc + FVector(0,0,15.0f), Center + Loc - FVector(0,0,15.0f), StaticObjectTypes, true, Ignore, EDrawDebugTrace::ForDuration, Hit, true)) {
+		if (UKismetSystemLibrary::LineTraceSingleForObjects(GetWorld(), Center + Loc + FVector(0,0,15.0f), Center + Loc - FVector(0,0,15.0f), StaticObjectTypes, true, Ignore, EDrawDebugTrace::ForOneFrame, Hit, true)) {
 			TraceHeights.Add(Hit.Location.Z);
 		}
 		else {
-			GEngine->AddOnScreenDebugMessage(-1, .5f, FColor::Emerald, "SassPlayer CheckBldgCorners: TRACE MADE NO CONTACT");
+			GEngine->AddOnScreenDebugMessage(-1, GetWorld()->DeltaTimeSeconds, FColor::Emerald, "SassPlayer CheckBldgCorners: TRACE MADE NO CONTACT");
 			return true;
 		}
 	}
 	float first = TraceHeights[0];
 	for (float Height : TraceHeights) {
 		if (FMath::Abs(Height - first) > MAX_BLDG_CORNER_DIFFERENCE) {
-			GEngine->AddOnScreenDebugMessage(-1, .5f, FColor::Emerald, "SassPlayer CheckBldgCorners: HEIGHTS NOT EQUAL");
+			GEngine->AddOnScreenDebugMessage(-1, GetWorld()->DeltaTimeSeconds, FColor::Emerald, "SassPlayer CheckBldgCorners: HEIGHTS NOT EQUAL");
 			return true;
 		}
 	}
 	TArray<AActor*> nullArray;
 	for (FVector Loc : ExtraLocs) {
-
-		//if (UKismetSystemLibrary::LineTraceSingleForObjects(GetWorld(), Center + Loc + FVector(0, 0, 65.0f), Center + Loc - FVector(0, 0, 15.0f), DynamicObjectTypes, true, Ignore, EDrawDebugTrace::ForDuration, Hit, true)) {
-		if (UKismetSystemLibrary::LineTraceSingle_NEW(GetWorld(), Center + Loc + FVector(0, 0, 65.0f), Center + Loc - FVector(0, 0, 15.0f), UEngineTypes::ConvertToTraceType(ECollisionChannel::ECC_GameTraceChannel1), false, nullArray, EDrawDebugTrace::ForDuration, Hit, true)){
+		if (UKismetSystemLibrary::LineTraceSingle_NEW(GetWorld(), Center + Loc + FVector(0, 0, 65.0f), Center + Loc - FVector(0, 0, 15.0f), UEngineTypes::ConvertToTraceType(ECollisionChannel::ECC_GameTraceChannel1), false, nullArray, EDrawDebugTrace::ForOneFrame, Hit, true)){
 			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, Hit.GetActor()->GetName());
 			if (AbuildingBase* Bldg = Cast<AbuildingBase>(Hit.GetActor())) {
 				if (Bldg->OwningPlayerID != PlayerID) {
-					GEngine->AddOnScreenDebugMessage(-1, .1f, FColor::Emerald, "SassPlayer CheckBldgCorners: OVERLAPS ENEMY TERRITORY");
+					GEngine->AddOnScreenDebugMessage(-1, GetWorld()->DeltaTimeSeconds, FColor::Emerald, "SassPlayer CheckBldgCorners: OVERLAPS ENEMY TERRITORY");
 					return true;
 				}
 			}
 		}
 		else if (!isCity) { //Trace did not hit
-			GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Green, "SassPlayer CheckBldgCorners: TERRITORY TRACE DID NOT MAKE CONTACT");
+			GEngine->AddOnScreenDebugMessage(-1, GetWorld()->DeltaTimeSeconds, FColor::Green, "SassPlayer CheckBldgCorners: TERRITORY TRACE DID NOT MAKE CONTACT");
 			return true;
 		}
 	}
