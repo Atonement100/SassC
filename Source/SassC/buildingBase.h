@@ -39,10 +39,10 @@ public:
 	float GetHealth();
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Building Base")
-	FVector TraceSize = FVector(50, 50, 10);
+	FVector TraceSize = FVector(35.0f, 31.0f, 10.0f);
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Building Base")
-	FVector HalfHeight = FVector(0, 0, 25);
+	FVector HalfHeight = FVector(0.0f, 0.0f, 20.0f);
 
 	UFUNCTION(Reliable, NetMulticast, WithValidation)
 	void PostCreation(FLinearColor PlayerColor);
@@ -65,9 +65,9 @@ protected:
 	UPROPERTY(BlueprintReadOnly, VisibleDefaultsOnly)
 	FName ColorParameterText = "PlayerColor";
 	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly)
-	FVector CollisionBounds = FVector(50.0f, 50.0f, 50.0f);
+	FVector CollisionBounds = FVector(35.0f, 31.0f, 40.0f);
 	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly)
-	FVector CollisionDisplacement = FVector(0.0f, 0.0f, 50.0f);
+	FVector CollisionDisplacement = FVector(0.0f, 1.0f, 20.0f);
 
 
 

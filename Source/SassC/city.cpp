@@ -18,7 +18,7 @@ Acity::Acity() {
 	BuildingCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("City Collision"));
 	BuildingCollision->AttachTo(BuildingMesh);
 	BuildingCollision->SetBoxExtent(CollisionBounds);
-	BuildingCollision->SetRelativeLocation(FVector(0, 0, 50));
+	BuildingCollision->SetRelativeLocation(CollisionDisplacement);
 
 	AreaOfInfluence = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Area of Influence"));
 	AreaOfInfluence->AttachTo(RootComponent);
@@ -55,7 +55,7 @@ void Acity::Tick(float DeltaTime) {
 
 void Acity::PostCreation_Implementation(FLinearColor PlayerColor) {
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, "City has been spawned for a player");
-	AreaOfInfluence->SetWorldScale3D(FVector(3.5, 3.5, .5));
+	AreaOfInfluence->SetWorldScale3D(FVector(3.5f, 3.5f, 0.5f));
 	
 
 	UMaterialInstanceDynamic* DynamicDecal = InfluenceDecal->CreateDynamicMaterialInstance();
