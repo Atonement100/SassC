@@ -145,6 +145,10 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Spawnables")
 	bool CheckBldgCorners(TArray<FVector> ExtraLocs, FVector Center, int32 PlayerID, bool isCity);
 	
+	/*Returns true if there is an issue with the spawn location*/
+	UFUNCTION(BlueprintCallable, Category = "Spawnables")
+	bool CheckUnitLocation(FVector Center, int32 PlayerID);
+
 	/*Blueprint-set class of the pause widget*/
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Default")
 	TSubclassOf<UUserWidget> PauseWidgetClass;
