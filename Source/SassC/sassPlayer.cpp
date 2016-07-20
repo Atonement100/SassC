@@ -589,7 +589,6 @@ bool AsassPlayer::ColorPlayer_Validate(FLinearColor PlayerColor)
 }
 
 bool AsassPlayer::CheckUnitLocation(FVector Center, int32 PlayerID) {
-	GEngine->AddOnScreenDebugMessage(-1, GetWorld()->DeltaTimeSeconds, FColor::Emerald, "called");
 	TArray<AActor*> nullArray;
 	FHitResult Hit;
 	if (UKismetSystemLibrary::LineTraceSingle_NEW(GetWorld(), Center + FVector(0, 0, 65.0f), Center - FVector(0, 0, 15.0f), UEngineTypes::ConvertToTraceType(ECollisionChannel::ECC_GameTraceChannel1), false, nullArray, EDrawDebugTrace::ForOneFrame, Hit, true)) {
@@ -639,6 +638,19 @@ bool AsassPlayer::CheckBldgCorners(TArray<FVector> ExtraLocs, FVector Center, in
 		else if (!isCity) { //Trace did not hit
 			GEngine->AddOnScreenDebugMessage(-1, GetWorld()->DeltaTimeSeconds, FColor::Green, "SassPlayer CheckBldgCorners: TERRITORY TRACE DID NOT MAKE CONTACT");
 			return true;
+		}
+	}
+
+	if (isCity) {
+		TArray<FHitResult> SphereHits;
+		UKismetSystemLibrary::SphereTraceMulti_NEW(GetWorld(), Center, Center + FVector(0,0,1), USassCStaticLibrary::CityDefaultInfluenceRange(), UEngineTypes::ConvertToTraceType(ECollisionChannel::ECC_GameTraceChannel1), false, nullArray, EDrawDebugTrace::ForOneFrame, SphereHits, true);
+		for (FHitResult AHit : SphereHits) {
+			if (AbuildingBase* Bldg = Cast<AbuildingBase>(AHit.GetActor())) {
+				if (Bldg->OwningPlayerID != PlayerID) {
+					GEngine->AddOnScreenDebugMessage(-1, GetWorld()->DeltaTimeSeconds, FColor::Orange, "SassPlayer CheckBldgCorners: CITY TERRITORY OVERLAPS ENEMY TERRITORY");
+					return true;
+				}
+			}
 		}
 	}
 

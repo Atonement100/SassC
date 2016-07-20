@@ -115,4 +115,8 @@ public:
 		return "NULLIFY_OVERLAP";
 	}
 	
+	static float CityDefaultInfluenceRange() {
+		return 175.0f;
+	}
+
 };
