@@ -102,7 +102,7 @@ void AsassPlayer::Tick( float DeltaTime )
 			FHitResult BoxTraceHit;
 			TArray<AActor*> ActorsToIgnore;
 			ActorsToIgnore.Add(LocalObjectSpawn);
-			IsBadSpawn = UKismetSystemLibrary::BoxTraceSingleForObjects(GetWorld(), CursorHit.Location + FVector(0,0,2), CursorHit.Location + 2 * HalfHeight, FVector(TraceSize.X, TraceSize.Y, 0), FRotator::ZeroRotator, DynamicAndStaticObjectTypes, true, ActorsToIgnore, EDrawDebugTrace::ForOneFrame, BoxTraceHit, true);
+			IsBadSpawn = UKismetSystemLibrary::BoxTraceSingle(GetWorld(), CursorHit.Location + FVector(0, 0, 2), CursorHit.Location + 2 * HalfHeight, FVector(TraceSize.X, TraceSize.Y, 0), FRotator::ZeroRotator, UEngineTypes::UEngineTypes::ConvertToTraceType(ECollisionChannel::ECC_GameTraceChannel2), true, ActorsToIgnore, EDrawDebugTrace::ForOneFrame, BoxTraceHit, true);
 			if (AbuildingBase* BuildingCast = Cast<AbuildingBase>(LocalObjectSpawn)) { 
 				IsBadSpawn = IsBadSpawn | CheckBldgCorners(BuildingCast->CornerLocations, CursorHit.Location, PlayerState->PlayerId, (Cast<Acity>(LocalObjectSpawn)?true:false));
 			} 
