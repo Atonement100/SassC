@@ -513,14 +513,6 @@ void AsassPlayer::ServerSpawnBuilding_Implementation(AsassPlayerController* Play
 	if (Hit.Normal.Z >= .990) {
 		const TArray<AActor*> BoxIgnore;
 		FHitResult BoxHit;
-	
-
-
-			//(UKismetSystemLibrary::BoxTraceSingleForObjects(GetWorld(), Hit.Location + FVector(0, 0, 2), Hit.Location + 2 * HalfHeight, FVector(TraceSize.X, TraceSize.Y, 0), FRotator::ZeroRotator, DynamicAndStaticObjectTypes, true, BoxIgnore, EDrawDebugTrace::ForDuration, BoxHit, true))
-
-
-
-
 
 		if (!UKismetSystemLibrary::BoxTraceSingle(GetWorld(), Hit.Location + FVector(0, 0, 2), Hit.Location + 2 * HalfHeight, FVector(TraceSize.X, TraceSize.Y, 0), FRotator::ZeroRotator, UEngineTypes::UEngineTypes::ConvertToTraceType(ECollisionChannel::ECC_GameTraceChannel2), true, BoxIgnore, EDrawDebugTrace::ForDuration, BoxHit, true)) {
 			GEngine->AddOnScreenDebugMessage(-1, 4.0f, FColor::Red, UKismetStringLibrary::Conv_VectorToString(Location));

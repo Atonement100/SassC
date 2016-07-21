@@ -176,13 +176,22 @@ void AunitBase::Tick( float DeltaTime )
 		}
 	}
 	else {
-		if (EnemiesInRange.Num() > 0 && TimeSinceAttack > AttackDelay && EnemiesInRange[0]) {
+		if (EnemiesInRange.Num() > 0 && TimeSinceAttack > AttackDelay && EnemiesInRange[0] && EnemiesInRange[0]) {
+			int32 CompareID;
+			if (AunitBase* Unit = Cast<AunitBase>(EnemiesInRange[0])) { CompareID = Unit->OwningPlayerID; }
+			else if (AbuildingBase* Bldg = Cast<AbuildingBase>(EnemiesInRange[0])) { CompareID = Bldg->OwningPlayerID; }
+			else CompareID = 0;
+			if (CompareID != OwningPlayerID) {
 				GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, "Proximity attack");
 				const FDamageEvent DamageInfo = FDamageEvent();
-				EnemiesInRange[0]->TakeDamage(AttackDamage, DamageInfo, nullptr, this); 
-				SetActorRotation(FRotator(0,UKismetMathLibrary::FindLookAtRotation(GetActorLocation(), EnemiesInRange[0]->GetActorLocation()).Yaw,0));
+				EnemiesInRange[0]->TakeDamage(AttackDamage, DamageInfo, nullptr, this);
+				SetActorRotation(FRotator(0, UKismetMathLibrary::FindLookAtRotation(GetActorLocation(), EnemiesInRange[0]->GetActorLocation()).Yaw, 0));
 				TimeSinceAttack = 0.0f;
 				IsAttacking = true;
+			}
+			else {
+				EnemiesInRange.RemoveAt(0);
+			}
 		}
 		else if (EnemiesInRange.Num() == 0){
 			IsAttacking = false;
