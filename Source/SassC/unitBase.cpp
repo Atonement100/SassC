@@ -20,13 +20,16 @@ AunitBase::AunitBase()
 
 	UnderUnitDecal = CreateDefaultSubobject<UDecalComponent>(TEXT("Under Unit Decal"));
 	UnderUnitDecal->AttachTo(RootComponent);
+	UnderUnitDecal->FadeScreenSize = 0.0f;
 	
 	SelectionCircleDecal = CreateDefaultSubobject<UDecalComponent>(TEXT("Selection Circle Decal"));
 	SelectionCircleDecal->AttachTo(RootComponent);
 	SelectionCircleDecal->bVisible = false;
+	SelectionCircleDecal->FadeScreenSize = 0.0f;
 
 	SelectionBlendDecal = CreateDefaultSubobject<UDecalComponent>(TEXT("Selection Blend Decal"));
 	SelectionBlendDecal->AttachTo(RootComponent);
+	SelectionBlendDecal->FadeScreenSize = 0.0f;
 
 	DetectionSphere = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Detection Sphere"));
 	DetectionSphere->AttachTo(RootComponent);

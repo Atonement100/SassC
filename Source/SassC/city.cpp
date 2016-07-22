@@ -31,6 +31,7 @@ Acity::Acity() {
 	InfluenceDecal->SetVisibility(false);
 	InfluenceDecal->SetRelativeRotation(FQuat(FRotator(0, -90, 0)));
 	InfluenceDecal->SetRelativeLocation(FVector(.5, 3.5, 3.5));
+	InfluenceDecal->FadeScreenSize = 0.0f;
 }
 
 void Acity::PostInitializeComponents() {
