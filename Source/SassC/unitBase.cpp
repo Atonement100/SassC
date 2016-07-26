@@ -38,8 +38,8 @@ AunitBase::AunitBase()
 	AggroSphere->ComponentTags.Add(USassCStaticLibrary::NoAggroTag());
 	AggroSphere->AttachTo(RootComponent);
 
-	TextRender = CreateDefaultSubobject<UTextRenderComponent>(TEXT("Text Render"));
-	TextRender->AttachTo(RootComponent);
+	//TextRender = CreateDefaultSubobject<UTextRenderComponent>(TEXT("Text Render"));
+	//TextRender->AttachTo(RootComponent);
 
 	DetectionSphere->OnComponentBeginOverlap.AddDynamic(this, &AunitBase::OnOverlapBegin_DetectionSphere);
 	DetectionSphere->OnComponentEndOverlap.AddDynamic(this, &AunitBase::OnOverlapEnd_DetectionSphere);
