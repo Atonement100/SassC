@@ -18,5 +18,6 @@ class SASSC_API Awall : public AbuildingBase
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaSeconds) override;
 	
+protected:
 
 };
