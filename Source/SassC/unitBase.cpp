@@ -17,19 +17,28 @@
 AunitBase::AunitBase()
 {
 	PrimaryActorTick.bCanEverTick = true;
-
+	
 	UnderUnitDecal = CreateDefaultSubobject<UDecalComponent>(TEXT("Under Unit Decal"));
 	UnderUnitDecal->AttachTo(RootComponent);
 	UnderUnitDecal->FadeScreenSize = 0.0f;
-	
+	UnderUnitDecal->SetRelativeLocationAndRotation(FVector(0, 0, -10.2f), FQuat(FRotator(-90.0f, 0, 0)));
+	UnderUnitDecal->SetRelativeScale3D(FVector(10, 9, 9));
+	UnderUnitDecal->DecalSize = FVector(1, 1, 1);
+
 	SelectionCircleDecal = CreateDefaultSubobject<UDecalComponent>(TEXT("Selection Circle Decal"));
 	SelectionCircleDecal->AttachTo(RootComponent);
 	SelectionCircleDecal->bVisible = false;
 	SelectionCircleDecal->FadeScreenSize = 0.0f;
+	SelectionCircleDecal->SetRelativeLocationAndRotation(FVector(0, 0, -9), FQuat(FRotator(-90.0f, 0, 0)));
+	SelectionCircleDecal->SetRelativeScale3D(FVector(10, 8, 8));
+	SelectionCircleDecal->DecalSize = FVector(1, 1, 1);
 
 	SelectionBlendDecal = CreateDefaultSubobject<UDecalComponent>(TEXT("Selection Blend Decal"));
 	SelectionBlendDecal->AttachTo(RootComponent);
 	SelectionBlendDecal->FadeScreenSize = 0.0f;
+	SelectionBlendDecal->SetRelativeLocationAndRotation(FVector(0, 0, -10.2f), FQuat(FRotator(-90.0f, 0, 0)));
+	SelectionBlendDecal->SetRelativeScale3D(FVector(10, 10, 10));
+	SelectionBlendDecal->DecalSize = FVector(1, 1, 1);
 
 	DetectionSphere = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Detection Sphere"));
 	DetectionSphere->AttachTo(RootComponent);
