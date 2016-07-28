@@ -42,23 +42,24 @@ AunitBase::AunitBase()
 
 	DetectionSphere = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Detection Sphere"));
 	DetectionSphere->AttachTo(RootComponent);
+	DetectionSphere->OnComponentBeginOverlap.AddDynamic(this, &AunitBase::OnOverlapBegin_DetectionSphere);
+	DetectionSphere->OnComponentEndOverlap.AddDynamic(this, &AunitBase::OnOverlapEnd_DetectionSphere);
 
 	AggroSphere = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Aggro Sphere"));
 	AggroSphere->ComponentTags.Add(USassCStaticLibrary::NoAggroTag());
 	AggroSphere->AttachTo(RootComponent);
-
-	//TextRender = CreateDefaultSubobject<UTextRenderComponent>(TEXT("Text Render"));
-	//TextRender->AttachTo(RootComponent);
-
-	DetectionSphere->OnComponentBeginOverlap.AddDynamic(this, &AunitBase::OnOverlapBegin_DetectionSphere);
-	DetectionSphere->OnComponentEndOverlap.AddDynamic(this, &AunitBase::OnOverlapEnd_DetectionSphere);
-
 	AggroSphere->OnComponentBeginOverlap.AddDynamic(this, &AunitBase::OnOverlapBegin_AggroSphere);
 	AggroSphere->OnComponentEndOverlap.AddDynamic(this, &AunitBase::OnOverlapEnd_AggroSphere);
 	AggroSphere->SetWorldScale3D(FVector(AttackRange / SelectionSphereScaleMod));
 	//Decide if I want to have smaller aggro radius than attack range for idle characters... This would cause some issues with aggroing 
 	//In situations where someone on the offensive sends units /near/ and enemy but does not click him. Maybe lower aggro radius after
 	//A period of idle time to offset this?
+
+	//TextRender = CreateDefaultSubobject<UTextRenderComponent>(TEXT("Text Render"));
+	//TextRender->AttachTo(RootComponent);
+
+
+
 }
 
 void AunitBase::GetLifetimeReplicatedProps(TArray<FLifetimeProperty> &OutLifetimeProps) const
