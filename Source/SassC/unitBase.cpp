@@ -42,6 +42,8 @@ AunitBase::AunitBase()
 
 	DetectionSphere = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Detection Sphere"));
 	DetectionSphere->AttachTo(RootComponent);
+	DetectionSphere->SetRelativeLocation(FVector(0, 0, -9.0f));
+	DetectionSphere->SetRelativeScale3D(FVector(.32, .32, .2));
 	DetectionSphere->OnComponentBeginOverlap.AddDynamic(this, &AunitBase::OnOverlapBegin_DetectionSphere);
 	DetectionSphere->OnComponentEndOverlap.AddDynamic(this, &AunitBase::OnOverlapEnd_DetectionSphere);
 
