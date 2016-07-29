@@ -60,7 +60,13 @@ AunitBase::AunitBase()
 	//TextRender = CreateDefaultSubobject<UTextRenderComponent>(TEXT("Text Render"));
 	//TextRender->AttachTo(RootComponent);
 
-
+	UCharacterMovementComponent* CharMoveComp = GetCharacterMovement();
+	CharMoveComp->CrouchedHalfHeight = 5.0f;
+	CharMoveComp->bOrientRotationToMovement = true;
+	CharMoveComp->DefaultWaterMovementMode = EMovementMode::MOVE_Walking;
+	CharMoveComp->MaxStepHeight = 0;
+	CharMoveComp->MaxWalkSpeed = 50.0f;
+	CharMoveComp->MaxWalkSpeedCrouched = 50.0f;
 
 }
 
