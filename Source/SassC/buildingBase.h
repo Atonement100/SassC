@@ -69,7 +69,7 @@ protected:
 	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly)
 	FVector CollisionDisplacement = FVector(0.0f, 1.0f, 20.0f);
 
-
+	
 
 	
 };

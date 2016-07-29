@@ -8,20 +8,18 @@
 Agate::Agate() {
 	PrimaryActorTick.bCanEverTick = true;
 
-	BuildingMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Gate Mesh"));
-	BuildingMesh->AttachTo(RootComponent);
-	static ConstructorHelpers::FObjectFinder<UStaticMesh> gateMesh(TEXT("StaticMesh'/Game/StarterContent/Shapes/Shape_Trim.Shape_Trim'"));
-	if (gateMesh.Succeeded()) { BuildingMesh->SetStaticMesh(gateMesh.Object); }
+	GateMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Gate Mesh"));
+	GateMesh->AttachTo(RootComponent);
 
 	BuildingCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("Gate Collision"));
 	BuildingCollision->AttachTo(BuildingMesh);
 	BuildingCollision->SetBoxExtent(CollisionBounds);
-
+	
 }
 
 void Agate::PostInitializeComponents() {
 	Super::PostInitializeComponents();
-	BldgMeshMaterialDynamic = BuildingMesh->CreateDynamicMaterialInstance(0, BuildingMesh->GetMaterial(0));
+	BldgMeshMaterialDynamic = GateMesh->CreateDynamicMaterialInstance(0, GateMesh->GetMaterial(0));
 
 	//FTransform CollisionTransform = BuildingCollision->GetRelativeTransform();
 	//CollisionTransform.SetLocation(CollisionDisplacement);
@@ -35,6 +33,17 @@ void Agate::BeginPlay() {
 
 void Agate::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
+}
+
+void Agate::ColorBldg_Implementation(FLinearColor PlayerColor)
+{
+	BldgMeshMaterialDynamic->SetVectorParameterValue(ColorParameterText, PlayerColor);
+	this->GateMesh->SetMaterial(0, BldgMeshMaterialDynamic);
+}
+
+bool Agate::ColorBldg_Validate(FLinearColor PlayerColor)
+{
+	return true;
 }
 
 
