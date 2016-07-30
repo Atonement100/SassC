@@ -5,7 +5,7 @@
 
 Atower::Atower() {
 	PrimaryActorTick.bCanEverTick = true;
-
+	/*
 	BuildingMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("tower Mesh"));
 	BuildingMesh->AttachTo(RootComponent);
 	static ConstructorHelpers::FObjectFinder<UStaticMesh> towerMesh(TEXT("StaticMesh'/Game/StarterContent/Shapes/Shape_TriPyramid.Shape_TriPyramid'"));
@@ -14,7 +14,7 @@ Atower::Atower() {
 	BuildingCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("tower Collision"));
 	BuildingCollision->AttachTo(BuildingMesh);
 	BuildingCollision->SetBoxExtent(CollisionBounds);
-
+	*/
 }
 
 void Atower::PostInitializeComponents() {

@@ -5,7 +5,7 @@
 
 Awall::Awall() {
 	PrimaryActorTick.bCanEverTick = true;
-
+	/*
 	BuildingMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("wall Mesh"));
 	BuildingMesh->AttachTo(RootComponent);
 	static ConstructorHelpers::FObjectFinder<UStaticMesh> wallMesh(TEXT("StaticMesh'/Game/StarterContent/Shapes/Shape_Tube.Shape_Tube'"));
@@ -14,7 +14,7 @@ Awall::Awall() {
 	BuildingCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("wall Collision"));
 	BuildingCollision->AttachTo(BuildingMesh);
 	BuildingCollision->SetBoxExtent(CollisionBounds);
-
+	*/
 }
 
 void Awall::PostInitializeComponents() {

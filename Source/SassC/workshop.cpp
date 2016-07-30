@@ -5,7 +5,7 @@
 
 Aworkshop::Aworkshop() {
 	PrimaryActorTick.bCanEverTick = true;
-
+	/*
 	BuildingMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Workshop Mesh"));
 	BuildingMesh->AttachTo(RootComponent);
 	static ConstructorHelpers::FObjectFinder<UStaticMesh> workshopMesh(TEXT("StaticMesh'/Game/StarterContent/Shapes/Shape_Trim_90_In.Shape_Trim_90_In'"));
@@ -14,7 +14,7 @@ Aworkshop::Aworkshop() {
 	BuildingCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("workshop Collision"));
 	BuildingCollision->AttachTo(BuildingMesh);
 	BuildingCollision->SetBoxExtent(CollisionBounds);
-
+	*/
 }
 
 void Aworkshop::PostInitializeComponents() {

@@ -5,7 +5,7 @@
 
 Ashrine::Ashrine() {
 	PrimaryActorTick.bCanEverTick = true;
-
+	/*
 	BuildingMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("shrine Mesh"));
 	BuildingMesh->AttachTo(RootComponent);
 	static ConstructorHelpers::FObjectFinder<UStaticMesh> shrineMesh(TEXT("StaticMesh'/Game/StarterContent/Shapes/Shape_Pipe_180.Shape_Pipe_180'"));
@@ -14,7 +14,7 @@ Ashrine::Ashrine() {
 	BuildingCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("shrine Collision"));
 	BuildingCollision->AttachTo(BuildingMesh);
 	BuildingCollision->SetBoxExtent(CollisionBounds);
-
+	*/
 }
 
 void Ashrine::PostInitializeComponents() {

@@ -8,11 +8,14 @@
 Agate::Agate() {
 	PrimaryActorTick.bCanEverTick = true;
 
+	BuildingMesh->DestroyComponent();
+	BuildingCollision->DestroyComponent();
+
 	GateMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Gate Mesh"));
 	GateMesh->AttachTo(RootComponent);
 
 	BuildingCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("Gate Collision"));
-	BuildingCollision->AttachTo(BuildingMesh);
+	BuildingCollision->AttachTo(RootComponent);
 	BuildingCollision->SetBoxExtent(CollisionBounds);
 	
 }

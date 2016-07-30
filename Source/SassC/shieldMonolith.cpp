@@ -6,6 +6,7 @@
 AshieldMonolith::AshieldMonolith() {
 	PrimaryActorTick.bCanEverTick = true;
 
+	/*
 	BuildingMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("shieldMonolith Mesh"));
 	BuildingMesh->AttachTo(RootComponent);
 	static ConstructorHelpers::FObjectFinder<UStaticMesh> shieldMonolithMesh(TEXT("StaticMesh'/Game/StarterContent/Shapes/Shape_WideCapsule.Shape_WideCapsule'"));
@@ -14,7 +15,7 @@ AshieldMonolith::AshieldMonolith() {
 	BuildingCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("shieldMonolith Collision"));
 	BuildingCollision->AttachTo(BuildingMesh);
 	BuildingCollision->SetBoxExtent(CollisionBounds);
-
+	*/
 }
 
 void AshieldMonolith::PostInitializeComponents() {

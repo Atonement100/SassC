@@ -15,7 +15,17 @@ AbuildingBase::AbuildingBase()
 	bAlwaysRelevant = true;
 	bNetLoadOnClient = true;
 	bReplicates = true;
-	
+
+	BuildingMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Building Mesh"));
+	BuildingMesh->AttachTo(RootComponent);
+	BuildingMesh->SetRelativeLocation(FVector(0, 0, 1));
+	BuildingMesh->SetRelativeScale3D(FVector(1.905));
+
+	BuildingCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("Building Collision"));
+	BuildingCollision->AttachTo(RootComponent);
+	BuildingCollision->SetBoxExtent(CollisionBounds);
+	BuildingCollision->SetRelativeLocation(CollisionDisplacement);
+
 }
 
 void AbuildingBase::GetLifetimeReplicatedProps(TArray<FLifetimeProperty> &OutLifetimeProps) const

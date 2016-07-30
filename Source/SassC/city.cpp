@@ -8,7 +8,7 @@
 
 Acity::Acity() {
 	PrimaryActorTick.bCanEverTick = true;
-	
+	/*
 	BuildingMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("City Mesh"));
 	BuildingMesh->AttachTo(RootComponent);
 	static ConstructorHelpers::FObjectFinder<UStaticMesh> CityMesh(TEXT("StaticMesh'/Game/StarterContent/Shapes/Shape_QuadPyramid.Shape_QuadPyramid'"));
@@ -19,7 +19,7 @@ Acity::Acity() {
 	BuildingCollision->AttachTo(BuildingMesh);
 	BuildingCollision->SetBoxExtent(CollisionBounds);
 	BuildingCollision->SetRelativeLocation(CollisionDisplacement);
-
+	*/
 	AreaOfInfluence = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Area of Influence"));
 	AreaOfInfluence->AttachTo(RootComponent);
 	AreaOfInfluence->ComponentTags.Add(USassCStaticLibrary::NoAggroTag());
@@ -32,6 +32,7 @@ Acity::Acity() {
 	InfluenceDecal->SetRelativeRotation(FQuat(FRotator(0, -90, 0)));
 	InfluenceDecal->SetRelativeLocation(FVector(.5, 3.5, 3.5));
 	InfluenceDecal->FadeScreenSize = 0.0f;
+
 }
 
 void Acity::PostInitializeComponents() {
