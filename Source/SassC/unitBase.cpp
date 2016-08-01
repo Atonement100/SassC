@@ -22,7 +22,7 @@ AunitBase::AunitBase()
 	UnderUnitDecal->AttachTo(RootComponent);
 	UnderUnitDecal->FadeScreenSize = 0.0f;
 	UnderUnitDecal->SetRelativeLocationAndRotation(FVector(0, 0, -10.2f), FQuat(FRotator(-90.0f, 0, 0)));
-	UnderUnitDecal->SetRelativeScale3D(FVector(10, 9, 9));
+	UnderUnitDecal->SetRelativeScale3D(FVector(10, 5, 5));
 	UnderUnitDecal->DecalSize = FVector(1, 1, 1);
 
 	SelectionCircleDecal = CreateDefaultSubobject<UDecalComponent>(TEXT("Selection Circle Decal"));
@@ -30,7 +30,7 @@ AunitBase::AunitBase()
 	SelectionCircleDecal->bVisible = false;
 	SelectionCircleDecal->FadeScreenSize = 0.0f;
 	SelectionCircleDecal->SetRelativeLocationAndRotation(FVector(0, 0, -9), FQuat(FRotator(-90.0f, 0, 0)));
-	SelectionCircleDecal->SetRelativeScale3D(FVector(10, 8, 8));
+	SelectionCircleDecal->SetRelativeScale3D(FVector(10, 5, 5));
 	SelectionCircleDecal->DecalSize = FVector(1, 1, 1);
 
 	/*
