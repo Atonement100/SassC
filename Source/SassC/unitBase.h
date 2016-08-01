@@ -122,7 +122,7 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Unit Base")
 	float AttackDelay = 2.0f;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Unit Base")
-	float AttackRange = 20.0f;
+	float AttackRange = 10.0f;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Unit Base")
 	float AttackDamage = 15.0f;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")

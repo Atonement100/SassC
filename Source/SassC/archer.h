@@ -20,5 +20,7 @@ public:
 	virtual void Tick(float DeltaSeconds) override;
 	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
 	
-	
+protected:
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Unit Base")
+	float ArcherAttackRange = 35.0f;
 };

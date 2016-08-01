@@ -12,8 +12,11 @@ UCLASS()
 class SASSC_API Aballista : public AunitBase
 {
 	GENERATED_BODY()
-	
-	
+		Aballista();
+
+protected:
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Unit Base")
+		float BallistaAttackRange = 30.0f;
 	
 	
 };

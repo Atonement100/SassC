@@ -7,6 +7,7 @@ Aarcher::Aarcher()
 {
 	PrimaryActorTick.bCanEverTick = true;
 
+	AggroSphere->SetWorldScale3D(FVector(ArcherAttackRange / SelectionSphereScaleMod));
 }
 
 void Aarcher::BeginPlay()
