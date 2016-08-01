@@ -7,6 +7,9 @@ Aballista::Aballista() {
 	PrimaryActorTick.bCanEverTick = true;
 
 	AggroSphere->SetWorldScale3D(FVector(BallistaAttackRange / SelectionSphereScaleMod));
+
+	UnitCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("Unit Collision"));
+	UnitCollision->AttachTo(RootComponent);
 }
 
 

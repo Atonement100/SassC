@@ -17,6 +17,7 @@ class SASSC_API Aballista : public AunitBase
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Unit Base")
 		float BallistaAttackRange = 30.0f;
-	
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Building Base")
+		UBoxComponent* UnitCollision;
 	
 };
