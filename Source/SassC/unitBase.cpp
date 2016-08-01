@@ -179,7 +179,7 @@ void AunitBase::Tick( float DeltaTime )
 			}
 			else if (TimeSinceAttack > AttackDelay) {
 				if (BuildingToAttack->GetHealth() > 0) {
-					GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, "City attack");
+					GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, "UnitBase: City attack");
 					const FDamageEvent DamageInfo = FDamageEvent();
 					BuildingToAttack->TakeDamage(AttackDamage, DamageInfo, nullptr, this);
 					SetActorRotation(FRotator(0, UKismetMathLibrary::FindLookAtRotation(GetActorLocation(), EnemiesInRange[0]->GetActorLocation()).Yaw, 0));
@@ -205,7 +205,7 @@ void AunitBase::Tick( float DeltaTime )
 			else if (AbuildingBase* Bldg = Cast<AbuildingBase>(EnemiesInRange[0])) { CompareID = Bldg->OwningPlayerID; }
 			else CompareID = 0;
 			if (CompareID != OwningPlayerID) {
-				GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, "Proximity attack");
+				GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, "UnitBase: Proximity attack");
 				const FDamageEvent DamageInfo = FDamageEvent();
 				EnemiesInRange[0]->TakeDamage(AttackDamage, DamageInfo, nullptr, this);
 				SetActorRotation(FRotator(0, UKismetMathLibrary::FindLookAtRotation(GetActorLocation(), EnemiesInRange[0]->GetActorLocation()).Yaw, 0));
@@ -291,7 +291,7 @@ void AunitBase::ColorUnitDecal_Implementation(FLinearColor PlayerColor) {
 		UnderUnitDecal->SetDecalMaterial(UnitDecalMaterialDynamic);
 	}
 	else {
-		GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Green, "decal doesn't exist");
+		GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Green, "UnitBase ColorUnitDecal: decal doesn't exist");
 	}
 }
 
