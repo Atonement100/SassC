@@ -140,7 +140,7 @@ void AunitBase::Tick( float DeltaTime )
 		if ((OrderDestination - GetActorLocation()).Size2D() < 5.0f || TimeSinceOrdered > MaxTimeToMove){
 			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Cyan, "UnitBase Movement Complete");
 			ProcessingMoveToWorldOrder = false;
-			IsAttacking = false;
+			StopAttacking();
 		}
 	}
 	else if (ProcessingMoveToUnitOrder) {
@@ -155,27 +155,27 @@ void AunitBase::Tick( float DeltaTime )
 				const FDamageEvent DamageInfo = FDamageEvent();
 				if (ActorToFollow->GetHealth() > 0) {
 					ActorToFollow->TakeDamage(AttackDamage, DamageInfo, nullptr, this);
-					IsAttacking = true;
+					StartAttacking();
 				}
 				else { 
 					ActorToFollow = nullptr;
 					ProcessingMoveToUnitOrder = false;
 					GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Silver, "UnitBase Unit Attack Chase Complete (target has been killed)");
-					IsAttacking = false;
+					StopAttacking();
 				}
 			}
 		}
 		else {
 			ProcessingMoveToUnitOrder = false;
 			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Silver, "UnitBase Unit Attack Chase Complete");
-			IsAttacking = false;
+			StopAttacking();
 		}
 	}
 	else if (ProcessingMoveToBuildingOrder) {
 		if (BuildingToAttack && BuildingToAttack->GetHealth() > 0) {
 			if (!ReachedBuilding) {
 				AddMovementInput(OrderDirection, 1.0f);
-				IsAttacking = false;
+				StopAttacking();
 			}
 			else if (TimeSinceAttack > AttackDelay) {
 				if (BuildingToAttack->GetHealth() > 0) {
@@ -184,10 +184,10 @@ void AunitBase::Tick( float DeltaTime )
 					BuildingToAttack->TakeDamage(AttackDamage, DamageInfo, nullptr, this);
 					SetActorRotation(FRotator(0, UKismetMathLibrary::FindLookAtRotation(GetActorLocation(), EnemiesInRange[0]->GetActorLocation()).Yaw, 0));
 					TimeSinceAttack = 0.0f;
-					IsAttacking = true;
+					StartAttacking();
 				}
 				else {
-					IsAttacking = false;
+					StopAttacking();
 					ProcessingMoveToBuildingOrder = false;
 					BuildingToAttack = nullptr;
 					GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Orange, "UnitBase Building Attack Complete (target has been killed)");
@@ -195,7 +195,7 @@ void AunitBase::Tick( float DeltaTime )
 			}
 		}
 		else {
-			IsAttacking = false;
+			StopAttacking();
 		}
 	}
 	else {
@@ -210,16 +210,32 @@ void AunitBase::Tick( float DeltaTime )
 				EnemiesInRange[0]->TakeDamage(AttackDamage, DamageInfo, nullptr, this);
 				SetActorRotation(FRotator(0, UKismetMathLibrary::FindLookAtRotation(GetActorLocation(), EnemiesInRange[0]->GetActorLocation()).Yaw, 0));
 				TimeSinceAttack = 0.0f;
-				IsAttacking = true;
+				StartAttacking();
 			}
 			else {
 				EnemiesInRange.RemoveAt(0);
 			}
 		}
 		else if (EnemiesInRange.Num() == 0){
-			IsAttacking = false;
+			StopAttacking();
 		}
 	}
+}
+
+void AunitBase::StartAttacking_Implementation() {
+	this->IsAttacking = true;
+}
+
+bool AunitBase::StartAttacking_Validate() {
+	return true;
+}
+
+void AunitBase::StopAttacking_Implementation() {
+	this->IsAttacking = false;
+}
+
+bool AunitBase::StopAttacking_Validate() {
+	return true;
 }
 
 void AunitBase::SetupPlayerInputComponent(class UInputComponent* InputComponent)

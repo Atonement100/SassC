@@ -40,7 +40,7 @@ public:
 	virtual void ColorUnitDecal_Implementation(FLinearColor PlayerColor);
 	virtual bool ColorUnitDecal_Validate(FLinearColor PlayerColor);
 
-	/*Move selected units towards a world or enemy building destination*/
+	/*Move selected units towards a world*/
 	UFUNCTION(Reliable, Server, WithValidation)
 	void MoveToDest(FVector Destination);
 	virtual void MoveToDest_Implementation(FVector Destination);
@@ -52,10 +52,21 @@ public:
 	virtual void MoveToUnit_Implementation(AActor* UnitToAttack);
 	virtual bool MoveToUnit_Validate(AActor* UnitToAttack);
 
+	/*Move selected units towards an enemy building*/
 	UFUNCTION(Reliable, Server, WithValidation)
 	void MoveToBuilding(AActor* BuildingToTarget);
 	virtual void MoveToBuilding_Implementation(AActor* BuildingToTarget);
 	virtual bool MoveToBuilding_Validate(AActor* BuildingToTarget);
+
+	UFUNCTION(Reliable, Server, WithValidation)
+	void StartAttacking();
+	virtual void StartAttacking_Implementation();
+	virtual bool StartAttacking_Validate();
+
+	UFUNCTION(Reliable, Server, WithValidation)
+	void StopAttacking();
+	virtual void StopAttacking_Implementation();
+	virtual bool StopAttacking_Validate();
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
 	UDecalComponent* SelectionCircleDecal;
