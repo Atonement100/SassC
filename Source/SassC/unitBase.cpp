@@ -140,7 +140,7 @@ void AunitBase::Tick( float DeltaTime )
 		if ((OrderDestination - GetActorLocation()).Size2D() < 5.0f || TimeSinceOrdered > MaxTimeToMove){
 			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Cyan, "UnitBase Movement Complete");
 			ProcessingMoveToWorldOrder = false;
-			StopAttacking();
+			StopAttackAnimation();
 		}
 	}
 	else if (ProcessingMoveToUnitOrder) {
@@ -149,92 +149,106 @@ void AunitBase::Tick( float DeltaTime )
 			AddMovementInput(OrderDirection, 1.0f);
 
 			if (OrderDirection.Size() < AttackRange && TimeSinceAttack > AttackDelay) { //No need to check if unit is friendly or hostile for this attack, as "ActorToFollow" can only ever be hostile.
-				GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, "Attack!!");
+				//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, "Attack!!");
 				TimeSinceAttack = 0.0f;
 				
 				const FDamageEvent DamageInfo = FDamageEvent();
 				if (ActorToFollow->GetHealth() > 0) {
-					ActorToFollow->TakeDamage(AttackDamage, DamageInfo, nullptr, this);
-					StartAttacking();
+					Attack(ActorToFollow);
+					StartAttackAnimation();
 				}
 				else { 
 					ActorToFollow = nullptr;
 					ProcessingMoveToUnitOrder = false;
 					GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Silver, "UnitBase Unit Attack Chase Complete (target has been killed)");
-					StopAttacking();
+					StopAttackAnimation();
 				}
 			}
 		}
 		else {
 			ProcessingMoveToUnitOrder = false;
 			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Silver, "UnitBase Unit Attack Chase Complete");
-			StopAttacking();
+			StopAttackAnimation();
 		}
 	}
 	else if (ProcessingMoveToBuildingOrder) {
 		if (BuildingToAttack && BuildingToAttack->GetHealth() > 0) {
 			if (!ReachedBuilding) {
 				AddMovementInput(OrderDirection, 1.0f);
-				StopAttacking();
+				StopAttackAnimation();
 			}
 			else if (TimeSinceAttack > AttackDelay) {
 				if (BuildingToAttack->GetHealth() > 0) {
 					GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, "UnitBase: City attack");
-					const FDamageEvent DamageInfo = FDamageEvent();
-					BuildingToAttack->TakeDamage(AttackDamage, DamageInfo, nullptr, this);
-					SetActorRotation(FRotator(0, UKismetMathLibrary::FindLookAtRotation(GetActorLocation(), EnemiesInRange[0]->GetActorLocation()).Yaw, 0));
-					TimeSinceAttack = 0.0f;
-					StartAttacking();
+					Attack(BuildingToAttack);
+					StartAttackAnimation();
 				}
 				else {
-					StopAttacking();
+					GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Orange, "UnitBase Building Attack Complete (target has been killed)");
 					ProcessingMoveToBuildingOrder = false;
 					BuildingToAttack = nullptr;
-					GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Orange, "UnitBase Building Attack Complete (target has been killed)");
+					StopAttackAnimation();
 				}
 			}
 		}
 		else {
-			StopAttacking();
+			StopAttackAnimation();
 		}
 	}
 	else {
 		if (EnemiesInRange.Num() > 0 && TimeSinceAttack > AttackDelay && EnemiesInRange[0] && EnemiesInRange[0]) {
 			int32 CompareID;
-			if (AunitBase* Unit = Cast<AunitBase>(EnemiesInRange[0])) { CompareID = Unit->OwningPlayerID; }
+
+			if (AunitBase* Unit = Cast<AunitBase>(EnemiesInRange[0])) { CompareID = Unit->OwningPlayerID; }					
 			else if (AbuildingBase* Bldg = Cast<AbuildingBase>(EnemiesInRange[0])) { CompareID = Bldg->OwningPlayerID; }
 			else CompareID = 0;
+
 			if (CompareID != OwningPlayerID) {
-				GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, "UnitBase: Proximity attack");
-				const FDamageEvent DamageInfo = FDamageEvent();
-				EnemiesInRange[0]->TakeDamage(AttackDamage, DamageInfo, nullptr, this);
-				SetActorRotation(FRotator(0, UKismetMathLibrary::FindLookAtRotation(GetActorLocation(), EnemiesInRange[0]->GetActorLocation()).Yaw, 0));
-				TimeSinceAttack = 0.0f;
-				StartAttacking();
+				//GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Green, "UnitBase: Proximity attack");
+				Attack(EnemiesInRange[0]);
+				StartAttackAnimation();
 			}
 			else {
 				EnemiesInRange.RemoveAt(0);
 			}
 		}
 		else if (EnemiesInRange.Num() == 0){
-			StopAttacking();
+			StopAttackAnimation();
 		}
 	}
 }
 
-void AunitBase::StartAttacking_Implementation() {
-	this->IsAttacking = true;
+void AunitBase::Attack_Implementation(AActor* Target) {
+	this->TimeSinceAttack = 0.0f;
+
+	if (!Target) {
+		StopAttackAnimation();
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, "UnitBase Attack: Attack failed, target does not exist");
+		return; 
+	}
+
+	const FDamageEvent DamageInfo = FDamageEvent();
+	Target->TakeDamage(this->AttackDamage, DamageInfo, nullptr, this);
+	this->SetActorRotation(FRotator(0, UKismetMathLibrary::FindLookAtRotation(this->GetActorLocation(), Target->GetActorLocation()).Yaw, 0));
 }
 
-bool AunitBase::StartAttacking_Validate() {
+bool AunitBase::Attack_Validate(AActor* Target) {
 	return true;
 }
 
-void AunitBase::StopAttacking_Implementation() {
+void AunitBase::StartAttackAnimation_Implementation() {
+	this->IsAttacking = true;
+}
+
+bool AunitBase::StartAttackAnimation_Validate() {
+	return true;
+}
+
+void AunitBase::StopAttackAnimation_Implementation() {
 	this->IsAttacking = false;
 }
 
-bool AunitBase::StopAttacking_Validate() {
+bool AunitBase::StopAttackAnimation_Validate() {
 	return true;
 }
 

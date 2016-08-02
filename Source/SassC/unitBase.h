@@ -59,14 +59,19 @@ public:
 	virtual bool MoveToBuilding_Validate(AActor* BuildingToTarget);
 
 	UFUNCTION(Reliable, Server, WithValidation)
-	void StartAttacking();
-	virtual void StartAttacking_Implementation();
-	virtual bool StartAttacking_Validate();
+	void Attack(AActor* Target);
+	virtual void Attack_Implementation(AActor* Target);
+	virtual bool Attack_Validate(AActor* Target);
 
 	UFUNCTION(Reliable, Server, WithValidation)
-	void StopAttacking();
-	virtual void StopAttacking_Implementation();
-	virtual bool StopAttacking_Validate();
+	void StartAttackAnimation();
+	virtual void StartAttackAnimation_Implementation();
+	virtual bool StartAttackAnimation_Validate();
+
+	UFUNCTION(Reliable, Server, WithValidation)
+	void StopAttackAnimation();
+	virtual void StopAttackAnimation_Implementation();
+	virtual bool StopAttackAnimation_Validate();
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
 	UDecalComponent* SelectionCircleDecal;
