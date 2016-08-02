@@ -151,8 +151,6 @@ void AunitBase::Tick( float DeltaTime )
 			if (OrderDirection.Size() < AttackRange && TimeSinceAttack > AttackDelay) { //No need to check if unit is friendly or hostile for this attack, as "ActorToFollow" can only ever be hostile.
 				//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, "Attack!!");
 				TimeSinceAttack = 0.0f;
-				
-				const FDamageEvent DamageInfo = FDamageEvent();
 				if (ActorToFollow->GetHealth() > 0) {
 					Attack(ActorToFollow);
 					StartAttackAnimation();

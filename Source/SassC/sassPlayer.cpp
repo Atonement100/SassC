@@ -422,7 +422,9 @@ bool AsassPlayer::ServerSprint_Validate(bool isRunning, UCharacterMovementCompon
 #pragma region WASD Movement
 void AsassPlayer::MoveForward(float AxisValue) {
 	if (Controller != NULL && AxisValue != 0.0f) {
-		FRotator Rotation = Controller->GetControlRotation();
+		//@TODO:: Why not change this to mesh direction
+		//FRotator Rotation = Controller->GetControlRotation();
+		FRotator Rotation = GetMesh()->GetComponentRotation() - GetMesh()->RelativeRotation;
 		const FVector Direction = FRotationMatrix(Rotation).GetScaledAxis(EAxis::X);
 		AddMovementInput(Direction, AxisValue);
 	}
