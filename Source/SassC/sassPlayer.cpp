@@ -89,7 +89,8 @@ void AsassPlayer::Tick( float DeltaTime )
 		if (PlayerControllerPtr != nullptr) PlayerControllerPtr->GetHitResultUnderCursorByChannel(UEngineTypes::ConvertToTraceType(ECC_Visibility), true, CursorHit);
 		if (LocalObjectSpawn != nullptr) LocalObjectSpawn->SetActorLocation(CursorHit.Location + CurrentHalfHeight);
 		
-		if (CursorHit.GetActor() && !CursorHit.GetActor()->IsA(AbuildingBase::StaticClass())) {
+		if (CursorHit.GetActor() && !CursorHit.GetActor()->IsA(AbuildingBase::StaticClass())) {			//Trace hit something that isn't a building
+			if (ResetLocalView) { LocalObjectSpawn->SetActorHiddenInGame(false); ResetLocalView = false; }
 			if (CursorHit.Normal.Z > .990) {
 				//@TODO: HalfHeight and TraceSize will only ever change when spawnable changes. Instead of checking this on tick, check it when spawnable is switched.
 				FVector HalfHeight, TraceSize;
@@ -120,13 +121,14 @@ void AsassPlayer::Tick( float DeltaTime )
 			if (AbuildingBase* BuildingCast = Cast<AbuildingBase>(LocalObjectSpawn)) { BuildingCast->UpdateMaterial(NewColor); }
 			else if (AunitBase* UnitCast = Cast<AunitBase>(LocalObjectSpawn)) { UnitCast->UpdateMaterial(NewColor); }
 		}
-		else if (CursorHit.GetActor()) {
+		else if (CursorHit.GetActor()) {	//Did hit something and it was a building
 			 GEngine->AddOnScreenDebugMessage(-1, DeltaTime, FColor::Green, CursorHit.GetActor()->GetName());
 
 			if (LocalObjectSpawn->IsA(Atower::StaticClass()) && CursorHit.GetActor()->IsA(Atower::StaticClass())) {
 				LocalObjectSpawn->SetActorHiddenInGame(true);
 				Atower* TempTower = Cast<Atower>(CursorHit.GetActor());
 				if (TempTower->OwningPlayerID == PlayerState->PlayerId) TempTower->PreviewUpgrade();
+				ResetLocalView = true;
 			}
 		}
 	}

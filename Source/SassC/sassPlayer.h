@@ -210,6 +210,7 @@ protected:
 	bool SphereSpawnLatch = true;
 	bool TickRaycastLatch = true;
 	bool IsBadSpawn = true;
+	bool ResetLocalView = false;
 	TArray<FHitResult> SphereTraceHits;
 	FVector CurrentHit;
 	FVector InitialHit;
