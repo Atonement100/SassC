@@ -19,7 +19,8 @@ class SASSC_API AwallSegment : public AbuildingBase
 	virtual void Tick(float DeltaSeconds) override;
 
 protected:
-
+	AbuildingBase* LeftConnection;
+	AbuildingBase* RightConnection;
 	
 	
 };

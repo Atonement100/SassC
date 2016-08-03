@@ -9,6 +9,9 @@
 #include "sassGameState.h"
 #include "unitBase.h"
 #include "city.h"
+#include "wall.h"
+#include "wallSegment.h"
+#include "tower.h"
 #include "selectionSphere.h"
 #include "buildingBase.h"
 #include "unitController.h"
@@ -60,7 +63,6 @@ void AsassPlayer::Tick( float DeltaTime )
 		FActorSpawnParameters TempParams = FActorSpawnParameters();
 		TempParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 		const FActorSpawnParameters SpawnParams = FActorSpawnParameters(TempParams);
-		
 
 		if (LocalObjectSpawn != nullptr && !UKismetMathLibrary::EqualEqual_ClassClass(SelectedSpawnableClass, LocalObjectClass)) {
 			LocalObjectSpawn->Destroy();
@@ -87,35 +89,45 @@ void AsassPlayer::Tick( float DeltaTime )
 		if (PlayerControllerPtr != nullptr) PlayerControllerPtr->GetHitResultUnderCursorByChannel(UEngineTypes::ConvertToTraceType(ECC_Visibility), true, CursorHit);
 		if (LocalObjectSpawn != nullptr) LocalObjectSpawn->SetActorLocation(CursorHit.Location + CurrentHalfHeight);
 		
-		if (CursorHit.Normal.Z > .990) {
-			//@TODO: HalfHeight and TraceSize will only ever change when spawnable changes. Instead of checking this on tick, check it when spawnable is switched.
-			FVector HalfHeight, TraceSize;
-			if (AbuildingBase* BuildingCast = Cast<AbuildingBase>(LocalObjectSpawn)) { 
-				HalfHeight = BuildingCast->HalfHeight; 
-				TraceSize = BuildingCast->TraceSize; 
-			}
-			else if (AunitBase* UnitCast = Cast<AunitBase>(LocalObjectSpawn)) {
-				HalfHeight = UnitCast->HalfHeight;
-				TraceSize = UnitCast->TraceSize;
-			}
+		if (CursorHit.GetActor() && !CursorHit.GetActor()->IsA(AbuildingBase::StaticClass())) {
+			if (CursorHit.Normal.Z > .990) {
+				//@TODO: HalfHeight and TraceSize will only ever change when spawnable changes. Instead of checking this on tick, check it when spawnable is switched.
+				FVector HalfHeight, TraceSize;
+				if (AbuildingBase* BuildingCast = Cast<AbuildingBase>(LocalObjectSpawn)) {
+					HalfHeight = BuildingCast->HalfHeight;
+					TraceSize = BuildingCast->TraceSize;
+				}
+				else if (AunitBase* UnitCast = Cast<AunitBase>(LocalObjectSpawn)) {
+					HalfHeight = UnitCast->HalfHeight;
+					TraceSize = UnitCast->TraceSize;
+				}
 
-			FHitResult BoxTraceHit;
-			TArray<AActor*> ActorsToIgnore;
-			ActorsToIgnore.Add(LocalObjectSpawn);
-			IsBadSpawn = UKismetSystemLibrary::BoxTraceSingle(GetWorld(), CursorHit.Location + FVector(0, 0, 2), CursorHit.Location + 2 * HalfHeight, FVector(TraceSize.X, TraceSize.Y, 0), FRotator::ZeroRotator, UEngineTypes::UEngineTypes::ConvertToTraceType(ECollisionChannel::ECC_GameTraceChannel2), true, ActorsToIgnore, EDrawDebugTrace::ForOneFrame, BoxTraceHit, true);
-			if (AbuildingBase* BuildingCast = Cast<AbuildingBase>(LocalObjectSpawn)) { 
-				IsBadSpawn = IsBadSpawn | CheckBldgCorners(BuildingCast->CornerLocations, CursorHit.Location, PlayerState->PlayerId, (Cast<Acity>(LocalObjectSpawn)?true:false));
-			} 
-			else if (AunitBase* UnitCast = Cast<AunitBase>(LocalObjectSpawn)) {
-				IsBadSpawn = IsBadSpawn | CheckUnitLocation(CursorHit.Location, PlayerState->PlayerId);
+				FHitResult BoxTraceHit;
+				TArray<AActor*> ActorsToIgnore;
+				ActorsToIgnore.Add(LocalObjectSpawn);
+				IsBadSpawn = UKismetSystemLibrary::BoxTraceSingle(GetWorld(), CursorHit.Location + FVector(0, 0, 2), CursorHit.Location + 2 * HalfHeight, FVector(TraceSize.X, TraceSize.Y, 0), FRotator::ZeroRotator, UEngineTypes::UEngineTypes::ConvertToTraceType(ECollisionChannel::ECC_GameTraceChannel2), true, ActorsToIgnore, EDrawDebugTrace::ForOneFrame, BoxTraceHit, true);
+				if (AbuildingBase* BuildingCast = Cast<AbuildingBase>(LocalObjectSpawn)) {
+					IsBadSpawn = IsBadSpawn | CheckBldgCorners(BuildingCast->CornerLocations, CursorHit.Location, PlayerState->PlayerId, (Cast<Acity>(LocalObjectSpawn) ? true : false));
+				}
+				else if (AunitBase* UnitCast = Cast<AunitBase>(LocalObjectSpawn)) {
+					IsBadSpawn = IsBadSpawn | CheckUnitLocation(CursorHit.Location, PlayerState->PlayerId);
+				}
+			}
+			else { IsBadSpawn = true; }
+
+			FLinearColor NewColor = IsBadSpawn ? FLinearColor(.7f, 0.0f, .058f) : FLinearColor(.093f, .59f, .153f);
+
+			if (AbuildingBase* BuildingCast = Cast<AbuildingBase>(LocalObjectSpawn)) { BuildingCast->UpdateMaterial(NewColor); }
+			else if (AunitBase* UnitCast = Cast<AunitBase>(LocalObjectSpawn)) { UnitCast->UpdateMaterial(NewColor); }
+		}
+		else {
+			if (CursorHit.GetActor()) GEngine->AddOnScreenDebugMessage(-1, DeltaTime, FColor::Green, CursorHit.GetActor()->GetName());
+
+			if (LocalObjectSpawn->IsA(Atower::StaticClass()) && CursorHit.GetActor()->IsA(Atower::StaticClass())) {
+				LocalObjectSpawn->SetActorHiddenInGame(true);
+				
 			}
 		}
-		else { IsBadSpawn = true; }
-
-		FLinearColor NewColor = IsBadSpawn? FLinearColor(.7f, 0.0f, .058f) : FLinearColor(.093f, .59f, .153f);
-
-		if (AbuildingBase* BuildingCast = Cast<AbuildingBase>(LocalObjectSpawn)) { BuildingCast->UpdateMaterial(NewColor); }
-		else if (AunitBase* UnitCast = Cast<AunitBase>(LocalObjectSpawn)) { UnitCast->UpdateMaterial(NewColor); }
 	}
 	//Unit Menu not open
 	else {

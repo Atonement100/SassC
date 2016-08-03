@@ -19,5 +19,6 @@ class SASSC_API Awall : public AbuildingBase
 	virtual void Tick(float DeltaSeconds) override;
 	
 protected:
+	TArray<AbuildingBase*> ConnectedWalls;
 
 };
