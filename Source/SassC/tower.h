@@ -27,6 +27,16 @@ public:
 	void ResetPreview();
 	virtual void ResetPreview_Implementation();
 
+	UFUNCTION(Reliable, NetMulticast, WithValidation)
+	void NetUpgradeBuilding();
+	virtual void NetUpgradeBuilding_Implementation();
+	virtual bool NetUpgradeBuilding_Validate();
+
+	UFUNCTION(Reliable, Server, WithValidation)
+	void UpgradeBuilding();
+	virtual void UpgradeBuilding_Implementation();
+	virtual bool UpgradeBuilding_Validate();
+
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Tower")
 	UStaticMeshComponent* UpgradeOneMesh;

@@ -524,60 +524,69 @@ void AsassPlayer::ServerSpawnBuilding_Implementation(AsassPlayerController* Play
 
 	bool SpawningBuilding = ActorToSpawn.GetDefaultObject()->IsA(AbuildingBase::StaticClass());
 
-	if (Hit.Normal.Z >= .990) {
-		const TArray<AActor*> BoxIgnore;
-		FHitResult BoxHit;
+	if (Hit.GetActor() && !Hit.GetActor()->IsA(AbuildingBase::StaticClass())) {
+		if (Hit.Normal.Z >= .990) {
+			const TArray<AActor*> BoxIgnore;
+			FHitResult BoxHit;
 
-		if (!UKismetSystemLibrary::BoxTraceSingle(GetWorld(), Hit.Location + FVector(0, 0, 2), Hit.Location + 2 * HalfHeight, FVector(TraceSize.X, TraceSize.Y, 0), FRotator::ZeroRotator, UEngineTypes::UEngineTypes::ConvertToTraceType(ECollisionChannel::ECC_GameTraceChannel2), true, BoxIgnore, EDrawDebugTrace::ForDuration, BoxHit, true)) {
-			GEngine->AddOnScreenDebugMessage(-1, 4.0f, FColor::Red, UKismetStringLibrary::Conv_VectorToString(Location));
-			//if there is no hit (good)
-			if (!CheckBldgCorners(Midpoints, Hit.Location, PlayerID, ActorToSpawn.GetDefaultObject()->IsA(Acity::StaticClass())) || !(CheckUnitLocation(Hit.Location, PlayerID))) {
-				//if there is no obstruction (good)
-				AActor* NewSpawn = GetWorld()->SpawnActor(ActorToSpawn, &Location, &Rotation, SpawnParams);
+			if (!UKismetSystemLibrary::BoxTraceSingle(GetWorld(), Hit.Location + FVector(0, 0, 2), Hit.Location + 2 * HalfHeight, FVector(TraceSize.X, TraceSize.Y, 0), FRotator::ZeroRotator, UEngineTypes::UEngineTypes::ConvertToTraceType(ECollisionChannel::ECC_GameTraceChannel2), true, BoxIgnore, EDrawDebugTrace::ForDuration, BoxHit, true)) {
+				GEngine->AddOnScreenDebugMessage(-1, 4.0f, FColor::Red, UKismetStringLibrary::Conv_VectorToString(Location));
+				//if there is no hit (good)
+				if (!CheckBldgCorners(Midpoints, Hit.Location, PlayerID, ActorToSpawn.GetDefaultObject()->IsA(Acity::StaticClass())) || !(CheckUnitLocation(Hit.Location, PlayerID))) {
+					//if there is no obstruction (good)
+					AActor* NewSpawn = GetWorld()->SpawnActor(ActorToSpawn, &Location, &Rotation, SpawnParams);
 
-				if (NewSpawn == nullptr) {
-					GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red, "SassPlayer ServerSpawnBuilding: Could not spawn, unknown reason");
-					return;
-				}
-
-				if (SpawningBuilding) { NewSpawn->SetActorLocation(Hit.Location); }
-				AsassPlayerState* SassPlayerState = Cast<AsassPlayerState>(PlayerState);
-				if (SassPlayerState != nullptr) { 
-					SassPlayerState->ControlledBuildings.Add(NewSpawn); 
-					NewSpawn->SetOwner(PlayerController);
-				}
-
-				//@TODO: Should find a way to consolidate these... hard with units being ACharacter, buildings being AActor to give them a common unit
-				//try unit (more likely)
-				if (AunitBase* NewUnit = Cast<AunitBase>(NewSpawn)) {
-					NewUnit->UpdateMaterial(SassPlayerState->PlayerColor); 
-					NewUnit->SpawnDefaultController();
-					NewUnit->OwningPlayerID = PlayerID;
-				}
-				//try building
-				else {
-					if (AbuildingBase* NewBuilding = Cast<AbuildingBase>(NewSpawn)) {
-						NewBuilding->UpdateMaterial(SassPlayerState->PlayerColor); 
-						NewBuilding->OwningPlayerID = PlayerID;
-
-						NewBuilding->PostCreation(SassPlayerState->PlayerColor);
+					if (NewSpawn == nullptr) {
+						GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red, "SassPlayer ServerSpawnBuilding: Could not spawn, unknown reason");
+						return;
 					}
-					else { GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red, "SassPlayer ServerSpawnBuilding: Could not spawn, server could not determine what spawn was being asked for"); }
+
+					if (SpawningBuilding) { NewSpawn->SetActorLocation(Hit.Location); }
+					AsassPlayerState* SassPlayerState = Cast<AsassPlayerState>(PlayerState);
+					if (SassPlayerState != nullptr) {
+						SassPlayerState->ControlledBuildings.Add(NewSpawn);
+						NewSpawn->SetOwner(PlayerController);
+					}
+
+					//@TODO: Should find a way to consolidate these... hard with units being ACharacter, buildings being AActor to give them a common unit
+					//try unit (more likely)
+					if (AunitBase* NewUnit = Cast<AunitBase>(NewSpawn)) {
+						NewUnit->UpdateMaterial(SassPlayerState->PlayerColor);
+						NewUnit->SpawnDefaultController();
+						NewUnit->OwningPlayerID = PlayerID;
+					}
+					//try building
+					else {
+						if (AbuildingBase* NewBuilding = Cast<AbuildingBase>(NewSpawn)) {
+							NewBuilding->UpdateMaterial(SassPlayerState->PlayerColor);
+							NewBuilding->OwningPlayerID = PlayerID;
+
+							NewBuilding->PostCreation(SassPlayerState->PlayerColor);
+						}
+						else { GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red, "SassPlayer ServerSpawnBuilding: Could not spawn, server could not determine what spawn was being asked for"); }
+					}
+				}
+				else {
+					//Bad Spawn
+					GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red, "SassPlayer ServerSpawnBuilding: Could not spawn because corners were obstructed");
 				}
 			}
 			else {
 				//Bad Spawn
-				GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red, "SassPlayer ServerSpawnBuilding: Could not spawn because corners were obstructed");
+				GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red, "SassPlayer ServerSpawnBuilding: Could not spawn because trace hit something");
 			}
 		}
 		else {
 			//Bad Spawn
-			GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red, "SassPlayer ServerSpawnBuilding: Could not spawn because trace hit something");
+			GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red, "SassPlayer ServerSpawnBuilding: Could not spawn because location uneven");
 		}
 	}
-	else {
-		//Bad Spawn
-		GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red, "SassPlayer ServerSpawnBuilding: Could not spawn because location uneven");
+	else if (Hit.GetActor()) {
+		
+			if (ActorToSpawn.GetDefaultObject()->IsA(Atower::StaticClass()) && Hit.GetActor()->IsA(Atower::StaticClass())) {
+				Cast<Atower>(Hit.GetActor())->UpgradeBuilding();
+		
+		}
 	}
 }
 

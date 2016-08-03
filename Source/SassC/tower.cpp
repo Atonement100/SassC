@@ -59,3 +59,24 @@ void Atower::ResetPreview_Implementation() {
 	default: break;
 	}
 }
+
+void Atower::NetUpgradeBuilding_Implementation() {
+	switch (UpgradeLevel) {
+	case 1: { UpgradeOneMesh->SetVisibility(false); UpgradeTwoMesh->SetVisibility(true); UpgradeLevel++; break; }
+	case 0: { BuildingMesh->SetVisibility(false); UpgradeOneMesh->SetVisibility(true); UpgradeLevel++; break; }
+	case 2: break;
+	default: break;
+	}
+}
+
+bool Atower::NetUpgradeBuilding_Validate() {
+	return true;
+}
+
+void Atower::UpgradeBuilding_Implementation() {
+	NetUpgradeBuilding();
+}
+
+bool Atower::UpgradeBuilding_Validate() {
+	return true;
+}
