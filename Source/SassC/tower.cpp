@@ -15,6 +15,10 @@ Atower::Atower() {
 	BuildingCollision->AttachTo(BuildingMesh);
 	BuildingCollision->SetBoxExtent(CollisionBounds);
 	*/
+	UpgradeOneMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Tower Level 2 Mesh"));
+	UpgradeOneMesh->AttachTo(RootComponent);
+	UpgradeTwoMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Tower Level 3 Mesh"));
+	UpgradeTwoMesh->AttachTo(RootComponent);
 }
 
 void Atower::PostInitializeComponents() {
@@ -33,6 +37,25 @@ void Atower::BeginPlay() {
 
 void Atower::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
+	if (ResetRequired) { ResetPreview(); }
 }
 
+void Atower::PreviewUpgrade_Implementation() {
+	switch (UpgradeLevel) {
+	case 1: { UpgradeOneMesh->SetVisibility(false); UpgradeTwoMesh->SetVisibility(true); break; }
+	case 0: { BuildingMesh->SetVisibility(false); UpgradeOneMesh->SetVisibility(true); break; }
+	case 2: break;
+	default: break;
+	}
 
+	ResetRequired = true;
+}
+
+void Atower::ResetPreview_Implementation() {
+	switch (UpgradeLevel) {
+	case 1: { UpgradeOneMesh->SetVisibility(true); UpgradeTwoMesh->SetVisibility(false); break; }
+	case 0: { BuildingMesh->SetVisibility(true); UpgradeOneMesh->SetVisibility(false); break; }
+	case 2: break;
+	default: break;
+	}
+}

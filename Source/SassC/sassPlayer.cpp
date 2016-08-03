@@ -120,12 +120,12 @@ void AsassPlayer::Tick( float DeltaTime )
 			if (AbuildingBase* BuildingCast = Cast<AbuildingBase>(LocalObjectSpawn)) { BuildingCast->UpdateMaterial(NewColor); }
 			else if (AunitBase* UnitCast = Cast<AunitBase>(LocalObjectSpawn)) { UnitCast->UpdateMaterial(NewColor); }
 		}
-		else {
-			if (CursorHit.GetActor()) GEngine->AddOnScreenDebugMessage(-1, DeltaTime, FColor::Green, CursorHit.GetActor()->GetName());
+		else if (CursorHit.GetActor()) {
+			 GEngine->AddOnScreenDebugMessage(-1, DeltaTime, FColor::Green, CursorHit.GetActor()->GetName());
 
 			if (LocalObjectSpawn->IsA(Atower::StaticClass()) && CursorHit.GetActor()->IsA(Atower::StaticClass())) {
 				LocalObjectSpawn->SetActorHiddenInGame(true);
-				
+				Cast<Atower>(CursorHit.GetActor())->PreviewUpgrade();
 			}
 		}
 	}
