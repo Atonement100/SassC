@@ -125,7 +125,8 @@ void AsassPlayer::Tick( float DeltaTime )
 
 			if (LocalObjectSpawn->IsA(Atower::StaticClass()) && CursorHit.GetActor()->IsA(Atower::StaticClass())) {
 				LocalObjectSpawn->SetActorHiddenInGame(true);
-				Cast<Atower>(CursorHit.GetActor())->PreviewUpgrade();
+				Atower* TempTower = Cast<Atower>(CursorHit.GetActor());
+				if (TempTower->OwningPlayerID == PlayerState->PlayerId) TempTower->PreviewUpgrade();
 			}
 		}
 	}
@@ -582,10 +583,9 @@ void AsassPlayer::ServerSpawnBuilding_Implementation(AsassPlayerController* Play
 		}
 	}
 	else if (Hit.GetActor()) {
-		
-			if (ActorToSpawn.GetDefaultObject()->IsA(Atower::StaticClass()) && Hit.GetActor()->IsA(Atower::StaticClass())) {
-				Cast<Atower>(Hit.GetActor())->UpgradeBuilding();
-		
+		if (ActorToSpawn.GetDefaultObject()->IsA(Atower::StaticClass()) && Hit.GetActor()->IsA(Atower::StaticClass())) {
+			Atower* TempTower = Cast<Atower>(Hit.GetActor());
+			if (TempTower->OwningPlayerID == PlayerID) TempTower->UpgradeBuilding();
 		}
 	}
 }
