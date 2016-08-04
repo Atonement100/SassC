@@ -49,6 +49,26 @@ public:
 	virtual void PostCreation_Implementation(FLinearColor PlayerColor);
 	virtual bool PostCreation_Validate(FLinearColor PlayerColor);
 
+#pragma region Upgradable Building Functions
+	UFUNCTION(Unreliable, Client)
+	void PreviewUpgrade();
+	virtual void PreviewUpgrade_Implementation();
+
+	UFUNCTION(Unreliable, Client)
+	void ResetPreview();
+	virtual void ResetPreview_Implementation();
+
+	UFUNCTION(Reliable, NetMulticast, WithValidation)
+	void NetUpgradeBuilding();
+	virtual void NetUpgradeBuilding_Implementation();
+	virtual bool NetUpgradeBuilding_Validate();
+
+	UFUNCTION(Reliable, Server, WithValidation)
+	void UpgradeBuilding();
+	virtual void UpgradeBuilding_Implementation();
+	virtual bool UpgradeBuilding_Validate();
+#pragma endregion
+
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Building Base")
 	USceneComponent* SceneComponent;
@@ -69,6 +89,12 @@ protected:
 	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly)
 	FVector CollisionDisplacement = FVector(0.0f, 1.0f, 20.0f);
 
+	//These properties are used for buildings with upgrades, i.e. workshop, tower, and wall->gate. 
+	//For any buildings using these properties, each mesh must be individually declared in the specific blueprint.
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Tower")
+	uint8 UpgradeLevel = 0;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Tower")
+	bool ResetRequired = false;
 	
 
 	

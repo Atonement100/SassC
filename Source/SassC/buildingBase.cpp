@@ -82,3 +82,29 @@ bool AbuildingBase::PostCreation_Validate(FLinearColor PlayerColor)
 {
 	return true;
 }
+
+void AbuildingBase::PreviewUpgrade_Implementation()
+{
+}
+
+void AbuildingBase::ResetPreview_Implementation()
+{
+}
+
+void AbuildingBase::NetUpgradeBuilding_Implementation()
+{
+}
+
+bool AbuildingBase::NetUpgradeBuilding_Validate()
+{
+	return false;
+}
+
+void AbuildingBase::UpgradeBuilding_Implementation()
+{
+}
+
+bool AbuildingBase::UpgradeBuilding_Validate()
+{
+	return false;
+}

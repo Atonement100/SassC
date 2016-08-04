@@ -10,8 +10,10 @@
 #include "unitBase.h"
 #include "city.h"
 #include "wall.h"
+#include "gate.h"
 #include "wallSegment.h"
 #include "tower.h"
+#include "workshop.h"
 #include "selectionSphere.h"
 #include "buildingBase.h"
 #include "unitController.h"
@@ -128,6 +130,18 @@ void AsassPlayer::Tick( float DeltaTime )
 				LocalObjectSpawn->SetActorHiddenInGame(true);
 				Atower* TempTower = Cast<Atower>(CursorHit.GetActor());
 				if (TempTower->OwningPlayerID == PlayerState->PlayerId) TempTower->PreviewUpgrade();
+				ResetLocalView = true;
+			}
+			else if (LocalObjectSpawn->IsA(Aworkshop::StaticClass()) && CursorHit.GetActor()->IsA(Aworkshop::StaticClass())) {
+				LocalObjectSpawn->SetActorHiddenInGame(true);
+				Aworkshop* TempWorkshop = Cast<Aworkshop>(CursorHit.GetActor());
+				//if (TempWorkshop->OwningPlayerID == PlayerState->PlayerID) TempWorkshop->PreviewUpgrade();
+				ResetLocalView = true;
+			}
+			else if (LocalObjectSpawn->IsA(Agate::StaticClass()) && CursorHit.GetActor()->IsA(AwallSegment::StaticClass())) {
+				LocalObjectSpawn->SetActorHiddenInGame(true);
+				AwallSegment* TempSegment = Cast<AwallSegment>(CursorHit.GetActor());
+				//if (TempWorkshop->OwningPlayerID == PlayerState->PlayerID) TempSegment->PreviewUpgrade();
 				ResetLocalView = true;
 			}
 		}
