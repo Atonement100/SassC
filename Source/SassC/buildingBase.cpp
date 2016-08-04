@@ -74,6 +74,7 @@ float AbuildingBase::GetHealth() {
 	return Health;
 }
 
+#pragma region Upgradeable Building empty fx
 void AbuildingBase::PostCreation_Implementation(FLinearColor PlayerColor)
 {
 }
@@ -108,3 +109,4 @@ bool AbuildingBase::UpgradeBuilding_Validate()
 {
 	return false;
 }
+#pragma endregion

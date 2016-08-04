@@ -5,16 +5,7 @@
 
 Atower::Atower() {
 	PrimaryActorTick.bCanEverTick = true;
-	/*
-	BuildingMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("tower Mesh"));
-	BuildingMesh->AttachTo(RootComponent);
-	static ConstructorHelpers::FObjectFinder<UStaticMesh> towerMesh(TEXT("StaticMesh'/Game/StarterContent/Shapes/Shape_TriPyramid.Shape_TriPyramid'"));
-	if (towerMesh.Succeeded()) { BuildingMesh->SetStaticMesh(towerMesh.Object); }
 
-	BuildingCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("tower Collision"));
-	BuildingCollision->AttachTo(BuildingMesh);
-	BuildingCollision->SetBoxExtent(CollisionBounds);
-	*/
 	UpgradeOneMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Tower Level 2 Mesh"));
 	UpgradeOneMesh->AttachTo(RootComponent);
 	UpgradeTwoMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Tower Level 3 Mesh"));

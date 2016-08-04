@@ -135,13 +135,13 @@ void AsassPlayer::Tick( float DeltaTime )
 			else if (LocalObjectSpawn->IsA(Aworkshop::StaticClass()) && CursorHit.GetActor()->IsA(Aworkshop::StaticClass())) {
 				LocalObjectSpawn->SetActorHiddenInGame(true);
 				Aworkshop* TempWorkshop = Cast<Aworkshop>(CursorHit.GetActor());
-				//if (TempWorkshop->OwningPlayerID == PlayerState->PlayerID) TempWorkshop->PreviewUpgrade();
+				if (TempWorkshop->OwningPlayerID == PlayerState->PlayerId) TempWorkshop->PreviewUpgrade();
 				ResetLocalView = true;
 			}
 			else if (LocalObjectSpawn->IsA(Agate::StaticClass()) && CursorHit.GetActor()->IsA(AwallSegment::StaticClass())) {
 				LocalObjectSpawn->SetActorHiddenInGame(true);
 				AwallSegment* TempSegment = Cast<AwallSegment>(CursorHit.GetActor());
-				//if (TempWorkshop->OwningPlayerID == PlayerState->PlayerID) TempSegment->PreviewUpgrade();
+				if (TempSegment->OwningPlayerID == PlayerState->PlayerId) TempSegment->PreviewUpgrade();
 				ResetLocalView = true;
 			}
 		}
@@ -602,6 +602,16 @@ void AsassPlayer::ServerSpawnBuilding_Implementation(AsassPlayerController* Play
 		if (ActorToSpawn.GetDefaultObject()->IsA(Atower::StaticClass()) && Hit.GetActor()->IsA(Atower::StaticClass())) {
 			Atower* TempTower = Cast<Atower>(Hit.GetActor());
 			if (TempTower->OwningPlayerID == PlayerID) TempTower->UpgradeBuilding();
+		}
+		else if (LocalObjectSpawn->IsA(Aworkshop::StaticClass()) && Hit.GetActor()->IsA(Aworkshop::StaticClass())) {
+			LocalObjectSpawn->SetActorHiddenInGame(true);
+			Aworkshop* TempWorkshop = Cast<Aworkshop>(Hit.GetActor());
+			if (TempWorkshop->OwningPlayerID == PlayerID) TempWorkshop->UpgradeBuilding();
+		}
+		else if (LocalObjectSpawn->IsA(Agate::StaticClass()) && Hit.GetActor()->IsA(AwallSegment::StaticClass())) {
+			LocalObjectSpawn->SetActorHiddenInGame(true);
+			AwallSegment* TempSegment = Cast<AwallSegment>(Hit.GetActor());
+			if (TempSegment->OwningPlayerID == PlayerID) TempSegment->UpgradeBuilding();
 		}
 	}
 }

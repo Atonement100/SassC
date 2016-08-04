@@ -5,16 +5,9 @@
 
 Aworkshop::Aworkshop() {
 	PrimaryActorTick.bCanEverTick = true;
-	/*
-	BuildingMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Workshop Mesh"));
-	BuildingMesh->AttachTo(RootComponent);
-	static ConstructorHelpers::FObjectFinder<UStaticMesh> workshopMesh(TEXT("StaticMesh'/Game/StarterContent/Shapes/Shape_Trim_90_In.Shape_Trim_90_In'"));
-	if (workshopMesh.Succeeded()) { BuildingMesh->SetStaticMesh(workshopMesh.Object); }
 
-	BuildingCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("workshop Collision"));
-	BuildingCollision->AttachTo(BuildingMesh);
-	BuildingCollision->SetBoxExtent(CollisionBounds);
-	*/
+	UpgradeOneMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Tower Level 1 Mesh"));
+	UpgradeOneMesh->AttachTo(RootComponent);
 }
 
 void Aworkshop::PostInitializeComponents() {
@@ -33,6 +26,45 @@ void Aworkshop::BeginPlay() {
 
 void Aworkshop::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
+	if (ResetRequired) { ResetPreview(); }
 }
 
+
+void Aworkshop::PreviewUpgrade_Implementation() {
+	switch (UpgradeLevel) {
+	case 0: { BuildingMesh->SetVisibility(false); UpgradeOneMesh->SetVisibility(true); break; }
+	case 1: break;
+	default: break;
+	}
+
+	ResetRequired = true;
+}
+
+void Aworkshop::ResetPreview_Implementation() {
+	switch (UpgradeLevel) {
+	case 0: { BuildingMesh->SetVisibility(true); UpgradeOneMesh->SetVisibility(false); break; }
+	case 1: break;
+	default: break;
+	}
+}
+
+void Aworkshop::NetUpgradeBuilding_Implementation() {
+	switch (UpgradeLevel) {
+	case 0: { BuildingMesh->SetVisibility(false); UpgradeOneMesh->SetVisibility(true); UpgradeLevel++; break; }
+	case 1: break;
+	default: break;
+	}
+}
+
+bool Aworkshop::NetUpgradeBuilding_Validate() {
+	return true;
+}
+
+void Aworkshop::UpgradeBuilding_Implementation() {
+	NetUpgradeBuilding();
+}
+
+bool Aworkshop::UpgradeBuilding_Validate() {
+	return true;
+}
 
