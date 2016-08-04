@@ -603,13 +603,11 @@ void AsassPlayer::ServerSpawnBuilding_Implementation(AsassPlayerController* Play
 			Atower* TempTower = Cast<Atower>(Hit.GetActor());
 			if (TempTower->OwningPlayerID == PlayerID) TempTower->UpgradeBuilding();
 		}
-		else if (LocalObjectSpawn->IsA(Aworkshop::StaticClass()) && Hit.GetActor()->IsA(Aworkshop::StaticClass())) {
-			LocalObjectSpawn->SetActorHiddenInGame(true);
+		else if (ActorToSpawn.GetDefaultObject()->IsA(Aworkshop::StaticClass()) && Hit.GetActor()->IsA(Aworkshop::StaticClass())) {
 			Aworkshop* TempWorkshop = Cast<Aworkshop>(Hit.GetActor());
 			if (TempWorkshop->OwningPlayerID == PlayerID) TempWorkshop->UpgradeBuilding();
 		}
-		else if (LocalObjectSpawn->IsA(Agate::StaticClass()) && Hit.GetActor()->IsA(AwallSegment::StaticClass())) {
-			LocalObjectSpawn->SetActorHiddenInGame(true);
+		else if (ActorToSpawn.GetDefaultObject()->IsA(Agate::StaticClass()) && Hit.GetActor()->IsA(AwallSegment::StaticClass())) {
 			AwallSegment* TempSegment = Cast<AwallSegment>(Hit.GetActor());
 			if (TempSegment->OwningPlayerID == PlayerID) TempSegment->UpgradeBuilding();
 		}
