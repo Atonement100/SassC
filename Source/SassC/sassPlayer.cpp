@@ -122,6 +122,8 @@ void AsassPlayer::Tick( float DeltaTime )
 
 			if (AbuildingBase* BuildingCast = Cast<AbuildingBase>(LocalObjectSpawn)) { BuildingCast->UpdateMaterial(NewColor); }
 			else if (AunitBase* UnitCast = Cast<AunitBase>(LocalObjectSpawn)) { UnitCast->UpdateMaterial(NewColor); }
+
+			if (Awall* WallCast = Cast<Awall>(LocalObjectSpawn)) { WallCast->FindWallTowersInRange(); }
 		}
 		else if (CursorHit.GetActor()) {	//Did hit something and it was a building
 			 GEngine->AddOnScreenDebugMessage(-1, DeltaTime, FColor::Green, CursorHit.GetActor()->GetName());
@@ -546,7 +548,7 @@ void AsassPlayer::ServerSpawnBuilding_Implementation(AsassPlayerController* Play
 			const TArray<AActor*> BoxIgnore;
 			FHitResult BoxHit;
 
-			if (!UKismetSystemLibrary::BoxTraceSingle(GetWorld(), Hit.Location + FVector(0, 0, 2), Hit.Location + 2 * HalfHeight, FVector(TraceSize.X, TraceSize.Y, 0), FRotator::ZeroRotator, UEngineTypes::UEngineTypes::ConvertToTraceType(ECollisionChannel::ECC_GameTraceChannel2), true, BoxIgnore, EDrawDebugTrace::ForDuration, BoxHit, true)) {
+			if (!UKismetSystemLibrary::BoxTraceSingle(GetWorld(), Hit.Location + FVector(0, 0, 2), Hit.Location + 2 * HalfHeight, FVector(TraceSize.X, TraceSize.Y, 0), FRotator::ZeroRotator, UEngineTypes::ConvertToTraceType(ECollisionChannel::ECC_GameTraceChannel2), true, BoxIgnore, EDrawDebugTrace::ForDuration, BoxHit, true)) {
 				GEngine->AddOnScreenDebugMessage(-1, 4.0f, FColor::Red, UKismetStringLibrary::Conv_VectorToString(Location));
 				//if there is no hit (good)
 				if (!CheckBldgCorners(Midpoints, Hit.Location, PlayerID, ActorToSpawn.GetDefaultObject()->IsA(Acity::StaticClass())) || !(CheckUnitLocation(Hit.Location, PlayerID))) {
