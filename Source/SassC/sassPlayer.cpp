@@ -129,7 +129,9 @@ void AsassPlayer::Tick( float DeltaTime )
 				TArray<AActor*> ActorsToIgnore;
 				for (AActor* TargetWall : WallPreviewArray) {
 					GEngine->AddOnScreenDebugMessage(-1, .2f, FColor::Red, "aaa");
-					UKismetSystemLibrary::BoxTraceSingle(GetWorld(), WallCast->GetActorLocation() + FVector(0, 0, 5), TargetWall->GetActorLocation() + FVector(0, 0, 5), FVector(9.5f, 4.0f, 15.0f), (WallCast->GetActorLocation() - TargetWall->GetActorLocation()).Rotation(), UEngineTypes::ConvertToTraceType(ECC_Visibility), true, ActorsToIgnore, EDrawDebugTrace::ForOneFrame, Hit, true);
+					FVector Direction = WallCast->GetActorLocation() - TargetWall->GetActorLocation();
+					FVector UnitDirection = Direction / Direction.Size();
+					UKismetSystemLibrary::BoxTraceSingle(GetWorld(), WallCast->GetActorLocation() + FVector(UnitDirection.X*-24, UnitDirection.Y*-24, 21), TargetWall->GetActorLocation() + FVector(UnitDirection.X*24, UnitDirection.Y*24, 21), FVector(9.5f, 4.0f, 15.0f), Direction.Rotation(), UEngineTypes::ConvertToTraceType(ECC_Visibility), true, ActorsToIgnore, EDrawDebugTrace::ForOneFrame, Hit, true);
 				}
 			}
 		}

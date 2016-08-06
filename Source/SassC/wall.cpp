@@ -42,7 +42,7 @@ TArray<AActor*> Awall::FindWallTowersInRange()
 {
 	TArray<AActor*> nullArray;
 	TArray<FHitResult> SphereHits;
-	UKismetSystemLibrary::SphereTraceMulti_NEW(GetWorld(), this->GetActorLocation(), this->GetActorLocation() + FVector(0, 0, 1), 100.0f, UEngineTypes::ConvertToTraceType(ECollisionChannel::ECC_GameTraceChannel3), true, nullArray, EDrawDebugTrace::ForOneFrame, SphereHits, true);
+	UKismetSystemLibrary::SphereTraceMulti_NEW(GetWorld(), this->GetActorLocation(), this->GetActorLocation() + FVector(0, 0, 1), 200.0f, UEngineTypes::ConvertToTraceType(ECollisionChannel::ECC_GameTraceChannel3), true, nullArray, EDrawDebugTrace::ForOneFrame, SphereHits, true);
 
 
 	GEngine->AddOnScreenDebugMessage(-1, .2f, FColor::Black, UKismetStringLibrary::Conv_IntToString(SphereHits.Num()));
