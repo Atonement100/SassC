@@ -3,6 +3,7 @@
 #include "SassC.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "Kismet/KismetStringLibrary.h"
+#include "Kismet/KismetMathLibrary.h"
 #include "wall.h"
 
 Awall::Awall() {
@@ -37,20 +38,46 @@ void Awall::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
 }
 
-void Awall::FindWallTowersInRange_Implementation()
+TArray<AActor*> Awall::FindWallTowersInRange()
 {
 	TArray<AActor*> nullArray;
 	TArray<FHitResult> SphereHits;
-	UKismetSystemLibrary::SphereTraceMulti_NEW(GetWorld(), this->GetActorLocation(), this->GetActorLocation(), 100.0f, UEngineTypes::ConvertToTraceType(ECollisionChannel::ECC_GameTraceChannel3), true, nullArray, EDrawDebugTrace::ForOneFrame, SphereHits, true);
+	UKismetSystemLibrary::SphereTraceMulti_NEW(GetWorld(), this->GetActorLocation(), this->GetActorLocation() + FVector(0, 0, 1), 100.0f, UEngineTypes::ConvertToTraceType(ECollisionChannel::ECC_GameTraceChannel3), true, nullArray, EDrawDebugTrace::ForOneFrame, SphereHits, true);
 
+
+	GEngine->AddOnScreenDebugMessage(-1, .2f, FColor::Black, UKismetStringLibrary::Conv_IntToString(SphereHits.Num()));
 	for (FHitResult Hit : SphereHits) {
-		if (Hit.GetActor()->IsA(Awall::StaticClass())) {
-			FVector Distance = (Hit.GetActor()->GetActorLocation()) - this->GetActorLocation();
-			GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Emerald, "Dist: " + UKismetStringLibrary::Conv_VectorToString(Distance));
-			
+		if (!nullArray.Contains(Hit.GetActor()) && Hit.GetActor()->IsA(Awall::StaticClass())) {
+			float Distance = UKismetMathLibrary::VSize((Hit.GetActor()->GetActorLocation()) - this->GetActorLocation());
+			GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Emerald, "Dist: " + UKismetStringLibrary::Conv_FloatToString(Distance));
+			nullArray.Add(Hit.GetActor());
 		}
 	}
 
+	return nullArray;
+}
+
+TArray<AActor*> Awall::FindWallTowersInRange_Implementation()
+{
+	/*
+	TArray<AActor*> nullArray;
+	TArray<FHitResult> SphereHits;
+	UKismetSystemLibrary::SphereTraceMulti_NEW(GetWorld(), this->GetActorLocation(), this->GetActorLocation() + FVector(0, 0, 1), 100.0f, UEngineTypes::ConvertToTraceType(ECollisionChannel::ECC_GameTraceChannel3), true, nullArray, EDrawDebugTrace::ForOneFrame, SphereHits, true);
+
+
+	GEngine->AddOnScreenDebugMessage(-1, .2f, FColor::Black, UKismetStringLibrary::Conv_IntToString(SphereHits.Num()));
+	for (FHitResult Hit : SphereHits) {
+		if (!nullArray.Contains(Hit.GetActor()) && Hit.GetActor()->IsA(Awall::StaticClass())) {
+			float Distance = UKismetMathLibrary::VSize((Hit.GetActor()->GetActorLocation()) - this->GetActorLocation());
+			GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Emerald, "Dist: " + UKismetStringLibrary::Conv_FloatToString(Distance));
+			nullArray.Add(Hit.GetActor());
+		}
+	}
+
+	return nullArray;
+	*/
+
+	return TArray<AActor*>();
 }
 
 

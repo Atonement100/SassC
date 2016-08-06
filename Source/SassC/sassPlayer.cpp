@@ -108,7 +108,7 @@ void AsassPlayer::Tick( float DeltaTime )
 				FHitResult BoxTraceHit;
 				TArray<AActor*> ActorsToIgnore;
 				ActorsToIgnore.Add(LocalObjectSpawn);
-				IsBadSpawn = UKismetSystemLibrary::BoxTraceSingle(GetWorld(), CursorHit.Location + FVector(0, 0, 2), CursorHit.Location + 2 * HalfHeight, FVector(TraceSize.X, TraceSize.Y, 0), FRotator::ZeroRotator, UEngineTypes::UEngineTypes::ConvertToTraceType(ECollisionChannel::ECC_GameTraceChannel2), true, ActorsToIgnore, EDrawDebugTrace::ForOneFrame, BoxTraceHit, true);
+				IsBadSpawn = UKismetSystemLibrary::BoxTraceSingle(GetWorld(), CursorHit.Location + FVector(0, 0, 2), CursorHit.Location + 2 * HalfHeight, FVector(TraceSize.X, TraceSize.Y, 0), FRotator::ZeroRotator, UEngineTypes::ConvertToTraceType(ECollisionChannel::ECC_GameTraceChannel2), true, ActorsToIgnore, EDrawDebugTrace::ForOneFrame, BoxTraceHit, true);
 				if (AbuildingBase* BuildingCast = Cast<AbuildingBase>(LocalObjectSpawn)) {
 					IsBadSpawn = IsBadSpawn | CheckBldgCorners(BuildingCast->CornerLocations, CursorHit.Location, PlayerState->PlayerId, (Cast<Acity>(LocalObjectSpawn) ? true : false));
 				}
@@ -123,7 +123,15 @@ void AsassPlayer::Tick( float DeltaTime )
 			if (AbuildingBase* BuildingCast = Cast<AbuildingBase>(LocalObjectSpawn)) { BuildingCast->UpdateMaterial(NewColor); }
 			else if (AunitBase* UnitCast = Cast<AunitBase>(LocalObjectSpawn)) { UnitCast->UpdateMaterial(NewColor); }
 
-			if (Awall* WallCast = Cast<Awall>(LocalObjectSpawn)) { WallCast->FindWallTowersInRange(); }
+			if (Awall* WallCast = Cast<Awall>(LocalObjectSpawn)) { 
+				WallPreviewArray = (WallCast->FindWallTowersInRange()); 
+				FHitResult Hit;
+				TArray<AActor*> ActorsToIgnore;
+				for (AActor* TargetWall : WallPreviewArray) {
+					GEngine->AddOnScreenDebugMessage(-1, .2f, FColor::Red, "aaa");
+					UKismetSystemLibrary::BoxTraceSingle(GetWorld(), WallCast->GetActorLocation() + FVector(0, 0, 5), TargetWall->GetActorLocation() + FVector(0, 0, 5), FVector(9.5f, 4.0f, 15.0f), (WallCast->GetActorLocation() - TargetWall->GetActorLocation()).Rotation(), UEngineTypes::ConvertToTraceType(ECC_Visibility), true, ActorsToIgnore, EDrawDebugTrace::ForOneFrame, Hit, true);
+				}
+			}
 		}
 		else if (CursorHit.GetActor()) {	//Did hit something and it was a building
 			 GEngine->AddOnScreenDebugMessage(-1, DeltaTime, FColor::Green, CursorHit.GetActor()->GetName());

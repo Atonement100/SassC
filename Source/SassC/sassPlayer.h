@@ -12,6 +12,7 @@
 #include "sassPlayer.generated.h"
 
 class AunitBase;
+class Awall;
 class AsassPlayerController;
 
 UENUM()
@@ -212,6 +213,7 @@ protected:
 	bool IsBadSpawn = true;
 	bool ResetLocalView = false;
 	TArray<FHitResult> SphereTraceHits;
+	TArray<AActor*> WallPreviewArray;
 	FVector CurrentHit;
 	FVector InitialHit;
 	float SphereTraceRadius;

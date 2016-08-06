@@ -19,9 +19,8 @@ class SASSC_API Awall : public AbuildingBase
 	virtual void Tick(float DeltaSeconds) override;
 	
 public:
-	UFUNCTION(Unreliable, Client)
-	void FindWallTowersInRange();
-	virtual void FindWallTowersInRange_Implementation();
+	TArray<AActor*> FindWallTowersInRange();
+	virtual TArray<AActor*> FindWallTowersInRange_Implementation();
 
 protected:
 	TArray<AbuildingBase*> ConnectedWalls;
