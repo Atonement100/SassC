@@ -123,15 +123,40 @@ void AsassPlayer::Tick( float DeltaTime )
 			if (AbuildingBase* BuildingCast = Cast<AbuildingBase>(LocalObjectSpawn)) { BuildingCast->UpdateMaterial(NewColor); }
 			else if (AunitBase* UnitCast = Cast<AunitBase>(LocalObjectSpawn)) { UnitCast->UpdateMaterial(NewColor); }
 
+			/*
+			FVector Direction = End - Start;
+			float Size = Direction.Size2D();
+
+			Start += FVector(Direction.X / Size * 24, Direction.Y / Size * 24, 0);
+			End -= FVector(Direction.X / Size * -24, Direction.Y / Size * -24, 0);
+			float SpaceBetween = (End - Start).Size();
+
+
+			const FVector Location = Start + FVector(Direction.X/Size*24, Direction.Y/Size*24, 0);
+			const FRotator Rotation = Direction.Rotation();
+
+			for (int i = 0; i < SpaceBetween / 10; i++) {
+
+			GetWorld()->SpawnActor(WallSegmentClass, &Location, &Rotation, SpawnParams);
+			Location = Location + FVector(Direction.X / Size * 10, Direction.Y / Size * 10, 0);
+			}
+			*/
+
 			if (Awall* WallCast = Cast<Awall>(LocalObjectSpawn)) { 
 				WallPreviewArray = (WallCast->FindWallTowersInRange()); 
 				FHitResult Hit;
 				TArray<AActor*> ActorsToIgnore;
 				for (AActor* TargetWall : WallPreviewArray) {
-					GEngine->AddOnScreenDebugMessage(-1, .2f, FColor::Red, "aaa");
 					FVector Direction = WallCast->GetActorLocation() - TargetWall->GetActorLocation();
 					FVector UnitDirection = Direction / Direction.Size();
-					UKismetSystemLibrary::BoxTraceSingle(GetWorld(), WallCast->GetActorLocation() + FVector(UnitDirection.X*-24, UnitDirection.Y*-24, 21), TargetWall->GetActorLocation() + FVector(UnitDirection.X*24, UnitDirection.Y*24, 21), FVector(9.5f, 4.0f, 15.0f), Direction.Rotation(), UEngineTypes::ConvertToTraceType(ECC_Visibility), true, ActorsToIgnore, EDrawDebugTrace::ForOneFrame, Hit, true);
+					if (!UKismetSystemLibrary::BoxTraceSingle(GetWorld(), WallCast->GetActorLocation() + FVector(UnitDirection.X*-24, UnitDirection.Y*-24, 21), TargetWall->GetActorLocation() + FVector(UnitDirection.X * 24, UnitDirection.Y * 24, 21), FVector(9.5f, 4.0f, 15.0f), Direction.Rotation(), UEngineTypes::ConvertToTraceType(ECC_Visibility), true, ActorsToIgnore, EDrawDebugTrace::ForOneFrame, Hit, true)) {
+						float SpaceBetween = ((TargetWall->GetActorLocation() - FVector(Direction.X / Direction.Size2D() * -24, Direction.Y / Direction.Size2D() * -24, 0)) - (WallCast->GetActorLocation() + FVector(Direction.X / Direction.Size2D() * 24, Direction.Y / Direction.Size2D() * 24, 0))).Size();
+						FVector Start = WallCast->GetActorLocation();
+						for (int NumToSpawn = (SpaceBetween / 10); NumToSpawn > 0; NumToSpawn--) {
+							SpawnWallPreview(Start + FVector(UnitDirection.X * 24 * NumToSpawn, UnitDirection.Y * 24 * NumToSpawn, 0), Direction.Rotation());
+						}
+					}
+
 				}
 			}
 		}
@@ -358,14 +383,6 @@ UUserWidget* AsassPlayer::GetGameWidget() {
 }
 #pragma endregion
 
-void AsassPlayer::GetAllPlayerColors() {
-	TArray<AActor*> FoundControllers;
-	UGameplayStatics::GetAllActorsOfClass(GetWorld(), PlayerControllerClass, FoundControllers);
-	for (AActor* Controller : FoundControllers) {
-		
-	}
-}
-
 void AsassPlayer::QuitGame() {
 	FGenericPlatformMisc::RequestExit(false);
 }
@@ -543,6 +560,7 @@ AActor* AsassPlayer::GetSelectionSphereHolder() {
 
 #pragma endregion
 
+#pragma region Server-side Spawning
 void AsassPlayer::ServerSpawnBuilding_Implementation(AsassPlayerController* PlayerController, TSubclassOf<AActor> ActorToSpawn, FHitResult Hit, const FVector &HalfHeight, const TArray<FVector> &Midpoints, const FVector &TraceSize, int32 PlayerID)
 {
 	//GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Emerald, UKismetStringLibrary::Conv_VectorToString(Hit.Location));
@@ -629,6 +647,15 @@ void AsassPlayer::ServerSpawnBuilding_Implementation(AsassPlayerController* Play
 bool AsassPlayer::ServerSpawnBuilding_Validate(AsassPlayerController* PlayerController, TSubclassOf<AActor> ActorToSpawn, FHitResult Hit, const FVector &HalfHeight, const TArray<FVector> &Midpoints, const FVector &TraceSize, int32 PlayerID)
 {
 	return true;
+}
+#pragma endregion
+
+void AsassPlayer::GetAllPlayerColors() {
+	TArray<AActor*> FoundControllers;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), PlayerControllerClass, FoundControllers);
+	for (AActor* Controller : FoundControllers) {
+
+	}
 }
 
 void AsassPlayer::ColorPlayer_Implementation(FLinearColor PlayerColor)
@@ -727,6 +754,32 @@ bool AsassPlayer::LateStart_Validate(APlayerController* NewPlayer)
 }
 
 
+void AsassPlayer::SpawnWallPreview_Implementation(FVector Location, FRotator Rotation)
+{	
+	FActorSpawnParameters TempParams = FActorSpawnParameters();
+	TempParams.bNoCollisionFail = true;
+	const FActorSpawnParameters SpawnParams = FActorSpawnParameters(TempParams);
+	GetWorld()->SpawnActor(WallSegmentClass, &Location, &Rotation, SpawnParams);
+
+	/*
+	FVector Direction = End - Start;
+	float Size = Direction.Size2D();
+
+	Start += FVector(Direction.X / Size * 24, Direction.Y / Size * 24, 0);
+	End -= FVector(Direction.X / Size * -24, Direction.Y / Size * -24, 0);
+	float SpaceBetween = (End - Start).Size();
+
+
+	const FVector Location = Start + FVector(Direction.X/Size*24, Direction.Y/Size*24, 0);
+	const FRotator Rotation = Direction.Rotation();
+	
+	for (int i = 0; i < SpaceBetween / 10; i++) {
+
+		GetWorld()->SpawnActor(WallSegmentClass, &Location, &Rotation, SpawnParams);
+		Location = Location + FVector(Direction.X / Size * 10, Direction.Y / Size * 10, 0);
+	}
+	*/
+}
 
 #pragma region Blueprint Implementables
 void AsassPlayer::SetSassHUDRef_Implementation()

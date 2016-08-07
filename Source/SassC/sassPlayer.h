@@ -195,6 +195,10 @@ protected:
 	void CloseUnitMenu();
 	virtual void CloseUnitMenu_Implementation();
 
+	UFUNCTION(Unreliable, Client)
+		void SpawnWallPreview(FVector Location, FRotator Rotation);
+	virtual void SpawnWallPreview_Implementation(FVector Location, FRotator Rotation);
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sass Player")
 	AActor* LocalObjectSpawn;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Sass Player")
@@ -228,6 +232,8 @@ protected:
 	bool ShouldAddToSelection = false;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Sass Player")
 	UClass* SelectionSphereClass;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Sass Player")
+		UClass* WallSegmentClass;
 	const float SprintSpeed = 800.0f;
 	const float WalkSpeed = 400.0f;
 	const float CrouchSpeed = 200.0f;
