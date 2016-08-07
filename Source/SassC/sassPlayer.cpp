@@ -151,9 +151,10 @@ void AsassPlayer::Tick( float DeltaTime )
 					FVector UnitDirection = Direction / Direction.Size();
 					if (!UKismetSystemLibrary::BoxTraceSingle(GetWorld(), WallCast->GetActorLocation() + FVector(UnitDirection.X*-24, UnitDirection.Y*-24, 21), TargetWall->GetActorLocation() + FVector(UnitDirection.X * 24, UnitDirection.Y * 24, 21), FVector(9.5f, 4.0f, 15.0f), Direction.Rotation(), UEngineTypes::ConvertToTraceType(ECC_Visibility), true, ActorsToIgnore, EDrawDebugTrace::ForOneFrame, Hit, true)) {
 						float SpaceBetween = ((TargetWall->GetActorLocation() - FVector(Direction.X / Direction.Size2D() * -24, Direction.Y / Direction.Size2D() * -24, 0)) - (WallCast->GetActorLocation() + FVector(Direction.X / Direction.Size2D() * 24, Direction.Y / Direction.Size2D() * 24, 0))).Size();
-						FVector Start = WallCast->GetActorLocation();
-						for (int NumToSpawn = (SpaceBetween / 10); NumToSpawn > 0; NumToSpawn--) {
-							SpawnWallPreview(Start + FVector(UnitDirection.X * 24 * NumToSpawn, UnitDirection.Y * 24 * NumToSpawn, 0), Direction.Rotation());
+						FVector Start = WallCast->GetActorLocation() + FVector(UnitDirection.X * -12, UnitDirection.Y * -12, 0);
+						for (int NumToSpawn = (SpaceBetween / 19); NumToSpawn > 0; NumToSpawn--) {
+							SpawnWallPreview(Start, Direction.Rotation());
+							Start = Start + FVector(UnitDirection.X * -19, UnitDirection.Y * -19, 0);
 						}
 					}
 
