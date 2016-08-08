@@ -5,6 +5,7 @@
 
 AwallSegment::AwallSegment() {
 	PrimaryActorTick.bCanEverTick = true;
+
 }
 
 void AwallSegment::PostInitializeComponents() {

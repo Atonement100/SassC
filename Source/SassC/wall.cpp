@@ -4,6 +4,7 @@
 #include "Kismet/KismetSystemLibrary.h"
 #include "Kismet/KismetStringLibrary.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "wallSegment.h"
 #include "wall.h"
 
 Awall::Awall() {
@@ -38,7 +39,7 @@ void Awall::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
 }
 
-TArray<AActor*> Awall::FindWallTowersInRange()
+TArray<Awall*> Awall::FindWallTowersInRange()
 {
 	TArray<AActor*> nullArray;
 	TArray<FHitResult> SphereHits;
@@ -46,15 +47,16 @@ TArray<AActor*> Awall::FindWallTowersInRange()
 
 
 	GEngine->AddOnScreenDebugMessage(-1, .2f, FColor::Black, UKismetStringLibrary::Conv_IntToString(SphereHits.Num()));
+	TArray<Awall*> WallsInRange;
 	for (FHitResult Hit : SphereHits) {
-		if (!nullArray.Contains(Hit.GetActor()) && Hit.GetActor()->IsA(Awall::StaticClass())) {
+		if (!WallsInRange.Contains(Hit.GetActor()) && Hit.GetActor()->IsA(Awall::StaticClass())) {
 			float Distance = UKismetMathLibrary::VSize((Hit.GetActor()->GetActorLocation()) - this->GetActorLocation());
 			GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Emerald, "Dist: " + UKismetStringLibrary::Conv_FloatToString(Distance));
-			nullArray.Add(Hit.GetActor());
+			WallsInRange.Add(Cast<Awall>(Hit.GetActor()));
 		}
 	}
 
-	return nullArray;
+	return WallsInRange;
 }
 
 TArray<AActor*> Awall::FindWallTowersInRange_Implementation()
@@ -78,6 +80,16 @@ TArray<AActor*> Awall::FindWallTowersInRange_Implementation()
 	*/
 
 	return TArray<AActor*>();
+}
+
+void Awall::AddConnectedWallSegment_Implementation(AbuildingBase * NewSegment)
+{
+	ConnectedWalls.Add(NewSegment);
+}
+
+bool Awall::AddConnectedWallSegment_Validate(AbuildingBase * NewSegment)
+{
+	return true;
 }
 
 

@@ -181,6 +181,11 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sass Player")
 	AActor* SelectionSphereHolder;
 
+	UFUNCTION(Reliable, Server, WithValidation)
+		void ServerSpawnWall(Awall* NewWall, Awall* TargetWall);
+	virtual void ServerSpawnWall_Implementation(Awall* NewWall, Awall* TargetWall);
+	virtual bool ServerSpawnWall_Validate(Awall* NewWall, Awall* TargetWall);
+
 protected:
 	/*(Blueprint Native) Sets reference to game hud, so it can be used in code*/
 	UFUNCTION(BlueprintNativeEvent, Category = "HUD")
@@ -196,8 +201,9 @@ protected:
 	virtual void CloseUnitMenu_Implementation();
 
 	UFUNCTION(Unreliable, Client)
-		void SpawnWallPreview(FVector Location, FRotator Rotation);
+	void SpawnWallPreview(FVector Location, FRotator Rotation);
 	virtual void SpawnWallPreview_Implementation(FVector Location, FRotator Rotation);
+
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sass Player")
 	AActor* LocalObjectSpawn;
