@@ -141,7 +141,7 @@ void AsassPlayer::Tick( float DeltaTime )
 					//if not yet previewed, create a preview and add to existing preview array, need to keep track of connected walls and their order
 					FVector Displacement = TargetWall->GetActorLocation() - WallCast->GetActorLocation();
 					FVector UnitDirection = Displacement / Displacement.Size();
-					if (!UKismetSystemLibrary::BoxTraceSingle(GetWorld(), WallCast->GetActorLocation() + FVector(UnitDirection.X*24, UnitDirection.Y*24, 21), TargetWall->GetActorLocation() + FVector(UnitDirection.X * -24, UnitDirection.Y * -24, 21), FVector(9.5f, 4.0f, 15.0f), Displacement.Rotation(), UEngineTypes::ConvertToTraceType(ECC_Visibility), true, ActorsToIgnore, EDrawDebugTrace::ForOneFrame, Hit, true)) {
+					if (TargetWall->OwningPlayerID == PlayerState->PlayerId && !UKismetSystemLibrary::BoxTraceSingle(GetWorld(), WallCast->GetActorLocation() + FVector(UnitDirection.X*24, UnitDirection.Y*24, 21), TargetWall->GetActorLocation() + FVector(UnitDirection.X * -24, UnitDirection.Y * -24, 21), FVector(9.5f, 4.0f, 15.0f), Displacement.Rotation(), UEngineTypes::ConvertToTraceType(ECC_Visibility), true, ActorsToIgnore, EDrawDebugTrace::ForOneFrame, Hit, true)) {
 						if (!TargetWall->TempConnection) {
 							//create new
 							FTransform Transform = FTransform(Displacement.Rotation(), WallCast->GetActorLocation() + (Displacement / 2), FVector(Displacement.Size() / 19, 1, 1));
@@ -661,8 +661,7 @@ void AsassPlayer::ServerSpawnBuilding_Implementation(AsassPlayerController* Play
 								TArray<Awall*> WallsInRange = (WallCast->FindWallTowersInRange());
 								GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Emerald, UKismetStringLibrary::Conv_IntToString(WallsInRange.Num()));
 								for (Awall* TargetWall : WallsInRange) {
-									GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red, "SassPlayer ServerSpawnBuilding: server spawn wall should get called");
-									ServerSpawnWall(WallCast, TargetWall);
+									if (TargetWall->OwningPlayerID == PlayerID) { ServerSpawnWall(WallCast, TargetWall, PlayerID); }
 									/*
 									FVector Direction = WallCast->GetActorLocation() - TargetWall->GetActorLocation();
 									FVector UnitDirection = Direction / Direction.Size();
@@ -861,7 +860,7 @@ void AsassPlayer::SpawnWallPreview_Implementation(FVector Location, FRotator Rot
 	*/
 }
 
-void AsassPlayer::ServerSpawnWall_Implementation(Awall* NewWall, Awall* TargetWall)
+void AsassPlayer::ServerSpawnWall_Implementation(Awall* NewWall, Awall* TargetWall, int32 PlayerID)
 {
 	FActorSpawnParameters TempParams = FActorSpawnParameters();
 	TempParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
@@ -881,6 +880,7 @@ void AsassPlayer::ServerSpawnWall_Implementation(Awall* NewWall, Awall* TargetWa
 			const FVector Loc = Start;
 			const FRotator Rot = Direction.Rotation();
 			AwallSegment* NewSegment = Cast<AwallSegment>(GetWorld()->SpawnActor(WallSegmentClass, &Loc, &Rot, SpawnParams));
+			NewSegment->OwningPlayerID = PlayerID;
 			if (FirstLoop) {
 				NewWall->AddConnectedWallSegment(NewSegment);
 				NewSegment->LeftConnection = NewWall;
@@ -903,7 +903,7 @@ void AsassPlayer::ServerSpawnWall_Implementation(Awall* NewWall, Awall* TargetWa
 	}
 }
 
-bool AsassPlayer::ServerSpawnWall_Validate(Awall * NewWall, Awall * TargetWall)
+bool AsassPlayer::ServerSpawnWall_Validate(Awall * NewWall, Awall * TargetWall, int32 PlayerID)
 {
 	return true;
 }

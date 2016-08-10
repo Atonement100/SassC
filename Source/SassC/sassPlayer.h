@@ -182,9 +182,9 @@ public:
 	AActor* SelectionSphereHolder;
 
 	UFUNCTION(Reliable, Server, WithValidation)
-		void ServerSpawnWall(Awall* NewWall, Awall* TargetWall);
-	virtual void ServerSpawnWall_Implementation(Awall* NewWall, Awall* TargetWall);
-	virtual bool ServerSpawnWall_Validate(Awall* NewWall, Awall* TargetWall);
+		void ServerSpawnWall(Awall* NewWall, Awall* TargetWall, int32 PlayerID);
+	virtual void ServerSpawnWall_Implementation(Awall* NewWall, Awall* TargetWall, int32 PlayerID);
+	virtual bool ServerSpawnWall_Validate(Awall* NewWall, Awall* TargetWall, int32 PlayerID);
 
 protected:
 	/*(Blueprint Native) Sets reference to game hud, so it can be used in code*/
@@ -224,7 +224,7 @@ protected:
 	bool ResetLocalView = false;
 	TArray<FHitResult> SphereTraceHits;
 	TArray<Awall*> WallPreviewArray;
-	TArray<Awall*> WallsBeingPreviewed;
+	TArray<Awall*> WallsBeingPreviewed = TArray<Awall*>();
 	FVector CurrentHit;
 	FVector InitialHit;
 	float SphereTraceRadius;
