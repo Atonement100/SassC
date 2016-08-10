@@ -223,7 +223,8 @@ protected:
 	bool IsBadSpawn = true;
 	bool ResetLocalView = false;
 	TArray<FHitResult> SphereTraceHits;
-	TArray<AActor*> WallPreviewArray;
+	TArray<Awall*> WallPreviewArray;
+	TArray<Awall*> WallsBeingPreviewed;
 	FVector CurrentHit;
 	FVector InitialHit;
 	float SphereTraceRadius;
@@ -239,7 +240,9 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Sass Player")
 	UClass* SelectionSphereClass;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Sass Player")
-		UClass* WallSegmentClass;
+	UClass* WallSegmentClass;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Sass Player")
+	UClass* WallSegmentGhostClass;
 	const float SprintSpeed = 800.0f;
 	const float WalkSpeed = 400.0f;
 	const float CrouchSpeed = 200.0f;

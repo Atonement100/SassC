@@ -115,15 +115,64 @@ void AsassPlayer::Tick( float DeltaTime )
 				else if (AunitBase* UnitCast = Cast<AunitBase>(LocalObjectSpawn)) {
 					IsBadSpawn = IsBadSpawn | CheckUnitLocation(CursorHit.Location, PlayerState->PlayerId);
 				}
+
 			}
-			else { IsBadSpawn = true; }
+			else { 
+				IsBadSpawn = true; 
+				for (Awall* Wall : WallsBeingPreviewed) {
+					if (Wall->TempConnection) {
+						Wall->TempConnection->Destroy();
+						Wall->TempConnection = nullptr;
+					}
+					WallsBeingPreviewed.Remove(Wall);
+				}
+			}
 
 			FLinearColor NewColor = IsBadSpawn ? FLinearColor(.7f, 0.0f, .058f) : FLinearColor(.093f, .59f, .153f);
 
 			if (AbuildingBase* BuildingCast = Cast<AbuildingBase>(LocalObjectSpawn)) { BuildingCast->UpdateMaterial(NewColor); }
 			else if (AunitBase* UnitCast = Cast<AunitBase>(LocalObjectSpawn)) { UnitCast->UpdateMaterial(NewColor); }
 
-			
+			if (Awall* WallCast = Cast<Awall>(LocalObjectSpawn)) {
+				WallPreviewArray = (WallCast->FindWallTowersInRange());
+				FHitResult Hit;
+				TArray<AActor*> ActorsToIgnore;
+				for (Awall* TargetWall : WallPreviewArray) {
+					//if not yet previewed, create a preview and add to existing preview array, need to keep track of connected walls and their order
+					FVector Displacement = TargetWall->GetActorLocation() - WallCast->GetActorLocation();
+					FVector UnitDirection = Displacement / Displacement.Size();
+					if (!UKismetSystemLibrary::BoxTraceSingle(GetWorld(), WallCast->GetActorLocation() + FVector(UnitDirection.X*24, UnitDirection.Y*24, 21), TargetWall->GetActorLocation() + FVector(UnitDirection.X * -24, UnitDirection.Y * -24, 21), FVector(9.5f, 4.0f, 15.0f), Displacement.Rotation(), UEngineTypes::ConvertToTraceType(ECC_Visibility), true, ActorsToIgnore, EDrawDebugTrace::ForOneFrame, Hit, true)) {
+						if (!TargetWall->TempConnection) {
+							//create new
+							FTransform Transform = FTransform(Displacement.Rotation(), WallCast->GetActorLocation() + (Displacement / 2), FVector(Displacement.Size() / 19, 1, 1));
+							TargetWall->TempConnection = GetWorld()->SpawnActor(WallSegmentGhostClass, &Transform, SpawnParams);
+							WallsBeingPreviewed.Add(TargetWall);
+
+						}
+						else if (TargetWall->TempConnection) {
+							//update existing
+							FVector Displacement = TargetWall->GetActorLocation() - WallCast->GetActorLocation();
+							FTransform Transform = FTransform(Displacement.Rotation(), WallCast->GetActorLocation() + (Displacement / 2), FVector(Displacement.Size() / 19, 1, 1));
+							TargetWall->TempConnection->SetActorTransform(Transform);
+						}
+					}
+					else {
+						if (TargetWall->TempConnection) {
+							TargetWall->TempConnection->Destroy();
+							TargetWall->TempConnection = nullptr;
+						}
+						WallsBeingPreviewed.Remove(TargetWall);
+					}
+				}
+
+				for (Awall* WallToCheck : WallsBeingPreviewed) {
+					if (!WallPreviewArray.Contains(WallToCheck) && WallToCheck->TempConnection) {
+						WallToCheck->TempConnection->Destroy();
+						WallToCheck->TempConnection = nullptr;
+						WallsBeingPreviewed.Remove(WallToCheck);
+					}
+				}
+			}
 			/* 
 			if (Awall* WallCast = Cast<Awall>(LocalObjectSpawn)) { 
 				WallPreviewArray = (WallCast->FindWallTowersInRange()); 
@@ -146,6 +195,13 @@ void AsassPlayer::Tick( float DeltaTime )
 		}
 		else if (CursorHit.GetActor()) {	//Did hit something and it was a building
 			 GEngine->AddOnScreenDebugMessage(-1, DeltaTime, FColor::Green, CursorHit.GetActor()->GetName());
+			 for (Awall* Wall : WallsBeingPreviewed) {
+				 if (Wall->TempConnection) {
+					 Wall->TempConnection->Destroy();
+					 Wall->TempConnection = nullptr;
+				 }
+				 WallsBeingPreviewed.Remove(Wall);
+			 }
 
 			if (LocalObjectSpawn->IsA(Atower::StaticClass()) && CursorHit.GetActor()->IsA(Atower::StaticClass())) {
 				LocalObjectSpawn->SetActorHiddenInGame(true);
@@ -171,6 +227,13 @@ void AsassPlayer::Tick( float DeltaTime )
 	else {
 		if (ActorDestroyLatch) { //Do not combine into one if statement, still want to reset latch if object is nullptr
 			if (LocalObjectSpawn) LocalObjectSpawn->Destroy(); 
+			if (WallsBeingPreviewed.Num() != 0) {
+				for (Awall* Wall : WallsBeingPreviewed) {
+					Wall->TempConnection->Destroy();
+					Wall->TempConnection = nullptr;
+					WallsBeingPreviewed.Remove(Wall);
+				}
+			}
 			ActorSpawnLatch = true;
 			ActorDestroyLatch = false;
 		}
@@ -800,7 +863,6 @@ void AsassPlayer::SpawnWallPreview_Implementation(FVector Location, FRotator Rot
 
 void AsassPlayer::ServerSpawnWall_Implementation(Awall* NewWall, Awall* TargetWall)
 {
-
 	FActorSpawnParameters TempParams = FActorSpawnParameters();
 	TempParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 	const FActorSpawnParameters SpawnParams = FActorSpawnParameters(TempParams);

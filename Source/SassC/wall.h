@@ -23,6 +23,8 @@ class SASSC_API Awall : public AbuildingBase
 	virtual void Tick(float DeltaSeconds) override;
 	
 public:
+	AActor* TempConnection;
+	
 	TArray<Awall*> FindWallTowersInRange();
 	virtual TArray<AActor*> FindWallTowersInRange_Implementation();
 
