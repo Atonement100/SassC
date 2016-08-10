@@ -124,8 +124,8 @@ void AsassPlayer::Tick( float DeltaTime )
 						Wall->TempConnection->Destroy();
 						Wall->TempConnection = nullptr;
 					}
-					WallsBeingPreviewed.Remove(Wall);
 				}
+				WallsBeingPreviewed.Empty();
 			}
 
 			FLinearColor NewColor = IsBadSpawn ? FLinearColor(.7f, 0.0f, .058f) : FLinearColor(.093f, .59f, .153f);
@@ -161,7 +161,7 @@ void AsassPlayer::Tick( float DeltaTime )
 							TargetWall->TempConnection->Destroy();
 							TargetWall->TempConnection = nullptr;
 						}
-						WallsBeingPreviewed.Remove(TargetWall);
+						//WallsBeingPreviewed.Remove(TargetWall);
 					}
 				}
 
@@ -169,7 +169,7 @@ void AsassPlayer::Tick( float DeltaTime )
 					if (!WallPreviewArray.Contains(WallToCheck) && WallToCheck->TempConnection) {
 						WallToCheck->TempConnection->Destroy();
 						WallToCheck->TempConnection = nullptr;
-						WallsBeingPreviewed.Remove(WallToCheck);
+						//WallsBeingPreviewed.Remove(WallToCheck);
 					}
 				}
 			}
@@ -194,14 +194,13 @@ void AsassPlayer::Tick( float DeltaTime )
 			*/
 		}
 		else if (CursorHit.GetActor()) {	//Did hit something and it was a building
-			 GEngine->AddOnScreenDebugMessage(-1, DeltaTime, FColor::Green, CursorHit.GetActor()->GetName());
 			 for (Awall* Wall : WallsBeingPreviewed) {
 				 if (Wall->TempConnection) {
 					 Wall->TempConnection->Destroy();
 					 Wall->TempConnection = nullptr;
 				 }
-				 WallsBeingPreviewed.Remove(Wall);
 			 }
+			 WallsBeingPreviewed.Empty();
 
 			if (LocalObjectSpawn->IsA(Atower::StaticClass()) && CursorHit.GetActor()->IsA(Atower::StaticClass())) {
 				LocalObjectSpawn->SetActorHiddenInGame(true);
@@ -229,10 +228,12 @@ void AsassPlayer::Tick( float DeltaTime )
 			if (LocalObjectSpawn) LocalObjectSpawn->Destroy(); 
 			if (WallsBeingPreviewed.Num() != 0) {
 				for (Awall* Wall : WallsBeingPreviewed) {
-					Wall->TempConnection->Destroy();
-					Wall->TempConnection = nullptr;
-					WallsBeingPreviewed.Remove(Wall);
+					if (Wall->TempConnection) {
+						Wall->TempConnection->Destroy();
+						Wall->TempConnection = nullptr;
+					}
 				}
+				WallsBeingPreviewed.Empty();
 			}
 			ActorSpawnLatch = true;
 			ActorDestroyLatch = false;

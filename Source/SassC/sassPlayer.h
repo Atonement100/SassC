@@ -223,7 +223,7 @@ protected:
 	bool IsBadSpawn = true;
 	bool ResetLocalView = false;
 	TArray<FHitResult> SphereTraceHits;
-	TArray<Awall*> WallPreviewArray;
+	TArray<Awall*> WallPreviewArray = TArray<Awall*>();
 	TArray<Awall*> WallsBeingPreviewed = TArray<Awall*>();
 	FVector CurrentHit;
 	FVector InitialHit;
