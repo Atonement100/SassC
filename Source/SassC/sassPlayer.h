@@ -219,6 +219,7 @@ protected:
 	bool ActorSpawnLatch = true;
 	bool SphereDestroyLatch = false;
 	bool SphereSpawnLatch = true;
+	bool ResetWallPreviewLatch = false;
 	bool TickRaycastLatch = true;
 	bool IsBadSpawn = true;
 	bool ResetLocalView = false;

@@ -134,6 +134,7 @@ void AsassPlayer::Tick( float DeltaTime )
 			else if (AunitBase* UnitCast = Cast<AunitBase>(LocalObjectSpawn)) { UnitCast->UpdateMaterial(NewColor); }
 
 			if (Awall* WallCast = Cast<Awall>(LocalObjectSpawn)) {
+				ResetWallPreviewLatch = true;
 				WallPreviewArray = (WallCast->FindWallTowersInRange());
 				FHitResult Hit;
 				TArray<AActor*> ActorsToIgnore;
@@ -163,7 +164,7 @@ void AsassPlayer::Tick( float DeltaTime )
 						}
 						//WallsBeingPreviewed.Remove(TargetWall);
 					}
-				}
+				}	
 
 				for (Awall* WallToCheck : WallsBeingPreviewed) {
 					if (!WallPreviewArray.Contains(WallToCheck) && WallToCheck->TempConnection) {
@@ -172,6 +173,16 @@ void AsassPlayer::Tick( float DeltaTime )
 						//WallsBeingPreviewed.Remove(WallToCheck);
 					}
 				}
+			}
+			else if (ResetWallPreviewLatch) {
+				for (Awall* Wall : WallsBeingPreviewed) {
+					if (Wall->TempConnection) {
+						Wall->TempConnection->Destroy();
+						Wall->TempConnection = nullptr;
+					}
+				}
+				WallsBeingPreviewed.Empty();
+				ResetWallPreviewLatch = false;
 			}
 			/* 
 			if (Awall* WallCast = Cast<Awall>(LocalObjectSpawn)) { 
