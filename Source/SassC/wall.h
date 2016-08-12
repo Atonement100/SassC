@@ -17,12 +17,13 @@ class SASSC_API Awall : public AbuildingBase
 {
 	GENERATED_BODY()
 
+public:
 	Awall();
 	virtual void PostInitializeComponents() override;
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaSeconds) override;
 	
-public:
+
 	AActor* TempConnection;
 	
 	TArray<Awall*> FindWallTowersInRange();

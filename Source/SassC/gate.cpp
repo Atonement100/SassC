@@ -59,6 +59,7 @@ void Agate::OnOverlapBegin_GateTrigger(AActor * OtherActor, UPrimitiveComponent 
 	if (AunitBase* Unit = Cast<AunitBase>(OtherActor)) {
 		if (Unit->OwningPlayerID == this->OwningPlayerID) { 
 			UnitsInRange++; 
+			ShouldBeOpen = true;
 		}
 	}
 }
@@ -69,6 +70,9 @@ void Agate::OnOverlapEnd_GateTrigger(AActor * OtherActor, UPrimitiveComponent * 
 	if (AunitBase* Unit = Cast<AunitBase>(OtherActor)) {
 		if (Unit->OwningPlayerID == this->OwningPlayerID) {
 			UnitsInRange--;
+			if (UnitsInRange == 0) {
+				ShouldBeOpen = false;
+			}
 		}
 	}
 }

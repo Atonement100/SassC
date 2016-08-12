@@ -14,6 +14,7 @@ class SASSC_API Agate : public AbuildingBase
 {
 	GENERATED_BODY()
 		
+public:
 	Agate();
 	virtual void PostInitializeComponents() override;
 	virtual void BeginPlay() override;
@@ -28,6 +29,9 @@ class SASSC_API Agate : public AbuildingBase
 	virtual void OnOverlapBegin_GateTrigger(AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 	UFUNCTION()
 	virtual void OnOverlapEnd_GateTrigger(AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Gate")
+	bool ShouldBeOpen;
 
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Gate")
