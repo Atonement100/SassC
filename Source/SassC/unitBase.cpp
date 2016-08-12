@@ -33,15 +33,6 @@ AunitBase::AunitBase()
 	SelectionCircleDecal->SetRelativeScale3D(FVector(10, 5, 5));
 	SelectionCircleDecal->DecalSize = FVector(1, 1, 1);
 
-	/*
-	SelectionBlendDecal = CreateDefaultSubobject<UDecalComponent>(TEXT("Selection Blend Decal"));
-	SelectionBlendDecal->AttachTo(RootComponent);
-	SelectionBlendDecal->FadeScreenSize = 0.0f;
-	SelectionBlendDecal->SetRelativeLocationAndRotation(FVector(0, 0, -10.2f), FQuat(FRotator(-90.0f, 0, 0)));
-	SelectionBlendDecal->SetRelativeScale3D(FVector(10, 10, 10));
-	SelectionBlendDecal->DecalSize = FVector(1, 1, 1);
-	*/
-
 	DetectionSphere = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Detection Sphere"));
 	DetectionSphere->AttachTo(RootComponent);
 	DetectionSphere->SetRelativeLocation(FVector(0, 0, -9.0f));
