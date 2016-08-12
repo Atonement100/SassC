@@ -8,6 +8,7 @@
 /**
  * 
  */
+
 UCLASS()
 class SASSC_API Agate : public AbuildingBase
 {
