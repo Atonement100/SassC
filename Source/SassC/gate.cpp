@@ -18,6 +18,10 @@ Agate::Agate() {
 	BuildingCollision->AttachTo(RootComponent);
 	BuildingCollision->SetBoxExtent(CollisionBounds);
 	
+	OpenTrigger = CreateDefaultSubobject<UBoxComponent>(TEXT("Gate Open Trigger"));
+	OpenTrigger->AttachTo(RootComponent);
+	OpenTrigger->OnComponentBeginOverlap.AddDynamic(this, &Agate::OnOverlapBegin_GateTrigger);
+	OpenTrigger->OnComponentEndOverlap.AddDynamic(this, &Agate::OnOverlapEnd_GateTrigger);
 }
 
 void Agate::PostInitializeComponents() {
@@ -47,6 +51,20 @@ void Agate::ColorBldg_Implementation(FLinearColor PlayerColor)
 bool Agate::ColorBldg_Validate(FLinearColor PlayerColor)
 {
 	return true;
+}
+
+void Agate::OnOverlapBegin_GateTrigger(AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
+{
+	if (Cast<AunitBase>(OtherActor)->OwningPlayerID == this->OwningPlayerID) {
+		UnitsInRange++;
+	}
+}
+
+void Agate::OnOverlapEnd_GateTrigger(AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex)
+{
+	if (Cast<AunitBase>(OtherActor)->OwningPlayerID == this->OwningPlayerID) {
+		UnitsInRange--;
+	}
 }
 
 
