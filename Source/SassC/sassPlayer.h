@@ -182,9 +182,9 @@ public:
 	AActor* SelectionSphereHolder;
 
 	UFUNCTION(Reliable, Server, WithValidation)
-		void ServerSpawnWall(Awall* NewWall, Awall* TargetWall, int32 PlayerID);
-	virtual void ServerSpawnWall_Implementation(Awall* NewWall, Awall* TargetWall, int32 PlayerID);
-	virtual bool ServerSpawnWall_Validate(Awall* NewWall, Awall* TargetWall, int32 PlayerID);
+		void ServerSpawnWall(Awall* NewWall, Awall* TargetWall, int32 PlayerID, FLinearColor PlayerColor);
+	virtual void ServerSpawnWall_Implementation(Awall* NewWall, Awall* TargetWall, int32 PlayerID, FLinearColor PlayerColor);
+	virtual bool ServerSpawnWall_Validate(Awall* NewWall, Awall* TargetWall, int32 PlayerID, FLinearColor PlayerColor);
 
 protected:
 	/*(Blueprint Native) Sets reference to game hud, so it can be used in code*/

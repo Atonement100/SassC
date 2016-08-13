@@ -673,7 +673,7 @@ void AsassPlayer::ServerSpawnBuilding_Implementation(AsassPlayerController* Play
 								TArray<Awall*> WallsInRange = (WallCast->FindWallTowersInRange());
 								GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Emerald, UKismetStringLibrary::Conv_IntToString(WallsInRange.Num()));
 								for (Awall* TargetWall : WallsInRange) {
-									if (TargetWall->OwningPlayerID == PlayerID) { ServerSpawnWall(WallCast, TargetWall, PlayerID); }
+									if (TargetWall->OwningPlayerID == PlayerID) { ServerSpawnWall(WallCast, TargetWall, PlayerID, SassPlayerState->PlayerColor); }
 									/*
 									FVector Direction = WallCast->GetActorLocation() - TargetWall->GetActorLocation();
 									FVector UnitDirection = Direction / Direction.Size();
@@ -872,7 +872,7 @@ void AsassPlayer::SpawnWallPreview_Implementation(FVector Location, FRotator Rot
 	*/
 }
 
-void AsassPlayer::ServerSpawnWall_Implementation(Awall* NewWall, Awall* TargetWall, int32 PlayerID)
+void AsassPlayer::ServerSpawnWall_Implementation(Awall* NewWall, Awall* TargetWall, int32 PlayerID, FLinearColor PlayerColor)
 {
 	FActorSpawnParameters TempParams = FActorSpawnParameters();
 	TempParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
@@ -893,6 +893,7 @@ void AsassPlayer::ServerSpawnWall_Implementation(Awall* NewWall, Awall* TargetWa
 			const FRotator Rot = Direction.Rotation();
 			AwallSegment* NewSegment = Cast<AwallSegment>(GetWorld()->SpawnActor(WallSegmentClass, &Loc, &Rot, SpawnParams));
 			NewSegment->OwningPlayerID = PlayerID;
+			NewSegment->UpdateMaterial(PlayerColor);
 			if (FirstLoop) {
 				NewWall->AddConnectedWallSegment(NewSegment);
 				NewSegment->LeftConnection = NewWall;
@@ -915,7 +916,7 @@ void AsassPlayer::ServerSpawnWall_Implementation(Awall* NewWall, Awall* TargetWa
 	}
 }
 
-bool AsassPlayer::ServerSpawnWall_Validate(Awall * NewWall, Awall * TargetWall, int32 PlayerID)
+bool AsassPlayer::ServerSpawnWall_Validate(Awall * NewWall, Awall * TargetWall, int32 PlayerID, FLinearColor PlayerColor)
 {
 	return true;
 }
