@@ -30,7 +30,8 @@ void Atower::BeginPlay() {
 
 void Atower::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
-	if (ResetRequired) { ResetPreview(); }
+	if (PreviewActive) { PreviewUpgrade(); }
+	else if (ResetRequired) { ResetPreview(); }
 }
 
 void Atower::PreviewUpgrade_Implementation() {
@@ -38,11 +39,13 @@ void Atower::PreviewUpgrade_Implementation() {
 	case 1: { 
 		UpgradeOneMesh->SetVisibility(false); 
 		UpgradeTwoMesh->SetVisibility(true); 
+		this->ColorBldg(FLinearColor::Green);
 		break; 
 	}
 	case 0: { 
 		BuildingMesh->SetVisibility(false); 
 		UpgradeOneMesh->SetVisibility(true); 
+		this->ColorBldg(FLinearColor::Green);
 		break; 
 	}
 	case 2: break;
@@ -50,6 +53,7 @@ void Atower::PreviewUpgrade_Implementation() {
 	}
 
 	ResetRequired = true;
+	PreviewActive = false;
 }
 
 void Atower::ResetPreview_Implementation() {
@@ -57,13 +61,13 @@ void Atower::ResetPreview_Implementation() {
 	case 1: { 
 		UpgradeOneMesh->SetVisibility(true); 
 		UpgradeTwoMesh->SetVisibility(false); 
-		this->ColorBldg(OwningPlayerColor, 1); 
+		this->ColorBldg(OwningPlayerColor); 
 		break; 
 	}
 	case 0: { 
 		BuildingMesh->SetVisibility(true); 
 		UpgradeOneMesh->SetVisibility(false); 
-		this->ColorBldg(OwningPlayerColor, 0);
+		this->ColorBldg(OwningPlayerColor);
 		break; }
 	case 2: break;
 	default: break;

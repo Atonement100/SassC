@@ -33,6 +33,7 @@ void AbuildingBase::GetLifetimeReplicatedProps(TArray<FLifetimeProperty> &OutLif
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 	DOREPLIFETIME(AbuildingBase, Health);
 	DOREPLIFETIME(AbuildingBase, OwningPlayerID);
+	DOREPLIFETIME(AbuildingBase, OwningPlayerColor);
 }
 
 void AbuildingBase::PostInitializeComponents() {
@@ -52,21 +53,16 @@ void AbuildingBase::Tick( float DeltaTime )
 
 }
 
-void AbuildingBase::UpdateMaterial(FLinearColor PlayerColor) {
-	ColorBldg(PlayerColor);
+void AbuildingBase::UpdateMaterial(FLinearColor PlayerColor, bool SetPersistentColor) {
+	ColorBldg(PlayerColor, SetPersistentColor);
 }
 
-void AbuildingBase::ColorBldg_Implementation(FLinearColor PlayerColor, int8 MeshLevel) {
-	//Get start index
-	for (UMaterialInstanceDynamic* Material : BldgMeshMaterialDynamic) {
-		if (Material) Material->SetVectorParameterValue(ColorParameterText, PlayerColor);
-	}
-	//BldgMeshMaterialDynamic[MeshLevel]->SetVectorParameterValue(ColorParameterText, PlayerColor);
-	//this->BuildingMesh->SetMaterial(0, BldgMeshMaterialDynamic[MeshLevel]);
-	this->OwningPlayerColor = PlayerColor;
+void AbuildingBase::ColorBldg_Implementation(FLinearColor PlayerColor, bool SetPersistentColor) {
+	for (UMaterialInstanceDynamic* Material : BldgMeshMaterialDynamic) { if (Material) Material->SetVectorParameterValue(ColorParameterText, PlayerColor); }
+	if (SetPersistentColor) { this->OwningPlayerColor = PlayerColor; }
 }
 
-bool AbuildingBase::ColorBldg_Validate(FLinearColor PlayerColor, int8 MeshLevel) {
+bool AbuildingBase::ColorBldg_Validate(FLinearColor PlayerColor, bool SetPersistentColor) {
 	return true;
 }
 

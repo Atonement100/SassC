@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "SassC.h"
+#include "Kismet/KismetStringLibrary.h"
 #include "workshop.h"
 
 Aworkshop::Aworkshop() {
@@ -12,13 +13,8 @@ Aworkshop::Aworkshop() {
 
 void Aworkshop::PostInitializeComponents() {
 	Super::PostInitializeComponents();
-//	BldgMeshMaterialDynamic.Add(BuildingMesh->CreateDynamicMaterialInstance(0, BuildingMesh->GetMaterial(0)));
+	//This line is to include the second mesh in the dynamic material array, parent only allows for one mesh by default.
 	BldgMeshMaterialDynamic.Add(UpgradeOneMesh->CreateDynamicMaterialInstance(0, UpgradeOneMesh->GetMaterial(0)));
-
-	//FTransform CollisionTransform = BuildingCollision->GetRelativeTransform();
-	//CollisionTransform.SetLocation(CollisionDisplacement);
-
-	//BuildingCollision->SetRelativeLocation(CollisionDisplacement);
 }
 
 void Aworkshop::BeginPlay() {
@@ -27,7 +23,8 @@ void Aworkshop::BeginPlay() {
 
 void Aworkshop::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
-	if (ResetRequired) { ResetPreview(); }
+	if (PreviewActive) { PreviewUpgrade(); }
+	else if (ResetRequired) { ResetPreview(); }
 }
 
 
@@ -36,6 +33,8 @@ void Aworkshop::PreviewUpgrade_Implementation() {
 	case 0: { 
 		BuildingMesh->SetVisibility(false); 
 		UpgradeOneMesh->SetVisibility(true); 
+		GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Cyan, UKismetStringLibrary::Conv_ColorToString(FLinearColor::Green));
+		this->ColorBldg(FLinearColor::Green);
 		break; 
 	}
 	case 1: break;
@@ -43,32 +42,39 @@ void Aworkshop::PreviewUpgrade_Implementation() {
 	}
 
 	ResetRequired = true;
+	PreviewActive = false;
 }
 
 void Aworkshop::ResetPreview_Implementation() {
 	switch (UpgradeLevel) {
-	case 0: { 
+	case 0: 
 		BuildingMesh->SetVisibility(true); 
 		UpgradeOneMesh->SetVisibility(false); 
+		GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Cyan, "PlayerColor: " + UKismetStringLibrary::Conv_ColorToString(OwningPlayerColor));
 		this->ColorBldg(OwningPlayerColor);
 		break; 
-	}
-	case 1: break;
+	case 1: 
+		this->ColorBldg(OwningPlayerColor);
+		break;
 	default: break;
 	}
+	ResetRequired = false;
 }
 
 void Aworkshop::NetUpgradeBuilding_Implementation() {
 	switch (UpgradeLevel) {
-	case 0: { 
+	case 0:  
 		BuildingMesh->SetVisibility(false); 
 		UpgradeOneMesh->SetVisibility(true); 
 		UpgradeLevel++; 
 		this->ColorBldg(OwningPlayerColor);
-		break; }
-	case 1: break;
+		break; 
+	case 1: 
+		this->ColorBldg(OwningPlayerColor);
+		break;
 	default: break;
 	}
+	ResetRequired = false;
 }
 
 bool Aworkshop::NetUpgradeBuilding_Validate() {

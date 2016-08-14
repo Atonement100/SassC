@@ -130,7 +130,7 @@ void AsassPlayer::Tick( float DeltaTime )
 
 			FLinearColor NewColor = IsBadSpawn ? FLinearColor(.7f, 0.0f, .058f) : FLinearColor(.093f, .59f, .153f);
 			
-			if (AbuildingBase* BuildingCast = Cast<AbuildingBase>(LocalObjectSpawn)) { BuildingCast->UpdateMaterial(NewColor); }
+			if (AbuildingBase* BuildingCast = Cast<AbuildingBase>(LocalObjectSpawn)) { BuildingCast->UpdateMaterial(NewColor, false); }
 			else if (AunitBase* UnitCast = Cast<AunitBase>(LocalObjectSpawn)) { UnitCast->UpdateMaterial(NewColor); }
 
 			if (Awall* WallCast = Cast<Awall>(LocalObjectSpawn)) {
@@ -216,19 +216,19 @@ void AsassPlayer::Tick( float DeltaTime )
 			if (LocalObjectSpawn->IsA(Atower::StaticClass()) && CursorHit.GetActor()->IsA(Atower::StaticClass())) {
 				LocalObjectSpawn->SetActorHiddenInGame(true);
 				Atower* TempTower = Cast<Atower>(CursorHit.GetActor());
-				if (TempTower->OwningPlayerID == PlayerState->PlayerId) TempTower->PreviewUpgrade();
+				if (TempTower->OwningPlayerID == PlayerState->PlayerId) TempTower->PreviewActive = true;
 				ResetLocalView = true;
 			}
 			else if (LocalObjectSpawn->IsA(Aworkshop::StaticClass()) && CursorHit.GetActor()->IsA(Aworkshop::StaticClass())) {
 				LocalObjectSpawn->SetActorHiddenInGame(true);
 				Aworkshop* TempWorkshop = Cast<Aworkshop>(CursorHit.GetActor());
-				if (TempWorkshop->OwningPlayerID == PlayerState->PlayerId) TempWorkshop->PreviewUpgrade();
+				if (TempWorkshop->OwningPlayerID == PlayerState->PlayerId) TempWorkshop->PreviewActive = true;
 				ResetLocalView = true;
 			}
 			else if (LocalObjectSpawn->IsA(Agate::StaticClass()) && CursorHit.GetActor()->IsA(AwallSegment::StaticClass())) {
 				LocalObjectSpawn->SetActorHiddenInGame(true);
 				AwallSegment* TempSegment = Cast<AwallSegment>(CursorHit.GetActor());
-				if (TempSegment->OwningPlayerID == PlayerState->PlayerId) TempSegment->PreviewUpgrade();
+				if (TempSegment->OwningPlayerID == PlayerState->PlayerId) TempSegment->PreviewActive = true;
 				ResetLocalView = true;
 			}
 		}
@@ -665,7 +665,7 @@ void AsassPlayer::ServerSpawnBuilding_Implementation(AsassPlayerController* Play
 					else {
 						if (AbuildingBase* NewBuilding = Cast<AbuildingBase>(NewSpawn)) {
 							GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "is building");
-							NewBuilding->UpdateMaterial(SassPlayerState->PlayerColor);
+							NewBuilding->UpdateMaterial(SassPlayerState->PlayerColor, true);
 							NewBuilding->OwningPlayerID = PlayerID;
 							NewBuilding->PostCreation(SassPlayerState->PlayerColor);
 							if (Awall* WallCast = Cast<Awall>(NewBuilding)) {
@@ -893,7 +893,7 @@ void AsassPlayer::ServerSpawnWall_Implementation(Awall* NewWall, Awall* TargetWa
 			const FRotator Rot = Direction.Rotation();
 			AwallSegment* NewSegment = Cast<AwallSegment>(GetWorld()->SpawnActor(WallSegmentClass, &Loc, &Rot, SpawnParams));
 			NewSegment->OwningPlayerID = PlayerID;
-			NewSegment->UpdateMaterial(PlayerColor);
+			NewSegment->UpdateMaterial(PlayerColor, true);
 			if (FirstLoop) {
 				NewWall->AddConnectedWallSegment(NewSegment);
 				NewSegment->LeftConnection = NewWall;

@@ -18,13 +18,14 @@ public:
 	virtual void PostInitializeComponents() override;
 	virtual void Tick( float DeltaSeconds ) override;
 
+	/*This function only calls ColorBldg. I believe I set it up this way because ColorBldg is a NetMulticast and needs a server-based actor, such as the bldg itself, to properly call NetMulticast events.*/
 	UFUNCTION(BlueprintCallable, Category = "Spawnables Functions")
-	virtual void UpdateMaterial(FLinearColor PlayerColor);
+	virtual void UpdateMaterial(FLinearColor PlayerColor, bool SetPersistentColor = false);
 
 	UFUNCTION(Reliable, NetMulticast, WithValidation)
-	void ColorBldg(FLinearColor PlayerColor, int8 MeshLevel = 0);
-	virtual void ColorBldg_Implementation(FLinearColor PlayerColor, int8 MeshLevel = 0);
-	virtual bool ColorBldg_Validate(FLinearColor PlayerColor, int8 MeshLevel = 0);
+	void ColorBldg(FLinearColor PlayerColor, bool SetPersistentColor = false);
+	virtual void ColorBldg_Implementation(FLinearColor PlayerColor, bool SetPersistentColor = false);
+	virtual bool ColorBldg_Validate(FLinearColor PlayerColor, bool SetPersistentColor = false);
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Building Base")
 	TArray<FVector> CornerLocations;
@@ -67,6 +68,9 @@ public:
 	void UpgradeBuilding();
 	virtual void UpgradeBuilding_Implementation();
 	virtual bool UpgradeBuilding_Validate();
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Building Base")
+		bool PreviewActive = false;
 #pragma endregion
 
 protected:
@@ -88,7 +92,7 @@ protected:
 	FVector CollisionBounds = FVector(35.0f, 31.0f, 40.0f);
 	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly)
 	FVector CollisionDisplacement = FVector(0.0f, 1.0f, 20.0f);
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Building Base")
+	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadWrite, Category = "Building Base")
 	FLinearColor OwningPlayerColor;
 	//These properties are used for buildings with upgrades, i.e. workshop, tower, and wall->gate. 
 	//For any buildings using these properties, each mesh must be individually declared in the specific blueprint.
@@ -96,5 +100,6 @@ protected:
 	uint8 UpgradeLevel = 0;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Building Base")
 	bool ResetRequired = false;
+
 	
 };
