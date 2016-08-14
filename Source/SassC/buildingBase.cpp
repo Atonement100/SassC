@@ -35,6 +35,11 @@ void AbuildingBase::GetLifetimeReplicatedProps(TArray<FLifetimeProperty> &OutLif
 	DOREPLIFETIME(AbuildingBase, OwningPlayerID);
 }
 
+void AbuildingBase::PostInitializeComponents() {
+	Super::PostInitializeComponents();
+	if (BuildingMesh) { BldgMeshMaterialDynamic.Add(BuildingMesh->CreateDynamicMaterialInstance(0, BuildingMesh->GetMaterial(0))); }
+}
+
 void AbuildingBase::BeginPlay()
 {
 	Super::BeginPlay();
@@ -51,12 +56,17 @@ void AbuildingBase::UpdateMaterial(FLinearColor PlayerColor) {
 	ColorBldg(PlayerColor);
 }
 
-void AbuildingBase::ColorBldg_Implementation(FLinearColor PlayerColor) {
-	BldgMeshMaterialDynamic->SetVectorParameterValue(ColorParameterText, PlayerColor);
-	this->BuildingMesh->SetMaterial(0, BldgMeshMaterialDynamic);
+void AbuildingBase::ColorBldg_Implementation(FLinearColor PlayerColor, int8 MeshLevel) {
+	//Get start index
+	for (UMaterialInstanceDynamic* Material : BldgMeshMaterialDynamic) {
+		if (Material) Material->SetVectorParameterValue(ColorParameterText, PlayerColor);
+	}
+	//BldgMeshMaterialDynamic[MeshLevel]->SetVectorParameterValue(ColorParameterText, PlayerColor);
+	//this->BuildingMesh->SetMaterial(0, BldgMeshMaterialDynamic[MeshLevel]);
+	this->OwningPlayerColor = PlayerColor;
 }
 
-bool AbuildingBase::ColorBldg_Validate(FLinearColor PlayerColor) {
+bool AbuildingBase::ColorBldg_Validate(FLinearColor PlayerColor, int8 MeshLevel) {
 	return true;
 }
 
@@ -65,7 +75,6 @@ float AbuildingBase::TakeDamage(float DamageAmount, FDamageEvent const & DamageE
 	Health -= DamageAmount;
 	if (Health <= 0.0f) {
 		SetLifeSpan(0.001f);
-		GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red, UKismetStringLibrary::Conv_FloatToString(Health));
 	}
 	return DamageAmount;
 }

@@ -23,7 +23,7 @@ Awall::Awall() {
 
 void Awall::PostInitializeComponents() {
 	Super::PostInitializeComponents();
-	BldgMeshMaterialDynamic = BuildingMesh->CreateDynamicMaterialInstance(0, BuildingMesh->GetMaterial(0));
+//	BldgMeshMaterialDynamic = BuildingMesh->CreateDynamicMaterialInstance(0, BuildingMesh->GetMaterial(0));
 
 	//FTransform CollisionTransform = BuildingCollision->GetRelativeTransform();
 	//CollisionTransform.SetLocation(CollisionDisplacement);
@@ -44,9 +44,6 @@ TArray<Awall*> Awall::FindWallTowersInRange()
 	TArray<AActor*> nullArray;
 	TArray<FHitResult> SphereHits;
 	UKismetSystemLibrary::SphereTraceMulti_NEW(GetWorld(), this->GetActorLocation(), this->GetActorLocation() + FVector(0, 0, 1), 150.0f, UEngineTypes::ConvertToTraceType(ECollisionChannel::ECC_GameTraceChannel3), true, nullArray, EDrawDebugTrace::ForOneFrame, SphereHits, true);
-
-
-	GEngine->AddOnScreenDebugMessage(-1, .2f, FColor::Black, UKismetStringLibrary::Conv_IntToString(SphereHits.Num()));
 	TArray<Awall*> WallsInRange;
 	for (FHitResult Hit : SphereHits) {
 		if (!WallsInRange.Contains(Hit.GetActor()) && Hit.GetActor()->IsA(Awall::StaticClass())) {

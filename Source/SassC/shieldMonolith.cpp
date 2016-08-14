@@ -20,7 +20,7 @@ AshieldMonolith::AshieldMonolith() {
 
 void AshieldMonolith::PostInitializeComponents() {
 	Super::PostInitializeComponents();
-	BldgMeshMaterialDynamic = BuildingMesh->CreateDynamicMaterialInstance(0, BuildingMesh->GetMaterial(0));
+//	BldgMeshMaterialDynamic = BuildingMesh->CreateDynamicMaterialInstance(0, BuildingMesh->GetMaterial(0));
 
 	//FTransform CollisionTransform = BuildingCollision->GetRelativeTransform();
 	//CollisionTransform.SetLocation(CollisionDisplacement);

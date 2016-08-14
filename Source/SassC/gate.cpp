@@ -26,12 +26,9 @@ Agate::Agate() {
 
 void Agate::PostInitializeComponents() {
 	Super::PostInitializeComponents();
-	BldgMeshMaterialDynamic = GateMesh->CreateDynamicMaterialInstance(0, GateMesh->GetMaterial(0));
-
-	//FTransform CollisionTransform = BuildingCollision->GetRelativeTransform();
-	//CollisionTransform.SetLocation(CollisionDisplacement);
-
-	//BuildingCollision->SetRelativeLocation(CollisionDisplacement);
+	BldgMeshMaterialDynamic.Add(GateMesh->CreateDynamicMaterialInstance(0, GateMesh->GetMaterial(0))); 
+	//This is an override from building base, since it is a skeletal mesh, not a static mesh
+	
 }
 
 void Agate::BeginPlay() {
@@ -42,13 +39,13 @@ void Agate::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
 }
 
-void Agate::ColorBldg_Implementation(FLinearColor PlayerColor)
+void Agate::ColorBldg_Implementation(FLinearColor PlayerColor, int8 MeshLevel)
 {
-	BldgMeshMaterialDynamic->SetVectorParameterValue(ColorParameterText, PlayerColor);
-	this->GateMesh->SetMaterial(0, BldgMeshMaterialDynamic);
+	BldgMeshMaterialDynamic[MeshLevel]->SetVectorParameterValue(ColorParameterText, PlayerColor);
+	this->GateMesh->SetMaterial(0, BldgMeshMaterialDynamic[MeshLevel]);
 }
 
-bool Agate::ColorBldg_Validate(FLinearColor PlayerColor)
+bool Agate::ColorBldg_Validate(FLinearColor PlayerColor, int8 MeshLevel)
 {
 	return true;
 }

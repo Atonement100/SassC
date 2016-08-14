@@ -21,9 +21,9 @@ public:
 	virtual void Tick(float DeltaSeconds) override;
 
 	UFUNCTION(Reliable, NetMulticast, WithValidation)
-	void ColorBldg(FLinearColor PlayerColor);
-	virtual void ColorBldg_Implementation(FLinearColor PlayerColor) override;
-	virtual bool ColorBldg_Validate(FLinearColor PlayerColor) override;
+	void ColorBldg(FLinearColor PlayerColor, int8 MeshLevel = 0);
+	virtual void ColorBldg_Implementation(FLinearColor PlayerColor, int8 MeshLevel = 0) override;
+	virtual bool ColorBldg_Validate(FLinearColor PlayerColor, int8 MeshLevel = 0) override;
 
 	UFUNCTION()
 	virtual void OnOverlapBegin_GateTrigger(AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);

@@ -12,7 +12,8 @@ Aworkshop::Aworkshop() {
 
 void Aworkshop::PostInitializeComponents() {
 	Super::PostInitializeComponents();
-	BldgMeshMaterialDynamic = BuildingMesh->CreateDynamicMaterialInstance(0, BuildingMesh->GetMaterial(0));
+//	BldgMeshMaterialDynamic.Add(BuildingMesh->CreateDynamicMaterialInstance(0, BuildingMesh->GetMaterial(0)));
+	BldgMeshMaterialDynamic.Add(UpgradeOneMesh->CreateDynamicMaterialInstance(0, UpgradeOneMesh->GetMaterial(0)));
 
 	//FTransform CollisionTransform = BuildingCollision->GetRelativeTransform();
 	//CollisionTransform.SetLocation(CollisionDisplacement);
@@ -32,7 +33,11 @@ void Aworkshop::Tick(float DeltaTime) {
 
 void Aworkshop::PreviewUpgrade_Implementation() {
 	switch (UpgradeLevel) {
-	case 0: { BuildingMesh->SetVisibility(false); UpgradeOneMesh->SetVisibility(true); break; }
+	case 0: { 
+		BuildingMesh->SetVisibility(false); 
+		UpgradeOneMesh->SetVisibility(true); 
+		break; 
+	}
 	case 1: break;
 	default: break;
 	}
@@ -42,7 +47,12 @@ void Aworkshop::PreviewUpgrade_Implementation() {
 
 void Aworkshop::ResetPreview_Implementation() {
 	switch (UpgradeLevel) {
-	case 0: { BuildingMesh->SetVisibility(true); UpgradeOneMesh->SetVisibility(false); break; }
+	case 0: { 
+		BuildingMesh->SetVisibility(true); 
+		UpgradeOneMesh->SetVisibility(false); 
+		this->ColorBldg(OwningPlayerColor);
+		break; 
+	}
 	case 1: break;
 	default: break;
 	}
@@ -50,7 +60,12 @@ void Aworkshop::ResetPreview_Implementation() {
 
 void Aworkshop::NetUpgradeBuilding_Implementation() {
 	switch (UpgradeLevel) {
-	case 0: { BuildingMesh->SetVisibility(false); UpgradeOneMesh->SetVisibility(true); UpgradeLevel++; break; }
+	case 0: { 
+		BuildingMesh->SetVisibility(false); 
+		UpgradeOneMesh->SetVisibility(true); 
+		UpgradeLevel++; 
+		this->ColorBldg(OwningPlayerColor);
+		break; }
 	case 1: break;
 	default: break;
 	}
