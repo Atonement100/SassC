@@ -182,7 +182,7 @@ public:
 	AActor* SelectionSphereHolder;
 
 	UFUNCTION(Reliable, Server, WithValidation)
-		void ServerSpawnWall(Awall* NewWall, Awall* TargetWall, int32 PlayerID, FLinearColor PlayerColor);
+	void ServerSpawnWall(Awall* NewWall, Awall* TargetWall, int32 PlayerID, FLinearColor PlayerColor);
 	virtual void ServerSpawnWall_Implementation(Awall* NewWall, Awall* TargetWall, int32 PlayerID, FLinearColor PlayerColor);
 	virtual bool ServerSpawnWall_Validate(Awall* NewWall, Awall* TargetWall, int32 PlayerID, FLinearColor PlayerColor);
 

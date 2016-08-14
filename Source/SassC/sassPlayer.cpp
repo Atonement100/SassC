@@ -317,7 +317,12 @@ void AsassPlayer::SetupPlayerInputComponent(class UInputComponent* InputComponen
 }
 
 void AsassPlayer::testFunction() {
-
+	FHitResult Hit;
+	if (!PlayerControllerPtr) return;
+	PlayerControllerPtr->GetHitResultUnderCursorByChannel(UEngineTypes::ConvertToTraceType(ECC_Visibility), true, Hit); // Assign Hit
+	if (!Hit.GetActor()) return;
+	FVector Location = Hit.GetActor()->GetActorLocation();
+	GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Emerald, UKismetStringLibrary::Conv_VectorToString(Location));
 }
 
 
@@ -674,30 +679,6 @@ void AsassPlayer::ServerSpawnBuilding_Implementation(AsassPlayerController* Play
 								GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Emerald, UKismetStringLibrary::Conv_IntToString(WallsInRange.Num()));
 								for (Awall* TargetWall : WallsInRange) {
 									if (TargetWall->OwningPlayerID == PlayerID) { ServerSpawnWall(WallCast, TargetWall, PlayerID, SassPlayerState->PlayerColor); }
-									/*
-									FVector Direction = WallCast->GetActorLocation() - TargetWall->GetActorLocation();
-									FVector UnitDirection = Direction / Direction.Size();
-									if (!UKismetSystemLibrary::BoxTraceSingle(GetWorld(), WallCast->GetActorLocation() + FVector(UnitDirection.X*-24, UnitDirection.Y*-24, 21), TargetWall->GetActorLocation() + FVector(UnitDirection.X * 24, UnitDirection.Y * 24, 21), FVector(9.5f, 4.0f, 15.0f), Direction.Rotation(), UEngineTypes::ConvertToTraceType(ECC_Visibility), true, ActorsToIgnore, EDrawDebugTrace::ForOneFrame, Hit, true)) {
-										float SpaceBetween = ((TargetWall->GetActorLocation() - FVector(Direction.X / Direction.Size2D() * -24, Direction.Y / Direction.Size2D() * -24, 0)) - (WallCast->GetActorLocation() + FVector(Direction.X / Direction.Size2D() * 24, Direction.Y / Direction.Size2D() * 24, 0))).Size();
-										FVector Start = WallCast->GetActorLocation() + FVector(UnitDirection.X * -12, UnitDirection.Y * -12, 0);
-										bool FirstLoop = true, LastLoop = false;
-										for (int NumToSpawn = (SpaceBetween / 19); NumToSpawn > 0; NumToSpawn--) {
-											if (FirstLoop) {
-
-											}
-											else if (LastLoop) {
-											
-											}
-											else {
-												
-											}
-
-
-
-											Start = Start + FVector(UnitDirection.X * -19, UnitDirection.Y * -19, 0);
-										}
-									}
-									*/
 								}
 							}
 						}
@@ -894,6 +875,7 @@ void AsassPlayer::ServerSpawnWall_Implementation(Awall* NewWall, Awall* TargetWa
 			AwallSegment* NewSegment = Cast<AwallSegment>(GetWorld()->SpawnActor(WallSegmentClass, &Loc, &Rot, SpawnParams));
 			NewSegment->OwningPlayerID = PlayerID;
 			NewSegment->UpdateMaterial(PlayerColor, true);
+			NewSegment->FixSpawnLocation(Loc);
 			if (FirstLoop) {
 				NewWall->AddConnectedWallSegment(NewSegment);
 				NewSegment->LeftConnection = NewWall;
@@ -916,7 +898,7 @@ void AsassPlayer::ServerSpawnWall_Implementation(Awall* NewWall, Awall* TargetWa
 	}
 }
 
-bool AsassPlayer::ServerSpawnWall_Validate(Awall * NewWall, Awall * TargetWall, int32 PlayerID, FLinearColor PlayerColor)
+bool AsassPlayer::ServerSpawnWall_Validate(Awall* NewWall, Awall* TargetWall, int32 PlayerID, FLinearColor PlayerColor)
 {
 	return true;
 }

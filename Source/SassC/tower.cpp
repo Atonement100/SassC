@@ -14,7 +14,7 @@ Atower::Atower() {
 
 void Atower::PostInitializeComponents() {
 	Super::PostInitializeComponents();
-	//BldgMeshMaterialDynamic.Add(BuildingMesh->CreateDynamicMaterialInstance(0, BuildingMesh->GetMaterial(0)));
+	//These are to include the additional meshes and materials in the dynamic material array, parent only adds one mesh and material by default.
 	BldgMeshMaterialDynamic.Add(BuildingMesh->CreateDynamicMaterialInstance(1, BuildingMesh->GetMaterial(1)));
 	for (int NumMaterials = 0; NumMaterials < UpgradeOneMesh->GetNumMaterials(); NumMaterials++) {
 		BldgMeshMaterialDynamic.Add(UpgradeOneMesh->CreateDynamicMaterialInstance(NumMaterials, UpgradeOneMesh->GetMaterial(NumMaterials)));
