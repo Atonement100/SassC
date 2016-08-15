@@ -669,10 +669,10 @@ void AsassPlayer::ServerSpawnBuilding_Implementation(AsassPlayerController* Play
 					//try building
 					else {
 						if (AbuildingBase* NewBuilding = Cast<AbuildingBase>(NewSpawn)) {
-							GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "is building");
 							NewBuilding->UpdateMaterial(SassPlayerState->PlayerColor, true);
 							NewBuilding->OwningPlayerID = PlayerID;
 							NewBuilding->PostCreation(SassPlayerState->PlayerColor);
+							NewBuilding->FixSpawnLocation(Hit.Location);
 							if (Awall* WallCast = Cast<Awall>(NewBuilding)) {
 								
 								TArray<Awall*> WallsInRange = (WallCast->FindWallTowersInRange());
