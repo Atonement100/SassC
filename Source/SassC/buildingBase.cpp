@@ -79,6 +79,28 @@ float AbuildingBase::GetHealth() {
 	return Health;
 }
 
+void AbuildingBase::FixSpawnLocation_Implementation(FVector RealLocation)
+{
+	NetFixSpawnLocation(RealLocation);
+}
+
+bool AbuildingBase::FixSpawnLocation_Validate(FVector RealLocation)
+{
+	return true;
+}
+
+void AbuildingBase::NetFixSpawnLocation_Implementation(FVector RealLocation)
+{
+	Role = ROLE_Authority;
+	//SetActorLocation(RealLocation + FVector(10));
+	SetActorLocation(RealLocation);
+}
+
+bool AbuildingBase::NetFixSpawnLocation_Validate(FVector RealLocation)
+{
+	return true;
+}
+
 #pragma region Upgradeable Building empty fx
 void AbuildingBase::PostCreation_Implementation(FLinearColor PlayerColor)
 {
@@ -89,6 +111,8 @@ bool AbuildingBase::PostCreation_Validate(FLinearColor PlayerColor)
 	return true;
 }
 
+
+
 void AbuildingBase::PreviewUpgrade_Implementation()
 {
 }
@@ -97,20 +121,21 @@ void AbuildingBase::ResetPreview_Implementation()
 {
 }
 
-void AbuildingBase::NetUpgradeBuilding_Implementation()
-{
-}
-
-bool AbuildingBase::NetUpgradeBuilding_Validate()
-{
-	return false;
-}
-
 void AbuildingBase::UpgradeBuilding_Implementation()
 {
 }
 
 bool AbuildingBase::UpgradeBuilding_Validate()
+{
+	return false;
+}
+
+void AbuildingBase::NetUpgradeBuilding_Implementation()
+{
+
+}
+
+bool AbuildingBase::NetUpgradeBuilding_Validate()
 {
 	return false;
 }

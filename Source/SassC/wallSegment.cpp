@@ -22,6 +22,7 @@ void AwallSegment::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
 }
 
+/*
 void AwallSegment::FixSpawnLocation_Implementation(FVector RealLocation)
 {
 	NetFixSpawnLocation(RealLocation);
@@ -34,16 +35,13 @@ bool AwallSegment::FixSpawnLocation_Validate(FVector RealLocation)
 
 void AwallSegment::NetFixSpawnLocation_Implementation(FVector RealLocation)
 {
+	Role = ROLE_Authority;
 	SetActorLocation(RealLocation + FVector(10));
-	GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Red, "OLD LOCATION : " + UKismetStringLibrary::Conv_VectorToString(this->GetActorLocation()));
 	SetActorLocation(RealLocation);
-	if (Role = ROLE_Authority) {
-		GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Yellow, "SHOULD BE AT: " + UKismetStringLibrary::Conv_VectorToString(RealLocation));
-		GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Green, "NEW LOCATION : " + UKismetStringLibrary::Conv_VectorToString(this->GetActorLocation()));
-	}
 }
 
 bool AwallSegment::NetFixSpawnLocation_Validate(FVector RealLocation)
 {
 	return true;
 }
+*/

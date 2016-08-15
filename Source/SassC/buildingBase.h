@@ -50,6 +50,11 @@ public:
 	virtual void PostCreation_Implementation(FLinearColor PlayerColor);
 	virtual bool PostCreation_Validate(FLinearColor PlayerColor);
 
+	UFUNCTION(Reliable, Server, WithValidation)
+	void FixSpawnLocation(FVector RealLocation);
+	virtual void FixSpawnLocation_Implementation(FVector RealLocation);
+	virtual bool FixSpawnLocation_Validate(FVector RealLocation);
+
 #pragma region Upgradable Building Functions
 	UFUNCTION(Unreliable, Client)
 	void PreviewUpgrade();
@@ -94,6 +99,12 @@ protected:
 	FVector CollisionDisplacement = FVector(0.0f, 1.0f, 20.0f);
 	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadWrite, Category = "Building Base")
 	FLinearColor OwningPlayerColor;
+
+	UFUNCTION(Reliable, NetMulticast, WithValidation)
+	void NetFixSpawnLocation(FVector RealLocation);
+	virtual void NetFixSpawnLocation_Implementation(FVector RealLocation);
+	virtual bool NetFixSpawnLocation_Validate(FVector RealLocation);
+
 	//These properties are used for buildings with upgrades, i.e. workshop, tower, and wall->gate. 
 	//For any buildings using these properties, each mesh must be individually declared in the specific blueprint.
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Building Base")
