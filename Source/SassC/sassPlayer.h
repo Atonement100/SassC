@@ -54,6 +54,7 @@ public:
 	/*Toggles unit menu*/
 	void UnitMenuPressed();
 	/*Toggles escape/pause menu */
+	UFUNCTION(BlueprintCallable, Category = "Sass Player")
 	void PausePressed();
 	//@TODO: Bring up confirmation menu for f10 exiting if shipping with force quit
 	/*Force quits game (F10)*/

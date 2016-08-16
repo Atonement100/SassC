@@ -453,6 +453,7 @@ void AsassPlayer::QuitGame() {
 
 #pragma region Pause functions
 void AsassPlayer::PausePressed() {
+	
 	if (!IsPaused) {
 		if (PauseWidgetClass != nullptr) PauseWidget = CreateWidget<UsassPauseMenu>(PlayerControllerPtr, PauseWidgetClass);
 		if (PauseWidget != nullptr) PauseWidget->AddToViewport();

@@ -74,8 +74,3 @@ void Agate::OnOverlapEnd_GateTrigger(AActor * OtherActor, UPrimitiveComponent * 
 		}
 	}
 }
-
-
-
-
-

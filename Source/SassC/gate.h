@@ -32,7 +32,6 @@ public:
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Gate")
 	bool ShouldBeOpen;
-
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Gate")
 	USkeletalMeshComponent* GateMesh;
