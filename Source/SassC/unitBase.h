@@ -94,6 +94,11 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Unit Base")
 	FVector HalfHeight = FVector(0, 0, 11);
 
+	UFUNCTION(Reliable, Server, WithValidation)
+		void FixSpawnLocation(FVector RealLocation);
+	virtual void FixSpawnLocation_Implementation(FVector RealLocation);
+	virtual bool FixSpawnLocation_Validate(FVector RealLocation);
+
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
 	UMaterialInstanceDynamic* UnitDecalMaterialDynamic;
@@ -148,4 +153,8 @@ protected:
 
 	const int SelectionSphereScaleMod = 100; //this should never ever be changed
 	
+	UFUNCTION(Reliable, NetMulticast, WithValidation)
+		void NetFixSpawnLocation(FVector RealLocation);
+	virtual void NetFixSpawnLocation_Implementation(FVector RealLocation);
+	virtual bool NetFixSpawnLocation_Validate(FVector RealLocation);
 };

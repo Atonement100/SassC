@@ -22,6 +22,7 @@ Agate::Agate() {
 	OpenTrigger->AttachTo(RootComponent);
 	OpenTrigger->OnComponentBeginOverlap.AddDynamic(this, &Agate::OnOverlapBegin_GateTrigger);
 	OpenTrigger->OnComponentEndOverlap.AddDynamic(this, &Agate::OnOverlapEnd_GateTrigger);
+	OpenTrigger->SetCollisionResponseToChannel(ECollisionChannel::ECC_GameTraceChannel3, ECollisionResponse::ECR_Ignore);
 }
 
 void Agate::PostInitializeComponents() {

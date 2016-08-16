@@ -665,6 +665,9 @@ void AsassPlayer::ServerSpawnBuilding_Implementation(AsassPlayerController* Play
 						NewUnit->UpdateMaterial(SassPlayerState->PlayerColor);
 						NewUnit->SpawnDefaultController();
 						NewUnit->OwningPlayerID = PlayerID;
+
+						//Don't think units need to have location fixed. Small change shouldn't matter. If it does an alternative solution will need to be found, as this causes issues.
+						//NewUnit->FixSpawnLocation(Location);
 					}
 					//try building
 					else {

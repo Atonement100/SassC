@@ -325,3 +325,25 @@ void AunitBase::SetDecalVisibility(bool isVisible) {
 float AunitBase::GetHealth() {
 	return Health;
 }
+
+void AunitBase::FixSpawnLocation_Implementation(FVector RealLocation)
+{
+	NetFixSpawnLocation(RealLocation);
+}
+
+bool AunitBase::FixSpawnLocation_Validate(FVector RealLocation)
+{
+	return true;
+}
+
+void AunitBase::NetFixSpawnLocation_Implementation(FVector RealLocation)
+{
+	Role = ROLE_Authority;
+	//SetActorLocation(RealLocation + FVector(10));
+	SetActorLocation(RealLocation);
+}
+
+bool AunitBase::NetFixSpawnLocation_Validate(FVector RealLocation)
+{
+	return true;
+}
