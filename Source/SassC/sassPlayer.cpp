@@ -398,7 +398,7 @@ void AsassPlayer::UnitMenuPressed() {
 	if (!IsUnitMenuOpen) {
 		if (PlayerControllerPtr != nullptr) {
 			PlayerControllerPtr->bShowMouseCursor = true;
-			PlayerControllerPtr->SetInputMode(GameAndUI);
+			PlayerControllerPtr->SetInputMode(FInputModeGameAndUI());
 			OpenUnitMenu();
 		}
 		IsUnitMenuOpen = true;
@@ -406,7 +406,7 @@ void AsassPlayer::UnitMenuPressed() {
 	else {
 		if (PlayerControllerPtr != nullptr) {
 			PlayerControllerPtr->bShowMouseCursor = false;
-			PlayerControllerPtr->SetInputMode(GameOnly);
+			PlayerControllerPtr->SetInputMode(FInputModeGameOnly());
 			CloseUnitMenu();
 		}
 		IsUnitMenuOpen = false;
@@ -433,7 +433,7 @@ void AsassPlayer::CreateGameHUD() {
 		RemoveAllWidgets();
 		GameWidget = CreateWidget<UUserWidget>(PlayerControllerPtr, GameWidgetClass);
 		if (GameWidget != nullptr) GameWidget->AddToViewport();
-		PlayerControllerPtr->SetInputMode(GameOnly);
+		PlayerControllerPtr->SetInputMode(FInputModeGameOnly());
 		PlayerControllerPtr->bShowMouseCursor = false;
 		SetSassHUDRef();
 	}
@@ -458,7 +458,7 @@ void AsassPlayer::PausePressed() {
 		if (PauseWidgetClass != nullptr) PauseWidget = CreateWidget<UsassPauseMenu>(PlayerControllerPtr, PauseWidgetClass);
 		if (PauseWidget != nullptr) PauseWidget->AddToViewport();
 		if (PlayerControllerPtr != nullptr) {
-			PlayerControllerPtr->SetInputMode(GameAndUI);
+			PlayerControllerPtr->SetInputMode(FInputModeGameAndUI());
 			PlayerControllerPtr->SetIgnoreMoveInput(true);
 			PlayerControllerPtr->bShowMouseCursor = true;
 		}
@@ -470,7 +470,7 @@ void AsassPlayer::PausePressed() {
 			PauseWidget = nullptr;
 		}
 		if (PlayerControllerPtr != nullptr) {
-			PlayerControllerPtr->SetInputMode(GameOnly);
+			PlayerControllerPtr->SetInputMode(FInputModeGameOnly());
 			PlayerControllerPtr->SetIgnoreMoveInput(false);
 			PlayerControllerPtr->bShowMouseCursor = false;
 		}

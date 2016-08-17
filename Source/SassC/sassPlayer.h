@@ -252,8 +252,6 @@ protected:
 	const float StandingEyeHeight = 80.0f;
 	UUserWidget* PauseWidget;
 	UUserWidget* PregameWidget;
-	FInputModeGameAndUI GameAndUI;
-	FInputModeGameOnly GameOnly;
 	APlayerController* PlayerControllerPtr;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Sass Player")
 	TArray<AunitBase*> SelectedUnits;
