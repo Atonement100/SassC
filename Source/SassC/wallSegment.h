@@ -17,9 +17,20 @@ public:
 	AwallSegment();
 	virtual void PostInitializeComponents() override;
 	virtual void BeginPlay() override;
+	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const;
+
 	virtual void Tick(float DeltaSeconds) override;
 
+#pragma region Upgradeable Building Overrides
+	virtual void PreviewUpgrade_Implementation() override;
+	virtual void ResetPreview_Implementation() override;
+	virtual void NetUpgradeBuilding_Implementation() override;
+	virtual bool NetUpgradeBuilding_Validate() override;
+	virtual void UpgradeBuilding_Implementation() override;
+	virtual bool UpgradeBuilding_Validate() override;
+#pragma endregion
 
+	TArray<AbuildingBase*> GatePreviewArray;
 	AbuildingBase* LeftConnection;
 	AbuildingBase* RightConnection;
 	/*

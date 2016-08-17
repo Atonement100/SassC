@@ -19,6 +19,7 @@ public:
 	virtual void PostInitializeComponents() override;
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaSeconds) override;
+
 /*
 	UFUNCTION(Reliable, NetMulticast, WithValidation)
 	void ColorBldg(FLinearColor PlayerColor);

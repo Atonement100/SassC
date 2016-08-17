@@ -27,15 +27,14 @@ void Aworkshop::Tick(float DeltaTime) {
 	else if (ResetRequired) { ResetPreview(); }
 }
 
-
 void Aworkshop::PreviewUpgrade_Implementation() {
 	switch (UpgradeLevel) {
-	case 0: { 
-		BuildingMesh->SetVisibility(false); 
-		UpgradeOneMesh->SetVisibility(true); 
+	case 0: {
+		BuildingMesh->SetVisibility(false);
+		UpgradeOneMesh->SetVisibility(true);
 		GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Cyan, UKismetStringLibrary::Conv_ColorToString(FLinearColor::Green));
 		this->ColorBldg(FLinearColor::Green);
-		break; 
+		break;
 	}
 	case 1: break;
 	default: break;
@@ -47,13 +46,13 @@ void Aworkshop::PreviewUpgrade_Implementation() {
 
 void Aworkshop::ResetPreview_Implementation() {
 	switch (UpgradeLevel) {
-	case 0: 
-		BuildingMesh->SetVisibility(true); 
-		UpgradeOneMesh->SetVisibility(false); 
+	case 0:
+		BuildingMesh->SetVisibility(true);
+		UpgradeOneMesh->SetVisibility(false);
 		GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Cyan, "PlayerColor: " + UKismetStringLibrary::Conv_ColorToString(OwningPlayerColor));
 		this->ColorBldg(OwningPlayerColor);
-		break; 
-	case 1: 
+		break;
+	case 1:
 		this->ColorBldg(OwningPlayerColor);
 		break;
 	default: break;
@@ -63,13 +62,13 @@ void Aworkshop::ResetPreview_Implementation() {
 
 void Aworkshop::NetUpgradeBuilding_Implementation() {
 	switch (UpgradeLevel) {
-	case 0:  
-		BuildingMesh->SetVisibility(false); 
-		UpgradeOneMesh->SetVisibility(true); 
-		UpgradeLevel++; 
+	case 0:
+		BuildingMesh->SetVisibility(false);
+		UpgradeOneMesh->SetVisibility(true);
+		UpgradeLevel++;
 		this->ColorBldg(OwningPlayerColor);
-		break; 
-	case 1: 
+		break;
+	case 1:
 		this->ColorBldg(OwningPlayerColor);
 		break;
 	default: break;
@@ -88,4 +87,5 @@ void Aworkshop::UpgradeBuilding_Implementation() {
 bool Aworkshop::UpgradeBuilding_Validate() {
 	return true;
 }
+
 

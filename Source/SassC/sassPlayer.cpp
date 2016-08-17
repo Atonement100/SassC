@@ -859,6 +859,7 @@ void AsassPlayer::SpawnWallPreview_Implementation(FVector Location, FRotator Rot
 
 void AsassPlayer::ServerSpawnWall_Implementation(Awall* NewWall, Awall* TargetWall, int32 PlayerID, FLinearColor PlayerColor)
 {
+	if (!TargetWall) return;
 	FActorSpawnParameters TempParams = FActorSpawnParameters();
 	TempParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 	const FActorSpawnParameters SpawnParams = FActorSpawnParameters(TempParams);
@@ -867,13 +868,14 @@ void AsassPlayer::ServerSpawnWall_Implementation(Awall* NewWall, Awall* TargetWa
 
 	FVector Direction = NewWall->GetActorLocation() - TargetWall->GetActorLocation();
 	FVector UnitDirection = Direction / Direction.Size();
+
 	if (!UKismetSystemLibrary::BoxTraceSingle(GetWorld(), NewWall->GetActorLocation() + FVector(UnitDirection.X*-24, UnitDirection.Y*-24, 21), TargetWall->GetActorLocation() + FVector(UnitDirection.X * 24, UnitDirection.Y * 24, 21), FVector(9.5f, 4.0f, 15.0f), Direction.Rotation(), UEngineTypes::ConvertToTraceType(ECC_Visibility), true, ActorsToIgnore, EDrawDebugTrace::ForOneFrame, Hit, true)) {
 		float SpaceBetween = ((TargetWall->GetActorLocation() - FVector(Direction.X / Direction.Size2D() * -24, Direction.Y / Direction.Size2D() * -24, 0)) - (NewWall->GetActorLocation() + FVector(Direction.X / Direction.Size2D() * 24, Direction.Y / Direction.Size2D() * 24, 0))).Size();
 		FVector Start = NewWall->GetActorLocation() + FVector(UnitDirection.X * -12, UnitDirection.Y * -12, 0);
 		bool FirstLoop = true, LastLoop = false;
 		AwallSegment* PreviousSegment = nullptr;
- 		for (int NumToSpawn = (SpaceBetween / 19); NumToSpawn > 0; NumToSpawn--) {
-			GEngine->AddOnScreenDebugMessage(-1, 4.0f, FColor::Cyan, UKismetStringLibrary::Conv_IntToString(NumToSpawn));
+		//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, UKismetStringLibrary::Conv_IntToString(SpaceBetween/19));
+		for (int NumToSpawn = (SpaceBetween / 19); NumToSpawn > 0; NumToSpawn--) {
 			const FVector Loc = Start;
 			const FRotator Rot = Direction.Rotation();
 			AwallSegment* NewSegment = Cast<AwallSegment>(GetWorld()->SpawnActor(WallSegmentClass, &Loc, &Rot, SpawnParams));
