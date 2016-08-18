@@ -888,6 +888,7 @@ void AsassPlayer::ServerSpawnWall_Implementation(Awall* NewWall, Awall* TargetWa
 				FirstLoop = false;
 			}
 			else if (LastLoop) {
+				PreviousSegment->RightConnection = NewSegment;
 				NewSegment->LeftConnection = PreviousSegment;
 				NewSegment->RightConnection = TargetWall;
 				TargetWall->AddConnectedWallSegment(NewSegment);
