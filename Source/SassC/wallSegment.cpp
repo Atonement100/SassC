@@ -21,8 +21,9 @@ void AwallSegment::BeginPlay() {
 
 void AwallSegment::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
-	if (PreviewActive) { PreviewUpgrade(); }
+	if (PreviewActive) { PreviewUpgrade(); GEngine->AddOnScreenDebugMessage(-1, DeltaTime, FColor::Cyan, UKismetStringLibrary::Conv_IntToString(GatePreviewArray.Num())); }
 	else if (!DelayReset && ResetRequired) { ResetPreview(); }
+	DelayReset = false;	
 }
 
 void AwallSegment::GetLifetimeReplicatedProps(TArray<FLifetimeProperty> &OutLifetimeProps) const
@@ -63,7 +64,7 @@ int AwallSegment::TryConnection(AbuildingBase* Connection, TArray<AbuildingBase*
 		Connection->ColorBldg(FLinearColor::White, false);
 		Connection->DelayReset = true;
 		Connection->ResetRequired = true;
-		ConnectedBldgs.Add(Connection);
+		if(!ConnectedBldgs.Contains(Connection)) ConnectedBldgs.Add(Connection);
 	}
 	else {
 		return Depth;
@@ -79,8 +80,10 @@ int AwallSegment::TryConnection(AbuildingBase* Connection, TArray<AbuildingBase*
 
 void AwallSegment::PreviewUpgrade_Implementation() {
 	ColorBldg(FLinearColor::White, false);
+	int8 Depth = 1;
 
-	if (LeftConnection) TryConnection(LeftConnection, GatePreviewArray, 1, true);
+	if (LeftConnection) Depth = TryConnection(LeftConnection, GatePreviewArray, Depth, true);
+	if (RightConnection && Depth < 4) Depth = TryConnection(RightConnection, GatePreviewArray, Depth, false);
 
 	ResetRequired = true;
 	PreviewActive = false;
