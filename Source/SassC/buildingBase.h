@@ -78,6 +78,8 @@ public:
 	bool PreviewActive = false;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Building Base")
 	bool ResetRequired = false;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Building Base")
+	bool DelayReset = false;
 #pragma endregion
 
 protected:

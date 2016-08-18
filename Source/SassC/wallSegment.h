@@ -22,6 +22,7 @@ public:
 	virtual void Tick(float DeltaSeconds) override;
 
 #pragma region Upgradeable Building Overrides
+	int TryConnection(AbuildingBase * Connection, TArray<AbuildingBase*> &ConnectedBldgs, int8 Depth, bool TryLeft);
 	virtual void PreviewUpgrade_Implementation() override;
 	virtual void ResetPreview_Implementation() override;
 	virtual void NetUpgradeBuilding_Implementation() override;
@@ -35,6 +36,7 @@ public:
 	AbuildingBase* LeftConnection;
 	UPROPERTY(Replicated)
 	AbuildingBase* RightConnection;
+	
 	/*
 	UFUNCTION(Reliable, Server, WithValidation)
 	void FixSpawnLocation(FVector RealLocation);
