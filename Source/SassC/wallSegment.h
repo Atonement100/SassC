@@ -31,7 +31,9 @@ public:
 #pragma endregion
 
 	TArray<AbuildingBase*> GatePreviewArray;
+	UPROPERTY(Replicated)
 	AbuildingBase* LeftConnection;
+	UPROPERTY(Replicated)
 	AbuildingBase* RightConnection;
 	/*
 	UFUNCTION(Reliable, Server, WithValidation)

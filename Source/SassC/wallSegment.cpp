@@ -28,8 +28,9 @@ void AwallSegment::Tick(float DeltaTime) {
 void AwallSegment::GetLifetimeReplicatedProps(TArray<FLifetimeProperty> &OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
-	//DOREPLIFETIME(AwallSegment, LeftConnection);
-	//DOREPLIFETIME(AwallSegment, RightConnection);
+	
+	DOREPLIFETIME(AwallSegment, LeftConnection);
+	DOREPLIFETIME(AwallSegment, RightConnection);
 }
 
 /*
