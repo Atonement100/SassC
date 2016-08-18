@@ -75,7 +75,9 @@ public:
 	virtual bool UpgradeBuilding_Validate();
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Building Base")
-		bool PreviewActive = false;
+	bool PreviewActive = false;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Building Base")
+	bool ResetRequired = false;
 #pragma endregion
 
 protected:
@@ -109,8 +111,7 @@ protected:
 	//For any buildings using these properties, each mesh must be individually declared in the specific blueprint.
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Building Base")
 	uint8 UpgradeLevel = 0;
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Building Base")
-	bool ResetRequired = false;
+
 
 	
 };

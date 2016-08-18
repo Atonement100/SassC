@@ -62,6 +62,7 @@ void AwallSegment::PreviewUpgrade_Implementation() {
 	if (LeftConnection) GEngine->AddOnScreenDebugMessage(-1, .5f, FColor::Red, LeftConnection->GetName());
 	if (LeftConnection && LeftConnection->IsA(AwallSegment::StaticClass())) {
 		LeftConnection->ColorBldg(FLinearColor::White, false);
+		LeftConnection->ResetRequired = true;
 		GatePreviewArray.Add(LeftConnection);
 	}
 
