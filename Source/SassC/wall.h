@@ -22,11 +22,11 @@ public:
 	virtual void PostInitializeComponents() override;
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaSeconds) override;
-	
 
 	AActor* TempConnection;
-	
-	TArray<Awall*> FindWallTowersInRange();
+
+	Awall * GetClosestWallTowerInRange(float Range = 150.0f, TArray<AActor*> ActorsToIgnore = TArray<AActor*>());
+	TArray<Awall*> FindWallTowersInRange(float Range = 150.0f, TArray<AActor*> ActorsToIgnore = TArray<AActor*>());
 	virtual TArray<AActor*> FindWallTowersInRange_Implementation();
 
 	UFUNCTION(Reliable, Server, WithValidation)

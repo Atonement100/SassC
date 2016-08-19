@@ -678,16 +678,22 @@ void AsassPlayer::ServerSpawnBuilding_Implementation(AsassPlayerController* Play
 								const FVector LeftLoc = Hit.Location + HalfHeight + FVector(0, 50, -20);
 								const FVector RightLoc = Hit.Location + HalfHeight + FVector(0, -50, -20);
 								AActor* x = GetWorld()->SpawnActor(WallClass, &LeftLoc, &Rotation, WallParams);
-								AbuildingBase* LeftTemp = Cast<AbuildingBase>(x);
+								AActor* y = GetWorld()->SpawnActor(WallClass, &RightLoc, &Rotation, WallParams);
+								TArray<AActor*> Ignore = TArray<AActor*>();
+								Ignore.Add(x);
+								Ignore.Add(y);
+								Awall* LeftTemp = Cast<Awall>(x);
+								Awall* RightTemp = Cast<Awall>(y);
 									LeftTemp->OwningPlayerID = PlayerID;
 									LeftTemp->UpdateMaterial(SassPlayerState->PlayerColor, true);
 									LeftTemp->PostCreation(SassPlayerState->PlayerColor);
+									ServerSpawnWall(LeftTemp, LeftTemp->GetClosestWallTowerInRange(150.0f, Ignore), PlayerID, SassPlayerState->PlayerColor);
 									//LeftTemp->FixSpawnLocation(Hit.Location + HalfHeight + FVector(0, 44, -20));
-								AActor* y = GetWorld()->SpawnActor(WallClass, &RightLoc, &Rotation, WallParams);
-								AbuildingBase* RightTemp = Cast<AbuildingBase>(y);
+
 									RightTemp->OwningPlayerID = PlayerID;
 									RightTemp->UpdateMaterial(SassPlayerState->PlayerColor, true);
 									RightTemp->PostCreation(SassPlayerState->PlayerColor);
+									ServerSpawnWall(RightTemp, RightTemp->GetClosestWallTowerInRange(150.0f, Ignore), PlayerID, SassPlayerState->PlayerColor);
 									//RightTemp->FixSpawnLocation(Hit.Location + HalfHeight + FVector(0, -44, -20));
 							}
 						}
@@ -845,7 +851,7 @@ void AsassPlayer::SpawnWallPreview_Implementation(FVector Location, FRotator Rot
 
 void AsassPlayer::ServerSpawnWall_Implementation(Awall* NewWall, Awall* TargetWall, int32 PlayerID, FLinearColor PlayerColor)
 {
-	if (!TargetWall) return;
+	if (!TargetWall) {GEngine->AddOnScreenDebugMessage(-1, 5.0, FColor::Red, "ServerSpawnWall: TargetWall does not exist"); return;}
 	FActorSpawnParameters TempParams = FActorSpawnParameters();
 	TempParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 	const FActorSpawnParameters SpawnParams = FActorSpawnParameters(TempParams);
@@ -888,6 +894,10 @@ void AsassPlayer::ServerSpawnWall_Implementation(Awall* NewWall, Awall* TargetWa
 			PreviousSegment = NewSegment;
 			Start = Start + FVector(UnitDirection.X * -19, UnitDirection.Y * -19, 0);
 		}
+	}
+	else {
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "ServerSpawnWall: Spawn was blocked");
+
 	}
 }
 

@@ -39,11 +39,32 @@ void Awall::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
 }
 
-TArray<Awall*> Awall::FindWallTowersInRange()
+Awall* Awall::GetClosestWallTowerInRange(float Range, TArray<AActor*> ActorsToIgnore) {
+	TArray<Awall*> Walls = this->FindWallTowersInRange(Range, ActorsToIgnore);
+	if (Walls.Num() == 0) return nullptr;
+	else if (Walls.Num() == 1) return Walls[0];
+	else {
+		Awall* WallToReturn = Walls[0];
+		float Dist = (Walls[0]->GetActorLocation() - this->GetActorLocation()).SizeSquared();
+		for (int WallIndex = 1; WallIndex < Walls.Num(); WallIndex++) {
+			float CompareDist = (Walls[WallIndex]->GetActorLocation() - this->GetActorLocation()).SizeSquared();
+			if (CompareDist < Dist){
+				Dist = CompareDist;
+				WallToReturn = Walls[WallIndex];
+			}
+		}
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Orange, WallToReturn->GetName());
+		return WallToReturn;
+	}
+
+	return nullptr;
+}
+
+TArray<Awall*> Awall::FindWallTowersInRange(float Range, TArray<AActor*> ActorsToIgnore)
 {
-	TArray<AActor*> nullArray;
+	TArray<AActor*> IgnoreArray = ActorsToIgnore;
 	TArray<FHitResult> SphereHits;
-	UKismetSystemLibrary::SphereTraceMulti_NEW(GetWorld(), this->GetActorLocation(), this->GetActorLocation() + FVector(0, 0, 1), 150.0f, UEngineTypes::ConvertToTraceType(ECollisionChannel::ECC_GameTraceChannel3), true, nullArray, EDrawDebugTrace::ForOneFrame, SphereHits, true);
+	UKismetSystemLibrary::SphereTraceMulti_NEW(GetWorld(), this->GetActorLocation(), this->GetActorLocation() + FVector(0, 0, 1), Range, UEngineTypes::ConvertToTraceType(ECollisionChannel::ECC_GameTraceChannel3), true, IgnoreArray, EDrawDebugTrace::ForOneFrame, SphereHits, true);
 	TArray<Awall*> WallsInRange;
 	for (FHitResult Hit : SphereHits) {
 		if (!WallsInRange.Contains(Hit.GetActor()) && Hit.GetActor()->IsA(Awall::StaticClass())) {
