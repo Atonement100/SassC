@@ -90,6 +90,14 @@ bool AbuildingBase::FixSpawnLocation_Validate(FVector RealLocation)
 	return true;
 }
 
+void AbuildingBase::HideMesh()
+{
+}
+
+void AbuildingBase::ShowMesh()
+{
+}
+
 void AbuildingBase::NetFixSpawnLocation_Implementation(FVector RealLocation)
 {
 	Role = ROLE_Authority;

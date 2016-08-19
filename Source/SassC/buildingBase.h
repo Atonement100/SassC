@@ -56,6 +56,9 @@ public:
 	virtual bool FixSpawnLocation_Validate(FVector RealLocation);
 
 #pragma region Upgradable Building Functions
+	virtual void HideMesh();
+	virtual void ShowMesh();
+
 	UFUNCTION(Unreliable, Client)
 	void PreviewUpgrade();
 	virtual void PreviewUpgrade_Implementation();

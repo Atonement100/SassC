@@ -5,6 +5,9 @@
 #include "buildingBase.h"
 #include "wallSegment.generated.h"
 
+class Agate;
+class Awall;
+
 /**
  * 
  */
@@ -24,6 +27,8 @@ public:
 #pragma region Upgradeable Building Overrides
 	void TryRemove(AbuildingBase * RemoveFrom, bool IsLeftConnection);
 	int TryConnection(AbuildingBase * Connection, TArray<AbuildingBase*> &ConnectedBldgs, int8 Depth, bool TryLeft);
+	void HideMesh() override;
+	void ShowMesh() override;
 	virtual void PreviewUpgrade_Implementation() override;
 	virtual void ResetPreview_Implementation() override;
 	virtual void NetUpgradeBuilding_Implementation() override;
@@ -45,6 +50,9 @@ public:
 	virtual bool FixSpawnLocation_Validate(FVector RealLocation);
 	*/
 protected:
+	AActor* TempGate;
+	AActor* TempLeftWall;
+	AActor* TempRightWall;
 	/*
 	UFUNCTION(Reliable, NetMulticast, WithValidation)
 	void NetFixSpawnLocation(FVector RealLocation);
