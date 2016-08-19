@@ -33,8 +33,9 @@ public:
 	void AddConnectedWallSegment(AbuildingBase* NewSegment);
 	virtual void AddConnectedWallSegment_Implementation(AbuildingBase* NewSegment);
 	virtual bool AddConnectedWallSegment_Validate(AbuildingBase* NewSegment);
+	TArray<AbuildingBase*> ConnectedWalls;
 
 protected:
-	TArray<AbuildingBase*> ConnectedWalls;
+	
 
 };

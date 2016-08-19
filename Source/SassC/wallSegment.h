@@ -18,10 +18,11 @@ public:
 	virtual void PostInitializeComponents() override;
 	virtual void BeginPlay() override;
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const;
-
+	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, class AActor* DamageCauser) override;
 	virtual void Tick(float DeltaSeconds) override;
 
 #pragma region Upgradeable Building Overrides
+	void TryRemove(AbuildingBase * RemoveFrom, bool IsLeftConnection);
 	int TryConnection(AbuildingBase * Connection, TArray<AbuildingBase*> &ConnectedBldgs, int8 Depth, bool TryLeft);
 	virtual void PreviewUpgrade_Implementation() override;
 	virtual void ResetPreview_Implementation() override;

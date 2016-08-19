@@ -68,6 +68,7 @@ bool AbuildingBase::ColorBldg_Validate(FLinearColor PlayerColor, bool SetPersist
 
 float AbuildingBase::TakeDamage(float DamageAmount, FDamageEvent const & DamageEvent, AController * EventInstigator, AActor * DamageCauser)
 {
+	DamageAmount = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
 	Health -= DamageAmount;
 	if (Health <= 0.0f) {
 		SetLifeSpan(0.001f);
