@@ -221,6 +221,7 @@ protected:
 	bool SphereDestroyLatch = false;
 	bool SphereSpawnLatch = true;
 	bool ResetWallPreviewLatch = false;
+	bool ResetGatePreviewLatch = true;
 	bool TickRaycastLatch = true;
 	bool IsBadSpawn = true;
 	bool ResetLocalView = false;
@@ -269,4 +270,7 @@ protected:
 
 
 	const int SelectionSphereScaleMod = 100; // this should never ever be changed
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Sass Player")
+	UClass*	WallClass;
 };

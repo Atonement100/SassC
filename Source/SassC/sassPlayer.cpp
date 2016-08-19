@@ -133,6 +133,15 @@ void AsassPlayer::Tick( float DeltaTime )
 			if (AbuildingBase* BuildingCast = Cast<AbuildingBase>(LocalObjectSpawn)) { BuildingCast->UpdateMaterial(NewColor, false); }
 			else if (AunitBase* UnitCast = Cast<AunitBase>(LocalObjectSpawn)) { UnitCast->UpdateMaterial(NewColor); }
 
+			if (Agate* GateCast = Cast <Agate>(LocalObjectSpawn)) {
+				ResetGatePreviewLatch = true;
+
+			}
+			else if (ResetGatePreviewLatch) {
+
+				ResetGatePreviewLatch = false;
+			}
+
 			if (Awall* WallCast = Cast<Awall>(LocalObjectSpawn)) {
 				ResetWallPreviewLatch = true;
 				WallPreviewArray = (WallCast->FindWallTowersInRange());
@@ -184,25 +193,7 @@ void AsassPlayer::Tick( float DeltaTime )
 				WallsBeingPreviewed.Empty();
 				ResetWallPreviewLatch = false;
 			}
-			/* 
-			if (Awall* WallCast = Cast<Awall>(LocalObjectSpawn)) { 
-				WallPreviewArray = (WallCast->FindWallTowersInRange()); 
-				FHitResult Hit;
-				TArray<AActor*> ActorsToIgnore;
-				for (AActor* TargetWall : WallPreviewArray) {
-					FVector Direction = WallCast->GetActorLocation() - TargetWall->GetActorLocation();
-					FVector UnitDirection = Direction / Direction.Size();
-					if (!UKismetSystemLibrary::BoxTraceSingle(GetWorld(), WallCast->GetActorLocation() + FVector(UnitDirection.X*-24, UnitDirection.Y*-24, 21), TargetWall->GetActorLocation() + FVector(UnitDirection.X * 24, UnitDirection.Y * 24, 21), FVector(9.5f, 4.0f, 15.0f), Direction.Rotation(), UEngineTypes::ConvertToTraceType(ECC_Visibility), true, ActorsToIgnore, EDrawDebugTrace::ForOneFrame, Hit, true)) {
-						float SpaceBetween = ((TargetWall->GetActorLocation() - FVector(Direction.X / Direction.Size2D() * -24, Direction.Y / Direction.Size2D() * -24, 0)) - (WallCast->GetActorLocation() + FVector(Direction.X / Direction.Size2D() * 24, Direction.Y / Direction.Size2D() * 24, 0))).Size();
-						FVector Start = WallCast->GetActorLocation() + FVector(UnitDirection.X * -12, UnitDirection.Y * -12, 0);
-						for (int NumToSpawn = (SpaceBetween / 19); NumToSpawn > 0; NumToSpawn--) {
-							SpawnWallPreview(Start, Direction.Rotation());
-							Start = Start + FVector(UnitDirection.X * -19, UnitDirection.Y * -19, 0);
-						}
-					}
-				}	
-			}
-			*/
+
 		}
 		else if (CursorHit.GetActor()) {	//Did hit something and it was a building
 			 for (Awall* Wall : WallsBeingPreviewed) {
@@ -627,6 +618,9 @@ AActor* AsassPlayer::GetSelectionSphereHolder() {
 void AsassPlayer::ServerSpawnBuilding_Implementation(AsassPlayerController* PlayerController, TSubclassOf<AActor> ActorToSpawn, FHitResult Hit, const FVector &HalfHeight, const TArray<FVector> &Midpoints, const FVector &TraceSize, int32 PlayerID)
 {
 	const FActorSpawnParameters SpawnParams = FActorSpawnParameters();
+	FActorSpawnParameters TempParams = FActorSpawnParameters();
+	TempParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+	const FActorSpawnParameters WallParams = FActorSpawnParameters(TempParams);
 
 	const FVector Location = Hit.Location + HalfHeight;
 	const FRotator Rotation = FRotator::ZeroRotator;
@@ -674,13 +668,27 @@ void AsassPlayer::ServerSpawnBuilding_Implementation(AsassPlayerController* Play
 							NewBuilding->OwningPlayerID = PlayerID;
 							NewBuilding->PostCreation(SassPlayerState->PlayerColor);
 							NewBuilding->FixSpawnLocation(Hit.Location);
-							if (Awall* WallCast = Cast<Awall>(NewBuilding)) {
-								
+							if (Awall* WallCast = Cast<Awall>(NewBuilding)) {						
 								TArray<Awall*> WallsInRange = (WallCast->FindWallTowersInRange());
-								GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Emerald, UKismetStringLibrary::Conv_IntToString(WallsInRange.Num()));
 								for (Awall* TargetWall : WallsInRange) {
 									if (TargetWall->OwningPlayerID == PlayerID) { ServerSpawnWall(WallCast, TargetWall, PlayerID, SassPlayerState->PlayerColor); }
 								}
+							}
+							else if (Agate* GateCast = Cast<Agate>(NewBuilding)) {
+								const FVector LeftLoc = Hit.Location + HalfHeight + FVector(0, 40, -20);
+								const FVector RightLoc = Hit.Location + HalfHeight + FVector(0, -40, -20);
+								AActor* x = GetWorld()->SpawnActor(WallClass, &LeftLoc, &Rotation, WallParams);
+								AbuildingBase* LeftTemp = Cast<AbuildingBase>(x);
+									LeftTemp->OwningPlayerID = PlayerID;
+									LeftTemp->UpdateMaterial(SassPlayerState->PlayerColor, true);
+									LeftTemp->PostCreation(SassPlayerState->PlayerColor);
+									LeftTemp->FixSpawnLocation(Hit.Location + HalfHeight + FVector(0, 40, -20));
+								AActor* y = GetWorld()->SpawnActor(WallClass, &RightLoc, &Rotation, WallParams);
+								AbuildingBase* RightTemp = Cast<AbuildingBase>(x);
+									RightTemp->OwningPlayerID = PlayerID;
+									RightTemp->UpdateMaterial(SassPlayerState->PlayerColor, true);
+									RightTemp->PostCreation(SassPlayerState->PlayerColor);
+									RightTemp->FixSpawnLocation(Hit.Location + HalfHeight + FVector(0, 40, -20));
 							}
 						}
 						else { GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red, "SassPlayer ServerSpawnBuilding: Could not spawn, server could not determine what spawn was being asked for"); }
@@ -833,24 +841,6 @@ void AsassPlayer::SpawnWallPreview_Implementation(FVector Location, FRotator Rot
 	const FActorSpawnParameters SpawnParams = FActorSpawnParameters(TempParams);
 	GetWorld()->SpawnActor(WallSegmentClass, &Location, &Rotation, SpawnParams);
 
-	/*
-	FVector Direction = End - Start;
-	float Size = Direction.Size2D();
-
-	Start += FVector(Direction.X / Size * 24, Direction.Y / Size * 24, 0);
-	End -= FVector(Direction.X / Size * -24, Direction.Y / Size * -24, 0);
-	float SpaceBetween = (End - Start).Size();
-
-
-	const FVector Location = Start + FVector(Direction.X/Size*24, Direction.Y/Size*24, 0);
-	const FRotator Rotation = Direction.Rotation();
-	
-	for (int i = 0; i < SpaceBetween / 10; i++) {
-
-		GetWorld()->SpawnActor(WallSegmentClass, &Location, &Rotation, SpawnParams);
-		Location = Location + FVector(Direction.X / Size * 10, Direction.Y / Size * 10, 0);
-	}
-	*/
 }
 
 void AsassPlayer::ServerSpawnWall_Implementation(Awall* NewWall, Awall* TargetWall, int32 PlayerID, FLinearColor PlayerColor)

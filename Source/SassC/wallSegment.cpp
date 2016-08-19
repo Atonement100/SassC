@@ -14,7 +14,6 @@ AwallSegment::AwallSegment() {
 
 void AwallSegment::PostInitializeComponents() {
 	Super::PostInitializeComponents();
-	//BldgMeshMaterialDynamic = BuildingMesh->CreateDynamicMaterialInstance(0, BuildingMesh->GetMaterial(0));
 }
 
 void AwallSegment::BeginPlay() {
