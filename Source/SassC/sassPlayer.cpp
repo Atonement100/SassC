@@ -225,12 +225,12 @@ void AsassPlayer::Tick( float DeltaTime )
 				if (TempWorkshop->OwningPlayerID == PlayerState->PlayerId) TempWorkshop->PreviewActive = true;
 				ResetLocalView = true;
 			}
-			else if (LocalObjectSpawn->IsA(Agate::StaticClass()) && CursorHit.GetActor()->IsA(AwallSegment::StaticClass())) {
+			/*else if (LocalObjectSpawn->IsA(Agate::StaticClass()) && CursorHit.GetActor()->IsA(AwallSegment::StaticClass())) {
 				LocalObjectSpawn->SetActorHiddenInGame(true);
 				AwallSegment* TempSegment = Cast<AwallSegment>(CursorHit.GetActor());
 				if (TempSegment->OwningPlayerID == PlayerState->PlayerId) TempSegment->PreviewActive = true;
 				ResetLocalView = true;
-			}
+			}*/
 		}
 	}
 	//Unit Menu not open
@@ -545,8 +545,6 @@ bool AsassPlayer::ServerSprint_Validate(bool isRunning, UCharacterMovementCompon
 #pragma region WASD Movement
 void AsassPlayer::MoveForward(float AxisValue) {
 	if (Controller != NULL && AxisValue != 0.0f) {
-		//@TODO:: Why not change this to mesh direction
-		//FRotator Rotation = Controller->GetControlRotation();
 		FRotator Rotation = GetMesh()->GetComponentRotation() - GetMesh()->RelativeRotation;
 		const FVector Direction = FRotationMatrix(Rotation).GetScaledAxis(EAxis::X);
 		AddMovementInput(Direction, AxisValue);
@@ -628,7 +626,6 @@ AActor* AsassPlayer::GetSelectionSphereHolder() {
 #pragma region Server-side Spawning
 void AsassPlayer::ServerSpawnBuilding_Implementation(AsassPlayerController* PlayerController, TSubclassOf<AActor> ActorToSpawn, FHitResult Hit, const FVector &HalfHeight, const TArray<FVector> &Midpoints, const FVector &TraceSize, int32 PlayerID)
 {
-	//GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Emerald, UKismetStringLibrary::Conv_VectorToString(Hit.Location));
 	const FActorSpawnParameters SpawnParams = FActorSpawnParameters();
 
 	const FVector Location = Hit.Location + HalfHeight;
@@ -713,10 +710,10 @@ void AsassPlayer::ServerSpawnBuilding_Implementation(AsassPlayerController* Play
 			Aworkshop* TempWorkshop = Cast<Aworkshop>(Hit.GetActor());
 			if (TempWorkshop->OwningPlayerID == PlayerID) TempWorkshop->UpgradeBuilding();
 		}
-		else if (ActorToSpawn.GetDefaultObject()->IsA(Agate::StaticClass()) && Hit.GetActor()->IsA(AwallSegment::StaticClass())) {
+		/*else if (ActorToSpawn.GetDefaultObject()->IsA(Agate::StaticClass()) && Hit.GetActor()->IsA(AwallSegment::StaticClass())) {
 			AwallSegment* TempSegment = Cast<AwallSegment>(Hit.GetActor());
 			if (TempSegment->OwningPlayerID == PlayerID) TempSegment->UpgradeBuilding();
-		}
+		}*/
 	}
 }
 
@@ -740,7 +737,6 @@ void AsassPlayer::ColorPlayer_Implementation(FLinearColor PlayerColor)
 		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, "PlayerMaterial or Mesh bad");
 		return;
 	}
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, "ColorPlayer should set");
 	DynamicPlayerMaterial->SetVectorParameterValue(ColorParameterName, PlayerColor);
 	GetMesh()->SetMaterial(0, DynamicPlayerMaterial);
 }

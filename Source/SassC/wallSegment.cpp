@@ -23,7 +23,7 @@ void AwallSegment::BeginPlay() {
 
 void AwallSegment::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
-	if (PreviewActive) { PreviewUpgrade(); GEngine->AddOnScreenDebugMessage(-1, DeltaTime, FColor::Cyan, UKismetStringLibrary::Conv_IntToString(GatePreviewArray.Num())); }
+	if (PreviewActive) { PreviewUpgrade(); }
 	else if (!DelayReset && ResetRequired) { ResetPreview(); }
 	DelayReset = false;	
 }
@@ -72,20 +72,20 @@ void AwallSegment::TryRemove(AbuildingBase* RemoveFrom, bool IsLeftConnection) {
 	}
 	else if (IsLeftConnection) {
 		if (AwallSegment* Left = Cast<AwallSegment>(LeftConnection)) {
-			GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Purple, Left->RightConnection->GetName());
+			//GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Purple, Left->RightConnection->GetName());
 			Left->RightConnection = nullptr;
 			if (Left->RightConnection == nullptr) {
-				GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Purple, "is nullptr");
+				//GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Purple, "is nullptr");
 			}
 
 		}
 	}
 	else if (!IsLeftConnection) {
 		if (AwallSegment* Right = Cast<AwallSegment>(RightConnection)) {
-			GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Purple, Right->LeftConnection->GetName());
+			//GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Purple, Right->LeftConnection->GetName());
 			Right->LeftConnection = nullptr;
 			if (Right->LeftConnection == nullptr) {
-				GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Purple, "is nullptr");
+				//GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Purple, "is nullptr");
 			}
 
 		}
@@ -93,9 +93,8 @@ void AwallSegment::TryRemove(AbuildingBase* RemoveFrom, bool IsLeftConnection) {
 }
 
 int AwallSegment::TryConnection(AbuildingBase* Connection, TArray<AbuildingBase*> &ConnectedBldgs, int8 Depth, bool TryLeft) {
-
 	if (!Connection || Depth == 4) return Depth;
-	GEngine->AddOnScreenDebugMessage(-1, GetWorld()->GetDeltaSeconds(), FColor::Orange, Connection->GetName());
+	//GEngine->AddOnScreenDebugMessage(-1, GetWorld()->GetDeltaSeconds(), FColor::Orange, Connection->GetName());
 	if (Connection && Connection->IsA(AwallSegment::StaticClass())) {
 		Connection->HideMesh();
 		Connection->DelayReset = true;
