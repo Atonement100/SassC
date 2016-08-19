@@ -675,20 +675,20 @@ void AsassPlayer::ServerSpawnBuilding_Implementation(AsassPlayerController* Play
 								}
 							}
 							else if (Agate* GateCast = Cast<Agate>(NewBuilding)) {
-								const FVector LeftLoc = Hit.Location + HalfHeight + FVector(0, 40, -20);
-								const FVector RightLoc = Hit.Location + HalfHeight + FVector(0, -40, -20);
+								const FVector LeftLoc = Hit.Location + HalfHeight + FVector(0, 50, -20);
+								const FVector RightLoc = Hit.Location + HalfHeight + FVector(0, -50, -20);
 								AActor* x = GetWorld()->SpawnActor(WallClass, &LeftLoc, &Rotation, WallParams);
 								AbuildingBase* LeftTemp = Cast<AbuildingBase>(x);
 									LeftTemp->OwningPlayerID = PlayerID;
 									LeftTemp->UpdateMaterial(SassPlayerState->PlayerColor, true);
 									LeftTemp->PostCreation(SassPlayerState->PlayerColor);
-									LeftTemp->FixSpawnLocation(Hit.Location + HalfHeight + FVector(0, 40, -20));
+									//LeftTemp->FixSpawnLocation(Hit.Location + HalfHeight + FVector(0, 44, -20));
 								AActor* y = GetWorld()->SpawnActor(WallClass, &RightLoc, &Rotation, WallParams);
-								AbuildingBase* RightTemp = Cast<AbuildingBase>(x);
+								AbuildingBase* RightTemp = Cast<AbuildingBase>(y);
 									RightTemp->OwningPlayerID = PlayerID;
 									RightTemp->UpdateMaterial(SassPlayerState->PlayerColor, true);
 									RightTemp->PostCreation(SassPlayerState->PlayerColor);
-									RightTemp->FixSpawnLocation(Hit.Location + HalfHeight + FVector(0, 40, -20));
+									//RightTemp->FixSpawnLocation(Hit.Location + HalfHeight + FVector(0, -44, -20));
 							}
 						}
 						else { GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red, "SassPlayer ServerSpawnBuilding: Could not spawn, server could not determine what spawn was being asked for"); }
