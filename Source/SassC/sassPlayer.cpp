@@ -143,7 +143,7 @@ void AsassPlayer::Tick( float DeltaTime )
 				if (TempGateWalls[1]) TempGateWalls[1]->SetActorTransform(RightTransform);
 				else if (!TempGateWalls[1]) TempGateWalls[1] = GetWorld()->SpawnActor(WallClass, &RightTransform, SpawnParams);
 
-				//@TODO: When trying to spawn, will fail every time because of contact with the additional gates.
+				
 				//@TODO: Cursor will make contact with the walltowers, causing issues.
 				/*
 				for (AActor* Wall : TempGateWalls) {
@@ -684,7 +684,8 @@ void AsassPlayer::ServerSpawnBuilding_Implementation(AsassPlayerController* Play
 			if (!UKismetSystemLibrary::BoxTraceSingle(GetWorld(), Hit.Location + FVector(0, 0, 2), Hit.Location + 2 * HalfHeight, FVector(TraceSize.X, TraceSize.Y, 0), FRotator::ZeroRotator, UEngineTypes::ConvertToTraceType(ECollisionChannel::ECC_GameTraceChannel2), true, ActorsToIgnore, EDrawDebugTrace::ForDuration, BoxHit, true)) {
 				GEngine->AddOnScreenDebugMessage(-1, 4.0f, FColor::Red, UKismetStringLibrary::Conv_VectorToString(Location));
 				//if there is no hit (good)
-				if (!CheckBldgCorners(Midpoints, Hit.Location, PlayerID, ActorToSpawn.GetDefaultObject()->IsA(Acity::StaticClass())) || !(CheckUnitLocation(Hit.Location, PlayerID))) {
+				if ((ActorToSpawn.GetDefaultObject()->IsA(AbuildingBase::StaticClass()) && !CheckBldgCorners(Midpoints, Hit.Location, PlayerID, ActorToSpawn.GetDefaultObject()->IsA(Acity::StaticClass())))
+					|| ((ActorToSpawn.GetDefaultObject()->IsA(AunitBase::StaticClass())) && !CheckUnitLocation(Hit.Location, PlayerID))) {
 					//if there is no obstruction (good)
 					AActor* NewSpawn = GetWorld()->SpawnActor(ActorToSpawn, &Location, &Rotation, SpawnParams);
 
@@ -821,7 +822,7 @@ bool AsassPlayer::CheckUnitLocation(FVector Center, int32 PlayerID) {
 
 bool AsassPlayer::CheckBldgCorners(TArray<FVector> ExtraLocs, FVector Center, int32 PlayerID, bool isCity)
 {
-	if (ExtraLocs.Num() == 0) return true;
+	if (ExtraLocs.Num() == 0){ GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Red, "No extre locs"); return true; }
 
 	FHitResult Hit;
 	TArray<float> TraceHeights;
@@ -842,6 +843,8 @@ bool AsassPlayer::CheckBldgCorners(TArray<FVector> ExtraLocs, FVector Center, in
 			return true;
 		}
 	}
+
+
 	TArray<AActor*> nullArray;
 	for (FVector Loc : ExtraLocs) {
 		if (UKismetSystemLibrary::LineTraceSingle_NEW(GetWorld(), Center + Loc + FVector(0, 0, 65.0f), Center + Loc - FVector(0, 0, 15.0f), UEngineTypes::ConvertToTraceType(ECollisionChannel::ECC_GameTraceChannel1), false, nullArray, EDrawDebugTrace::ForOneFrame, Hit, true)){
