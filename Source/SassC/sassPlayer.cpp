@@ -728,7 +728,7 @@ void AsassPlayer::ServerSpawnBuilding_Implementation(AsassPlayerController* Play
 								const FVector RightLoc = Hit.Location + HalfHeight + FVector(0, -50, -20);
 								AActor* x = GetWorld()->SpawnActor(WallClass, &LeftLoc, &Rotation, WallParams);
 								AActor* y = GetWorld()->SpawnActor(WallClass, &RightLoc, &Rotation, WallParams);
-								TArray<AActor*> Ignore = TArray<AActor*>();
+								TArray<AActor*> Ignore = TArray<AActor*>(ActorsToIgnore);
 								Ignore.Add(x);
 								Ignore.Add(y);
 
