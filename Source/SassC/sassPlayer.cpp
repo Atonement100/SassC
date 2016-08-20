@@ -29,7 +29,7 @@
 AsassPlayer::AsassPlayer()
 {
 	PrimaryActorTick.bCanEverTick = true;
-	
+	TempGateWalls.SetNumZeroed(2);
 }
 
 void AsassPlayer::BeginPlay()
@@ -135,13 +135,61 @@ void AsassPlayer::Tick( float DeltaTime )
 
 			if (Agate* GateCast = Cast <Agate>(LocalObjectSpawn)) {
 				ResetGatePreviewLatch = true;
+				const FTransform LeftTransform = FTransform(FRotator::ZeroRotator, CursorHit.Location + FVector(0,50,0));
+				const FTransform RightTransform = FTransform(FRotator::ZeroRotator, CursorHit.Location + FVector(0, -50, 0));
 
+				if (TempGateWalls[0]) TempGateWalls[0]->SetActorTransform(LeftTransform);
+				else if (!TempGateWalls[0]) TempGateWalls[0] = GetWorld()->SpawnActor(WallClass, &LeftTransform, SpawnParams);		
+				if (TempGateWalls[1]) TempGateWalls[1]->SetActorTransform(RightTransform);
+				else if (!TempGateWalls[1]) TempGateWalls[1] = GetWorld()->SpawnActor(WallClass, &RightTransform, SpawnParams);
+
+				//@TODO: When trying to spawn, will fail every time because of contact with the additional gates.
+				//@TODO: Cursor will make contact with the walltowers, causing issues.
+				/*
+				for (AActor* Wall : TempGateWalls) {
+					if (!Wall) continue;
+					Awall* WallInstance = Cast<Awall>(Wall);
+					Awall* TargetWall = WallInstance->GetClosestWallTowerInRange(100.0f, TempGateWalls);
+					FVector Displacement = TargetWall->GetActorLocation() - Wall->GetActorLocation();
+					FVector UnitDirection = Displacement / Displacement.Size();
+					FHitResult Hit;
+					if (TargetWall->OwningPlayerID == PlayerState->PlayerId && !UKismetSystemLibrary::BoxTraceSingle(GetWorld(), WallInstance->GetActorLocation() + FVector(UnitDirection.X * 24, UnitDirection.Y * 24, 21), TargetWall->GetActorLocation() + FVector(UnitDirection.X * -24, UnitDirection.Y * -24, 21), FVector(9.5f, 4.0f, 15.0f), Displacement.Rotation(), UEngineTypes::ConvertToTraceType(ECC_Visibility), true, TempGateWalls, EDrawDebugTrace::ForOneFrame, Hit, true)) {
+						if (!TargetWall->TempConnection) {
+							//create new
+							FTransform Transform = FTransform(Displacement.Rotation(), WallInstance->GetActorLocation() + (Displacement / 2), FVector(Displacement.Size() / 19, 1, 1));
+							TargetWall->TempConnection = GetWorld()->SpawnActor(WallSegmentGhostClass, &Transform, SpawnParams);
+							WallsBeingPreviewed.Add(TargetWall);
+
+						}
+						else if (TargetWall->TempConnection) {
+							//update existing
+							FVector Displacement = TargetWall->GetActorLocation() - WallInstance->GetActorLocation();
+							FTransform Transform = FTransform(Displacement.Rotation(), WallInstance->GetActorLocation() + (Displacement / 2), FVector(Displacement.Size() / 19, 1, 1));
+							TargetWall->TempConnection->SetActorTransform(Transform);
+						}
+					}
+					else {
+						if (TargetWall->TempConnection) {
+							TargetWall->TempConnection->Destroy();
+							TargetWall->TempConnection = nullptr;
+						}
+					}
+				}
+				*/
 			}
 			else if (ResetGatePreviewLatch) {
-
 				ResetGatePreviewLatch = false;
+				if (TempGateWalls[0]) { TempGateWalls[0]->Destroy(); TempGateWalls[0] = nullptr; }
+				if (TempGateWalls[1]) { TempGateWalls[1]->Destroy(); TempGateWalls[1] = nullptr; }
+				for (Awall* Wall : WallsBeingPreviewed) {
+					if (Wall->TempConnection) {
+						Wall->TempConnection->Destroy();
+						Wall->TempConnection = nullptr;
+					}
+				}
+				WallsBeingPreviewed.Empty();
 			}
-
+			
 			if (Awall* WallCast = Cast<Awall>(LocalObjectSpawn)) {
 				ResetWallPreviewLatch = true;
 				WallPreviewArray = (WallCast->FindWallTowersInRange());
@@ -171,7 +219,6 @@ void AsassPlayer::Tick( float DeltaTime )
 							TargetWall->TempConnection->Destroy();
 							TargetWall->TempConnection = nullptr;
 						}
-						//WallsBeingPreviewed.Remove(TargetWall);
 					}
 				}	
 
@@ -323,6 +370,7 @@ void AsassPlayer::LeftClickPressed() {
 		if (PlayerControllerPtr == nullptr) return;
 		FHitResult Hit;
 		TArray<FVector> LocationsToCheck;
+		TArray<AActor*> ActorsToIgnore = TArray<AActor*>();
 		FVector TraceSize, HalfHeight;
 
 		PlayerControllerPtr->GetHitResultUnderCursorByChannel(UEngineTypes::ConvertToTraceType(ECC_Visibility), true, Hit); // Assign Hit
@@ -330,14 +378,15 @@ void AsassPlayer::LeftClickPressed() {
 			LocationsToCheck = LocalBuildingRef->CornerLocations; 
 			TraceSize = LocalBuildingRef->TraceSize;
 			HalfHeight = LocalBuildingRef->HalfHeight;
+			if (LocalBuildingRef->IsA(Agate::StaticClass())) { ActorsToIgnore = TempGateWalls; }
 		}
 		else if (AunitBase* LocalUnitRef = Cast<AunitBase>(LocalObjectSpawn)) {
 			TraceSize = LocalUnitRef->TraceSize;
 			HalfHeight = LocalUnitRef->HalfHeight;
 		}
 
-
-		ServerSpawnBuilding(Cast<AsassPlayerController>(PlayerControllerPtr), SelectedSpawnableClass, Hit, HalfHeight, LocationsToCheck, TraceSize, PlayerState->PlayerId);
+		const TArray<AActor*> ConfirmedToIgnore = ActorsToIgnore;
+		ServerSpawnBuilding(Cast<AsassPlayerController>(PlayerControllerPtr), SelectedSpawnableClass, Hit, HalfHeight, LocationsToCheck, TraceSize, PlayerState->PlayerId, ConfirmedToIgnore);
 	}
 }
 
@@ -615,7 +664,7 @@ AActor* AsassPlayer::GetSelectionSphereHolder() {
 #pragma endregion
 
 #pragma region Server-side Spawning
-void AsassPlayer::ServerSpawnBuilding_Implementation(AsassPlayerController* PlayerController, TSubclassOf<AActor> ActorToSpawn, FHitResult Hit, const FVector &HalfHeight, const TArray<FVector> &Midpoints, const FVector &TraceSize, int32 PlayerID)
+void AsassPlayer::ServerSpawnBuilding_Implementation(AsassPlayerController* PlayerController, TSubclassOf<AActor> ActorToSpawn, FHitResult Hit, const FVector &HalfHeight, const TArray<FVector> &Midpoints, const FVector &TraceSize, int32 PlayerID, const TArray<AActor*> &ActorsToIgnore)
 {
 	const FActorSpawnParameters SpawnParams = FActorSpawnParameters();
 	FActorSpawnParameters TempParams = FActorSpawnParameters();
@@ -632,7 +681,7 @@ void AsassPlayer::ServerSpawnBuilding_Implementation(AsassPlayerController* Play
 			const TArray<AActor*> BoxIgnore;
 			FHitResult BoxHit;
 
-			if (!UKismetSystemLibrary::BoxTraceSingle(GetWorld(), Hit.Location + FVector(0, 0, 2), Hit.Location + 2 * HalfHeight, FVector(TraceSize.X, TraceSize.Y, 0), FRotator::ZeroRotator, UEngineTypes::ConvertToTraceType(ECollisionChannel::ECC_GameTraceChannel2), true, BoxIgnore, EDrawDebugTrace::ForDuration, BoxHit, true)) {
+			if (!UKismetSystemLibrary::BoxTraceSingle(GetWorld(), Hit.Location + FVector(0, 0, 2), Hit.Location + 2 * HalfHeight, FVector(TraceSize.X, TraceSize.Y, 0), FRotator::ZeroRotator, UEngineTypes::ConvertToTraceType(ECollisionChannel::ECC_GameTraceChannel2), true, ActorsToIgnore, EDrawDebugTrace::ForDuration, BoxHit, true)) {
 				GEngine->AddOnScreenDebugMessage(-1, 4.0f, FColor::Red, UKismetStringLibrary::Conv_VectorToString(Location));
 				//if there is no hit (good)
 				if (!CheckBldgCorners(Midpoints, Hit.Location, PlayerID, ActorToSpawn.GetDefaultObject()->IsA(Acity::StaticClass())) || !(CheckUnitLocation(Hit.Location, PlayerID))) {
@@ -682,19 +731,15 @@ void AsassPlayer::ServerSpawnBuilding_Implementation(AsassPlayerController* Play
 								TArray<AActor*> Ignore = TArray<AActor*>();
 								Ignore.Add(x);
 								Ignore.Add(y);
-								Awall* LeftTemp = Cast<Awall>(x);
-								Awall* RightTemp = Cast<Awall>(y);
-									LeftTemp->OwningPlayerID = PlayerID;
-									LeftTemp->UpdateMaterial(SassPlayerState->PlayerColor, true);
-									LeftTemp->PostCreation(SassPlayerState->PlayerColor);
-									ServerSpawnWall(LeftTemp, LeftTemp->GetClosestWallTowerInRange(150.0f, Ignore), PlayerID, SassPlayerState->PlayerColor);
-									//LeftTemp->FixSpawnLocation(Hit.Location + HalfHeight + FVector(0, 44, -20));
 
-									RightTemp->OwningPlayerID = PlayerID;
-									RightTemp->UpdateMaterial(SassPlayerState->PlayerColor, true);
-									RightTemp->PostCreation(SassPlayerState->PlayerColor);
-									ServerSpawnWall(RightTemp, RightTemp->GetClosestWallTowerInRange(150.0f, Ignore), PlayerID, SassPlayerState->PlayerColor);
-									//RightTemp->FixSpawnLocation(Hit.Location + HalfHeight + FVector(0, -44, -20));
+								for (int SideNum = 0; SideNum < Ignore.Num(); SideNum++) {
+									if (!Ignore[SideNum]) continue;
+									Awall* Wall = Cast<Awall>(Ignore[SideNum]);
+									Wall->OwningPlayerID = PlayerID;
+									Wall->UpdateMaterial(SassPlayerState->PlayerColor, true);
+									Wall->PostCreation(SassPlayerState->PlayerColor);
+									ServerSpawnWall(Wall, Wall->GetClosestWallTowerInRange(100.0f, Ignore), PlayerID, SassPlayerState->PlayerColor);
+								}
 							}
 						}
 						else { GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red, "SassPlayer ServerSpawnBuilding: Could not spawn, server could not determine what spawn was being asked for"); }
@@ -731,7 +776,7 @@ void AsassPlayer::ServerSpawnBuilding_Implementation(AsassPlayerController* Play
 	}
 }
 
-bool AsassPlayer::ServerSpawnBuilding_Validate(AsassPlayerController* PlayerController, TSubclassOf<AActor> ActorToSpawn, FHitResult Hit, const FVector &HalfHeight, const TArray<FVector> &Midpoints, const FVector &TraceSize, int32 PlayerID)
+bool AsassPlayer::ServerSpawnBuilding_Validate(AsassPlayerController* PlayerController, TSubclassOf<AActor> ActorToSpawn, FHitResult Hit, const FVector &HalfHeight, const TArray<FVector> &Midpoints, const FVector &TraceSize, int32 PlayerID, const TArray<AActor*> &ActorsToIgnore)
 {
 	return true;
 }
@@ -861,7 +906,7 @@ void AsassPlayer::ServerSpawnWall_Implementation(Awall* NewWall, Awall* TargetWa
 	FVector Direction = NewWall->GetActorLocation() - TargetWall->GetActorLocation();
 	FVector UnitDirection = Direction / Direction.Size();
 
-	if (!UKismetSystemLibrary::BoxTraceSingle(GetWorld(), NewWall->GetActorLocation() + FVector(UnitDirection.X*-24, UnitDirection.Y*-24, 21), TargetWall->GetActorLocation() + FVector(UnitDirection.X * 24, UnitDirection.Y * 24, 21), FVector(9.5f, 4.0f, 15.0f), Direction.Rotation(), UEngineTypes::ConvertToTraceType(ECC_Visibility), true, ActorsToIgnore, EDrawDebugTrace::ForOneFrame, Hit, true)) {
+	if (!UKismetSystemLibrary::BoxTraceSingle(GetWorld(), NewWall->GetActorLocation() + FVector(UnitDirection.X*-24, UnitDirection.Y*-24, 21), TargetWall->GetActorLocation() + FVector(UnitDirection.X * 24, UnitDirection.Y * 24, 21), FVector(9.5f, 4.0f, 15.0f), Direction.Rotation(), UEngineTypes::ConvertToTraceType(ECC_Visibility), true, ActorsToIgnore, EDrawDebugTrace::ForDuration, Hit, true)) {
 		float SpaceBetween = ((TargetWall->GetActorLocation() - FVector(Direction.X / Direction.Size2D() * -24, Direction.Y / Direction.Size2D() * -24, 0)) - (NewWall->GetActorLocation() + FVector(Direction.X / Direction.Size2D() * 24, Direction.Y / Direction.Size2D() * 24, 0))).Size();
 		FVector Start = NewWall->GetActorLocation() + FVector(UnitDirection.X * -12, UnitDirection.Y * -12, 0);
 		bool FirstLoop = true, LastLoop = false;

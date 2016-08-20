@@ -88,9 +88,9 @@ public:
 
 	/*Request from player to spawn building on server*/
 	UFUNCTION(Reliable, Server, WithValidation)
-	void ServerSpawnBuilding(AsassPlayerController* PlayerController, TSubclassOf<AActor> ActorToSpawn, FHitResult Hit, const FVector &HalfHeight, const TArray<FVector> &Midpoints, const FVector &TraceSize, int32 PlayerID);
-	virtual void ServerSpawnBuilding_Implementation(AsassPlayerController* PlayerController, TSubclassOf<AActor> ActorToSpawn, FHitResult Hit, const FVector &HalfHeight, const TArray<FVector> &Midpoints, const FVector &TraceSize, int32 PlayerID);
-	virtual bool ServerSpawnBuilding_Validate(AsassPlayerController* PlayerController, TSubclassOf<AActor> ActorToSpawn, FHitResult Hit, const FVector &HalfHeight, const TArray<FVector> &Midpoints, const FVector &TraceSize, int32 PlayerID);
+	void ServerSpawnBuilding(AsassPlayerController* PlayerController, TSubclassOf<AActor> ActorToSpawn, FHitResult Hit, const FVector &HalfHeight, const TArray<FVector> &Midpoints, const FVector &TraceSize, int32 PlayerID, const TArray<AActor*> &ActorsToIgnore = TArray<AActor*>());
+	virtual void ServerSpawnBuilding_Implementation(AsassPlayerController* PlayerController, TSubclassOf<AActor> ActorToSpawn, FHitResult Hit, const FVector &HalfHeight, const TArray<FVector> &Midpoints, const FVector &TraceSize, int32 PlayerID, const TArray<AActor*> &ActorsToIgnore = TArray<AActor*>());
+	virtual bool ServerSpawnBuilding_Validate(AsassPlayerController* PlayerController, TSubclassOf<AActor> ActorToSpawn, FHitResult Hit, const FVector &HalfHeight, const TArray<FVector> &Midpoints, const FVector &TraceSize, int32 PlayerID, const TArray<AActor*> &ActorsToIgnore = TArray<AActor*>());
 
 	/*Gets playercolor associated with a player when they spawn and updates their playermodel*/
 	UFUNCTION(Reliable, NetMulticast, WithValidation)
@@ -228,6 +228,7 @@ protected:
 	TArray<FHitResult> SphereTraceHits;
 	TArray<Awall*> WallPreviewArray = TArray<Awall*>();
 	TArray<Awall*> WallsBeingPreviewed = TArray<Awall*>();
+	TArray<AActor*> TempGateWalls = TArray<AActor*>();
 	FVector CurrentHit;
 	FVector InitialHit;
 	float SphereTraceRadius;

@@ -9,26 +9,10 @@
 
 Awall::Awall() {
 	PrimaryActorTick.bCanEverTick = true;
-	/*
-	BuildingMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("wall Mesh"));
-	BuildingMesh->AttachTo(RootComponent);
-	static ConstructorHelpers::FObjectFinder<UStaticMesh> wallMesh(TEXT("StaticMesh'/Game/StarterContent/Shapes/Shape_Tube.Shape_Tube'"));
-	if (wallMesh.Succeeded()) { BuildingMesh->SetStaticMesh(wallMesh.Object); }
-
-	BuildingCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("wall Collision"));
-	BuildingCollision->AttachTo(BuildingMesh);
-	BuildingCollision->SetBoxExtent(CollisionBounds);
-	*/
 }
 
 void Awall::PostInitializeComponents() {
 	Super::PostInitializeComponents();
-//	BldgMeshMaterialDynamic = BuildingMesh->CreateDynamicMaterialInstance(0, BuildingMesh->GetMaterial(0));
-
-	//FTransform CollisionTransform = BuildingCollision->GetRelativeTransform();
-	//CollisionTransform.SetLocation(CollisionDisplacement);
-
-	//BuildingCollision->SetRelativeLocation(CollisionDisplacement);
 }
 
 void Awall::BeginPlay() {
@@ -53,7 +37,6 @@ Awall* Awall::GetClosestWallTowerInRange(float Range, TArray<AActor*> ActorsToIg
 				WallToReturn = Walls[WallIndex];
 			}
 		}
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Orange, WallToReturn->GetName());
 		return WallToReturn;
 	}
 
