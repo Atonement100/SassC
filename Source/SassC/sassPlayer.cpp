@@ -135,7 +135,7 @@ void AsassPlayer::Tick( float DeltaTime )
 
 			if (Agate* GateCast = Cast <Agate>(LocalObjectSpawn)) {
 				ResetGatePreviewLatch = true;
-				const FTransform LeftTransform = FTransform(FRotator::ZeroRotator, CursorHit.Location + FVector(0,50,0));
+				const FTransform LeftTransform = FTransform(FRotator::ZeroRotator, CursorHit.Location + FVector(0, 50, 0));
 				const FTransform RightTransform = FTransform(FRotator::ZeroRotator, CursorHit.Location + FVector(0, -50, 0));
 
 				if (TempGateWalls[0]) TempGateWalls[0]->SetActorTransform(LeftTransform);
@@ -189,7 +189,7 @@ void AsassPlayer::Tick( float DeltaTime )
 				}
 				WallsBeingPreviewed.Empty();
 			}
-			
+
 			if (Awall* WallCast = Cast<Awall>(LocalObjectSpawn)) {
 				ResetWallPreviewLatch = true;
 				WallPreviewArray = (WallCast->FindWallTowersInRange());
@@ -275,6 +275,8 @@ void AsassPlayer::Tick( float DeltaTime )
 	else {
 		if (ActorDestroyLatch) { //Do not combine into one if statement, still want to reset latch if object is nullptr
 			if (LocalObjectSpawn) LocalObjectSpawn->Destroy(); 
+			if (TempGateWalls[0]) { TempGateWalls[0]->Destroy(); TempGateWalls[0] = nullptr; }
+			if (TempGateWalls[1]) { TempGateWalls[1]->Destroy(); TempGateWalls[1] = nullptr; }
 			if (WallsBeingPreviewed.Num() != 0) {
 				for (Awall* Wall : WallsBeingPreviewed) {
 					if (Wall->TempConnection) {

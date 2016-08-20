@@ -44,13 +44,11 @@ void AbuildingBase::PostInitializeComponents() {
 void AbuildingBase::BeginPlay()
 {
 	Super::BeginPlay();
-	
 }
 
 void AbuildingBase::Tick( float DeltaTime )
 {
 	Super::Tick( DeltaTime );
-
 }
 
 void AbuildingBase::UpdateMaterial(FLinearColor PlayerColor, bool SetPersistentColor) {
