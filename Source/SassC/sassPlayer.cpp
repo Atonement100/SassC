@@ -150,12 +150,11 @@ void AsassPlayer::Tick( float DeltaTime )
 				}
 
 				
-				//@TODO: Cursor will make contact with the walltowers, causing issues.
-				/*
 				for (AActor* Wall : TempGateWalls) {
 					if (!Wall) continue;
 					Awall* WallInstance = Cast<Awall>(Wall);
 					Awall* TargetWall = WallInstance->GetClosestWallTowerInRange(100.0f, TempGateWalls);
+					if (!TargetWall) continue;
 					FVector Displacement = TargetWall->GetActorLocation() - Wall->GetActorLocation();
 					FVector UnitDirection = Displacement / Displacement.Size();
 					FHitResult Hit;
@@ -181,7 +180,7 @@ void AsassPlayer::Tick( float DeltaTime )
 						}
 					}
 				}
-				*/
+				
 			}
 			else if (ResetGatePreviewLatch) {
 				ResetGatePreviewLatch = false;
