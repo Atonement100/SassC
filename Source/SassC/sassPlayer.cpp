@@ -139,9 +139,15 @@ void AsassPlayer::Tick( float DeltaTime )
 				const FTransform RightTransform = FTransform(FRotator::ZeroRotator, CursorHit.Location + FVector(0, -50, 0));
 
 				if (TempGateWalls[0]) TempGateWalls[0]->SetActorTransform(LeftTransform);
-				else if (!TempGateWalls[0]) TempGateWalls[0] = GetWorld()->SpawnActor(WallClass, &LeftTransform, SpawnParams);		
+				else if (!TempGateWalls[0]) { 
+					TempGateWalls[0] = GetWorld()->SpawnActor(WallClass, &LeftTransform, SpawnParams);
+					Cast<Awall>(TempGateWalls[0])->GetMesh()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Visibility, ECollisionResponse::ECR_Ignore);
+				}
 				if (TempGateWalls[1]) TempGateWalls[1]->SetActorTransform(RightTransform);
-				else if (!TempGateWalls[1]) TempGateWalls[1] = GetWorld()->SpawnActor(WallClass, &RightTransform, SpawnParams);
+				else if (!TempGateWalls[1]) { 
+					TempGateWalls[1] = GetWorld()->SpawnActor(WallClass, &RightTransform, SpawnParams); 
+					Cast<Awall>(TempGateWalls[1])->GetMesh()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Visibility, ECollisionResponse::ECR_Ignore);
+				}
 
 				
 				//@TODO: Cursor will make contact with the walltowers, causing issues.

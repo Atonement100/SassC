@@ -58,6 +58,7 @@ public:
 #pragma region Upgradable Building Functions
 	virtual void HideMesh();
 	virtual void ShowMesh();
+	virtual UStaticMeshComponent* GetMesh(int MeshIndex = 0);
 
 	UFUNCTION(Unreliable, Client)
 	void PreviewUpgrade();

@@ -96,6 +96,11 @@ void AbuildingBase::ShowMesh()
 {
 }
 
+UStaticMeshComponent* AbuildingBase::GetMesh(int MeshIndex)
+{
+	return this->BuildingMesh;
+}
+
 void AbuildingBase::NetFixSpawnLocation_Implementation(FVector RealLocation)
 {
 	Role = ROLE_Authority;
