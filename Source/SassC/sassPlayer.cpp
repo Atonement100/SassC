@@ -138,61 +138,68 @@ void AsassPlayer::Tick( float DeltaTime )
 				const FTransform LeftTransform = FTransform(FRotator::ZeroRotator, CursorHit.Location + FVector(0, 50, 0));
 				const FTransform RightTransform = FTransform(FRotator::ZeroRotator, CursorHit.Location + FVector(0, -50, 0));
 
-				if (TempGateWalls[0]) TempGateWalls[0]->SetActorTransform(LeftTransform);
+				if (TempGateWalls[0] != nullptr) TempGateWalls[0]->SetActorTransform(LeftTransform);
 				else if (!TempGateWalls[0]) { 
 					TempGateWalls[0] = GetWorld()->SpawnActor(WallClass, &LeftTransform, SpawnParams);
 					Cast<Awall>(TempGateWalls[0])->GetMesh()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Visibility, ECollisionResponse::ECR_Ignore);
 				}
-				if (TempGateWalls[1]) TempGateWalls[1]->SetActorTransform(RightTransform);
+				if (TempGateWalls[1] != nullptr) TempGateWalls[1]->SetActorTransform(RightTransform);
 				else if (!TempGateWalls[1]) { 
 					TempGateWalls[1] = GetWorld()->SpawnActor(WallClass, &RightTransform, SpawnParams); 
 					Cast<Awall>(TempGateWalls[1])->GetMesh()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Visibility, ECollisionResponse::ECR_Ignore);
 				}
 
-				
+				TempGateWallsBeingPreviewed.Empty();
 				for (AActor* Wall : TempGateWalls) {
 					if (!Wall) continue;
 					Awall* WallInstance = Cast<Awall>(Wall);
 					Awall* TargetWall = WallInstance->GetClosestWallTowerInRange(100.0f, TempGateWalls);
-					if (!TargetWall) continue;
+					if (!TargetWall) {
+						if (WallInstance->TempConnection) {
+							WallInstance->TempConnection->Destroy();
+							WallInstance->TempConnection = nullptr;
+						}
+						continue;
+					}
+					TempGateWallsBeingTargeted.Add(TargetWall);
 					FVector Displacement = TargetWall->GetActorLocation() - Wall->GetActorLocation();
 					FVector UnitDirection = Displacement / Displacement.Size();
 					FHitResult Hit;
 					if (TargetWall->OwningPlayerID == PlayerState->PlayerId && !UKismetSystemLibrary::BoxTraceSingle(GetWorld(), WallInstance->GetActorLocation() + FVector(UnitDirection.X * 24, UnitDirection.Y * 24, 21), TargetWall->GetActorLocation() + FVector(UnitDirection.X * -24, UnitDirection.Y * -24, 21), FVector(9.5f, 4.0f, 15.0f), Displacement.Rotation(), UEngineTypes::ConvertToTraceType(ECC_Visibility), true, TempGateWalls, EDrawDebugTrace::ForOneFrame, Hit, true)) {
-						if (!TargetWall->TempConnection) {
+						if (!WallInstance->TempConnection) {
 							//create new
 							FTransform Transform = FTransform(Displacement.Rotation(), WallInstance->GetActorLocation() + (Displacement / 2), FVector(Displacement.Size() / 19, 1, 1));
-							TargetWall->TempConnection = GetWorld()->SpawnActor(WallSegmentGhostClass, &Transform, SpawnParams);
-							WallsBeingPreviewed.Add(TargetWall);
-
+							WallInstance->TempConnection = GetWorld()->SpawnActor(WallSegmentGhostClass, &Transform, SpawnParams);
 						}
-						else if (TargetWall->TempConnection) {
+						else if (WallInstance->TempConnection) {
 							//update existing
 							FVector Displacement = TargetWall->GetActorLocation() - WallInstance->GetActorLocation();
 							FTransform Transform = FTransform(Displacement.Rotation(), WallInstance->GetActorLocation() + (Displacement / 2), FVector(Displacement.Size() / 19, 1, 1));
-							TargetWall->TempConnection->SetActorTransform(Transform);
+							WallInstance->TempConnection->SetActorTransform(Transform);
 						}
 					}
 					else {
-						if (TargetWall->TempConnection) {
-							TargetWall->TempConnection->Destroy();
-							TargetWall->TempConnection = nullptr;
+						if (WallInstance->TempConnection) {
+							WallInstance->TempConnection->Destroy();
+							WallInstance->TempConnection = nullptr;
 						}
 					}
 				}
-				
+		
 			}
 			else if (ResetGatePreviewLatch) {
 				ResetGatePreviewLatch = false;
-				if (TempGateWalls[0]) { TempGateWalls[0]->Destroy(); TempGateWalls[0] = nullptr; }
-				if (TempGateWalls[1]) { TempGateWalls[1]->Destroy(); TempGateWalls[1] = nullptr; }
-				for (Awall* Wall : WallsBeingPreviewed) {
-					if (Wall->TempConnection) {
-						Wall->TempConnection->Destroy();
-						Wall->TempConnection = nullptr;
+				for (int Index = 0; Index < TempGateWalls.Num(); Index++) {
+					if (!TempGateWalls[Index]) continue;
+					if (Awall* WallRefCast = Cast<Awall>(TempGateWalls[Index])) {
+						if (WallRefCast->TempConnection) {
+							WallRefCast->TempConnection->Destroy();
+							WallRefCast->TempConnection = nullptr;
+						}
 					}
+					TempGateWalls[Index]->Destroy();
+					TempGateWalls[Index] = nullptr;
 				}
-				WallsBeingPreviewed.Empty();
 			}
 
 			if (Awall* WallCast = Cast<Awall>(LocalObjectSpawn)) {
@@ -248,6 +255,21 @@ void AsassPlayer::Tick( float DeltaTime )
 
 		}
 		else if (CursorHit.GetActor()) {	//Did hit something and it was a building
+			if (ResetGatePreviewLatch) {
+				ResetGatePreviewLatch = false;
+				for (int Index = 0; Index < TempGateWalls.Num(); Index++) {
+					if (!TempGateWalls[Index]) continue;
+					if (Awall* WallRefCast = Cast<Awall>(TempGateWalls[Index])) {
+						if (WallRefCast->TempConnection) {
+							WallRefCast->TempConnection->Destroy();
+							WallRefCast->TempConnection = nullptr;
+						}
+					}
+					TempGateWalls[Index]->Destroy();
+					TempGateWalls[Index] = nullptr;
+				}
+			}
+
 			 for (Awall* Wall : WallsBeingPreviewed) {
 				 if (Wall->TempConnection) {
 					 Wall->TempConnection->Destroy();
@@ -280,8 +302,18 @@ void AsassPlayer::Tick( float DeltaTime )
 	else {
 		if (ActorDestroyLatch) { //Do not combine into one if statement, still want to reset latch if object is nullptr
 			if (LocalObjectSpawn) LocalObjectSpawn->Destroy(); 
-			if (TempGateWalls[0]) { TempGateWalls[0]->Destroy(); TempGateWalls[0] = nullptr; }
-			if (TempGateWalls[1]) { TempGateWalls[1]->Destroy(); TempGateWalls[1] = nullptr; }
+			for (int Index = 0; Index < TempGateWalls.Num(); Index++) {
+				if (!TempGateWalls[Index]) continue;
+				if (Awall* WallRefCast = Cast<Awall>(TempGateWalls[Index])) {
+					if (WallRefCast->TempConnection) {
+						WallRefCast->TempConnection->Destroy();
+						WallRefCast->TempConnection = nullptr;
+					}
+				}
+				TempGateWalls[Index]->Destroy();
+				TempGateWalls[Index] = nullptr;
+			}
+
 			if (WallsBeingPreviewed.Num() != 0) {
 				for (Awall* Wall : WallsBeingPreviewed) {
 					if (Wall->TempConnection) {

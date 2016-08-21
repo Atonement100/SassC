@@ -228,6 +228,8 @@ protected:
 	TArray<FHitResult> SphereTraceHits;
 	TArray<Awall*> WallPreviewArray = TArray<Awall*>();
 	TArray<Awall*> WallsBeingPreviewed = TArray<Awall*>();
+	TArray<Awall*> TempGateWallsBeingTargeted = TArray<Awall*>();
+	TArray<Awall*> TempGateWallsBeingPreviewed = TArray<Awall*>();
 	TArray<AActor*> TempGateWalls = TArray<AActor*>();
 	FVector CurrentHit;
 	FVector InitialHit;
