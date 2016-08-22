@@ -88,9 +88,9 @@ public:
 
 	/*Request from player to spawn building on server*/
 	UFUNCTION(Reliable, Server, WithValidation)
-	void ServerSpawnBuilding(AsassPlayerController* PlayerController, TSubclassOf<AActor> ActorToSpawn, FHitResult Hit, const FVector &HalfHeight, const TArray<FVector> &Midpoints, const FVector &TraceSize, int32 PlayerID, const TArray<AActor*> &ActorsToIgnore = TArray<AActor*>());
-	virtual void ServerSpawnBuilding_Implementation(AsassPlayerController* PlayerController, TSubclassOf<AActor> ActorToSpawn, FHitResult Hit, const FVector &HalfHeight, const TArray<FVector> &Midpoints, const FVector &TraceSize, int32 PlayerID, const TArray<AActor*> &ActorsToIgnore = TArray<AActor*>());
-	virtual bool ServerSpawnBuilding_Validate(AsassPlayerController* PlayerController, TSubclassOf<AActor> ActorToSpawn, FHitResult Hit, const FVector &HalfHeight, const TArray<FVector> &Midpoints, const FVector &TraceSize, int32 PlayerID, const TArray<AActor*> &ActorsToIgnore = TArray<AActor*>());
+	void ServerSpawnBuilding(AsassPlayerController* PlayerController, TSubclassOf<AActor> ActorToSpawn, FHitResult Hit, FRotator Rotator, const FVector &HalfHeight, const TArray<FVector> &Midpoints, const FVector &TraceSize, int32 PlayerID, const TArray<AActor*> &ActorsToIgnore = TArray<AActor*>());
+	virtual void ServerSpawnBuilding_Implementation(AsassPlayerController* PlayerController, TSubclassOf<AActor> ActorToSpawn, FHitResult Hit, FRotator Rotator, const FVector &HalfHeight, const TArray<FVector> &Midpoints, const FVector &TraceSize, int32 PlayerID, const TArray<AActor*> &ActorsToIgnore = TArray<AActor*>());
+	virtual bool ServerSpawnBuilding_Validate(AsassPlayerController* PlayerController, TSubclassOf<AActor> ActorToSpawn, FHitResult Hit, FRotator Rotator, const FVector &HalfHeight, const TArray<FVector> &Midpoints, const FVector &TraceSize, int32 PlayerID, const TArray<AActor*> &ActorsToIgnore = TArray<AActor*>());
 
 	/*Gets playercolor associated with a player when they spawn and updates their playermodel*/
 	UFUNCTION(Reliable, NetMulticast, WithValidation)
@@ -145,11 +145,11 @@ public:
 
 	/*Returns true if there is an issue with the spawn corners*/
 	UFUNCTION(BlueprintCallable, Category = "Spawnables")
-	bool CheckBldgCorners(TArray<FVector> ExtraLocs, FVector Center, int32 PlayerID, bool isCity);
+	bool CheckBldgCorners(TArray<FVector> ExtraLocs, FVector Center, FRotator Rotator, int32 PlayerID, bool isCity);
 
 	/*Returns true if there is an issue with the spawn location*/
 	UFUNCTION(BlueprintCallable, Category = "Spawnables")
-	bool CheckUnitLocation(FVector Center, int32 PlayerID);
+	bool CheckUnitLocation(FVector Center, FRotator Rotator, int32 PlayerID);
 
 	/*Blueprint-set class of the pause widget*/
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Default")
