@@ -880,11 +880,17 @@ bool AsassPlayer::CheckBldgCorners(TArray<FVector> ExtraLocs, FVector Center, FR
 	if (ExtraLocs.Num() == 0){ GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Red, "No extre locs"); return true; }
 
 	FHitResult Hit;
-	FVector DirectionUnitVector = Rotator.Vector();
+	FVector DirectionUnitVector = (Rotator).Vector();
 	TArray<float> TraceHeights;
 	TArray<AActor*> Ignore;
+	GEngine->AddOnScreenDebugMessage(-1, GetWorld()->DeltaTimeSeconds, FColor::Green, UKismetStringLibrary::Conv_RotatorToString(Rotator));
+	GEngine->AddOnScreenDebugMessage(-1, GetWorld()->DeltaTimeSeconds, FColor::Green, UKismetStringLibrary::Conv_VectorToString(DirectionUnitVector));
+
 	for (FVector Loc : ExtraLocs) {	
-		if (UKismetSystemLibrary::LineTraceSingleForObjects(GetWorld(), Center + Loc + FVector(0,0,15.0f), Center + Loc - FVector(0,0,15.0f), StaticObjectTypes, true, Ignore, EDrawDebugTrace::ForOneFrame, Hit, true)) {
+		float Magnitude = Loc.Size2D();
+		FVector Displacement = (Loc.Rotation() + Rotator).Vector()*Magnitude;
+		GEngine->AddOnScreenDebugMessage(-1, GetWorld()->DeltaTimeSeconds, FColor::Green, UKismetStringLibrary::Conv_VectorToString(Loc*DirectionUnitVector));
+		if (UKismetSystemLibrary::LineTraceSingleForObjects(GetWorld(), Center + Displacement + FVector(0,0,15.0f), Center + Displacement - FVector(0,0,15.0f), StaticObjectTypes, true, Ignore, EDrawDebugTrace::ForOneFrame, Hit, true)) {
 			TraceHeights.Add(Hit.Location.Z);
 		}
 		else {
@@ -903,7 +909,9 @@ bool AsassPlayer::CheckBldgCorners(TArray<FVector> ExtraLocs, FVector Center, FR
 
 	TArray<AActor*> nullArray;
 	for (FVector Loc : ExtraLocs) {
-		if (UKismetSystemLibrary::LineTraceSingle_NEW(GetWorld(), Center + Loc + FVector(0, 0, 65.0f), Center + Loc - FVector(0, 0, 15.0f), UEngineTypes::ConvertToTraceType(ECollisionChannel::ECC_GameTraceChannel1), false, nullArray, EDrawDebugTrace::ForOneFrame, Hit, true)){
+		float Magnitude = Loc.Size2D();
+		FVector Displacement = (Loc.Rotation() + Rotator).Vector()*Magnitude;
+		if (UKismetSystemLibrary::LineTraceSingle_NEW(GetWorld(), Center + Displacement + FVector(0, 0, 65.0f), Center + Displacement - FVector(0, 0, 15.0f), UEngineTypes::ConvertToTraceType(ECollisionChannel::ECC_GameTraceChannel1), false, nullArray, EDrawDebugTrace::ForOneFrame, Hit, true)){
 			if (AbuildingBase* Bldg = Cast<AbuildingBase>(Hit.GetActor())) {
 				if (Bldg->OwningPlayerID != PlayerID) {
 					GEngine->AddOnScreenDebugMessage(-1, GetWorld()->DeltaTimeSeconds, FColor::Emerald, "SassPlayer CheckBldgCorners: OVERLAPS ENEMY TERRITORY");
