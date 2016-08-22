@@ -231,6 +231,7 @@ protected:
 	TArray<Awall*> TempGateWallsBeingTargeted = TArray<Awall*>();
 	TArray<Awall*> TempGateWallsBeingPreviewed = TArray<Awall*>();
 	TArray<AActor*> TempGateWalls = TArray<AActor*>();
+	FRotator PreviewRotation = FRotator::ZeroRotator;
 	FVector CurrentHit;
 	FVector InitialHit;
 	float SphereTraceRadius;
@@ -242,6 +243,8 @@ protected:
 	bool IsUnitMenuOpen = false;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Sass Player")
 	bool IsLeftMouseDown = false;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Sass Player")
+	bool IsRightMouseDown = false;
 	bool ShouldAddToSelection = false;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Sass Player")
 	UClass* SelectionSphereClass;

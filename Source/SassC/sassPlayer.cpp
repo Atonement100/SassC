@@ -89,7 +89,16 @@ void AsassPlayer::Tick( float DeltaTime )
 		}
 		
 		if (PlayerControllerPtr != nullptr) PlayerControllerPtr->GetHitResultUnderCursorByChannel(UEngineTypes::ConvertToTraceType(ECC_Visibility), true, CursorHit);
-		if (LocalObjectSpawn != nullptr) LocalObjectSpawn->SetActorLocation(CursorHit.Location + CurrentHalfHeight);
+		if (LocalObjectSpawn != nullptr) {
+			if (!IsRightMouseDown) { LocalObjectSpawn->SetActorLocation(CursorHit.Location + CurrentHalfHeight); }
+			else if (IsRightMouseDown) {
+				FHitResult RotateHit;
+				TArray<AActor*> RaycastIgnores;
+				UKismetSystemLibrary::LineTraceSingle_NEW(GetWorld(), GetMesh()->GetComponentLocation() + FVector(0, 0, BaseEyeHeight + 80.0f), GetMesh()->GetComponentLocation() + FVector(0, 0, BaseEyeHeight + 80.0f) + UKismetMathLibrary::GetForwardVector(PlayerControllerPtr->GetControlRotation())*10000.0f, UEngineTypes::ConvertToTraceType(ECC_Visibility), true, RaycastIgnores, EDrawDebugTrace::ForDuration, RotateHit, true);
+				PreviewRotation = FRotator(0,(RotateHit.Location - LocalObjectSpawn->GetActorLocation()).Rotation().Yaw,0) - FRotator(0,90,0);
+				LocalObjectSpawn->SetActorRotation(PreviewRotation);
+			}
+		}
 		
 		if (CursorHit.GetActor() && !CursorHit.GetActor()->IsA(AbuildingBase::StaticClass())) {			//Trace hit something that isn't a building
 			if (ResetLocalView) { LocalObjectSpawn->SetActorHiddenInGame(false); ResetLocalView = false; }
@@ -434,21 +443,25 @@ void AsassPlayer::LeftClickReleased() {
 }
 
 void AsassPlayer::RightClickPressed() {
+	IsRightMouseDown = true;
+
 	FHitResult RaycastHit;
 	const TArray<AActor*> RaycastIgnores;
 
-	UKismetSystemLibrary::LineTraceSingle_NEW(GetWorld(), GetMesh()->GetComponentLocation() + FVector(0, 0, BaseEyeHeight + 80.0f), GetMesh()->GetComponentLocation() + FVector(0, 0, BaseEyeHeight + 80.0f) + UKismetMathLibrary::GetForwardVector(PlayerControllerPtr->GetControlRotation())*10000.0f,UEngineTypes::ConvertToTraceType(ECC_Visibility), true, RaycastIgnores, EDrawDebugTrace::ForDuration, RaycastHit, true);
-	if (RaycastHit.GetComponent()->ComponentHasTag(USassCStaticLibrary::NoAggroTag())) { UKismetSystemLibrary::LineTraceSingle_NEW(GetWorld(), GetMesh()->GetComponentLocation() + FVector(0, 0, BaseEyeHeight + 80.0f), GetMesh()->GetComponentLocation() + FVector(0, 0, BaseEyeHeight + 80.0f) + UKismetMathLibrary::GetForwardVector(PlayerControllerPtr->GetControlRotation())*10000.0f, UEngineTypes::ConvertToTraceType(ECC_Visibility), true, RaycastIgnores, EDrawDebugTrace::ForDuration, RaycastHit, true);}
-	AActor* HitActor = RaycastHit.GetActor();
-	ETypeOfOrder OrderType = ETypeOfOrder::ORDER_WORLD;
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Magenta, HitActor->GetName());
-	if ((HitActor->IsA(AunitBase::StaticClass()) || HitActor->IsA(AselectionSphere::StaticClass())) && !Cast<AsassPlayerState>(PlayerState)->ControlledBuildings.Contains(HitActor)) { OrderType = ETypeOfOrder::ORDER_UNIT; }
-	if (HitActor->IsA(AbuildingBase::StaticClass())) { OrderType = ETypeOfOrder::ORDER_BUILDING; }
-	CommandUnits(SelectedUnits, RaycastHit, OrderType);
+	if (!IsUnitMenuOpen) {
+		UKismetSystemLibrary::LineTraceSingle_NEW(GetWorld(), GetMesh()->GetComponentLocation() + FVector(0, 0, BaseEyeHeight + 80.0f), GetMesh()->GetComponentLocation() + FVector(0, 0, BaseEyeHeight + 80.0f) + UKismetMathLibrary::GetForwardVector(PlayerControllerPtr->GetControlRotation())*10000.0f, UEngineTypes::ConvertToTraceType(ECC_Visibility), true, RaycastIgnores, EDrawDebugTrace::ForDuration, RaycastHit, true);
+		if (RaycastHit.GetComponent()->ComponentHasTag(USassCStaticLibrary::NoAggroTag())) { UKismetSystemLibrary::LineTraceSingle_NEW(GetWorld(), GetMesh()->GetComponentLocation() + FVector(0, 0, BaseEyeHeight + 80.0f), GetMesh()->GetComponentLocation() + FVector(0, 0, BaseEyeHeight + 80.0f) + UKismetMathLibrary::GetForwardVector(PlayerControllerPtr->GetControlRotation())*10000.0f, UEngineTypes::ConvertToTraceType(ECC_Visibility), true, RaycastIgnores, EDrawDebugTrace::ForDuration, RaycastHit, true); }
+		AActor* HitActor = RaycastHit.GetActor();
+		ETypeOfOrder OrderType = ETypeOfOrder::ORDER_WORLD;
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Magenta, HitActor->GetName());
+		if ((HitActor->IsA(AunitBase::StaticClass()) || HitActor->IsA(AselectionSphere::StaticClass())) && !Cast<AsassPlayerState>(PlayerState)->ControlledBuildings.Contains(HitActor)) { OrderType = ETypeOfOrder::ORDER_UNIT; }
+		if (HitActor->IsA(AbuildingBase::StaticClass())) { OrderType = ETypeOfOrder::ORDER_BUILDING; }
+		CommandUnits(SelectedUnits, RaycastHit, OrderType);
+	}
 }
 
 void AsassPlayer::RightClickReleased() {
-
+	IsRightMouseDown = false;
 }
 
 void AsassPlayer::CommandUnits_Implementation(const TArray<AunitBase*> &SelectedUnits, FHitResult RaycastHit, ETypeOfOrder OrderType) {
