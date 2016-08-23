@@ -12,12 +12,14 @@
 #include "wall.h"
 #include "gate.h"
 #include "wallSegment.h"
+#include "shieldMonolith.h"
 #include "tower.h"
 #include "workshop.h"
 #include "selectionSphere.h"
 #include "buildingBase.h"
 #include "unitController.h"
 #include "SassCStaticLibrary.h"
+#include "ParticleDefinitions.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "Kismet/GameplayStatics.h"
@@ -456,7 +458,7 @@ void AsassPlayer::RightClickPressed() {
 		if (RaycastHit.GetComponent()->ComponentHasTag(USassCStaticLibrary::NoAggroTag())) { UKismetSystemLibrary::LineTraceSingle_NEW(GetWorld(), GetMesh()->GetComponentLocation() + FVector(0, 0, BaseEyeHeight + 80.0f), GetMesh()->GetComponentLocation() + FVector(0, 0, BaseEyeHeight + 80.0f) + UKismetMathLibrary::GetForwardVector(PlayerControllerPtr->GetControlRotation())*10000.0f, UEngineTypes::ConvertToTraceType(ECC_Visibility), true, RaycastIgnores, EDrawDebugTrace::ForDuration, RaycastHit, true); }
 		AActor* HitActor = RaycastHit.GetActor();
 		ETypeOfOrder OrderType = ETypeOfOrder::ORDER_WORLD;
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Magenta, HitActor->GetName());
+		//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Magenta, HitActor->GetName());
 		if ((HitActor->IsA(AunitBase::StaticClass()) || HitActor->IsA(AselectionSphere::StaticClass())) && !Cast<AsassPlayerState>(PlayerState)->ControlledBuildings.Contains(HitActor)) { OrderType = ETypeOfOrder::ORDER_UNIT; }
 		if (HitActor->IsA(AbuildingBase::StaticClass())) { OrderType = ETypeOfOrder::ORDER_BUILDING; }
 		CommandUnits(SelectedUnits, RaycastHit, OrderType);
@@ -779,12 +781,13 @@ void AsassPlayer::ServerSpawnBuilding_Implementation(AsassPlayerController* Play
 							NewBuilding->PostCreation(SassPlayerState->PlayerColor);
 							NewBuilding->FixSpawnLocation(Hit.Location);
 							if (Awall* WallCast = Cast<Awall>(NewBuilding)) {						
-								TArray<Awall*> WallsInRange = (WallCast->FindWallTowersInRange());
+								TArray<Awall*> WallsInRange = WallCast->FindWallTowersInRange();
 								for (Awall* TargetWall : WallsInRange) {
 									if (TargetWall->OwningPlayerID == PlayerID) { ServerSpawnWall(WallCast, TargetWall, PlayerID, SassPlayerState->PlayerColor); }
 								}
 							}
 							else if (Agate* GateCast = Cast<Agate>(NewBuilding)) {
+								//@TODO Check if I can skip AActor* and just spawn in with Ignore.Add(Getworld. . .  .
 								const FVector LeftLoc = Hit.Location + HalfHeight + (Rotator + FRotator(0, 90, 0)).Vector() * 50 + FVector(0, 0, -20);
 								const FVector RightLoc = Hit.Location + HalfHeight + (Rotator + FRotator(0, 90, 0)).Vector() * -50 + FVector(0, 0, -20);
 								AActor* x = GetWorld()->SpawnActor(WallClass, &LeftLoc, &Rotation, WallParams);
@@ -800,6 +803,13 @@ void AsassPlayer::ServerSpawnBuilding_Implementation(AsassPlayerController* Play
 									Wall->UpdateMaterial(SassPlayerState->PlayerColor, true);
 									Wall->PostCreation(SassPlayerState->PlayerColor);
 									ServerSpawnWall(Wall, Wall->GetClosestWallTowerInRange(100.0f, Ignore), PlayerID, SassPlayerState->PlayerColor);
+								}
+							}
+							else if (AshieldMonolith* MonoCast = Cast<AshieldMonolith>(NewBuilding)) {
+								TArray<AshieldMonolith*> MonolithsInRange = MonoCast->FindMonolithsInRange();
+								if (MonolithsInRange.Num() > 0) {
+									UParticleSystem* PSysToSpawn = MonoCast->BeamPSys;
+									for (AshieldMonolith* TargetMonolith : MonolithsInRange) { TargetMonolith->SpawnBeamEmitter(PSysToSpawn, MonoCast, TargetMonolith); }
 								}
 							}
 						}
@@ -830,10 +840,6 @@ void AsassPlayer::ServerSpawnBuilding_Implementation(AsassPlayerController* Play
 			Aworkshop* TempWorkshop = Cast<Aworkshop>(Hit.GetActor());
 			if (TempWorkshop->OwningPlayerID == PlayerID) TempWorkshop->UpgradeBuilding();
 		}
-		/*else if (ActorToSpawn.GetDefaultObject()->IsA(Agate::StaticClass()) && Hit.GetActor()->IsA(AwallSegment::StaticClass())) {
-			AwallSegment* TempSegment = Cast<AwallSegment>(Hit.GetActor());
-			if (TempSegment->OwningPlayerID == PlayerID) TempSegment->UpgradeBuilding();
-		}*/
 	}
 }
 
@@ -888,13 +894,10 @@ bool AsassPlayer::CheckBldgCorners(TArray<FVector> ExtraLocs, FVector Center, FR
 	FVector DirectionUnitVector = (Rotator).Vector();
 	TArray<float> TraceHeights;
 	TArray<AActor*> Ignore;
-	GEngine->AddOnScreenDebugMessage(-1, GetWorld()->DeltaTimeSeconds, FColor::Green, UKismetStringLibrary::Conv_RotatorToString(Rotator));
-	GEngine->AddOnScreenDebugMessage(-1, GetWorld()->DeltaTimeSeconds, FColor::Green, UKismetStringLibrary::Conv_VectorToString(DirectionUnitVector));
 
 	for (FVector Loc : ExtraLocs) {	
 		float Magnitude = Loc.Size2D();
 		FVector Displacement = (Loc.Rotation() + Rotator).Vector()*Magnitude;
-		GEngine->AddOnScreenDebugMessage(-1, GetWorld()->DeltaTimeSeconds, FColor::Green, UKismetStringLibrary::Conv_VectorToString(Loc*DirectionUnitVector));
 		if (UKismetSystemLibrary::LineTraceSingleForObjects(GetWorld(), Center + Displacement + FVector(0,0,15.0f), Center + Displacement - FVector(0,0,15.0f), StaticObjectTypes, true, Ignore, EDrawDebugTrace::ForOneFrame, Hit, true)) {
 			TraceHeights.Add(Hit.Location.Z);
 		}

@@ -46,7 +46,7 @@ void AwallSegment::ShowMesh() {
 	ResetRequired = false;
 }
 
-float AwallSegment::TakeDamage(float DamageAmount, FDamageEvent const & DamageEvent, AController * EventInstigator, AActor * DamageCauser)
+float AwallSegment::TakeDamage(float DamageAmount, FDamageEvent const & DamageEvent, AController* EventInstigator, AActor* DamageCauser)
 {
 	DamageAmount = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
 	if (Health <= 0.0f) {
@@ -71,34 +71,22 @@ void AwallSegment::TryRemove(AbuildingBase* RemoveFrom, bool IsLeftConnection) {
 	}
 	else if (IsLeftConnection) {
 		if (AwallSegment* Left = Cast<AwallSegment>(LeftConnection)) {
-			//GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Purple, Left->RightConnection->GetName());
 			Left->RightConnection = nullptr;
-			if (Left->RightConnection == nullptr) {
-				//GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Purple, "is nullptr");
-			}
-
 		}
 	}
 	else if (!IsLeftConnection) {
 		if (AwallSegment* Right = Cast<AwallSegment>(RightConnection)) {
-			//GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Purple, Right->LeftConnection->GetName());
 			Right->LeftConnection = nullptr;
-			if (Right->LeftConnection == nullptr) {
-				//GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Purple, "is nullptr");
-			}
-
 		}
 	}
 }
 
 int AwallSegment::TryConnection(AbuildingBase* Connection, TArray<AbuildingBase*> &ConnectedBldgs, int8 Depth, bool TryLeft) {
 	if (!Connection || Depth == 4) return Depth;
-	//GEngine->AddOnScreenDebugMessage(-1, GetWorld()->GetDeltaSeconds(), FColor::Orange, Connection->GetName());
 	if (Connection && Connection->IsA(AwallSegment::StaticClass())) {
 		Connection->HideMesh();
 		Connection->DelayReset = true;
 		Connection->ResetRequired = true;
-		//if(!ConnectedBldgs.Contains(Connection)) ConnectedBldgs.Add(Connection);
 	}
 	else {
 		return Depth;

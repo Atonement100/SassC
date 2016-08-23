@@ -51,8 +51,7 @@ TArray<Awall*> Awall::FindWallTowersInRange(float Range, TArray<AActor*> ActorsT
 	TArray<Awall*> WallsInRange;
 	for (FHitResult Hit : SphereHits) {
 		if (!WallsInRange.Contains(Hit.GetActor()) && Hit.GetActor()->IsA(Awall::StaticClass())) {
-			float Distance = UKismetMathLibrary::VSize((Hit.GetActor()->GetActorLocation()) - this->GetActorLocation());
-			GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Emerald, "Dist: " + UKismetStringLibrary::Conv_FloatToString(Distance));
+			float Distance = ((Hit.GetActor()->GetActorLocation()) - this->GetActorLocation()).Size();
 			WallsInRange.Add(Cast<Awall>(Hit.GetActor()));
 		}
 	}
