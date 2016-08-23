@@ -144,8 +144,8 @@ void AsassPlayer::Tick( float DeltaTime )
 
 			if (Agate* GateCast = Cast <Agate>(LocalObjectSpawn)) {
 				ResetGatePreviewLatch = true;
-				const FTransform LeftTransform = FTransform(FRotator::ZeroRotator, CursorHit.Location + FVector(0, 50, 0));
-				const FTransform RightTransform = FTransform(FRotator::ZeroRotator, CursorHit.Location + FVector(0, -50, 0));
+				const FTransform LeftTransform = FTransform(FRotator::ZeroRotator, LocalObjectSpawn->GetActorLocation() + (PreviewRotation + FRotator(0, 90, 0)).Vector() * 50);
+				const FTransform RightTransform = FTransform(FRotator::ZeroRotator, LocalObjectSpawn->GetActorLocation() + (PreviewRotation + FRotator(0, 90, 0)).Vector() * -50);
 
 				if (TempGateWalls[0] != nullptr) TempGateWalls[0]->SetActorTransform(LeftTransform);
 				else if (!TempGateWalls[0]) { 
@@ -780,8 +780,8 @@ void AsassPlayer::ServerSpawnBuilding_Implementation(AsassPlayerController* Play
 								}
 							}
 							else if (Agate* GateCast = Cast<Agate>(NewBuilding)) {
-								const FVector LeftLoc = Hit.Location + HalfHeight + FVector(0, 50, -20);
-								const FVector RightLoc = Hit.Location + HalfHeight + FVector(0, -50, -20);
+								const FVector LeftLoc = Hit.Location + HalfHeight + (Rotator + FRotator(0, 90, 0)).Vector() * 50 + FVector(0, 0, -20);
+								const FVector RightLoc = Hit.Location + HalfHeight + (Rotator + FRotator(0, 90, 0)).Vector() * -50 + FVector(0, 0, -20);
 								AActor* x = GetWorld()->SpawnActor(WallClass, &LeftLoc, &Rotation, WallParams);
 								AActor* y = GetWorld()->SpawnActor(WallClass, &RightLoc, &Rotation, WallParams);
 								TArray<AActor*> Ignore = TArray<AActor*>(ActorsToIgnore);
