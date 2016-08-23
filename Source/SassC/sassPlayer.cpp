@@ -73,7 +73,7 @@ void AsassPlayer::Tick( float DeltaTime )
 		
 		if (ActorSpawnLatch) {
 			if (PlayerControllerPtr) PlayerControllerPtr->GetHitResultUnderCursorByChannel(UEngineTypes::ConvertToTraceType(ECC_Visibility), true, CursorHit);
-			FTransform Transform = FTransform(PreviewRotation, CursorHit.Location + FVector(0,0,50.0), FVector(1));
+			FTransform Transform = FTransform(PreviewRotation, CursorHit.Location, FVector(1));
 
 			LocalObjectSpawn = GetWorld()->SpawnActor(SelectedSpawnableClass, &Transform, SpawnParams);
 			if (LocalObjectSpawn != nullptr) {
