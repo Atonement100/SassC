@@ -200,11 +200,12 @@ protected:
 	UFUNCTION(BlueprintNativeEvent, Category = "HUD")
 	void CloseUnitMenu();
 	virtual void CloseUnitMenu_Implementation();
-
 	UFUNCTION(Unreliable, Client)
 	void SpawnWallPreview(FVector Location, FRotator Rotation);
 	virtual void SpawnWallPreview_Implementation(FVector Location, FRotator Rotation);
 
+	UFUNCTION(Category = "Sass Player")
+	bool ShouldIgnoreLookInput();
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sass Player")
 	AActor* LocalObjectSpawn;
