@@ -1,31 +1,16 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "SassC.h"
+#include "Kismet/GameplayStatics.h"
+#include "ParticleDefinitions.h"
 #include "shieldMonolith.h"
 
 AshieldMonolith::AshieldMonolith() {
 	PrimaryActorTick.bCanEverTick = true;
-
-	/*
-	BuildingMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("shieldMonolith Mesh"));
-	BuildingMesh->AttachTo(RootComponent);
-	static ConstructorHelpers::FObjectFinder<UStaticMesh> shieldMonolithMesh(TEXT("StaticMesh'/Game/StarterContent/Shapes/Shape_WideCapsule.Shape_WideCapsule'"));
-	if (shieldMonolithMesh.Succeeded()) { BuildingMesh->SetStaticMesh(shieldMonolithMesh.Object); }
-
-	BuildingCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("shieldMonolith Collision"));
-	BuildingCollision->AttachTo(BuildingMesh);
-	BuildingCollision->SetBoxExtent(CollisionBounds);
-	*/
 }
 
 void AshieldMonolith::PostInitializeComponents() {
 	Super::PostInitializeComponents();
-//	BldgMeshMaterialDynamic = BuildingMesh->CreateDynamicMaterialInstance(0, BuildingMesh->GetMaterial(0));
-
-	//FTransform CollisionTransform = BuildingCollision->GetRelativeTransform();
-	//CollisionTransform.SetLocation(CollisionDisplacement);
-
-	//BuildingCollision->SetRelativeLocation(CollisionDisplacement);
 }
 
 void AshieldMonolith::BeginPlay() {
@@ -36,4 +21,26 @@ void AshieldMonolith::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
 }
 
+void AshieldMonolith::PostCreation_Implementation(FLinearColor PlayerColor) {
+	UParticleSystemComponent* BubbleComponent = UGameplayStatics::SpawnEmitterAttached(BubblePSys, BuildingMesh, NAME_None, BubblePSysLocation);
+	if(BubbleComponent) AttachedParticleSystems.Add(BubbleComponent);
+}
+
+USceneComponent* AshieldMonolith::GetBeamSocket()
+{
+	if (BeamPSysSocket) return BeamPSysSocket;
+	return nullptr;
+}
+
+float AshieldMonolith::TakeDamage(float DamageAmount, FDamageEvent const & DamageEvent, AController * EventInstigator, AActor * DamageCauser)
+{
+	DamageAmount = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
+	if (Health <= 0.0f) {
+		for (UParticleSystemComponent* PSys : AttachedParticleSystems) {
+			if (PSys) { PSys->DeactivateSystem(); PSys->DestroyComponent(); }
+		}
+	}
+
+	return DamageAmount;
+}
 
