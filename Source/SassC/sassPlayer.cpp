@@ -983,7 +983,7 @@ void AsassPlayer::ServerSpawnWall_Implementation(Awall* NewWall, Awall* TargetWa
 
 	if (!UKismetSystemLibrary::BoxTraceSingle(GetWorld(), NewWall->GetActorLocation() + FVector(UnitDirection.X*-24, UnitDirection.Y*-24, 21), TargetWall->GetActorLocation() + FVector(UnitDirection.X * 24, UnitDirection.Y * 24, 21), FVector(9.5f, 4.0f, 15.0f), Direction.Rotation(), UEngineTypes::ConvertToTraceType(ECC_Visibility), true, ActorsToIgnore, EDrawDebugTrace::ForDuration, Hit, true)) {
 		float SpaceBetween = ((TargetWall->GetActorLocation() - FVector(Direction.X / Direction.Size2D() * -24, Direction.Y / Direction.Size2D() * -24, 0)) - (NewWall->GetActorLocation() + FVector(Direction.X / Direction.Size2D() * 24, Direction.Y / Direction.Size2D() * 24, 0))).Size();
-		FVector Start = NewWall->GetActorLocation() + FVector(UnitDirection.X * -12, UnitDirection.Y * -12, 0);
+		FVector Start = NewWall->GetActorLocation() + FVector(UnitDirection.X * -18, UnitDirection.Y * -18, 0);
 		bool FirstLoop = true, LastLoop = false;
 		AwallSegment* PreviousSegment = nullptr;
 		//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, UKismetStringLibrary::Conv_IntToString(SpaceBetween/19));
