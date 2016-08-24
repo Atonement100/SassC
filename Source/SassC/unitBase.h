@@ -73,6 +73,11 @@ public:
 	virtual void StopAttackAnimation_Implementation();
 	virtual bool StopAttackAnimation_Validate();
 
+	UFUNCTION(Reliable, Server, WithValidation)
+	void SetIsAttacking(bool NewIsAttacking);
+	virtual void SetIsAttacking_Implementation(bool NewIsAttacking);
+	virtual bool SetIsAttacking_Validate(bool NewIsAttacking);
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
 	UDecalComponent* SelectionCircleDecal;
 

@@ -986,7 +986,6 @@ void AsassPlayer::ServerSpawnWall_Implementation(Awall* NewWall, Awall* TargetWa
 		FVector Start = NewWall->GetActorLocation() + FVector(UnitDirection.X * -18, UnitDirection.Y * -18, 0);
 		bool FirstLoop = true, LastLoop = false;
 		AwallSegment* PreviousSegment = nullptr;
-		//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, UKismetStringLibrary::Conv_IntToString(SpaceBetween/19));
 		for (int NumToSpawn = (SpaceBetween / 19); NumToSpawn > 0; NumToSpawn--) {
 			const FVector Loc = Start;
 			const FRotator Rot = Direction.Rotation();
@@ -1008,8 +1007,8 @@ void AsassPlayer::ServerSpawnWall_Implementation(Awall* NewWall, Awall* TargetWa
 			else {
 				NewSegment->LeftConnection = PreviousSegment;
 				PreviousSegment->RightConnection = NewSegment;
-				if (NumToSpawn == 2) { LastLoop = true; }
 			}
+			if (NumToSpawn == 2) { LastLoop = true; }
 
 			PreviousSegment = NewSegment;
 			Start = Start + FVector(UnitDirection.X * -19, UnitDirection.Y * -19, 0);

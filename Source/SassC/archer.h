@@ -20,7 +20,11 @@ public:
 	virtual void Tick(float DeltaSeconds) override;
 	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
 	
+	virtual void Attack_Implementation(AActor* Target) override;
+	virtual bool Attack_Validate(AActor* Target) override;
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Unit Base")
 	float ArcherAttackRange = 35.0f;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Archer")
+	UClass* ProjectileClass;
 };

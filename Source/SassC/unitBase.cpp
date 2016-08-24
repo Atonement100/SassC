@@ -94,7 +94,7 @@ void AunitBase::OnOverlapEnd_DetectionSphere(class AActor* OtherActor, class UPr
 }
 
 void AunitBase::OnOverlapBegin_AggroSphere(class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) {
-	//need to add friendly unit check
+
 	if (OtherActor != this && !OtherComp->ComponentHasTag(USassCStaticLibrary::NoAggroTag())) {
 		if (OtherActor->IsA(AunitBase::StaticClass()) && Cast<AunitBase>(OtherActor)->OwningPlayerID != OwningPlayerID) {
 			EnemiesInRange.Add(OtherActor);
@@ -131,7 +131,7 @@ void AunitBase::Tick( float DeltaTime )
 		if ((OrderDestination - GetActorLocation()).Size2D() < 5.0f || TimeSinceOrdered > MaxTimeToMove){
 			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Cyan, "UnitBase Movement Complete");
 			ProcessingMoveToWorldOrder = false;
-			StopAttackAnimation();
+			SetIsAttacking(false);
 		}
 	}
 	else if (ProcessingMoveToUnitOrder) {
@@ -144,44 +144,44 @@ void AunitBase::Tick( float DeltaTime )
 				TimeSinceAttack = 0.0f;
 				if (ActorToFollow->GetHealth() > 0) {
 					Attack(ActorToFollow);
-					StartAttackAnimation();
+					SetIsAttacking(true);
 				}
 				else { 
 					ActorToFollow = nullptr;
 					ProcessingMoveToUnitOrder = false;
 					GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Silver, "UnitBase Unit Attack Chase Complete (target has been killed)");
-					StopAttackAnimation();
+					SetIsAttacking(false);
 				}
 			}
 		}
 		else {
 			ProcessingMoveToUnitOrder = false;
 			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Silver, "UnitBase Unit Attack Chase Complete");
-			StopAttackAnimation();
+			SetIsAttacking(false);
 		}
 	}
 	else if (ProcessingMoveToBuildingOrder) {
 		if (BuildingToAttack && BuildingToAttack->GetHealth() > 0) {
 			if (!ReachedBuilding) {
 				AddMovementInput(OrderDirection, 1.0f);
-				StopAttackAnimation();
+				SetIsAttacking(false);
 			}
 			else if (TimeSinceAttack > AttackDelay) {
 				if (BuildingToAttack->GetHealth() > 0) {
 					GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, "UnitBase: City attack");
 					Attack(BuildingToAttack);
-					StartAttackAnimation();
+					SetIsAttacking(true);
 				}
 				else {
 					GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Orange, "UnitBase Building Attack Complete (target has been killed)");
 					ProcessingMoveToBuildingOrder = false;
 					BuildingToAttack = nullptr;
-					StopAttackAnimation();
+					SetIsAttacking(false);
 				}
 			}
 		}
 		else {
-			StopAttackAnimation();
+			SetIsAttacking(false);
 		}
 	}
 	else {
@@ -195,14 +195,14 @@ void AunitBase::Tick( float DeltaTime )
 			if (CompareID != OwningPlayerID) {
 				//GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Green, "UnitBase: Proximity attack");
 				Attack(EnemiesInRange[0]);
-				StartAttackAnimation();
+				SetIsAttacking(true);
 			}
 			else {
 				EnemiesInRange.RemoveAt(0);
 			}
 		}
 		else if (EnemiesInRange.Num() == 0){
-			StopAttackAnimation();
+			SetIsAttacking(false);
 		}
 	}
 }
@@ -211,9 +211,9 @@ void AunitBase::Attack_Implementation(AActor* Target) {
 	this->TimeSinceAttack = 0.0f;
 
 	if (!Target) {
-		StopAttackAnimation();
+		SetIsAttacking(false);
 		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, "UnitBase Attack: Attack failed, target does not exist");
-		return; 
+		return;
 	}
 
 	const FDamageEvent DamageInfo = FDamageEvent();
@@ -238,6 +238,16 @@ void AunitBase::StopAttackAnimation_Implementation() {
 }
 
 bool AunitBase::StopAttackAnimation_Validate() {
+	return true;
+}
+
+void AunitBase::SetIsAttacking_Implementation(bool NewIsAttacking)
+{
+	this->IsAttacking = NewIsAttacking;
+}
+
+bool AunitBase::SetIsAttacking_Validate(bool NewIsAttacking)
+{
 	return true;
 }
 
