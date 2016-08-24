@@ -1,0 +1,21 @@
+parameter float BeamMulitplier = 9.75 : range(0, 100);
+parameter float BeamCenterEnd = .42 : range(0, .5);
+parameter float BeamPeripheralFalloffRange = .15 : range(0,.5);
+
+glsl vec4 ShieldMono(vec2 position){
+	float y = position.y;
+	if (y > BeamCenterEnd && y < 1-BeamCenterEnd){
+		float d = ((.5-BeamCenterEnd) - abs(.5 - y)) * BeamMulitplier;
+		return 1-(vec4(1-d,1-d,1-d,0));
+		}
+	else if(y > 1-BeamCenterEnd || y < BeamCenterEnd){
+		float d = ((1-BeamPeripheralFalloffRange) - y);
+		float e = (y - BeamPeripheralFalloffRange);
+		float f = min(d,e);
+		return 1-(vec4(1-f,1-f,1-f,0));
+	}
+	else
+		return vec4(0,0,0,1);
+}
+
+image ShieldMonoRender = glsl(ShieldMono, 256, 256);
