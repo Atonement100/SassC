@@ -10,10 +10,18 @@
 AwallSegment::AwallSegment() {
 	PrimaryActorTick.bCanEverTick = true;
 
+	DamageOneMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Damage One Mesh"));
+	DamageOneMesh->AttachTo(RootComponent);
+	DamageTwoMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Damage Two Mesh"));
+	DamageTwoMesh->AttachTo(RootComponent);
 }
 
 void AwallSegment::PostInitializeComponents() {
 	Super::PostInitializeComponents();
+
+	//These are to include the additional meshes and materials in the dynamic material array, parent only adds one mesh and material by default.
+	BldgMeshMaterialDynamic.Add(DamageOneMesh->CreateDynamicMaterialInstance(0, DamageOneMesh->GetMaterial(0)));
+	BldgMeshMaterialDynamic.Add(DamageTwoMesh->CreateDynamicMaterialInstance(0, DamageTwoMesh->GetMaterial(0))); 
 }
 
 void AwallSegment::BeginPlay() {
@@ -22,17 +30,18 @@ void AwallSegment::BeginPlay() {
 
 void AwallSegment::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
-	if (PreviewActive) { PreviewUpgrade(); }
-	else if (!DelayReset && ResetRequired) { ResetPreview(); }
-	DelayReset = false;	
+	//if (PreviewActive) { PreviewUpgrade(); }
+	//else if (!DelayReset && ResetRequired) { ResetPreview(); }
+	//DelayReset = false;	
 }
 
 void AwallSegment::GetLifetimeReplicatedProps(TArray<FLifetimeProperty> &OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
-	
+
 	DOREPLIFETIME(AwallSegment, LeftConnection);
 	DOREPLIFETIME(AwallSegment, RightConnection);
+	DOREPLIFETIME(AwallSegment, DamageLevel);
 }
 
 void AwallSegment::HideMesh() {
@@ -70,15 +79,43 @@ void AwallSegment::TryRemove(AbuildingBase* RemoveFrom, bool IsLeftConnection) {
 		WallTower->ConnectedWalls.Remove(this);
 	}
 	else if (IsLeftConnection) {
-		if (AwallSegment* Left = Cast<AwallSegment>(LeftConnection)) {
+		if (AwallSegment* Left = Cast<AwallSegment>(RemoveFrom)) {
 			Left->RightConnection = nullptr;
+			Left->ChangeMesh();
 		}
 	}
 	else if (!IsLeftConnection) {
-		if (AwallSegment* Right = Cast<AwallSegment>(RightConnection)) {
+		if (AwallSegment* Right = Cast<AwallSegment>(RemoveFrom)) {
 			Right->LeftConnection = nullptr;
+			Right->ChangeMesh();
 		}
 	}
+}
+
+void AwallSegment::ChangeMesh_Implementation(){
+	if (DamageLevel == 0) {
+		if (!RightConnection) {
+			BuildingMesh->SetVisibility(false);
+			DamageOneMesh->SetVisibility(true);
+			DamageOneMesh->SetRelativeRotation(FRotator(0, 180.0f, 0)); //Rotate crumbling side towards side without a wall
+		}
+		else if (!LeftConnection) {
+			BuildingMesh->SetVisibility(false);
+			DamageOneMesh->SetVisibility(true);
+			DamageOneMesh->SetRelativeRotation(FRotator::ZeroRotator); //Shouldn't need to rotate, but for safety purposes.
+		}
+		DamageLevel++;
+	}
+	else if (DamageLevel == 1) {
+		DamageOneMesh->SetVisibility(false);	//Crumbling on both sides, no need to rotate
+		DamageTwoMesh->SetVisibility(true);
+		DamageLevel++;
+	}
+}
+
+bool AwallSegment::ChangeMesh_Validate()
+{
+	return true;
 }
 
 int AwallSegment::TryConnection(AbuildingBase* Connection, TArray<AbuildingBase*> &ConnectedBldgs, int8 Depth, bool TryLeft) {
@@ -185,3 +222,5 @@ void AwallSegment::UpgradeBuilding_Implementation() {
 bool AwallSegment::UpgradeBuilding_Validate() {
 	return true;
 }
+
+

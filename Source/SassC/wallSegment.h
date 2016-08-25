@@ -49,10 +49,24 @@ public:
 	virtual void FixSpawnLocation_Implementation(FVector RealLocation);
 	virtual bool FixSpawnLocation_Validate(FVector RealLocation);
 	*/
+
+	UFUNCTION(Reliable, NetMulticast, WithValidation)
+	void ChangeMesh();
+	virtual void ChangeMesh_Implementation();
+	virtual bool ChangeMesh_Validate();
+
 protected:
 	AActor* TempGate;
 	AActor* TempLeftWall;
 	AActor* TempRightWall;
+	UPROPERTY(Replicated)
+	int8 DamageLevel = 0;
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Wall Segment")
+	UStaticMeshComponent* DamageOneMesh;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Wall Segment")
+	UStaticMeshComponent* DamageTwoMesh;
+	
 	/*
 	UFUNCTION(Reliable, NetMulticast, WithValidation)
 	void NetFixSpawnLocation(FVector RealLocation);
