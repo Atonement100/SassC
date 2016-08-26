@@ -23,6 +23,27 @@ void Awall::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
 }
 
+float Awall::TakeDamage(float DamageAmount, FDamageEvent const & DamageEvent, AController * EventInstigator, AActor * DamageCauser)
+{
+	DamageAmount = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
+	if (Health <= 0.0f) {
+		for (AbuildingBase* Wall : ConnectedWalls) {
+			if (AwallSegment* WallSegmentCast = Cast<AwallSegment>(Wall)){
+				if (WallSegmentCast->LeftConnection->IsA(Awall::StaticClass())) {
+					WallSegmentCast->ChangeMesh(true);
+					WallSegmentCast->LeftConnection = nullptr;
+				}
+				else {
+					WallSegmentCast->ChangeMesh(false);
+					WallSegmentCast->RightConnection = nullptr;
+				}
+			}
+		}
+	}
+
+	return DamageAmount;
+}
+
 Awall* Awall::GetClosestWallTowerInRange(float Range, TArray<AActor*> ActorsToIgnore) {
 	TArray<Awall*> Walls = this->FindWallTowersInRange(Range, ActorsToIgnore);
 	if (Walls.Num() == 0) return nullptr;
