@@ -12,7 +12,11 @@ UCLASS()
 class SASSC_API Ascallywag : public AunitBase
 {
 	GENERATED_BODY()
-		Ascallywag();
+
+public:
+	Ascallywag();
+	virtual void Tick(float DeltaSeconds) override;
+
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Unit Base")
 		float ScallywagAttackRange = 70.0f;
