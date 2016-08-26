@@ -50,10 +50,14 @@ public:
 	virtual bool FixSpawnLocation_Validate(FVector RealLocation);
 	*/
 
+	UFUNCTION(Reliable, Server, WithValidation)
+	void ChangeMesh(bool LeftConnectionDestroyed = false);
+	virtual void ChangeMesh_Implementation(bool LeftConnectionDestroyed = false);
+	virtual bool ChangeMesh_Validate(bool LeftConnectionDestroyed = false);
 	UFUNCTION(Reliable, NetMulticast, WithValidation)
-	void ChangeMesh();
-	virtual void ChangeMesh_Implementation();
-	virtual bool ChangeMesh_Validate();
+	void NetChangeMesh(bool LeftConnectionDestroyed = false);
+	virtual void NetChangeMesh_Implementation(bool LeftConnectionDestroyed = false);
+	virtual bool NetChangeMesh_Validate(bool LeftConnectionDestroyed = false);
 
 protected:
 	AActor* TempGate;

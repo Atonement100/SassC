@@ -61,9 +61,11 @@ float AwallSegment::TakeDamage(float DamageAmount, FDamageEvent const & DamageEv
 	if (Health <= 0.0f) {
 		if (LeftConnection) {
 			TryRemove(LeftConnection, true);
+			if (LeftConnection->IsA(AwallSegment::StaticClass())) { Cast<AwallSegment>(LeftConnection)->ChangeMesh(false); }
 		}
 		if (RightConnection) {
 			TryRemove(RightConnection, false);
+			if (RightConnection->IsA(AwallSegment::StaticClass())) { Cast<AwallSegment>(RightConnection)->ChangeMesh(true); }
 		}
 	
 	this->LeftConnection = nullptr;
@@ -80,40 +82,52 @@ void AwallSegment::TryRemove(AbuildingBase* RemoveFrom, bool IsLeftConnection) {
 	}
 	else if (IsLeftConnection) {
 		if (AwallSegment* Left = Cast<AwallSegment>(RemoveFrom)) {
-			Left->RightConnection = nullptr;
-			Left->ChangeMesh();
+			if(Left->RightConnection) Left->RightConnection = nullptr;
+			
 		}
 	}
 	else if (!IsLeftConnection) {
 		if (AwallSegment* Right = Cast<AwallSegment>(RemoveFrom)) {
-			Right->LeftConnection = nullptr;
-			Right->ChangeMesh();
+			if(Right->LeftConnection) Right->LeftConnection = nullptr;		
 		}
 	}
 }
 
-void AwallSegment::ChangeMesh_Implementation(){
+void AwallSegment::ChangeMesh_Implementation(bool LeftConnectionDestroyed) {
+	NetChangeMesh(LeftConnectionDestroyed);
+}
+
+bool AwallSegment::ChangeMesh_Validate(bool LeftConnectionDestroyed){
+	return true;
+}
+
+void AwallSegment::NetChangeMesh_Implementation(bool LeftConnectionDestroyed){
 	if (DamageLevel == 0) {
-		if (!RightConnection) {
-			BuildingMesh->SetVisibility(false);
-			DamageOneMesh->SetVisibility(true);
-			DamageOneMesh->SetRelativeRotation(FRotator(0, 180.0f, 0)); //Rotate crumbling side towards side without a wall
+		if (!LeftConnectionDestroyed) {
+			if (BuildingMesh) BuildingMesh->SetVisibility(false);
+			if (DamageOneMesh) {
+				DamageOneMesh->SetVisibility(true);
+				DamageOneMesh->SetRelativeRotation(FRotator(0, 180.0f, 0)); //Rotate crumbling side towards side without a wall
+			}
 		}
-		else if (!LeftConnection) {
-			BuildingMesh->SetVisibility(false);
-			DamageOneMesh->SetVisibility(true);
-			DamageOneMesh->SetRelativeRotation(FRotator::ZeroRotator); //Shouldn't need to rotate, but for safety purposes.
+		else if (LeftConnectionDestroyed) {
+			if (BuildingMesh) BuildingMesh->SetVisibility(false);
+			if (DamageOneMesh) {
+				DamageOneMesh->SetVisibility(true);
+				DamageOneMesh->SetRelativeRotation(FRotator::ZeroRotator); //Shouldn't need to rotate, but for safety purposes.
+			}
 		}
 		DamageLevel++;
 	}
 	else if (DamageLevel == 1) {
-		DamageOneMesh->SetVisibility(false);	//Crumbling on both sides, no need to rotate
-		DamageTwoMesh->SetVisibility(true);
+		if (BuildingMesh) BuildingMesh->SetVisibility(false);
+		if (DamageOneMesh) DamageOneMesh->SetVisibility(false);	//Crumbling on both sides, no need to rotate
+		if (DamageTwoMesh) DamageTwoMesh->SetVisibility(true);
 		DamageLevel++;
 	}
 }
 
-bool AwallSegment::ChangeMesh_Validate()
+bool AwallSegment::NetChangeMesh_Validate(bool LeftConnectionDestroyed)
 {
 	return true;
 }
