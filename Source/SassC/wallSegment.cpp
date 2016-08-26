@@ -14,6 +14,7 @@ AwallSegment::AwallSegment() {
 	DamageOneMesh->AttachTo(RootComponent);
 	DamageTwoMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Damage Two Mesh"));
 	DamageTwoMesh->AttachTo(RootComponent);
+
 }
 
 void AwallSegment::PostInitializeComponents() {
@@ -22,6 +23,9 @@ void AwallSegment::PostInitializeComponents() {
 	//These are to include the additional meshes and materials in the dynamic material array, parent only adds one mesh and material by default.
 	BldgMeshMaterialDynamic.Add(DamageOneMesh->CreateDynamicMaterialInstance(0, DamageOneMesh->GetMaterial(0)));
 	BldgMeshMaterialDynamic.Add(DamageTwoMesh->CreateDynamicMaterialInstance(0, DamageTwoMesh->GetMaterial(0))); 
+
+	BuildingCollision->SetVisibility(false);
+	BuildingCollision->SetHiddenInGame(true);
 }
 
 void AwallSegment::BeginPlay() {
