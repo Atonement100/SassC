@@ -181,6 +181,7 @@ void AunitBase::Tick( float DeltaTime )
 			}
 		}
 		else {
+			ProcessingMoveToBuildingOrder = false;
 			SetIsAttacking(false);
 		}
 	}
