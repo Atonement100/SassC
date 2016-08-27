@@ -13,6 +13,9 @@ Ascallywag::Ascallywag() {
 void Ascallywag::Tick(float DeltaSeconds) {
 	Super::Tick(DeltaSeconds);
 	AddMeshRelativeLocation(GetMovementComponent()->Velocity.Size());
+	if (!(ProcessingMoveToBuildingOrder || ProcessingMoveToUnitOrder || ProcessingMoveToWorldOrder || IsAttacking)) {
+		GetMovementComponent()->StopMovementImmediately();
+	}
 }
 
 void Ascallywag::AddMeshRelativeLocation_Implementation(float Velocity){
