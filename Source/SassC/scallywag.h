@@ -16,10 +16,12 @@ class SASSC_API Ascallywag : public AunitBase
 public:
 	Ascallywag();
 	virtual void Tick(float DeltaSeconds) override;
+	virtual void PostInitializeComponents() override;
+	virtual void UpdateMaterial(FLinearColor PlayerColor) override;
 
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Unit Base")
-		float ScallywagAttackRange = 70.0f;
+	float ScallywagAttackRange = 70.0f;
 	
 	UFUNCTION(Reliable, Server, WithValidation)
 	void AddMeshRelativeLocation(float Velocity);
@@ -31,6 +33,13 @@ protected:
 	virtual void NetAddMeshRelativeLocation_Implementation(float Velocity);
 	virtual bool NetAddMeshRelativeLocation_Validate(float Velocity);
 	
+	UFUNCTION(Reliable, NetMulticast, WithValidation)
+	void ColorUnit(FLinearColor PlayerColor);
+	virtual void ColorUnit_Implementation(FLinearColor PlayerColor);
+	virtual bool ColorUnit_Validate(FLinearColor PlayerColor);
+
+	UMaterialInstanceDynamic* UnitMeshMaterialDynamic;
+	const FName ColorParameterText = "PlayerColor";
 	const TArray<AActor*> ActorsToIgnore = TArray<AActor*>();
 	FHitResult Hit;
 };

@@ -107,14 +107,14 @@ public:
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
 	UMaterialInstanceDynamic* UnitDecalMaterialDynamic;
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
-	UMaterialInstanceDynamic* UnitMeshMaterialDynamic;
+	//UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
+	//UMaterialInstanceDynamic* UnitMeshMaterialDynamic;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
 	FName ColorParameterName = "PlayerColor";
 	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
 	float Health = 100.0f;
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
-	USkeletalMeshComponent* UnitMesh;
+	//UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
+	//USkeletalMeshComponent* UnitMesh;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
 	UDecalComponent* UnderUnitDecal;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")

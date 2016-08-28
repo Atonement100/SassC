@@ -103,7 +103,7 @@ UStaticMeshComponent* AbuildingBase::GetMesh(int MeshIndex)
 
 void AbuildingBase::NetFixSpawnLocation_Implementation(FVector RealLocation)
 {
-	Role = ROLE_Authority;
+	Role = ROLE_Authority; //This is a horrible thing to do, but spawns are not sent to client with precision beyond int. I can only pray that the buildings do not rise up and attempt to take over servers. If that happens, we may all be doomed.
 	//SetActorLocation(RealLocation + FVector(10));
 	SetActorLocation(RealLocation);
 }
