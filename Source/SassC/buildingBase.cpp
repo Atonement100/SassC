@@ -8,6 +8,8 @@
 AbuildingBase::AbuildingBase()
 {
 	PrimaryActorTick.bCanEverTick = true;
+	NetUpdateFrequency = 20.0f;
+
 	SceneComponent = CreateDefaultSubobject<USceneComponent>(TEXT("Root"));
 	SceneComponent->SetRelativeLocation(FVector::ZeroVector);
 	RootComponent = SceneComponent;

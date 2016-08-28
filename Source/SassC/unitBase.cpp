@@ -17,6 +17,7 @@
 AunitBase::AunitBase()
 {
 	PrimaryActorTick.bCanEverTick = true;
+	NetUpdateFrequency = 30.0f;
 	
 	UnderUnitDecal = CreateDefaultSubobject<UDecalComponent>(TEXT("Under Unit Decal"));
 	UnderUnitDecal->AttachTo(RootComponent);
@@ -107,12 +108,9 @@ void AunitBase::OnOverlapBegin_AggroSphere(class AActor* OtherActor, class UPrim
 }
 
 void AunitBase::OnOverlapEnd_AggroSphere(class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex) {
-	if (EnemiesInRange.Contains(OtherActor)) {
-		EnemiesInRange.Remove(OtherActor);
-		if (OtherActor == BuildingToAttack) {
-			ReachedBuilding = false;
-		}
-	}
+	if (!OtherActor) return;
+	EnemiesInRange.Remove(OtherActor);
+	if (OtherActor == BuildingToAttack) { ReachedBuilding = false; }
 }
 
 void AunitBase::BeginPlay()
@@ -163,13 +161,14 @@ void AunitBase::Tick( float DeltaTime )
 	else if (ProcessingMoveToBuildingOrder) {
 		if (BuildingToAttack && BuildingToAttack->GetHealth() > 0) {
 			if (!ReachedBuilding) {
+				//OrderDirection = BuildingToAttack->GetActorLocation() - this->GetActorLocation();
 				AddMovementInput(OrderDirection, 1.0f);
 				SetIsAttacking(false);
 			}
 			else if (TimeSinceAttack > AttackDelay) {
 				if (BuildingToAttack->GetHealth() > 0) {
 					GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, "UnitBase: City attack");
-					Attack(BuildingToAttack);
+					Attack(BuildingToAttack);	
 					SetIsAttacking(true);
 				}
 				else {
@@ -186,6 +185,7 @@ void AunitBase::Tick( float DeltaTime )
 		}
 	}
 	else {
+		//UKismetSystemLibrary::SphereTraceSingle_NEW(GetWorld(), GetActorLocation(), GetActorLocation() + FVector(0,0,1), AttackRange, UEngineTypes::ConvertToTraceType(ECollisionChannel::))
 		if (EnemiesInRange.Num() > 0 && TimeSinceAttack > AttackDelay && EnemiesInRange[0] && EnemiesInRange[0]) {
 			int32 CompareID;
 
@@ -202,10 +202,11 @@ void AunitBase::Tick( float DeltaTime )
 				EnemiesInRange.RemoveAt(0);
 			}
 		}
-		else if (EnemiesInRange.Num() == 0){
+		else if (IsAttacking && EnemiesInRange.Num() == 0){
 			SetIsAttacking(false);
 		}
 	}
+	
 }
 
 void AunitBase::Attack_Implementation(AActor* Target) {
