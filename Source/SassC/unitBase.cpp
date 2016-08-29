@@ -290,6 +290,8 @@ void AunitBase::MoveToBuilding_Implementation(AActor* BuildingToTarget)
 {
 	OrderDirection = BuildingToTarget->GetActorLocation() - GetActorLocation();
 	BuildingToAttack = Cast<AbuildingBase>(BuildingToTarget);
+	if (EnemiesInRange.Contains(BuildingToAttack)) ReachedBuilding = true;
+	else { ReachedBuilding = false; }
 	ProcessingMoveToBuildingOrder = true;
 	ProcessingMoveToUnitOrder = false;
 	ProcessingMoveToWorldOrder = false;
