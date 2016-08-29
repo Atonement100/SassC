@@ -159,7 +159,7 @@ protected:
 	const int SelectionSphereScaleMod = 100; //this should never ever be changed
 	
 	UFUNCTION(Reliable, NetMulticast, WithValidation)
-		void NetFixSpawnLocation(FVector RealLocation);
+	void NetFixSpawnLocation(FVector RealLocation);
 	virtual void NetFixSpawnLocation_Implementation(FVector RealLocation);
 	virtual bool NetFixSpawnLocation_Validate(FVector RealLocation);
 };

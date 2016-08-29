@@ -161,52 +161,52 @@ void AunitBase::Tick( float DeltaTime )
 	else if (ProcessingMoveToBuildingOrder) {
 		if (BuildingToAttack && BuildingToAttack->GetHealth() > 0) {
 			if (!ReachedBuilding) {
-				//OrderDirection = BuildingToAttack->GetActorLocation() - this->GetActorLocation();
+				OrderDirection = BuildingToAttack->GetActorLocation() - this->GetActorLocation();
 				AddMovementInput(OrderDirection, 1.0f);
-				if (IsAttacking)SetIsAttacking(false);
+				if (IsAttacking) SetIsAttacking(false);
 			}
 			else if (TimeSinceAttack > AttackDelay) {
 				if (BuildingToAttack->GetHealth() > 0) {
 					GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, "UnitBase: City attack");
 					Attack(BuildingToAttack);	
-					if (!IsAttacking)SetIsAttacking(true);
+					if (!IsAttacking) SetIsAttacking(true);
 				}
 				else {
 					GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Orange, "UnitBase Building Attack Complete (target has been killed)");
 					ProcessingMoveToBuildingOrder = false;
 					BuildingToAttack = nullptr;
-					if (IsAttacking)SetIsAttacking(false);
+					if (IsAttacking) SetIsAttacking(false);
 				}
 			}
 		}
 		else {
 			ProcessingMoveToBuildingOrder = false;
-			if (IsAttacking)SetIsAttacking(false);
+			if (IsAttacking) SetIsAttacking(false);
 		}
 	}
 	else {
-		//UKismetSystemLibrary::SphereTraceSingle_NEW(GetWorld(), GetActorLocation(), GetActorLocation() + FVector(0,0,1), AttackRange, UEngineTypes::ConvertToTraceType(ECollisionChannel::))
 		if (EnemiesInRange.Num() > 0 && TimeSinceAttack > AttackDelay && EnemiesInRange[0] && EnemiesInRange[0]) {
-			int32 CompareID;
-
-			if (AunitBase* Unit = Cast<AunitBase>(EnemiesInRange[0])) { CompareID = Unit->OwningPlayerID; }					
-			else if (AbuildingBase* Bldg = Cast<AbuildingBase>(EnemiesInRange[0])) { CompareID = Bldg->OwningPlayerID; }
-			else CompareID = 0;
-
-			if (CompareID != OwningPlayerID) {
-				//GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Green, "UnitBase: Proximity attack");
-				Attack(EnemiesInRange[0]);
-				if(!IsAttacking) SetIsAttacking(true);
-			}
-			else {
-				EnemiesInRange.RemoveAt(0);
+			if (AunitBase* Unit = Cast<AunitBase>(EnemiesInRange[0])) { 
+				if (Unit->OwningPlayerID != this->OwningPlayerID) {
+					MoveToUnit(Unit);
+				}
+				else {
+					EnemiesInRange.RemoveAt(0);
+				}
+			}					
+			else if (AbuildingBase* Bldg = Cast<AbuildingBase>(EnemiesInRange[0])) { 
+				if (Bldg->OwningPlayerID != this->OwningPlayerID) {
+					MoveToBuilding(Bldg);
+				}
+				else {
+					EnemiesInRange.RemoveAt(0);
+				}
 			}
 		}
 		else if (IsAttacking && EnemiesInRange.Num() == 0){
 			SetIsAttacking(false);
 		}
 	}
-	
 }
 
 void AunitBase::Attack_Implementation(AActor* Target) {
