@@ -129,7 +129,7 @@ void AunitBase::Tick( float DeltaTime )
 		if ((OrderDestination - GetActorLocation()).Size2D() < 5.0f || TimeSinceOrdered > MaxTimeToMove){
 			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Cyan, "UnitBase Movement Complete");
 			ProcessingMoveToWorldOrder = false;
-			SetIsAttacking(false);
+			if (IsAttacking) SetIsAttacking(false);
 		}
 	}
 	else if (ProcessingMoveToUnitOrder) {
@@ -142,20 +142,20 @@ void AunitBase::Tick( float DeltaTime )
 				TimeSinceAttack = 0.0f;
 				if (ActorToFollow->GetHealth() > 0) {
 					Attack(ActorToFollow);
-					SetIsAttacking(true);
+					if (!IsAttacking) SetIsAttacking(true);
 				}
 				else { 
 					ActorToFollow = nullptr;
 					ProcessingMoveToUnitOrder = false;
 					GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Silver, "UnitBase Unit Attack Chase Complete (target has been killed)");
-					SetIsAttacking(false);
+					if (IsAttacking) SetIsAttacking(false);
 				}
 			}
 		}
 		else {
 			ProcessingMoveToUnitOrder = false;
 			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Silver, "UnitBase Unit Attack Chase Complete");
-			SetIsAttacking(false);
+			if (IsAttacking) SetIsAttacking(false);
 		}
 	}
 	else if (ProcessingMoveToBuildingOrder) {
@@ -163,25 +163,25 @@ void AunitBase::Tick( float DeltaTime )
 			if (!ReachedBuilding) {
 				//OrderDirection = BuildingToAttack->GetActorLocation() - this->GetActorLocation();
 				AddMovementInput(OrderDirection, 1.0f);
-				SetIsAttacking(false);
+				if (IsAttacking)SetIsAttacking(false);
 			}
 			else if (TimeSinceAttack > AttackDelay) {
 				if (BuildingToAttack->GetHealth() > 0) {
 					GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, "UnitBase: City attack");
 					Attack(BuildingToAttack);	
-					SetIsAttacking(true);
+					if (!IsAttacking)SetIsAttacking(true);
 				}
 				else {
 					GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Orange, "UnitBase Building Attack Complete (target has been killed)");
 					ProcessingMoveToBuildingOrder = false;
 					BuildingToAttack = nullptr;
-					SetIsAttacking(false);
+					if (IsAttacking)SetIsAttacking(false);
 				}
 			}
 		}
 		else {
 			ProcessingMoveToBuildingOrder = false;
-			SetIsAttacking(false);
+			if (IsAttacking)SetIsAttacking(false);
 		}
 	}
 	else {
@@ -196,7 +196,7 @@ void AunitBase::Tick( float DeltaTime )
 			if (CompareID != OwningPlayerID) {
 				//GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Green, "UnitBase: Proximity attack");
 				Attack(EnemiesInRange[0]);
-				SetIsAttacking(true);
+				if(!IsAttacking) SetIsAttacking(true);
 			}
 			else {
 				EnemiesInRange.RemoveAt(0);
