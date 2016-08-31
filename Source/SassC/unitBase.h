@@ -40,6 +40,14 @@ public:
 	virtual void ColorUnitDecal_Implementation(FLinearColor PlayerColor);
 	virtual bool ColorUnitDecal_Validate(FLinearColor PlayerColor);
 
+	UMaterialInstanceDynamic* UnitMeshMaterialDynamic;
+	const FName ColorParameterText = "PlayerColor";
+
+	UFUNCTION(Reliable, NetMulticast, WithValidation)
+	void ColorUnit(FLinearColor PlayerColor);
+	virtual void ColorUnit_Implementation(FLinearColor PlayerColor);
+	virtual bool ColorUnit_Validate(FLinearColor PlayerColor);
+
 	/*Move selected units towards a world*/
 	UFUNCTION(Reliable, Server, WithValidation)
 	void MoveToDest(FVector Destination);

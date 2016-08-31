@@ -32,14 +32,7 @@ protected:
 	void NetAddMeshRelativeLocation(float Velocity);
 	virtual void NetAddMeshRelativeLocation_Implementation(float Velocity);
 	virtual bool NetAddMeshRelativeLocation_Validate(float Velocity);
-	
-	UFUNCTION(Reliable, NetMulticast, WithValidation)
-	void ColorUnit(FLinearColor PlayerColor);
-	virtual void ColorUnit_Implementation(FLinearColor PlayerColor);
-	virtual bool ColorUnit_Validate(FLinearColor PlayerColor);
 
-	UMaterialInstanceDynamic* UnitMeshMaterialDynamic;
-	const FName ColorParameterText = "PlayerColor";
 	const TArray<AActor*> ActorsToIgnore = TArray<AActor*>();
 	FHitResult Hit;
 };

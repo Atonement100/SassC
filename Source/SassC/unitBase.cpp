@@ -316,6 +316,7 @@ float AunitBase::TakeDamage(float DamageAmount, FDamageEvent const & DamageEvent
 void AunitBase::UpdateMaterial(FLinearColor PlayerColor)
 {
 	ColorUnitDecal(PlayerColor);
+	ColorUnit(PlayerColor);
 }
 
 void AunitBase::ColorUnitDecal_Implementation(FLinearColor PlayerColor) {
@@ -329,6 +330,14 @@ void AunitBase::ColorUnitDecal_Implementation(FLinearColor PlayerColor) {
 }
 
 bool AunitBase::ColorUnitDecal_Validate(FLinearColor PlayerColor) {
+	return true;
+}
+
+void AunitBase::ColorUnit_Implementation(FLinearColor PlayerColor) {
+	if (UnitMeshMaterialDynamic) UnitMeshMaterialDynamic->SetVectorParameterValue(ColorParameterText, PlayerColor);
+}
+
+bool AunitBase::ColorUnit_Validate(FLinearColor PlayerColor) {
 	return true;
 }
 

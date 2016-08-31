@@ -27,17 +27,7 @@ void Ascallywag::PostInitializeComponents()
 void Ascallywag::UpdateMaterial(FLinearColor PlayerColor)
 {
 	Super::UpdateMaterial(PlayerColor);
-	ColorUnit(PlayerColor);
 }
-
-void Ascallywag::ColorUnit_Implementation(FLinearColor PlayerColor) {
-	if (UnitMeshMaterialDynamic) UnitMeshMaterialDynamic->SetVectorParameterValue(ColorParameterText, PlayerColor);
-}
-
-bool Ascallywag::ColorUnit_Validate(FLinearColor PlayerColor) {
-	return true;
-}
-
 
 void Ascallywag::AddMeshRelativeLocation_Implementation(float Velocity){
 	if ((ProcessingMoveToBuildingOrder || ProcessingMoveToUnitOrder || ProcessingMoveToWorldOrder || IsAttacking) && UKismetSystemLibrary::LineTraceSingle_NEW(GetWorld(), GetActorLocation(), GetActorLocation()-FVector(0,0,90), UEngineTypes::ConvertToTraceType(ECollisionChannel::ECC_GameTraceChannel4), true, ActorsToIgnore, EDrawDebugTrace::ForOneFrame, Hit, true)) {
