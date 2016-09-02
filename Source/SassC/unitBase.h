@@ -40,7 +40,6 @@ public:
 	virtual void ColorUnitDecal_Implementation(FLinearColor PlayerColor);
 	virtual bool ColorUnitDecal_Validate(FLinearColor PlayerColor);
 
-	UMaterialInstanceDynamic* UnitMeshMaterialDynamic;
 	const FName ColorParameterText = "PlayerColor";
 
 	UFUNCTION(Reliable, NetMulticast, WithValidation)
