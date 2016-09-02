@@ -875,7 +875,7 @@ bool AsassPlayer::ColorPlayer_Validate(FLinearColor PlayerColor)
 bool AsassPlayer::CheckUnitLocation(FVector Center, FRotator Rotator, int32 PlayerID) {
 	TArray<AActor*> nullArray;
 	FHitResult Hit;
-	if (UKismetSystemLibrary::LineTraceSingle_NEW(GetWorld(), Center + FVector(0, 0, 65.0f), Center - FVector(0, 0, 15.0f), UEngineTypes::ConvertToTraceType(ECollisionChannel::ECC_GameTraceChannel1), false, nullArray, EDrawDebugTrace::ForOneFrame, Hit, true)) {
+	if (UKismetSystemLibrary::LineTraceSingle_NEW(GetWorld(), Center + FVector(0, 0, 55.0f), Center - FVector(0, 0, 15.0f), UEngineTypes::ConvertToTraceType(ECollisionChannel::ECC_GameTraceChannel1), false, nullArray, EDrawDebugTrace::ForOneFrame, Hit, true)) {
 		if (AbuildingBase* Bldg = Cast<AbuildingBase>(Hit.GetActor())) {
 			if (Bldg->OwningPlayerID == PlayerID) {
 				GEngine->AddOnScreenDebugMessage(-1, GetWorld()->DeltaTimeSeconds, FColor::Emerald, "SassPlayer CheckUnitLocation: good spawn inside TERRITORY");
