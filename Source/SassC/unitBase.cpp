@@ -72,6 +72,12 @@ void AunitBase::GetLifetimeReplicatedProps(TArray<FLifetimeProperty> &OutLifetim
 	DOREPLIFETIME(AunitBase, Health);
 }
 
+void AunitBase::PostInitializeComponents() {
+	Super::PostInitializeComponents();
+	if (GetMesh()) { UnitMeshMaterialDynamic = GetMesh()->CreateDynamicMaterialInstance(0, GetMesh()->GetMaterial(0)); }
+}
+
+
 void AunitBase::OnOverlapBegin_DetectionSphere(class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) {
 	AsassPlayer* PlayerCharacterRef = (AsassPlayer*)UGameplayStatics::GetPlayerCharacter(this, 0);
 

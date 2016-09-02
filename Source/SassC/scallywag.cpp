@@ -21,7 +21,7 @@ void Ascallywag::Tick(float DeltaSeconds) {
 void Ascallywag::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
-	if(GetMesh()) UnitMeshMaterialDynamic = GetMesh()->CreateDynamicMaterialInstance(0, GetMesh()->GetMaterial(0));
+//	if(GetMesh()) UnitMeshMaterialDynamic = GetMesh()->CreateDynamicMaterialInstance(0, GetMesh()->GetMaterial(0));
 }
 
 void Ascallywag::UpdateMaterial(FLinearColor PlayerColor)
