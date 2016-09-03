@@ -305,6 +305,7 @@ void AunitBase::SetupPlayerInputComponent(class UInputComponent* InputComponent)
 }
 
 void AunitBase::MoveToDest_Implementation(FVector Destination) {
+	if (IsAttacking)SetIsAttacking(false);
 	OrderDestination = Destination;
 	OrderDirection = Destination - GetActorLocation();
 	TimeSinceOrdered = 0;
@@ -319,6 +320,7 @@ bool AunitBase::MoveToDest_Validate(FVector Destination) {
 
 void AunitBase::MoveToUnit_Implementation(AActor* UnitToAttack, bool IsStaticAttack)
 {
+	if (IsAttacking)SetIsAttacking(false);
 	ActorToFollow = Cast<AunitBase>(UnitToAttack);
 	if (IsStaticAttack) {
 		ActiveCommandType = EProcessingCommandType::ORDER_STATIC_UNIT;
@@ -335,6 +337,7 @@ bool AunitBase::MoveToUnit_Validate(AActor* UnitToAttack, bool IsStaticAttack)
 
 void AunitBase::MoveToBuilding_Implementation(AActor* BuildingToTarget)
 {
+	if (IsAttacking)SetIsAttacking(false);
 	OrderDirection = BuildingToTarget->GetActorLocation() - GetActorLocation();
 	BuildingToAttack = Cast<AbuildingBase>(BuildingToTarget);
 	if (EnemiesInRange.Contains(BuildingToAttack)) ReachedBuilding = true;
