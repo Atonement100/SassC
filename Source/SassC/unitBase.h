@@ -65,9 +65,9 @@ public:
 
 	/*Move selected units towards an enemy unit*/
 	UFUNCTION(Reliable, Server, WithValidation)
-	void MoveToUnit(AActor* UnitToAttack);
-	virtual void MoveToUnit_Implementation(AActor* UnitToAttack);
-	virtual bool MoveToUnit_Validate(AActor* UnitToAttack);
+	void MoveToUnit(AActor* UnitToAttack, bool IsStaticAttack = false);
+	virtual void MoveToUnit_Implementation(AActor* UnitToAttack, bool IsStaticAttack = false);
+	virtual bool MoveToUnit_Validate(AActor* UnitToAttack, bool IsStaticAttack = false);
 
 	/*Move selected units towards an enemy building*/
 	UFUNCTION(Reliable, Server, WithValidation)
@@ -122,6 +122,7 @@ public:
 	virtual bool FixSpawnLocation_Validate(FVector RealLocation);
 
 protected:
+	void SwitchToIdle();
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
 	UMaterialInstanceDynamic* UnitDecalMaterialDynamic;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")

@@ -58,9 +58,9 @@ AunitBase::AunitBase()
 	CharMoveComp->CrouchedHalfHeight = 5.0f;
 	CharMoveComp->bOrientRotationToMovement = true;
 	CharMoveComp->DefaultWaterMovementMode = EMovementMode::MOVE_Walking;
-	CharMoveComp->MaxStepHeight = 0;
-	CharMoveComp->MaxWalkSpeed = 50.0f;
-	CharMoveComp->MaxWalkSpeedCrouched = 50.0f;
+CharMoveComp->MaxStepHeight = 0;
+CharMoveComp->MaxWalkSpeed = 50.0f;
+CharMoveComp->MaxWalkSpeedCrouched = 50.0f;
 
 }
 
@@ -83,7 +83,7 @@ void AunitBase::OnOverlapBegin_DetectionSphere(class AActor* OtherActor, class U
 
 	if (PlayerCharacterRef != nullptr && OtherActor == PlayerCharacterRef->GetSelectionSphereHolder()) {
 		AsassPlayerState* PlayerStateRef = (AsassPlayerState*)PlayerCharacterRef->PlayerState;
-		if (PlayerStateRef != nullptr && PlayerStateRef->ControlledBuildings.Contains(this)){
+		if (PlayerStateRef != nullptr && PlayerStateRef->ControlledBuildings.Contains(this)) {
 			SetDecalVisibility(true);
 		}
 	}
@@ -124,17 +124,17 @@ void AunitBase::BeginPlay()
 	Super::BeginPlay();
 }
 
-void AunitBase::Tick( float DeltaTime )
+void AunitBase::Tick(float DeltaTime)
 {
-	Super::Tick( DeltaTime );
+	Super::Tick(DeltaTime);
 	TimeSinceAttack += DeltaTime;
 
 	switch (ActiveCommandType) {
-	case EProcessingCommandType::ORDER_IDLE: 
+	case EProcessingCommandType::ORDER_IDLE:
 		if (EnemiesInRange.Num() > 0 && TimeSinceAttack > AttackDelay && EnemiesInRange[0] && EnemiesInRange[0]) {
 			if (AunitBase* Unit = Cast<AunitBase>(EnemiesInRange[0])) {
 				if (Unit->OwningPlayerID != this->OwningPlayerID) {
-					MoveToUnit(Unit);
+					MoveToUnit(Unit, true);
 				}
 				else {
 					EnemiesInRange.RemoveAt(0);
@@ -152,10 +152,30 @@ void AunitBase::Tick( float DeltaTime )
 		else if (IsAttacking && EnemiesInRange.Num() == 0) {
 			SetIsAttacking(false);
 		}
-	
 		break;
-	case EProcessingCommandType::ORDER_STATIC_UNIT: 
-
+	case EProcessingCommandType::ORDER_STATIC_UNIT:
+		if (ActorToFollow) {
+			OrderDirection = ActorToFollow->GetActorLocation() - GetActorLocation();
+			if (OrderDirection.Size() < AttackRange) {
+				if (TimeSinceAttack > AttackDelay){
+					GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Green, "Static Attack!!");
+					TimeSinceAttack = 0.0f;
+					if (ActorToFollow->GetHealth() > 0) {
+						Attack(ActorToFollow);
+						if (!IsAttacking) SetIsAttacking(true);
+					}
+					else {
+						ActorToFollow = nullptr;
+						SwitchToIdle();
+						GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Silver, "Static Attack target has been killed");
+					}
+				}
+			}
+		}
+		else {
+			SwitchToIdle();
+			GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Silver, "UnitBase Unit Attack Chase Complete");
+		}
 	
 		break;
 	case EProcessingCommandType::ORDER_WORLD: 
@@ -163,8 +183,7 @@ void AunitBase::Tick( float DeltaTime )
 		TimeSinceOrdered += DeltaTime;
 		if ((OrderDestination - GetActorLocation()).Size2D() < 5.0f || TimeSinceOrdered > MaxTimeToMove) {
 			GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Cyan, "UnitBase Movement Complete");
-			ActiveCommandType = EProcessingCommandType::ORDER_IDLE;
-			if (IsAttacking) SetIsAttacking(false);
+			SwitchToIdle();
 		}
 	
 		break;
@@ -182,16 +201,14 @@ void AunitBase::Tick( float DeltaTime )
 				}
 				else {
 					ActorToFollow = nullptr;
-					ActiveCommandType = EProcessingCommandType::ORDER_IDLE;
 					GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Silver, "UnitBase Unit Attack Chase Complete (target has been killed)");
-					if (IsAttacking) SetIsAttacking(false);
+					SwitchToIdle();
 				}
 			}
 		}
 		else {
-			ActiveCommandType = EProcessingCommandType::ORDER_IDLE;
 			GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Silver, "UnitBase Unit Attack Chase Complete");
-			if (IsAttacking) SetIsAttacking(false);
+			SwitchToIdle();
 		}
 	
 		break;
@@ -210,22 +227,26 @@ void AunitBase::Tick( float DeltaTime )
 				}
 				else {
 					GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Orange, "UnitBase Building Attack Complete (target has been killed)");
-					ActiveCommandType = EProcessingCommandType::ORDER_IDLE;
 					BuildingToAttack = nullptr;
-					if (IsAttacking) SetIsAttacking(false);
+					SwitchToIdle();
 				}
 			}
 		}
 		else {
-			ActiveCommandType = EProcessingCommandType::ORDER_IDLE;
-			if (IsAttacking) SetIsAttacking(false);
+			SwitchToIdle();
 		}
 	
 		break;
 	default: 
-		ActiveCommandType = EProcessingCommandType::ORDER_IDLE;
+		SwitchToIdle();
 		break;
 	}
+}
+
+void AunitBase::SwitchToIdle() {
+	ActiveCommandType = EProcessingCommandType::ORDER_IDLE;
+	if (IsAttacking) SetIsAttacking(false);
+
 }
 
 void AunitBase::Attack_Implementation(AActor* Target) {
@@ -290,13 +311,18 @@ bool AunitBase::MoveToDest_Validate(FVector Destination) {
 	return true;
 }
 
-void AunitBase::MoveToUnit_Implementation(AActor* UnitToAttack)
+void AunitBase::MoveToUnit_Implementation(AActor* UnitToAttack, bool IsStaticAttack)
 {
 	ActorToFollow = Cast<AunitBase>(UnitToAttack);
-	ActiveCommandType = EProcessingCommandType::ORDER_UNIT;
+	if (IsStaticAttack) {
+		ActiveCommandType = EProcessingCommandType::ORDER_STATIC_UNIT;
+	}
+	else {
+		ActiveCommandType = EProcessingCommandType::ORDER_UNIT;
+	}
 }
 
-bool AunitBase::MoveToUnit_Validate(AActor* UnitToAttack)
+bool AunitBase::MoveToUnit_Validate(AActor* UnitToAttack, bool IsStaticAttack)
 {
 	return true;
 }
