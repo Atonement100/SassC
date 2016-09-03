@@ -7,6 +7,15 @@
 
 class AbuildingBase;
 
+UENUM()
+enum class EProcessingCommandType : uint8 {
+	ORDER_IDLE			UMETA(DisplayName = "Idle"),
+	ORDER_UNIT			UMETA(DisplayName = "Unit"),
+	ORDER_BUILDING		UMETA(DisplayName = "Building"),
+	ORDER_WORLD			UMETA(DisplayName = "World"),
+	ORDER_STATIC_UNIT	UMETA(DisplayName = "StaticUnit")
+};
+
 UCLASS()
 class SASSC_API AunitBase : public ACharacter
 {
@@ -140,12 +149,6 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
 	bool ReachedBuilding;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
-	bool ProcessingMoveToWorldOrder = false;
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
-	bool ProcessingMoveToUnitOrder = false;
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
-	bool ProcessingMoveToBuildingOrder = false;
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
 	float MaxTimeToMove;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
 	float TimeSinceOrdered = 0.0f;
@@ -168,4 +171,7 @@ protected:
 	void NetFixSpawnLocation(FVector RealLocation);
 	virtual void NetFixSpawnLocation_Implementation(FVector RealLocation);
 	virtual bool NetFixSpawnLocation_Validate(FVector RealLocation);
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Unit Base")
+	EProcessingCommandType ActiveCommandType = EProcessingCommandType::ORDER_IDLE;
 };

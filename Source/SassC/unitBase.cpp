@@ -127,80 +127,20 @@ void AunitBase::BeginPlay()
 void AunitBase::Tick( float DeltaTime )
 {
 	Super::Tick( DeltaTime );
-	
 	TimeSinceAttack += DeltaTime;
-	if (ProcessingMoveToWorldOrder) {
-		AddMovementInput(OrderDirection, 1.0f);
-		TimeSinceOrdered += DeltaTime;
-		if ((OrderDestination - GetActorLocation()).Size2D() < 5.0f || TimeSinceOrdered > MaxTimeToMove){
-			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Cyan, "UnitBase Movement Complete");
-			ProcessingMoveToWorldOrder = false;
-			if (IsAttacking) SetIsAttacking(false);
-		}
-	}
-	else if (ProcessingMoveToUnitOrder) {
-		if (ActorToFollow) {
-			OrderDirection = ActorToFollow->GetActorLocation() - GetActorLocation();
-			AddMovementInput(OrderDirection, 1.0f);
 
-			if (OrderDirection.Size() < AttackRange && TimeSinceAttack > AttackDelay) { //No need to check if unit is friendly or hostile for this attack, as "ActorToFollow" can only ever be hostile.
-				//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, "Attack!!");
-				TimeSinceAttack = 0.0f;
-				if (ActorToFollow->GetHealth() > 0) {
-					Attack(ActorToFollow);
-					if (!IsAttacking) SetIsAttacking(true);
-				}
-				else { 
-					ActorToFollow = nullptr;
-					ProcessingMoveToUnitOrder = false;
-					GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Silver, "UnitBase Unit Attack Chase Complete (target has been killed)");
-					if (IsAttacking) SetIsAttacking(false);
-				}
-			}
-		}
-		else {
-			ProcessingMoveToUnitOrder = false;
-			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Silver, "UnitBase Unit Attack Chase Complete");
-			if (IsAttacking) SetIsAttacking(false);
-		}
-	}
-	else if (ProcessingMoveToBuildingOrder) {
-		if (BuildingToAttack && BuildingToAttack->GetHealth() > 0) {
-			if (!ReachedBuilding) {
-				OrderDirection = BuildingToAttack->GetActorLocation() - this->GetActorLocation();
-				AddMovementInput(OrderDirection, 1.0f);
-				if (IsAttacking) SetIsAttacking(false);
-			}
-			else if (TimeSinceAttack > AttackDelay) {
-				if (BuildingToAttack->GetHealth() > 0) {
-					GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, "UnitBase: City attack");
-					Attack(BuildingToAttack);	
-					if (!IsAttacking) SetIsAttacking(true);
-				}
-				else {
-					GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Orange, "UnitBase Building Attack Complete (target has been killed)");
-					ProcessingMoveToBuildingOrder = false;
-					BuildingToAttack = nullptr;
-					if (IsAttacking) SetIsAttacking(false);
-				}
-			}
-		}
-		else {
-			ProcessingMoveToBuildingOrder = false;
-			if (IsAttacking) SetIsAttacking(false);
-		}
-	}
-	else {
+	switch (ActiveCommandType) {
+	case EProcessingCommandType::ORDER_IDLE: 
 		if (EnemiesInRange.Num() > 0 && TimeSinceAttack > AttackDelay && EnemiesInRange[0] && EnemiesInRange[0]) {
-			if (AunitBase* Unit = Cast<AunitBase>(EnemiesInRange[0])) { 
+			if (AunitBase* Unit = Cast<AunitBase>(EnemiesInRange[0])) {
 				if (Unit->OwningPlayerID != this->OwningPlayerID) {
 					MoveToUnit(Unit);
 				}
 				else {
 					EnemiesInRange.RemoveAt(0);
 				}
-			}					
-			else if (AbuildingBase* Bldg = Cast<AbuildingBase>(EnemiesInRange[0])) { 
+			}
+			else if (AbuildingBase* Bldg = Cast<AbuildingBase>(EnemiesInRange[0])) {
 				if (Bldg->OwningPlayerID != this->OwningPlayerID) {
 					MoveToBuilding(Bldg);
 				}
@@ -209,9 +149,82 @@ void AunitBase::Tick( float DeltaTime )
 				}
 			}
 		}
-		else if (IsAttacking && EnemiesInRange.Num() == 0){
+		else if (IsAttacking && EnemiesInRange.Num() == 0) {
 			SetIsAttacking(false);
 		}
+	
+		break;
+	case EProcessingCommandType::ORDER_STATIC_UNIT: 
+
+	
+		break;
+	case EProcessingCommandType::ORDER_WORLD: 
+		AddMovementInput(OrderDirection, 1.0f);
+		TimeSinceOrdered += DeltaTime;
+		if ((OrderDestination - GetActorLocation()).Size2D() < 5.0f || TimeSinceOrdered > MaxTimeToMove) {
+			GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Cyan, "UnitBase Movement Complete");
+			ActiveCommandType = EProcessingCommandType::ORDER_IDLE;
+			if (IsAttacking) SetIsAttacking(false);
+		}
+	
+		break;
+	case EProcessingCommandType::ORDER_UNIT: 
+		if (ActorToFollow) {
+			OrderDirection = ActorToFollow->GetActorLocation() - GetActorLocation();
+			AddMovementInput(OrderDirection, 1.0f);
+
+			if (OrderDirection.Size() < AttackRange && TimeSinceAttack > AttackDelay) { //No need to check if unit is friendly or hostile for this attack, as "ActorToFollow" can only ever be hostile.
+				GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Green, "Attack!!");
+				TimeSinceAttack = 0.0f;
+				if (ActorToFollow->GetHealth() > 0) {
+					Attack(ActorToFollow);
+					if (!IsAttacking) SetIsAttacking(true);
+				}
+				else {
+					ActorToFollow = nullptr;
+					ActiveCommandType = EProcessingCommandType::ORDER_IDLE;
+					GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Silver, "UnitBase Unit Attack Chase Complete (target has been killed)");
+					if (IsAttacking) SetIsAttacking(false);
+				}
+			}
+		}
+		else {
+			ActiveCommandType = EProcessingCommandType::ORDER_IDLE;
+			GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Silver, "UnitBase Unit Attack Chase Complete");
+			if (IsAttacking) SetIsAttacking(false);
+		}
+	
+		break;
+	case EProcessingCommandType::ORDER_BUILDING: 
+		if (BuildingToAttack && BuildingToAttack->GetHealth() > 0) {
+			if (!ReachedBuilding) {
+				OrderDirection = BuildingToAttack->GetActorLocation() - this->GetActorLocation();
+				AddMovementInput(OrderDirection, 1.0f);
+				if (IsAttacking) SetIsAttacking(false);
+			}
+			else if (TimeSinceAttack > AttackDelay) {
+				if (BuildingToAttack->GetHealth() > 0) {
+					GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Green, "UnitBase: City attack");
+					Attack(BuildingToAttack);
+					if (!IsAttacking) SetIsAttacking(true);
+				}
+				else {
+					GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Orange, "UnitBase Building Attack Complete (target has been killed)");
+					ActiveCommandType = EProcessingCommandType::ORDER_IDLE;
+					BuildingToAttack = nullptr;
+					if (IsAttacking) SetIsAttacking(false);
+				}
+			}
+		}
+		else {
+			ActiveCommandType = EProcessingCommandType::ORDER_IDLE;
+			if (IsAttacking) SetIsAttacking(false);
+		}
+	
+		break;
+	default: 
+		ActiveCommandType = EProcessingCommandType::ORDER_IDLE;
+		break;
 	}
 }
 
@@ -270,9 +283,7 @@ void AunitBase::MoveToDest_Implementation(FVector Destination) {
 	TimeSinceOrdered = 0;
 	MaxTimeToMove = OrderDirection.Size() / GetMovementComponent()->GetMaxSpeed();
 	//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Cyan, "UnitBase MaxTimeToMove = " + UKismetStringLibrary::Conv_FloatToString(MaxTimeToMove));
-	ProcessingMoveToWorldOrder = true;
-	ProcessingMoveToUnitOrder = false;
-	ProcessingMoveToBuildingOrder = false;
+	ActiveCommandType = EProcessingCommandType::ORDER_WORLD;
 }
 
 bool AunitBase::MoveToDest_Validate(FVector Destination) {
@@ -282,9 +293,7 @@ bool AunitBase::MoveToDest_Validate(FVector Destination) {
 void AunitBase::MoveToUnit_Implementation(AActor* UnitToAttack)
 {
 	ActorToFollow = Cast<AunitBase>(UnitToAttack);
-	ProcessingMoveToUnitOrder = true;
-	ProcessingMoveToWorldOrder = false;
-	ProcessingMoveToBuildingOrder = false;
+	ActiveCommandType = EProcessingCommandType::ORDER_UNIT;
 }
 
 bool AunitBase::MoveToUnit_Validate(AActor* UnitToAttack)
@@ -298,9 +307,7 @@ void AunitBase::MoveToBuilding_Implementation(AActor* BuildingToTarget)
 	BuildingToAttack = Cast<AbuildingBase>(BuildingToTarget);
 	if (EnemiesInRange.Contains(BuildingToAttack)) ReachedBuilding = true;
 	else { ReachedBuilding = false; }
-	ProcessingMoveToBuildingOrder = true;
-	ProcessingMoveToUnitOrder = false;
-	ProcessingMoveToWorldOrder = false;
+	ActiveCommandType = EProcessingCommandType::ORDER_BUILDING;
 }
 bool AunitBase::MoveToBuilding_Validate(AActor* BuildingToTarget)
 {

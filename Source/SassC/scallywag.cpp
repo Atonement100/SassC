@@ -13,7 +13,7 @@ Ascallywag::Ascallywag() {
 void Ascallywag::Tick(float DeltaSeconds) {
 	Super::Tick(DeltaSeconds);
 	AddMeshRelativeLocation(GetMovementComponent()->Velocity.Size());
-	if (!(ProcessingMoveToBuildingOrder || ProcessingMoveToUnitOrder || ProcessingMoveToWorldOrder || IsAttacking)) {
+	if (!((ActiveCommandType >= EProcessingCommandType::ORDER_UNIT && ActiveCommandType <= EProcessingCommandType::ORDER_STATIC_UNIT) || IsAttacking)) {
 		GetMovementComponent()->StopMovementImmediately();
 	}
 }
@@ -30,7 +30,7 @@ void Ascallywag::UpdateMaterial(FLinearColor PlayerColor)
 }
 
 void Ascallywag::AddMeshRelativeLocation_Implementation(float Velocity){
-	if ((ProcessingMoveToBuildingOrder || ProcessingMoveToUnitOrder || ProcessingMoveToWorldOrder || IsAttacking) && UKismetSystemLibrary::LineTraceSingle_NEW(GetWorld(), GetActorLocation(), GetActorLocation()-FVector(0,0,90), UEngineTypes::ConvertToTraceType(ECollisionChannel::ECC_GameTraceChannel4), true, ActorsToIgnore, EDrawDebugTrace::ForOneFrame, Hit, true)) {
+	if (((ActiveCommandType >= EProcessingCommandType::ORDER_UNIT && ActiveCommandType <= EProcessingCommandType::ORDER_STATIC_UNIT) || IsAttacking) && UKismetSystemLibrary::LineTraceSingle_NEW(GetWorld(), GetActorLocation(), GetActorLocation()-FVector(0,0,90), UEngineTypes::ConvertToTraceType(ECollisionChannel::ECC_GameTraceChannel4), true, ActorsToIgnore, EDrawDebugTrace::ForOneFrame, Hit, true)) {
 		AddActorWorldOffset(FVector(0, 0, .5));
 	}
 	else if (!UKismetSystemLibrary::LineTraceSingle_NEW(GetWorld(), GetActorLocation(), GetActorLocation() - FVector(0, 0, 33), UEngineTypes::ConvertToTraceType(ECollisionChannel::ECC_GameTraceChannel4), true, ActorsToIgnore, EDrawDebugTrace::ForOneFrame, Hit, true)) {//if (GetMesh()->RelativeLocation.Z > -30) {
