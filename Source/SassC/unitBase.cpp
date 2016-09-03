@@ -58,9 +58,9 @@ AunitBase::AunitBase()
 	CharMoveComp->CrouchedHalfHeight = 5.0f;
 	CharMoveComp->bOrientRotationToMovement = true;
 	CharMoveComp->DefaultWaterMovementMode = EMovementMode::MOVE_Walking;
-CharMoveComp->MaxStepHeight = 0;
-CharMoveComp->MaxWalkSpeed = 50.0f;
-CharMoveComp->MaxWalkSpeedCrouched = 50.0f;
+	CharMoveComp->MaxStepHeight = 0;
+	CharMoveComp->MaxWalkSpeed = 50.0f;
+	CharMoveComp->MaxWalkSpeedCrouched = 50.0f;
 
 }
 
@@ -157,6 +157,7 @@ void AunitBase::Tick(float DeltaTime)
 		if (ActorToFollow) {
 			OrderDirection = ActorToFollow->GetActorLocation() - GetActorLocation();
 			if (OrderDirection.Size() < AttackRange) {
+				SetActorRotation(FRotator(0,OrderDirection.Rotation().Yaw,0));
 				if (TimeSinceAttack > AttackDelay){
 					GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Green, "Static Attack!!");
 					TimeSinceAttack = 0.0f;
@@ -170,6 +171,10 @@ void AunitBase::Tick(float DeltaTime)
 						GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Silver, "Static Attack target has been killed");
 					}
 				}
+			}
+			else {
+				ActorToFollow = nullptr;
+				SwitchToIdle();
 			}
 		}
 		else {
@@ -190,7 +195,8 @@ void AunitBase::Tick(float DeltaTime)
 	case EProcessingCommandType::ORDER_UNIT: 
 		if (ActorToFollow) {
 			OrderDirection = ActorToFollow->GetActorLocation() - GetActorLocation();
-			AddMovementInput(OrderDirection, 1.0f);
+			if (OrderDirection.Size() > AttackRange) AddMovementInput(OrderDirection, 1.0f);
+			SetActorRotation(FRotator(0, OrderDirection.Rotation().Yaw, 0));
 
 			if (OrderDirection.Size() < AttackRange && TimeSinceAttack > AttackDelay) { //No need to check if unit is friendly or hostile for this attack, as "ActorToFollow" can only ever be hostile.
 				GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Green, "Attack!!");
