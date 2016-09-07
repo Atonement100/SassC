@@ -219,11 +219,18 @@ void AunitBase::Tick(float DeltaTime)
 	
 		break;
 	case EProcessingCommandType::ORDER_BUILDING: 
+
 		if (BuildingToAttack && BuildingToAttack->GetHealth() > 0) {
 			if (!ReachedBuilding) {
 				OrderDirection = BuildingToAttack->GetActorLocation() - this->GetActorLocation();
 				AddMovementInput(OrderDirection, 1.0f);
 				if (IsAttacking) SetIsAttacking(false);
+
+				TimeSinceOrdered += DeltaTime;
+				if (TimeSinceOrdered > MaxTimeToMove) {
+					GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Green, "Unitbase could not move to building in time");
+					SwitchToIdle();
+				}
 			}
 			else if (TimeSinceAttack > AttackDelay) {
 				if (BuildingToAttack->GetHealth() > 0) {
@@ -339,6 +346,11 @@ void AunitBase::MoveToBuilding_Implementation(AActor* BuildingToTarget)
 {
 	if (IsAttacking)SetIsAttacking(false);
 	OrderDirection = BuildingToTarget->GetActorLocation() - GetActorLocation();
+	TimeSinceOrdered = 0;
+	MaxTimeToMove = (OrderDirection.Size() / GetMovementComponent()->GetMaxSpeed()) * 1.4; 
+	//1.4 is a magic number, just want to give units more time than they should need to make it to buildings, 
+	//but also want to provide a timeout so they are stuck trying to get to a building that's surrounded 
+	//and will fall out to idle and pick up a target that way.
 	BuildingToAttack = Cast<AbuildingBase>(BuildingToTarget);
 	if (EnemiesInRange.Contains(BuildingToAttack)) ReachedBuilding = true;
 	else { ReachedBuilding = false; }
