@@ -548,6 +548,23 @@ void AsassPlayer::QuitGame() {
 	FGenericPlatformMisc::RequestExit(false);
 }
 
+void AsassPlayer::UpdateSelectedSpawnableClass(UClass * NewClass)
+{
+	if (!NewClass) return;
+	SelectedSpawnableClass = NewClass;
+	UObject* NewActor = SelectedSpawnableClass->GetDefaultObject();
+	if (NewActor->IsA(AbuildingBase::StaticClass())) {
+		AbuildingBase* SelectedBuilding = Cast<AbuildingBase>(NewActor);
+		CurrentHalfHeight = SelectedBuilding->HalfHeight;
+		CurrentTraceSize = SelectedBuilding->TraceSize;
+	}
+	else if(NewActor->IsA(AunitBase::StaticClass())) {
+		AunitBase* SelectedUnit = Cast<AunitBase>(NewActor);
+		CurrentHalfHeight = SelectedUnit->HalfHeight;
+		CurrentTraceSize = SelectedUnit->TraceSize;
+	}
+}
+
 #pragma region Pause functions
 void AsassPlayer::PausePressed() {
 	

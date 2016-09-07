@@ -60,6 +60,9 @@ public:
 	/*Force quits game (F10)*/
 	void QuitGame();
 
+	UFUNCTION(BlueprintCallable, Category = "Sass Player")
+	void UpdateSelectedSpawnableClass(UClass* NewClass);
+
 	//test functions
 	void testFunction();
 
@@ -240,6 +243,8 @@ protected:
 #pragma endregion
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sass Player")
 	FVector CurrentHalfHeight;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sass Player")
+	FVector CurrentTraceSize;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Sass Player")
 	bool IsUnitMenuOpen = false;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Sass Player")
