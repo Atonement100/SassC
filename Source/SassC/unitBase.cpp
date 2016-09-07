@@ -131,7 +131,7 @@ void AunitBase::Tick(float DeltaTime)
 
 	switch (ActiveCommandType) {
 	case EProcessingCommandType::ORDER_IDLE:
-		if (EnemiesInRange.Num() > 0 && TimeSinceAttack > AttackDelay && EnemiesInRange[0] && EnemiesInRange[0]) {
+		if (EnemiesInRange.Num() > 0 && TimeSinceAttack > AttackDelay && EnemiesInRange[0]) {
 			if (AunitBase* Unit = Cast<AunitBase>(EnemiesInRange[0])) {
 				if (Unit->OwningPlayerID != this->OwningPlayerID) {
 					MoveToUnit(Unit, true);
