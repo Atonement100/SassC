@@ -106,7 +106,8 @@ void AsassPlayer::Tick( float DeltaTime )
 			if (ResetLocalView) { LocalObjectSpawn->SetActorHiddenInGame(false); ResetLocalView = false; }
 			if (CursorHit.Normal.Z > .990) {
 				//@TODO: HalfHeight and TraceSize will only ever change when spawnable changes. Instead of checking this on tick, check it when spawnable is switched.
-				FVector HalfHeight, TraceSize;
+				FVector HalfHeight = CurrentHalfHeight, TraceSize = CurrentTraceSize;
+				/*
 				if (AbuildingBase* BuildingCast = Cast<AbuildingBase>(LocalObjectSpawn)) {
 					HalfHeight = BuildingCast->HalfHeight;
 					TraceSize = BuildingCast->TraceSize;
@@ -115,6 +116,8 @@ void AsassPlayer::Tick( float DeltaTime )
 					HalfHeight = UnitCast->HalfHeight;
 					TraceSize = UnitCast->TraceSize;
 				}
+				*/
+				
 
 				FHitResult BoxTraceHit;
 				TArray<AActor*> ActorsToIgnore;
@@ -560,7 +563,7 @@ void AsassPlayer::UpdateSelectedSpawnableClass(UClass * NewClass)
 	}
 	else if(NewActor->IsA(AunitBase::StaticClass())) {
 		AunitBase* SelectedUnit = Cast<AunitBase>(NewActor);
-		CurrentHalfHeight = SelectedUnit->HalfHeight;
+		CurrentHalfHeight = FVector(0,0,SelectedUnit->GetCapsuleComponent()->GetScaledCapsuleHalfHeight());
 		CurrentTraceSize = SelectedUnit->TraceSize;
 	}
 }
