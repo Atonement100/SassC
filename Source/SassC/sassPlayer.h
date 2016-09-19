@@ -22,6 +22,22 @@ enum class ETypeOfOrder : uint8 {
 	ORDER_WORLD			UMETA(DisplayName = "World")
 };
 
+UENUM()
+enum class ETypeOfSpawnable : uint8 {
+	BUILDING_CITY		UMETA(DisplayName = "City"),
+	BUILDING_WORKSHOP	UMETA(DisplayName = "Workshop"),
+	BUILDING_TOWER		UMETA(DisplayName = "Tower"),
+	BUILDING_WALL		UMETA(DisplayName = "Wall"),
+	BUILDING_GATE		UMETA(DisplayName = "Gate"),
+	BUILDING_SHIELDMONO UMETA(DisplayName = "Shield Monolith"),
+	BUILDING_SHRINE		UMETA(DisplayName = "Shrine"),
+	UNIT_SOLDIER		UMETA(DisplayName = "Soldier"),
+	UNIT_ARCHER			UMETA(DisplayName = "Archer"),
+	UNIT_SCALLYWAG		UMETA(DisplayName = "Scallywag"),
+	UNIT_BALLISTA		UMETA(DisplayName = "Ballista"),
+	UNIT_CATAPULT		UMETA(DisplayName = "Catapult")
+};
+
 UCLASS()
 class SASSC_API AsassPlayer : public ACharacter
 {
@@ -279,7 +295,9 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Sass Player")
 	TArray<TEnumAsByte<EObjectTypeQuery>> DynamicObjectTypes;
 	FCollisionObjectQueryParams WorldStatic = FCollisionObjectQueryParams(ECollisionChannel::ECC_WorldStatic); //const not allowed
-
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sass Player")
+	ETypeOfSpawnable SelectedSpawnableType = ETypeOfSpawnable::BUILDING_CITY;
 
 	const int SelectionSphereScaleMod = 100; // this should never ever be changed
 
