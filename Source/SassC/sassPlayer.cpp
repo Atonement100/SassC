@@ -78,7 +78,7 @@ void AsassPlayer::Tick( float DeltaTime )
 
 			LocalObjectSpawn = GetWorld()->SpawnActor(SelectedSpawnableClass, &Transform, SpawnParams);
 			if (LocalObjectSpawn != nullptr) {
-				LocalObjectSpawn->SetOwner(PlayerControllerPtr);
+				LocalObjectSpawn->SetOwner(PlayerControllerPtr);	//I don't know if this line actually works, honestly
 				LocalObjectSpawn->SetActorEnableCollision(false);
 			}
 			else { GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Green, "SassPlayer Tick LocalObject didn't spawn"); }
@@ -91,7 +91,9 @@ void AsassPlayer::Tick( float DeltaTime )
 		
 		if (PlayerControllerPtr != nullptr) PlayerControllerPtr->GetHitResultUnderCursorByChannel(UEngineTypes::ConvertToTraceType(ECC_Visibility), true, CursorHit);
 		if (LocalObjectSpawn != nullptr) {
-			if (!IsRightMouseDown) { LocalObjectSpawn->SetActorLocation(CursorHit.Location + CurrentHalfHeight); }
+			if (!IsRightMouseDown) { 
+				LocalObjectSpawn->SetActorLocation(CursorHit.Location + ((SelectedSpawnableType < ETypeOfSpawnable::UNIT_SOLDIER)? FVector::ZeroVector : CurrentHalfHeight)); 
+			}
 			else if (IsRightMouseDown) {
 				FHitResult RotateHit;
 				TArray<AActor*> RaycastIgnores;
