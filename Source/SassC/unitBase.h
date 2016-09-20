@@ -113,11 +113,8 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Unit Base")
 	FVector TraceSize = FVector(5, 5, 10);
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Unit Base")
-	FVector HalfHeight = FVector(0, 0, 11);
-
 	UFUNCTION(Reliable, Server, WithValidation)
-		void FixSpawnLocation(FVector RealLocation);
+	void FixSpawnLocation(FVector RealLocation);
 	virtual void FixSpawnLocation_Implementation(FVector RealLocation);
 	virtual bool FixSpawnLocation_Validate(FVector RealLocation);
 

@@ -422,7 +422,6 @@ bool AunitBase::FixSpawnLocation_Validate(FVector RealLocation)
 void AunitBase::NetFixSpawnLocation_Implementation(FVector RealLocation)
 {
 	Role = ROLE_Authority;
-	//SetActorLocation(RealLocation + FVector(10));
 	SetActorLocation(RealLocation);
 }
 
