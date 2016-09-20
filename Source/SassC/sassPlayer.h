@@ -192,7 +192,7 @@ public:
 
 	/*Spawnable the player currently as selected, for verification and tick local-spawning*/
 	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, Category = "Sass Player")
-	UClass* SelectedSpawnableClass;
+	UClass* SelectedSpawnableClass;			// This is set to default to city BP in sassplayer blueprint
 
 	/*Reference to spawned game widget*/
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Sass Player")
