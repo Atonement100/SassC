@@ -108,22 +108,12 @@ void AsassPlayer::Tick( float DeltaTime )
 			if (CursorHit.Normal.Z > .990) {
 				//@TODO: HalfHeight and TraceSize will only ever change when spawnable changes. Instead of checking this on tick, check it when spawnable is switched.
 				FVector HalfHeight = CurrentHalfHeight, TraceSize = CurrentTraceSize;
-				/*
-				if (AbuildingBase* BuildingCast = Cast<AbuildingBase>(LocalObjectSpawn)) {
-					HalfHeight = BuildingCast->HalfHeight;
-					TraceSize = BuildingCast->TraceSize;
-				}
-				else if (AunitBase* UnitCast = Cast<AunitBase>(LocalObjectSpawn)) {
-					HalfHeight = UnitCast->HalfHeight;
-					TraceSize = UnitCast->TraceSize;
-				}
-				*/
 				
 
 				FHitResult BoxTraceHit;
 				TArray<AActor*> ActorsToIgnore;
 				ActorsToIgnore.Add(LocalObjectSpawn);
-				IsBadSpawn = UKismetSystemLibrary::BoxTraceSingle(GetWorld(), CursorHit.Location + FVector(0, 0, 2), CursorHit.Location + 2 * HalfHeight, FVector(TraceSize.X, TraceSize.Y, 0), PreviewRotation, UEngineTypes::ConvertToTraceType(ECollisionChannel::ECC_GameTraceChannel2), true, ActorsToIgnore, EDrawDebugTrace::ForOneFrame, BoxTraceHit, true);
+				IsBadSpawn = UKismetSystemLibrary::BoxTraceSingle(GetWorld(), CursorHit.Location + FVector(0, 0, 2), CursorHit.Location + 2 * CurrentHalfHeight, FVector(CurrentTraceSize.X, CurrentTraceSize.Y, 0), PreviewRotation, UEngineTypes::ConvertToTraceType(ECollisionChannel::ECC_GameTraceChannel2), true, ActorsToIgnore, EDrawDebugTrace::ForOneFrame, BoxTraceHit, true);
 				if (AbuildingBase* BuildingCast = Cast<AbuildingBase>(LocalObjectSpawn)) {
 					IsBadSpawn = IsBadSpawn | CheckBldgCorners(BuildingCast->CornerLocations, CursorHit.Location, PreviewRotation, PlayerState->PlayerId, (Cast<Acity>(LocalObjectSpawn) ? true : false));
 				}
@@ -427,22 +417,16 @@ void AsassPlayer::LeftClickPressed() {
 			FHitResult Hit;
 			TArray<FVector> LocationsToCheck;
 			TArray<AActor*> ActorsToIgnore = TArray<AActor*>();
-			FVector TraceSize, HalfHeight;
 
 			PlayerControllerPtr->GetHitResultUnderCursorByChannel(UEngineTypes::ConvertToTraceType(ECC_Visibility), true, Hit); // Assign Hit
+
 			if (AbuildingBase* LocalBuildingRef = Cast<AbuildingBase>(LocalObjectSpawn)) {
 				LocationsToCheck = LocalBuildingRef->CornerLocations;
-				TraceSize = LocalBuildingRef->TraceSize;
-				HalfHeight = LocalBuildingRef->HalfHeight;
-				if (LocalBuildingRef->IsA(Agate::StaticClass())) { ActorsToIgnore = TempGateWalls; }
-			}
-			else if (AunitBase* LocalUnitRef = Cast<AunitBase>(LocalObjectSpawn)) {
-				TraceSize = LocalUnitRef->TraceSize;
-				HalfHeight = LocalUnitRef->HalfHeight;
+				if (SelectedSpawnableType == ETypeOfSpawnable::BUILDING_GATE) { ActorsToIgnore = TempGateWalls; }
 			}
 
 			const TArray<AActor*> ConfirmedToIgnore = ActorsToIgnore;
-			ServerSpawnBuilding(Cast<AsassPlayerController>(PlayerControllerPtr), SelectedSpawnableClass, Hit, PreviewRotation, HalfHeight, LocationsToCheck, TraceSize, PlayerState->PlayerId, ConfirmedToIgnore);
+			ServerSpawnBuilding(Cast<AsassPlayerController>(PlayerControllerPtr), SelectedSpawnableClass, Hit, PreviewRotation, CurrentHalfHeight, LocationsToCheck, CurrentTraceSize, PlayerState->PlayerId, ConfirmedToIgnore);
 		}
 	}
 }
