@@ -31,7 +31,8 @@
 AsassPlayer::AsassPlayer()
 {
 	PrimaryActorTick.bCanEverTick = true;
-	TempGateWalls.SetNumZeroed(2);
+	TempGateWalls.SetNumZeroed(2);	// This is done to give TempGateWalls an exact size, so that we can reference [0..1]
+									// Gate walls are potentially a very frequent check, so this aids in cutting down unnecessary repetitive checks
 }
 
 void AsassPlayer::BeginPlay()
@@ -47,8 +48,6 @@ void AsassPlayer::BeginPlay()
 	else {
 		CreatePregameHUD();
 	}
-
-	GetWorld();
 }
 
 void AsassPlayer::GetLifetimeReplicatedProps(TArray<FLifetimeProperty> &OutLifetimeProps) const
@@ -500,6 +499,8 @@ void AsassPlayer::UnitMenuPressed() {
 			PlayerControllerPtr->bShowMouseCursor = true;
 			PlayerControllerPtr->SetInputMode(FInputModeGameAndUI());
 			OpenUnitMenu();
+			//@TODO: Try updating selected spawnable class here, so that we can make sure we're looking at the right building
+			//when we open the menu
 		}
 		IsUnitMenuOpen = true;
 	}
@@ -551,10 +552,11 @@ void AsassPlayer::QuitGame() {
 	FGenericPlatformMisc::RequestExit(false);
 }
 
-void AsassPlayer::UpdateSelectedSpawnableClass(UClass * NewClass)
+void AsassPlayer::UpdateSelectedSpawnableClass(UClass * NewClass, ETypeOfSpawnable NewTypeOfSpawnable)
 {
 	if (!NewClass) return;
 	SelectedSpawnableClass = NewClass;
+	SelectedSpawnableType = NewTypeOfSpawnable;
 	UObject* NewActor = SelectedSpawnableClass->GetDefaultObject();
 	if (NewActor->IsA(AbuildingBase::StaticClass())) {
 		AbuildingBase* SelectedBuilding = Cast<AbuildingBase>(NewActor);

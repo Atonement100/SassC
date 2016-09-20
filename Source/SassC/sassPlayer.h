@@ -22,7 +22,7 @@ enum class ETypeOfOrder : uint8 {
 	ORDER_WORLD			UMETA(DisplayName = "World")
 };
 
-UENUM()
+UENUM(BlueprintType)
 enum class ETypeOfSpawnable : uint8 {
 	BUILDING_CITY		UMETA(DisplayName = "City"),
 	BUILDING_WORKSHOP	UMETA(DisplayName = "Workshop"),
@@ -30,8 +30,8 @@ enum class ETypeOfSpawnable : uint8 {
 	BUILDING_WALL		UMETA(DisplayName = "Wall"),
 	BUILDING_GATE		UMETA(DisplayName = "Gate"),
 	BUILDING_SHIELDMONO UMETA(DisplayName = "Shield Monolith"),
-	BUILDING_SHRINE		UMETA(DisplayName = "Shrine"),
-	UNIT_SOLDIER		UMETA(DisplayName = "Soldier"),
+	BUILDING_SHRINE		UMETA(DisplayName = "Shrine"),				//Buildings are <= 6
+	UNIT_SOLDIER		UMETA(DisplayName = "Soldier"),				//Units are >= 7
 	UNIT_ARCHER			UMETA(DisplayName = "Archer"),
 	UNIT_SCALLYWAG		UMETA(DisplayName = "Scallywag"),
 	UNIT_BALLISTA		UMETA(DisplayName = "Ballista"),
@@ -77,7 +77,7 @@ public:
 	void QuitGame();
 
 	UFUNCTION(BlueprintCallable, Category = "Sass Player")
-	void UpdateSelectedSpawnableClass(UClass* NewClass);
+	void UpdateSelectedSpawnableClass(UClass* NewClass, ETypeOfSpawnable NewTypeOfSpawnable);
 
 	//test functions
 	void testFunction();
