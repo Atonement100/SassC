@@ -22,8 +22,9 @@ public:
 
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Projectiles")
+	USceneComponent* SceneComponent;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Projectiles")
 	UStaticMeshComponent* ArrowMesh;
-	
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Projectiles")
 	UProjectileMovementComponent* MovementComponent;
 };

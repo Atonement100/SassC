@@ -7,6 +7,10 @@
 AprojectileSmallArrow::AprojectileSmallArrow()
 {
 	PrimaryActorTick.bCanEverTick = true;
+	SceneComponent = CreateDefaultSubobject<USceneComponent>(TEXT("Root"));
+	SceneComponent->SetRelativeLocation(FVector::ZeroVector);
+	RootComponent = SceneComponent;
+
 	ArrowMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Arrow Mesh"));
 	ArrowMesh->AttachTo(RootComponent);
 
