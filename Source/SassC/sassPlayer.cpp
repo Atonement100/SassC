@@ -486,8 +486,6 @@ void AsassPlayer::UnitMenuPressed() {
 			PlayerControllerPtr->SetInputMode(FInputModeGameAndUI());
 			OpenUnitMenu();
 			UpdateSelectedSpawnableClass(SelectedSpawnableClass, SelectedSpawnableType);
-			//@TODO: Try updating selected spawnable class here, so that we can make sure we're looking at the right building
-			//when we open the menu
 		}
 		IsUnitMenuOpen = true;
 	}

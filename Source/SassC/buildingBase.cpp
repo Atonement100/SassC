@@ -21,7 +21,7 @@ AbuildingBase::AbuildingBase()
 	BuildingMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Building Mesh"));
 	BuildingMesh->AttachTo(RootComponent);
 	BuildingMesh->SetRelativeLocation(FVector(0, 0, 1));
-	BuildingMesh->SetRelativeScale3D(FVector(1.905));
+	BuildingMesh->SetRelativeScale3D(FVector(1.905));	//1.905 is the Hammer -> UE conversion
 
 	BuildingCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("Building Collision"));
 	BuildingCollision->AttachTo(RootComponent);
