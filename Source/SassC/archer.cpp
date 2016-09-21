@@ -30,19 +30,17 @@ void Aarcher::SetupPlayerInputComponent(class UInputComponent* InputComponent)
 
 void Aarcher::Attack_Implementation(AActor * Target)
 {
-	//if (!Target) return;
-	//Super::Attack(Target);
-	/*
+	GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Green, "Archer atk");
+	if (!Target) return;
+	Super::Attack_Implementation(Target);
+	
 	FActorSpawnParameters TempParams = FActorSpawnParameters();
 	TempParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 	const FActorSpawnParameters SpawnParams = FActorSpawnParameters(TempParams);
-	//const FVector Location = this->GetMesh()->GetSocketLocation(FName("ArrowSocket"));
-	const FVector Location = this->GetActorLocation();
+	const FVector Location = this->GetMesh()->GetSocketLocation(FName("ArrowSocket"));
 	const FRotator Rotation = this->GetActorRotation();
 
 	GetWorld()->SpawnActor(ProjectileClass, &Location, &Rotation, SpawnParams);
-	*/
-
 }
 
 bool Aarcher::Attack_Validate(AActor* Target) {
