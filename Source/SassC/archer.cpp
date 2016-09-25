@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "SassC.h"
+#include "projectileSmallArrow.h"
 #include "archer.h"
 
 Aarcher::Aarcher()
@@ -40,7 +41,10 @@ void Aarcher::Attack_Implementation(AActor * Target)
 	const FVector Location = this->GetMesh()->GetSocketLocation(FName("ArrowSocket"));
 	const FRotator Rotation = this->GetActorRotation();
 
-	GetWorld()->SpawnActor(ProjectileClass, &Location, &Rotation, SpawnParams);
+	AActor* Projectile = GetWorld()->SpawnActor(ProjectileClass, &Location, &Rotation, SpawnParams);
+	FVector Velocity = Cast<AprojectileSmallArrow>(Projectile)->MovementComponent->Velocity;
+	if (Projectile) Projectile->SetLifeSpan(((Target->GetActorLocation() - this->GetActorLocation()).Size2D() / Velocity.Size()));
+	
 }
 
 bool Aarcher::Attack_Validate(AActor* Target) {

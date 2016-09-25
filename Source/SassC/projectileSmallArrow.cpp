@@ -18,6 +18,7 @@ AprojectileSmallArrow::AprojectileSmallArrow()
 	MovementComponent->UpdatedComponent = RootComponent;
 }
 
+
 void AprojectileSmallArrow::BeginPlay()
 {
 	Super::BeginPlay();
