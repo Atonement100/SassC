@@ -27,4 +27,10 @@ protected:
 	float ArcherAttackRange = 35.0f;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Archer")
 	UClass* ProjectileClass;
+
+	UFUNCTION(Unreliable, NetMulticast, WithValidation)
+	void SpawnArrow(AActor* Target);
+	virtual void SpawnArrow_Implementation(AActor* Target);
+	virtual bool SpawnArrow_Validate(AActor* Target);
+
 };

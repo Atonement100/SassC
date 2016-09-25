@@ -34,7 +34,16 @@ void Aarcher::Attack_Implementation(AActor * Target)
 	GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Green, "Archer atk");
 	if (!Target) return;
 	Super::Attack_Implementation(Target);
-	
+	SpawnArrow(Target);
+}
+
+bool Aarcher::Attack_Validate(AActor* Target) {
+	return true;
+}
+
+void Aarcher::SpawnArrow_Implementation(AActor* Target)
+{
+	//GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Green, "SpawnArrow");
 	FActorSpawnParameters TempParams = FActorSpawnParameters();
 	TempParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 	const FActorSpawnParameters SpawnParams = FActorSpawnParameters(TempParams);
@@ -44,9 +53,9 @@ void Aarcher::Attack_Implementation(AActor * Target)
 	AActor* Projectile = GetWorld()->SpawnActor(ProjectileClass, &Location, &Rotation, SpawnParams);
 	FVector Velocity = Cast<AprojectileSmallArrow>(Projectile)->MovementComponent->Velocity;
 	if (Projectile) Projectile->SetLifeSpan(((Target->GetActorLocation() - this->GetActorLocation()).Size2D() / Velocity.Size()));
-	
 }
 
-bool Aarcher::Attack_Validate(AActor* Target) {
+bool Aarcher::SpawnArrow_Validate(AActor* Target)
+{
 	return true;
 }
