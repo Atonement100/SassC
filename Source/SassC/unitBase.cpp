@@ -101,8 +101,8 @@ void AunitBase::OnOverlapEnd_DetectionSphere(class AActor* OtherActor, class UPr
 }
 
 void AunitBase::OnOverlapBegin_AggroSphere(class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) {
-
 	if (OtherActor != this && !OtherComp->ComponentHasTag(USassCStaticLibrary::NoAggroTag())) {
+
 		if (OtherActor->IsA(AunitBase::StaticClass()) && Cast<AunitBase>(OtherActor)->OwningPlayerID != OwningPlayerID) {
 			EnemiesInRange.Add(OtherActor);
 		}

@@ -19,7 +19,14 @@ public:
 	virtual void PostInitializeComponents() override;
 	virtual void UpdateMaterial(FLinearColor PlayerColor) override;
 
+	virtual void Attack_Implementation(AActor* Target) override;
+	virtual bool Attack_Validate(AActor* Target) override;
 protected:
+	UFUNCTION(Unreliable, NetMulticast, WithValidation)
+	void SpawnProjectile(AActor* Target);
+	virtual void SpawnProjectile_Implementation(AActor* Target);
+	virtual bool SpawnProjectile_Validate(AActor* Target);
+
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Unit Base")
 	float ScallywagAttackRange = 70.0f;
 	

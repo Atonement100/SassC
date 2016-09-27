@@ -33,14 +33,14 @@ void Aarcher::Attack_Implementation(AActor * Target)
 {
 	if (!Target) return;
 	Super::Attack_Implementation(Target);
-	SpawnArrow(Target);
+	SpawnProjectile(Target);
 }
 
 bool Aarcher::Attack_Validate(AActor* Target) {
 	return true;
 }
 
-void Aarcher::SpawnArrow_Implementation(AActor* Target)
+void Aarcher::SpawnProjectile_Implementation(AActor* Target)
 {
 	//This and related functions are not expressed in unitBase because each projectile-shooting 
 	//unit has the potential for very unreleated projectile logic.
@@ -49,7 +49,7 @@ void Aarcher::SpawnArrow_Implementation(AActor* Target)
 	FActorSpawnParameters TempParams = FActorSpawnParameters();
 	TempParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 	const FActorSpawnParameters SpawnParams = FActorSpawnParameters(TempParams);
-	const FVector Location = this->GetMesh()->GetSocketLocation(FName("ArrowSocket"));
+	const FVector Location = this->GetMesh()->GetSocketLocation(FName("ProjectileSocket"));
 	const FRotator Rotation = TargetDisplacement.Rotation();
 
 	AActor* Projectile = GetWorld()->SpawnActor(ProjectileClass, &Location, &Rotation, SpawnParams);
@@ -57,7 +57,7 @@ void Aarcher::SpawnArrow_Implementation(AActor* Target)
 	if (Projectile) Projectile->SetLifeSpan((TargetDisplacement).Size() / Velocity.Size());
 }
 
-bool Aarcher::SpawnArrow_Validate(AActor* Target)
+bool Aarcher::SpawnProjectile_Validate(AActor* Target)
 {
 	return true;
 }

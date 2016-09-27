@@ -2,6 +2,7 @@
 
 #include "SassC.h"
 #include "Kismet/KismetSystemLibrary.h"
+#include "projectileSmallArrow.h"
 #include "scallywag.h"
 
 Ascallywag::Ascallywag() {
@@ -27,6 +28,42 @@ void Ascallywag::PostInitializeComponents()
 void Ascallywag::UpdateMaterial(FLinearColor PlayerColor)
 {
 	Super::UpdateMaterial(PlayerColor);
+}
+
+void Ascallywag::Attack_Implementation(AActor * Target)
+{
+	if (!Target) return;
+	GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Green, "Scallywag attack");
+
+	Super::Attack_Implementation(Target);
+	SpawnProjectile(Target);
+}
+
+bool Ascallywag::Attack_Validate(AActor * Target)
+{
+	return true;
+}
+
+void Ascallywag::SpawnProjectile_Implementation(AActor * Target)
+{
+	//This and related functions are not expressed in unitBase because each projectile-shooting 
+	//unit has the potential for very unreleated projectile logic.
+	FVector TargetDisplacement = (Target->GetActorLocation() - this->GetActorLocation());
+
+	FActorSpawnParameters TempParams = FActorSpawnParameters();
+	TempParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+	const FActorSpawnParameters SpawnParams = FActorSpawnParameters(TempParams);
+	const FVector Location = this->GetMesh()->GetSocketLocation(FName("ProjectileSocket"));
+	const FRotator Rotation = TargetDisplacement.Rotation();
+
+	AActor* Projectile = GetWorld()->SpawnActor(ProjectileClass, &Location, &Rotation, SpawnParams);
+	FVector Velocity = Cast<AprojectileSmallArrow>(Projectile)->MovementComponent->Velocity;
+	if (Projectile) Projectile->SetLifeSpan((TargetDisplacement).Size() / Velocity.Size());
+}
+
+bool Ascallywag::SpawnProjectile_Validate(AActor * Target)
+{
+	return true;
 }
 
 void Ascallywag::AddMeshRelativeLocation_Implementation(float Velocity){
