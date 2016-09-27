@@ -23,9 +23,9 @@ public:
 	virtual bool Attack_Validate(AActor* Target) override;
 protected:
 	UFUNCTION(Unreliable, NetMulticast, WithValidation)
-	void SpawnProjectile(AActor* Target);
-	virtual void SpawnProjectile_Implementation(AActor* Target);
-	virtual bool SpawnProjectile_Validate(AActor* Target);
+	void SpawnProjectile(FVector TargetLocation);
+	virtual void SpawnProjectile_Implementation(FVector TargetLocation);
+	virtual bool SpawnProjectile_Validate(FVector TargetLocation);
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Unit Base")
 	float ScallywagAttackRange = 70.0f;

@@ -36,7 +36,7 @@ void Ascallywag::Attack_Implementation(AActor * Target)
 	GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Green, "Scallywag attack");
 
 	Super::Attack_Implementation(Target);
-	SpawnProjectile(Target);
+	SpawnProjectile(Target->GetActorLocation());
 }
 
 bool Ascallywag::Attack_Validate(AActor * Target)
@@ -44,11 +44,11 @@ bool Ascallywag::Attack_Validate(AActor * Target)
 	return true;
 }
 
-void Ascallywag::SpawnProjectile_Implementation(AActor * Target)
+void Ascallywag::SpawnProjectile_Implementation(FVector TargetLocation)
 {
 	//This and related functions are not expressed in unitBase because each projectile-shooting 
 	//unit has the potential for very unreleated projectile logic.
-	FVector TargetDisplacement = (Target->GetActorLocation() - this->GetActorLocation());
+	FVector TargetDisplacement = (TargetLocation - this->GetActorLocation());
 
 	FActorSpawnParameters TempParams = FActorSpawnParameters();
 	TempParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
@@ -61,13 +61,14 @@ void Ascallywag::SpawnProjectile_Implementation(AActor * Target)
 	if (Projectile) Projectile->SetLifeSpan((TargetDisplacement).Size() / Velocity.Size());
 }
 
-bool Ascallywag::SpawnProjectile_Validate(AActor * Target)
+bool Ascallywag::SpawnProjectile_Validate(FVector TargetLocation)
 {
 	return true;
 }
 
 void Ascallywag::AddMeshRelativeLocation_Implementation(float Velocity){
-	if (((ActiveCommandType >= EProcessingCommandType::ORDER_UNIT && ActiveCommandType <= EProcessingCommandType::ORDER_STATIC_UNIT) || IsAttacking) && UKismetSystemLibrary::LineTraceSingle_NEW(GetWorld(), GetActorLocation(), GetActorLocation()-FVector(0,0,90), UEngineTypes::ConvertToTraceType(ECollisionChannel::ECC_GameTraceChannel4), true, ActorsToIgnore, EDrawDebugTrace::ForOneFrame, Hit, true)) {
+	if (((ActiveCommandType >= EProcessingCommandType::ORDER_UNIT && ActiveCommandType <= EProcessingCommandType::ORDER_STATIC_UNIT) || IsAttacking) 
+		&& UKismetSystemLibrary::LineTraceSingle_NEW(GetWorld(), GetActorLocation(), GetActorLocation()-FVector(0,0,90), UEngineTypes::ConvertToTraceType(ECollisionChannel::ECC_GameTraceChannel4), true, ActorsToIgnore, EDrawDebugTrace::ForOneFrame, Hit, true)) {
 		AddActorWorldOffset(FVector(0, 0, .5));
 	}
 	else if (!UKismetSystemLibrary::LineTraceSingle_NEW(GetWorld(), GetActorLocation(), GetActorLocation() - FVector(0, 0, 33), UEngineTypes::ConvertToTraceType(ECollisionChannel::ECC_GameTraceChannel4), true, ActorsToIgnore, EDrawDebugTrace::ForOneFrame, Hit, true)) {//if (GetMesh()->RelativeLocation.Z > -30) {

@@ -27,8 +27,8 @@ protected:
 	float ArcherAttackRange = 35.0f;
 
 	UFUNCTION(Unreliable, NetMulticast, WithValidation)
-	void SpawnProjectile(AActor* Target);
-	virtual void SpawnProjectile_Implementation(AActor* Target);
-	virtual bool SpawnProjectile_Validate(AActor* Target);
+	void SpawnProjectile(FVector TargetLocation);
+	virtual void SpawnProjectile_Implementation(FVector TargetLocation);
+	virtual bool SpawnProjectile_Validate(FVector TargetLocation);
 
 };
