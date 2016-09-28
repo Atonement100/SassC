@@ -439,9 +439,8 @@ void AsassPlayer::RightClickPressed() {
 		if (RaycastHit.GetComponent()->ComponentHasTag(USassCStaticLibrary::NoAggroTag())) { UKismetSystemLibrary::LineTraceSingle_NEW(GetWorld(), GetMesh()->GetComponentLocation() + FVector(0, 0, BaseEyeHeight + 80.0f), GetMesh()->GetComponentLocation() + FVector(0, 0, BaseEyeHeight + 80.0f) + UKismetMathLibrary::GetForwardVector(PlayerControllerPtr->GetControlRotation())*10000.0f, UEngineTypes::ConvertToTraceType(ECC_Visibility), true, RaycastIgnores, EDrawDebugTrace::ForDuration, RaycastHit, true); }
 		AActor* HitActor = RaycastHit.GetActor();
 		ETypeOfOrder OrderType = ETypeOfOrder::ORDER_WORLD;
-		//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Magenta, HitActor->GetName());
-		if ((HitActor->IsA(AunitBase::StaticClass()) || HitActor->IsA(AselectionSphere::StaticClass())) && !Cast<AsassPlayerState>(PlayerState)->ControlledBuildings.Contains(HitActor)) { OrderType = ETypeOfOrder::ORDER_UNIT; }
-		if (HitActor->IsA(AbuildingBase::StaticClass())) { OrderType = ETypeOfOrder::ORDER_BUILDING; }
+		if ((HitActor->IsA(AunitBase::StaticClass()) || HitActor->IsA(AselectionSphere::StaticClass())) && Cast<AunitBase>(HitActor)->OwningPlayerID != PlayerState->PlayerId) { OrderType = ETypeOfOrder::ORDER_UNIT; }
+		if (HitActor->IsA(AbuildingBase::StaticClass()) && Cast<AbuildingBase>(HitActor)->OwningPlayerID != PlayerState->PlayerId) { OrderType = ETypeOfOrder::ORDER_BUILDING; }
 		CommandUnits(SelectedUnits, RaycastHit, OrderType);
 	}
 }
