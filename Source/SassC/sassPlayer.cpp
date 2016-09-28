@@ -295,12 +295,6 @@ void AsassPlayer::Tick( float DeltaTime )
 				if (TempWorkshop->OwningPlayerID == PlayerState->PlayerId) TempWorkshop->PreviewActive = true;
 				ResetLocalView = true;
 			}
-			/*else if (LocalObjectSpawn->IsA(Agate::StaticClass()) && CursorHit.GetActor()->IsA(AwallSegment::StaticClass())) {
-				LocalObjectSpawn->SetActorHiddenInGame(true);
-				AwallSegment* TempSegment = Cast<AwallSegment>(CursorHit.GetActor());
-				if (TempSegment->OwningPlayerID == PlayerState->PlayerId) TempSegment->PreviewActive = true;
-				ResetLocalView = true;
-			}*/
 		}
 	}
 	//Unit Menu not open
@@ -338,7 +332,6 @@ void AsassPlayer::Tick( float DeltaTime )
 				FHitResult InitRaycastHit;
 				const FActorSpawnParameters SpawnParams = FActorSpawnParameters();
 				UKismetSystemLibrary::LineTraceSingleForObjects(GetWorld(), GetMesh()->GetComponentLocation() + FVector(0, 0, BaseEyeHeight + 80.0f), GetMesh()->GetComponentLocation() + FVector(0, 0, BaseEyeHeight + 80.0f) + UKismetMathLibrary::GetForwardVector(PlayerControllerPtr->GetControlRotation())*10000.0f, StaticObjectTypes, true, RaycastIgnore, EDrawDebugTrace::ForOneFrame, InitRaycastHit, true);
-				//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Cyan, UKismetStringLibrary::Conv_VectorToString(InitRaycastHit.Location));
 				InitialHit = InitRaycastHit.Location;
 				FTransform Transform = FTransform(FRotator::ZeroRotator, InitialHit, FVector(1));
 				SelectionSphereHolder = (AselectionSphere*)(GetWorld()->SpawnActor(SelectionSphereClass, &Transform, SpawnParams));
