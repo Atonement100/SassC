@@ -162,7 +162,7 @@ protected:
 	TArray<AActor*> EnemiesInRange;
 	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
 	bool IsAttacking;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Archer") //Used for units with projectiles
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Unit Base") //Used for units with projectiles
 	UClass* ProjectileClass;
 
 	const int SelectionSphereScaleMod = 100; //this should never ever be changed
