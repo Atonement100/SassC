@@ -172,6 +172,12 @@ protected:
 	virtual void NetFixSpawnLocation_Implementation(FVector RealLocation);
 	virtual bool NetFixSpawnLocation_Validate(FVector RealLocation);
 
+	UFUNCTION(Unreliable, NetMulticast, WithValidation)
+	void SpawnProjectile(FVector TargetLocation);
+	virtual void SpawnProjectile_Implementation(FVector TargetLocation);
+	virtual bool SpawnProjectile_Validate(FVector TargetLocation);
+
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Unit Base")
 	EProcessingCommandType ActiveCommandType = EProcessingCommandType::ORDER_IDLE;
 };

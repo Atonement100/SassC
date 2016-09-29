@@ -5,6 +5,7 @@
 #include "sassPlayer.h"
 #include "sassPlayerState.h"
 #include "unitController.h"
+#include "projectileSmallArrow.h"
 #include "Net/UnrealNetwork.h"
 #include "SassCStaticLibrary.h"
 #include "Kismet/KismetSystemLibrary.h"
@@ -278,6 +279,29 @@ void AunitBase::Attack_Implementation(AActor* Target) {
 bool AunitBase::Attack_Validate(AActor* Target) {
 	return true;
 }
+
+void AunitBase::SpawnProjectile_Implementation(FVector TargetLocation)
+{
+	//This and related functions are not expressed in unitBase because each projectile-shooting 
+	//unit has the potential for very unreleated projectile logic.
+	FVector TargetDisplacement = (TargetLocation - this->GetActorLocation());
+
+	FActorSpawnParameters TempParams = FActorSpawnParameters();
+	TempParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+	const FActorSpawnParameters SpawnParams = FActorSpawnParameters(TempParams);
+	const FVector Location = this->GetMesh()->GetSocketLocation(FName("ProjectileSocket"));
+	const FRotator Rotation = TargetDisplacement.Rotation();
+
+	AActor* Projectile = GetWorld()->SpawnActor(ProjectileClass, &Location, &Rotation, SpawnParams);
+	FVector Velocity = Cast<AprojectileSmallArrow>(Projectile)->MovementComponent->Velocity;
+	if (Projectile) Projectile->SetLifeSpan((TargetDisplacement).Size() / Velocity.Size());
+}
+
+bool AunitBase::SpawnProjectile_Validate(FVector TargetLocation)
+{
+	return true;
+}
+
 
 void AunitBase::StartAttackAnimation_Implementation() {
 	this->IsAttacking = true;

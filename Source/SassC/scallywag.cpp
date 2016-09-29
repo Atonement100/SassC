@@ -44,28 +44,6 @@ bool Ascallywag::Attack_Validate(AActor * Target)
 	return true;
 }
 
-void Ascallywag::SpawnProjectile_Implementation(FVector TargetLocation)
-{
-	//This and related functions are not expressed in unitBase because each projectile-shooting 
-	//unit has the potential for very unreleated projectile logic.
-	FVector TargetDisplacement = (TargetLocation - this->GetActorLocation());
-
-	FActorSpawnParameters TempParams = FActorSpawnParameters();
-	TempParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-	const FActorSpawnParameters SpawnParams = FActorSpawnParameters(TempParams);
-	const FVector Location = this->GetMesh()->GetSocketLocation(FName("ProjectileSocket"));
-	const FRotator Rotation = TargetDisplacement.Rotation();
-
-	AActor* Projectile = GetWorld()->SpawnActor(ProjectileClass, &Location, &Rotation, SpawnParams);
-	FVector Velocity = Cast<AprojectileSmallArrow>(Projectile)->MovementComponent->Velocity;
-	if (Projectile) Projectile->SetLifeSpan((TargetDisplacement).Size() / Velocity.Size());
-}
-
-bool Ascallywag::SpawnProjectile_Validate(FVector TargetLocation)
-{
-	return true;
-}
-
 void Ascallywag::AddMeshRelativeLocation_Implementation(float Velocity) {
 	//Should be moving and isn't too high
 	if ((ActiveCommandType >= EProcessingCommandType::ORDER_UNIT && ActiveCommandType <= EProcessingCommandType::ORDER_STATIC_UNIT) || IsAttacking) {

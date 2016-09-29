@@ -39,25 +39,3 @@ void Aarcher::Attack_Implementation(AActor * Target)
 bool Aarcher::Attack_Validate(AActor* Target) {
 	return true;
 }
-
-void Aarcher::SpawnProjectile_Implementation(FVector TargetLocation)
-{
-	//This and related functions are not expressed in unitBase because each projectile-shooting 
-	//unit has the potential for very unreleated projectile logic.
-	FVector TargetDisplacement = (TargetLocation - this->GetActorLocation());
-
-	FActorSpawnParameters TempParams = FActorSpawnParameters();
-	TempParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-	const FActorSpawnParameters SpawnParams = FActorSpawnParameters(TempParams);
-	const FVector Location = this->GetMesh()->GetSocketLocation(FName("ProjectileSocket"));
-	const FRotator Rotation = TargetDisplacement.Rotation();
-
-	AActor* Projectile = GetWorld()->SpawnActor(ProjectileClass, &Location, &Rotation, SpawnParams);
-	FVector Velocity = Cast<AprojectileSmallArrow>(Projectile)->MovementComponent->Velocity;
-	if (Projectile) Projectile->SetLifeSpan((TargetDisplacement).Size() / Velocity.Size());
-}
-
-bool Aarcher::SpawnProjectile_Validate(FVector TargetLocation)
-{
-	return true;
-}
