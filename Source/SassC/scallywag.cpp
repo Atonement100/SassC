@@ -33,8 +33,6 @@ void Ascallywag::UpdateMaterial(FLinearColor PlayerColor)
 void Ascallywag::Attack_Implementation(AActor * Target)
 {
 	if (!Target) return;
-	GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Green, "Scallywag attack");
-
 	Super::Attack_Implementation(Target);
 	SpawnProjectile(Target->GetActorLocation());
 }

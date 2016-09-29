@@ -14,6 +14,8 @@ class SASSC_API Aballista : public AunitBase
 	GENERATED_BODY()
 		Aballista();
 
+	virtual void Attack_Implementation(AActor* Target) override;
+
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Unit Base")
 		float BallistaAttackRange = 30.0f;

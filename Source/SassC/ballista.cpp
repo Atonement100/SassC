@@ -12,4 +12,8 @@ Aballista::Aballista() {
 	UnitCollision->AttachTo(RootComponent);
 }
 
-
+void Aballista::Attack_Implementation(AActor* Target) {
+	if (!Target) return;
+	Super::Attack_Implementation(Target);
+	SpawnProjectile(Target->GetActorLocation());
+}
