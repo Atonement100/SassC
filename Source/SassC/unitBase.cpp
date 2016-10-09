@@ -284,7 +284,7 @@ void AunitBase::SpawnProjectile_Implementation(FVector TargetLocation)
 {
 	//This and related functions are not expressed in unitBase because each projectile-shooting 
 	//unit has the potential for very unreleated projectile logic.
-	FVector TargetDisplacement = (TargetLocation - this->GetActorLocation());
+	FVector TargetDisplacement = ((TargetLocation + FVector(0,0,this->GetCapsuleComponent()->GetScaledCapsuleHalfHeight())) - this->GetActorLocation());
 
 	FActorSpawnParameters TempParams = FActorSpawnParameters();
 	TempParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
