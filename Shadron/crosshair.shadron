@@ -1,0 +1,20 @@
+#include <shapes>
+#include <math_constants>
+
+param float OuterRadius = .5 : range (0,1);
+param float InnerRadius = .4 :range (0,1);
+	
+
+glsl vec4 Crosshair(vec2 position){
+	if (circle(position, CENTER, OuterRadius) == 0){
+		return vec4(0,0,0,1);
+	}
+	
+	if (circle(position, CENTER, InnerRadius) == 0){
+		return vec4(1,1,1,1);
+	}
+
+	return vec4(0,0,0,1);
+}
+
+image crosshairRender = glsl(Crosshair, 1024, 1024);

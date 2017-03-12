@@ -84,7 +84,7 @@ void AunitBase::OnOverlapBegin_DetectionSphere(class AActor* OtherActor, class U
 
 	if (PlayerCharacterRef != nullptr && OtherActor == PlayerCharacterRef->GetSelectionSphereHolder()) {
 		AsassPlayerState* PlayerStateRef = (AsassPlayerState*)PlayerCharacterRef->PlayerState;
-		if (PlayerStateRef != nullptr && PlayerStateRef->PlayerId) {
+		if (PlayerStateRef != nullptr && this->OwningPlayerID == PlayerStateRef->PlayerId) {
 			SetDecalVisibility(true);
 		}
 	}
@@ -95,7 +95,7 @@ void AunitBase::OnOverlapEnd_DetectionSphere(class AActor* OtherActor, class UPr
 
 	if (PlayerCharacterRef != nullptr && OtherActor == PlayerCharacterRef->GetSelectionSphereHolder()) {
 		AsassPlayerState* PlayerStateRef = (AsassPlayerState*)PlayerCharacterRef->PlayerState;
-		if (PlayerStateRef != nullptr && PlayerStateRef->PlayerId) {
+		if (PlayerStateRef != nullptr && this->OwningPlayerID == PlayerStateRef->PlayerId) {
 			SetDecalVisibility(false);
 		}
 	}

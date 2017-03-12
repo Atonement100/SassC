@@ -32,7 +32,6 @@ void Aworkshop::PreviewUpgrade_Implementation() {
 	case 0: {
 		BuildingMesh->SetVisibility(false);
 		UpgradeOneMesh->SetVisibility(true);
-		GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Cyan, UKismetStringLibrary::Conv_ColorToString(FLinearColor::Green));
 		this->ColorBldg(FLinearColor::Green);
 		break;
 	}
@@ -49,7 +48,6 @@ void Aworkshop::ResetPreview_Implementation() {
 	case 0:
 		BuildingMesh->SetVisibility(true);
 		UpgradeOneMesh->SetVisibility(false);
-		GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Cyan, "PlayerColor: " + UKismetStringLibrary::Conv_ColorToString(OwningPlayerColor));
 		this->ColorBldg(OwningPlayerColor);
 		break;
 	case 1:
