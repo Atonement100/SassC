@@ -12,13 +12,25 @@ All features are designed for and tested in a networked multiplayer environment.
 - Server creation and player connection and disconnection
 - Server browser with Steam integration for server finding as well as LAN searching
 - City building and territory control
+
+![Example of some building as well as territory requirements.](/readme_media/territory.gif)
 - Dynamic wall and gate buildables
+
+![Example of wall and gate buildables](/readme_media/walls.gif)
 - Shield monolith buildable with dynamic linking
+
+![Example of monoliths linking](/readme_media/shieldmono.gif)
 - All buildings are constructable, including rotation for fine-tuning of base building
+
+![Picture with all buildables](/readme_media/all-buildings.png)
 - All units are spawnable, including rotation for ease of placement with larger units, such as the catapult and ballista
+
+![Picture with all units](/readme_media/all-units.png)
 - All units have their original models, textures, and animations.
 - Units are rigged and have working animation state machines
 - Unit combat of all sorts works and is stable over network, including destruction of buildables
+
+![Example of combat, with building destruction](/readme_media/combat.gif)
 - An untextured map, derivative of the original sa_orbit, has already been built for gameplay testing
 
 ## Backlog / Issue Tracker - Trello
