@@ -4,7 +4,7 @@ using UnrealBuildTool;
 
 public class SassC : ModuleRules
 {
-	public SassC(TargetInfo Target)
+	public SassC(ReadOnlyTargetRules Target) : base (Target)
 	{
 		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "UMG" });
 
@@ -17,10 +17,7 @@ public class SassC : ModuleRules
 		 PrivateDependencyModuleNames.Add("OnlineSubsystem");
 		 if ((Target.Platform == UnrealTargetPlatform.Win32) || (Target.Platform == UnrealTargetPlatform.Win64))
 		 {
-				if (UEBuildConfiguration.bCompileSteamOSS == true)
-				{
-					DynamicallyLoadedModuleNames.Add("OnlineSubsystemSteam");
-				}
+			DynamicallyLoadedModuleNames.Add("OnlineSubsystemSteam");	
 		 }
 	}
 }

@@ -68,3 +68,6 @@ Intermediate/*
 # Cache files for the editor to use
 DerivedDataCache/*
 e15e0bccd9d1a3dc270af967801b42f56f303636
+
+/.vs
+*.swp

@@ -10,7 +10,7 @@
 AshieldMonolith::AshieldMonolith() {
 	PrimaryActorTick.bCanEverTick = true;
 	BeamPSysSocket = CreateDefaultSubobject<USceneComponent>(TEXT("Beam Socket"));
-	BeamPSysSocket->AttachTo(RootComponent);
+	BeamPSysSocket->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepWorldTransform);
 }
 
 void AshieldMonolith::PostInitializeComponents() {
@@ -81,7 +81,7 @@ TArray<AshieldMonolith*> AshieldMonolith::FindMonolithsInRange(float Range, TArr
 {
 	TArray<AActor*> IgnoreArray = ActorsToIgnore;
 	TArray<FHitResult> SphereHits;
-	UKismetSystemLibrary::SphereTraceMulti_NEW(GetWorld(), this->GetActorLocation(), this->GetActorLocation() + FVector(0, 0, 1), Range, UEngineTypes::ConvertToTraceType(ECollisionChannel::ECC_GameTraceChannel5), true, IgnoreArray, EDrawDebugTrace::ForOneFrame, SphereHits, true);
+	UKismetSystemLibrary::SphereTraceMulti(GetWorld(), this->GetActorLocation(), this->GetActorLocation() + FVector(0, 0, 1), Range, UEngineTypes::ConvertToTraceType(ECollisionChannel::ECC_GameTraceChannel5), true, IgnoreArray, EDrawDebugTrace::ForOneFrame, SphereHits, true);
 	TArray<AshieldMonolith*> WallsInRange;
 	for (FHitResult Hit : SphereHits) {
 		if (!WallsInRange.Contains(Hit.GetActor()) && Hit.GetActor()->IsA(AshieldMonolith::StaticClass()) && Hit.GetActor() != this) {

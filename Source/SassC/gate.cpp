@@ -12,14 +12,14 @@ Agate::Agate() {
 	BuildingCollision->DestroyComponent();
 
 	GateMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Gate Mesh"));
-	GateMesh->AttachTo(RootComponent);
+	GateMesh->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepWorldTransform);
 
 	BuildingCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("Gate Collision"));
-	BuildingCollision->AttachTo(RootComponent);
+	BuildingCollision->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepWorldTransform);
 	BuildingCollision->SetBoxExtent(CollisionBounds);
 	
 	OpenTrigger = CreateDefaultSubobject<UBoxComponent>(TEXT("Gate Open Trigger"));
-	OpenTrigger->AttachTo(RootComponent);
+	OpenTrigger->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepWorldTransform);
 	OpenTrigger->OnComponentBeginOverlap.AddDynamic(this, &Agate::OnOverlapBegin_GateTrigger);
 	OpenTrigger->OnComponentEndOverlap.AddDynamic(this, &Agate::OnOverlapEnd_GateTrigger);
 	OpenTrigger->SetCollisionResponseToChannel(ECollisionChannel::ECC_GameTraceChannel3, ECollisionResponse::ECR_Ignore);
@@ -51,7 +51,7 @@ bool Agate::ColorBldg_Validate(FLinearColor PlayerColor, int8 MeshLevel)
 	return true;
 }
 */
-void Agate::OnOverlapBegin_GateTrigger(AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
+void Agate::OnOverlapBegin_GateTrigger(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
 	if (!OtherActor || OtherActor == this) return;
 	if (AunitBase* Unit = Cast<AunitBase>(OtherActor)) {
@@ -62,7 +62,7 @@ void Agate::OnOverlapBegin_GateTrigger(AActor * OtherActor, UPrimitiveComponent 
 	}
 }
 
-void Agate::OnOverlapEnd_GateTrigger(AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex)
+void Agate::OnOverlapEnd_GateTrigger(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
 	if (!OtherActor || OtherActor == this) return;
 	if (AunitBase* Unit = Cast<AunitBase>(OtherActor)) {

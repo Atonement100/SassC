@@ -21,22 +21,22 @@ AunitBase::AunitBase()
 	NetUpdateFrequency = 30.0f;
 	
 	UnderUnitDecal = CreateDefaultSubobject<UDecalComponent>(TEXT("Under Unit Decal"));
-	UnderUnitDecal->AttachTo(RootComponent);
+	UnderUnitDecal->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepWorldTransform);
 	UnderUnitDecal->FadeScreenSize = 0.0f;
 	UnderUnitDecal->SetRelativeLocationAndRotation(FVector(0, 0, -10.2f), FQuat(FRotator(-90.0f, 0, 0)));
 	UnderUnitDecal->SetRelativeScale3D(FVector(10, 5, 5));
 	UnderUnitDecal->DecalSize = FVector(1, 1, 1);
 
 	SelectionCircleDecal = CreateDefaultSubobject<UDecalComponent>(TEXT("Selection Circle Decal"));
-	SelectionCircleDecal->AttachTo(RootComponent);
-	SelectionCircleDecal->bVisible = false;
+	SelectionCircleDecal->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepWorldTransform);
+	SelectionCircleDecal->SetVisibleFlag(false);
 	SelectionCircleDecal->FadeScreenSize = 0.0f;
 	SelectionCircleDecal->SetRelativeLocationAndRotation(FVector(0, 0, -9), FQuat(FRotator(-90.0f, 0, 0)));
 	SelectionCircleDecal->SetRelativeScale3D(FVector(10, 5, 5));
 	SelectionCircleDecal->DecalSize = FVector(1, 1, 1);
 
 	DetectionSphere = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Detection Sphere"));
-	DetectionSphere->AttachTo(RootComponent);
+	DetectionSphere->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepWorldTransform);
 	DetectionSphere->SetRelativeLocation(FVector(0, 0, -9.0f));
 	DetectionSphere->SetRelativeScale3D(FVector(.32, .32, .2));
 	DetectionSphere->OnComponentBeginOverlap.AddDynamic(this, &AunitBase::OnOverlapBegin_DetectionSphere);
@@ -44,7 +44,7 @@ AunitBase::AunitBase()
 
 	AggroSphere = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Aggro Sphere"));
 	AggroSphere->ComponentTags.Add(USassCStaticLibrary::NoAggroTag());
-	AggroSphere->AttachTo(RootComponent);
+	AggroSphere->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepWorldTransform);
 	AggroSphere->OnComponentBeginOverlap.AddDynamic(this, &AunitBase::OnOverlapBegin_AggroSphere);
 	AggroSphere->OnComponentEndOverlap.AddDynamic(this, &AunitBase::OnOverlapEnd_AggroSphere);
 	AggroSphere->SetWorldScale3D(FVector(AttackRange / SelectionSphereScaleMod));
@@ -79,29 +79,29 @@ void AunitBase::PostInitializeComponents() {
 }
 
 
-void AunitBase::OnOverlapBegin_DetectionSphere(class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) {
+void AunitBase::OnOverlapBegin_DetectionSphere(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) {
 	AsassPlayer* PlayerCharacterRef = (AsassPlayer*)UGameplayStatics::GetPlayerCharacter(this, 0);
 
 	if (PlayerCharacterRef != nullptr && OtherActor == PlayerCharacterRef->GetSelectionSphereHolder()) {
-		AsassPlayerState* PlayerStateRef = (AsassPlayerState*)PlayerCharacterRef->PlayerState;
-		if (PlayerStateRef != nullptr && this->OwningPlayerID == PlayerStateRef->PlayerId) {
+		AsassPlayerState* PlayerStateRef = PlayerCharacterRef->GetPlayerState<AsassPlayerState>();
+		if (PlayerStateRef != nullptr && this->OwningPlayerID == PlayerStateRef->GetPlayerId()) {
 			SetDecalVisibility(true);
 		}
 	}
 }
 
-void AunitBase::OnOverlapEnd_DetectionSphere(class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex) {
+void AunitBase::OnOverlapEnd_DetectionSphere(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex) {
 	AsassPlayer* PlayerCharacterRef = (AsassPlayer*)UGameplayStatics::GetPlayerCharacter(this, 0);
 
 	if (PlayerCharacterRef != nullptr && OtherActor == PlayerCharacterRef->GetSelectionSphereHolder()) {
-		AsassPlayerState* PlayerStateRef = (AsassPlayerState*)PlayerCharacterRef->PlayerState;
-		if (PlayerStateRef != nullptr && this->OwningPlayerID == PlayerStateRef->PlayerId) {
+		AsassPlayerState* PlayerStateRef = PlayerCharacterRef->GetPlayerState<AsassPlayerState>();
+		if (PlayerStateRef != nullptr && this->OwningPlayerID == PlayerStateRef->GetPlayerId()) {
 			SetDecalVisibility(false);
 		}
 	}
 }
 
-void AunitBase::OnOverlapBegin_AggroSphere(class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) {
+void AunitBase::OnOverlapBegin_AggroSphere(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) {
 	if (OtherActor != this && !OtherComp->ComponentHasTag(USassCStaticLibrary::NoAggroTag())) {
 		if (OtherActor->IsA(AunitBase::StaticClass()) && Cast<AunitBase>(OtherActor)->OwningPlayerID != OwningPlayerID) {
 			EnemiesInRange.Add(OtherActor);
@@ -113,7 +113,7 @@ void AunitBase::OnOverlapBegin_AggroSphere(class AActor* OtherActor, class UPrim
 	}
 }
 
-void AunitBase::OnOverlapEnd_AggroSphere(class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex) {
+void AunitBase::OnOverlapEnd_AggroSphere(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex) {
 	if (!OtherActor) return;
 	EnemiesInRange.Remove(OtherActor);
 	if (OtherActor == BuildingToAttack) { ReachedBuilding = false; }
@@ -444,7 +444,7 @@ bool AunitBase::FixSpawnLocation_Validate(FVector RealLocation)
 
 void AunitBase::NetFixSpawnLocation_Implementation(FVector RealLocation)
 {
-	Role = ROLE_Authority;
+	SetRole(ROLE_Authority);
 	SetActorLocation(RealLocation);
 }
 

@@ -97,7 +97,7 @@ void AsassPlayer::Tick( float DeltaTime )
 			else if (IsRightMouseDown) {
 				FHitResult RotateHit;
 				TArray<AActor*> RaycastIgnores;
-				UKismetSystemLibrary::LineTraceSingle_NEW(GetWorld(), GetMesh()->GetComponentLocation() + FVector(0, 0, BaseEyeHeight + 80.0f), GetMesh()->GetComponentLocation() + FVector(0, 0, BaseEyeHeight + 80.0f) + UKismetMathLibrary::GetForwardVector(PlayerControllerPtr->GetControlRotation())*10000.0f, UEngineTypes::ConvertToTraceType(ECC_Visibility), true, RaycastIgnores, EDrawDebugTrace::None, RotateHit, true);
+				UKismetSystemLibrary::LineTraceSingle(GetWorld(), GetMesh()->GetComponentLocation() + FVector(0, 0, BaseEyeHeight + 80.0f), GetMesh()->GetComponentLocation() + FVector(0, 0, BaseEyeHeight + 80.0f) + UKismetMathLibrary::GetForwardVector(PlayerControllerPtr->GetControlRotation())*10000.0f, UEngineTypes::ConvertToTraceType(ECC_Visibility), true, RaycastIgnores, EDrawDebugTrace::None, RotateHit, true);
 				PreviewRotation = FRotator(0,(RotateHit.Location - LocalObjectSpawn->GetActorLocation()).Rotation().Yaw,0) - FRotator(0,90,0);
 				LocalObjectSpawn->SetActorRotation(PreviewRotation);
 			}
@@ -115,10 +115,10 @@ void AsassPlayer::Tick( float DeltaTime )
 				ActorsToIgnore.Add(LocalObjectSpawn);
 				IsBadSpawn = UKismetSystemLibrary::BoxTraceSingle(GetWorld(), CursorHit.Location + FVector(0, 0, 2), CursorHit.Location + 2 * CurrentHalfHeight, FVector(CurrentTraceSize.X, CurrentTraceSize.Y, 0), PreviewRotation, UEngineTypes::ConvertToTraceType(ECollisionChannel::ECC_GameTraceChannel2), true, ActorsToIgnore, EDrawDebugTrace::ForOneFrame, BoxTraceHit, true);
 				if (AbuildingBase* BuildingCast = Cast<AbuildingBase>(LocalObjectSpawn)) {
-					IsBadSpawn = IsBadSpawn | CheckBldgCorners(BuildingCast->CornerLocations, CursorHit.Location, PreviewRotation, PlayerState->PlayerId, (Cast<Acity>(LocalObjectSpawn) ? true : false));
+					IsBadSpawn = IsBadSpawn | CheckBldgCorners(BuildingCast->CornerLocations, CursorHit.Location, PreviewRotation, GetPlayerState()->GetPlayerId(), (Cast<Acity>(LocalObjectSpawn) ? true : false));
 				}
 				else if (AunitBase* UnitCast = Cast<AunitBase>(LocalObjectSpawn)) {
-					IsBadSpawn = IsBadSpawn | CheckUnitLocation(CursorHit.Location, PreviewRotation, PlayerState->PlayerId);
+					IsBadSpawn = IsBadSpawn | CheckUnitLocation(CursorHit.Location, PreviewRotation, GetPlayerState()->GetPlayerId());
 				}
 
 			}
@@ -170,7 +170,7 @@ void AsassPlayer::Tick( float DeltaTime )
 					FVector Displacement = TargetWall->GetActorLocation() - Wall->GetActorLocation();
 					FVector UnitDirection = Displacement / Displacement.Size();
 					FHitResult Hit;
-					if (TargetWall->OwningPlayerID == PlayerState->PlayerId && !UKismetSystemLibrary::BoxTraceSingle(GetWorld(), WallInstance->GetActorLocation() + FVector(UnitDirection.X * 24, UnitDirection.Y * 24, 21), TargetWall->GetActorLocation() + FVector(UnitDirection.X * -24, UnitDirection.Y * -24, 21), FVector(9.5f, 4.0f, 15.0f), Displacement.Rotation(), UEngineTypes::ConvertToTraceType(ECC_Visibility), true, TempGateWalls, EDrawDebugTrace::ForOneFrame, Hit, true)) {
+					if (TargetWall->OwningPlayerID == GetPlayerState()->GetPlayerId() && !UKismetSystemLibrary::BoxTraceSingle(GetWorld(), WallInstance->GetActorLocation() + FVector(UnitDirection.X * 24, UnitDirection.Y * 24, 21), TargetWall->GetActorLocation() + FVector(UnitDirection.X * -24, UnitDirection.Y * -24, 21), FVector(9.5f, 4.0f, 15.0f), Displacement.Rotation(), UEngineTypes::ConvertToTraceType(ECC_Visibility), true, TempGateWalls, EDrawDebugTrace::ForOneFrame, Hit, true)) {
 						if (!WallInstance->TempConnection) {
 							//create new
 							FTransform Transform = FTransform(Displacement.Rotation(), WallInstance->GetActorLocation() + (Displacement / 2), FVector(Displacement.Size() / 19, 1, 1));
@@ -216,7 +216,7 @@ void AsassPlayer::Tick( float DeltaTime )
 					//if not yet previewed, create a preview and add to existing preview array, need to keep track of connected walls and their order
 					FVector Displacement = TargetWall->GetActorLocation() - WallCast->GetActorLocation();
 					FVector UnitDirection = Displacement / Displacement.Size();
-					if (TargetWall->OwningPlayerID == PlayerState->PlayerId && !UKismetSystemLibrary::BoxTraceSingle(GetWorld(), WallCast->GetActorLocation() + FVector(UnitDirection.X*24, UnitDirection.Y*24, 21), TargetWall->GetActorLocation() + FVector(UnitDirection.X * -24, UnitDirection.Y * -24, 21), FVector(9.5f, 4.0f, 15.0f), Displacement.Rotation(), UEngineTypes::ConvertToTraceType(ECC_Visibility), true, ActorsToIgnore, EDrawDebugTrace::ForOneFrame, Hit, true)) {
+					if (TargetWall->OwningPlayerID == GetPlayerState()->GetPlayerId() && !UKismetSystemLibrary::BoxTraceSingle(GetWorld(), WallCast->GetActorLocation() + FVector(UnitDirection.X*24, UnitDirection.Y*24, 21), TargetWall->GetActorLocation() + FVector(UnitDirection.X * -24, UnitDirection.Y * -24, 21), FVector(9.5f, 4.0f, 15.0f), Displacement.Rotation(), UEngineTypes::ConvertToTraceType(ECC_Visibility), true, ActorsToIgnore, EDrawDebugTrace::ForOneFrame, Hit, true)) {
 						if (!TargetWall->TempConnection) {
 							//create new
 							FTransform Transform = FTransform(Displacement.Rotation(), WallCast->GetActorLocation() + (Displacement / 2), FVector(Displacement.Size() / 19, 1, 1));
@@ -286,13 +286,13 @@ void AsassPlayer::Tick( float DeltaTime )
 			if (LocalObjectSpawn->IsA(Atower::StaticClass()) && CursorHit.GetActor()->IsA(Atower::StaticClass())) {
 				LocalObjectSpawn->SetActorHiddenInGame(true);
 				Atower* TempTower = Cast<Atower>(CursorHit.GetActor());
-				if (TempTower->OwningPlayerID == PlayerState->PlayerId) TempTower->PreviewActive = true;
+				if (TempTower->OwningPlayerID == GetPlayerState()->GetPlayerId()) TempTower->PreviewActive = true;
 				ResetLocalView = true;
 			}
 			else if (LocalObjectSpawn->IsA(Aworkshop::StaticClass()) && CursorHit.GetActor()->IsA(Aworkshop::StaticClass())) {
 				LocalObjectSpawn->SetActorHiddenInGame(true);
 				Aworkshop* TempWorkshop = Cast<Aworkshop>(CursorHit.GetActor());
-				if (TempWorkshop->OwningPlayerID == PlayerState->PlayerId) TempWorkshop->PreviewActive = true;
+				if (TempWorkshop->OwningPlayerID == GetPlayerState()->GetPlayerId()) TempWorkshop->PreviewActive = true;
 				ResetLocalView = true;
 			}
 		}
@@ -352,7 +352,7 @@ void AsassPlayer::Tick( float DeltaTime )
 		//Left Mouse button not pressed
 		else if (SphereDestroyLatch) {
 			if (SelectionSphereHolder) SelectionSphereHolder->Destroy();
-			CreateSelectedUnitsArray(SphereTraceHits, PlayerState->PlayerId, ShouldAddToSelection);
+			CreateSelectedUnitsArray(SphereTraceHits, GetPlayerState()->GetPlayerId(), ShouldAddToSelection);
 			ActorSpawnLatch = true;
 			SphereSpawnLatch = true;
 			SphereDestroyLatch = false;
@@ -419,7 +419,7 @@ void AsassPlayer::LeftClickPressed() {
 			}
 
 			const TArray<AActor*> ConfirmedToIgnore = ActorsToIgnore;
-			ServerSpawnBuilding(Cast<AsassPlayerController>(PlayerControllerPtr), SelectedSpawnableClass, Hit, PreviewRotation, CurrentHalfHeight, LocationsToCheck, CurrentTraceSize, PlayerState->PlayerId, ConfirmedToIgnore);
+			ServerSpawnBuilding(Cast<AsassPlayerController>(PlayerControllerPtr), SelectedSpawnableClass, Hit, PreviewRotation, CurrentHalfHeight, LocationsToCheck, CurrentTraceSize, GetPlayerState()->GetPlayerId(), ConfirmedToIgnore);
 		}
 	}
 }
@@ -435,12 +435,12 @@ void AsassPlayer::RightClickPressed() {
 	const TArray<AActor*> RaycastIgnores;
 
 	if (!IsUnitMenuOpen) {
-		UKismetSystemLibrary::LineTraceSingle_NEW(GetWorld(), GetMesh()->GetComponentLocation() + FVector(0, 0, BaseEyeHeight + 80.0f), GetMesh()->GetComponentLocation() + FVector(0, 0, BaseEyeHeight + 80.0f) + UKismetMathLibrary::GetForwardVector(PlayerControllerPtr->GetControlRotation())*10000.0f, UEngineTypes::ConvertToTraceType(ECC_Visibility), true, RaycastIgnores, EDrawDebugTrace::ForDuration, RaycastHit, true);
-		if (RaycastHit.GetComponent()->ComponentHasTag(USassCStaticLibrary::NoAggroTag())) { UKismetSystemLibrary::LineTraceSingle_NEW(GetWorld(), GetMesh()->GetComponentLocation() + FVector(0, 0, BaseEyeHeight + 80.0f), GetMesh()->GetComponentLocation() + FVector(0, 0, BaseEyeHeight + 80.0f) + UKismetMathLibrary::GetForwardVector(PlayerControllerPtr->GetControlRotation())*10000.0f, UEngineTypes::ConvertToTraceType(ECC_Visibility), true, RaycastIgnores, EDrawDebugTrace::ForDuration, RaycastHit, true); }
+		UKismetSystemLibrary::LineTraceSingle(GetWorld(), GetMesh()->GetComponentLocation() + FVector(0, 0, BaseEyeHeight + 80.0f), GetMesh()->GetComponentLocation() + FVector(0, 0, BaseEyeHeight + 80.0f) + UKismetMathLibrary::GetForwardVector(PlayerControllerPtr->GetControlRotation())*10000.0f, UEngineTypes::ConvertToTraceType(ECC_Visibility), true, RaycastIgnores, EDrawDebugTrace::ForDuration, RaycastHit, true);
+		if (RaycastHit.GetComponent()->ComponentHasTag(USassCStaticLibrary::NoAggroTag())) { UKismetSystemLibrary::LineTraceSingle(GetWorld(), GetMesh()->GetComponentLocation() + FVector(0, 0, BaseEyeHeight + 80.0f), GetMesh()->GetComponentLocation() + FVector(0, 0, BaseEyeHeight + 80.0f) + UKismetMathLibrary::GetForwardVector(PlayerControllerPtr->GetControlRotation())*10000.0f, UEngineTypes::ConvertToTraceType(ECC_Visibility), true, RaycastIgnores, EDrawDebugTrace::ForDuration, RaycastHit, true); }
 		AActor* HitActor = RaycastHit.GetActor();
 		ETypeOfOrder OrderType = ETypeOfOrder::ORDER_WORLD;
-		if ((HitActor->IsA(AunitBase::StaticClass()) || HitActor->IsA(AselectionSphere::StaticClass())) && Cast<AunitBase>(HitActor)->OwningPlayerID != PlayerState->PlayerId) { OrderType = ETypeOfOrder::ORDER_UNIT; }
-		if (HitActor->IsA(AbuildingBase::StaticClass()) && Cast<AbuildingBase>(HitActor)->OwningPlayerID != PlayerState->PlayerId) { OrderType = ETypeOfOrder::ORDER_BUILDING; }
+		if ((HitActor->IsA(AunitBase::StaticClass()) || HitActor->IsA(AselectionSphere::StaticClass())) && Cast<AunitBase>(HitActor)->OwningPlayerID != GetPlayerState()->GetPlayerId()) { OrderType = ETypeOfOrder::ORDER_UNIT; }
+		if (HitActor->IsA(AbuildingBase::StaticClass()) && Cast<AbuildingBase>(HitActor)->OwningPlayerID != GetPlayerState()->GetPlayerId()) { OrderType = ETypeOfOrder::ORDER_BUILDING; }
 		CommandUnits(SelectedUnits, RaycastHit, OrderType);
 	}
 }
@@ -535,6 +535,7 @@ void AsassPlayer::UpdateSelectedSpawnableClass(UClass * NewClass, ETypeOfSpawnab
 	SelectedSpawnableClass = NewClass;
 	SelectedSpawnableType = NewTypeOfSpawnable;
 	UObject* NewActor = SelectedSpawnableClass->GetDefaultObject();
+
 	if (NewActor->IsA(AbuildingBase::StaticClass())) {
 		AbuildingBase* SelectedBuilding = Cast<AbuildingBase>(NewActor);
 		CurrentHalfHeight = SelectedBuilding->HalfHeight;
@@ -549,7 +550,6 @@ void AsassPlayer::UpdateSelectedSpawnableClass(UClass * NewClass, ETypeOfSpawnab
 
 #pragma region Pause functions
 void AsassPlayer::PausePressed() {
-	
 	if (!IsPaused) {
 		if (PauseWidgetClass != nullptr) PauseWidget = CreateWidget<UsassPauseMenu>(PlayerControllerPtr, PauseWidgetClass);
 		if (PauseWidget != nullptr) PauseWidget->AddToViewport();
@@ -641,7 +641,7 @@ bool AsassPlayer::ServerSprint_Validate(bool isRunning, UCharacterMovementCompon
 #pragma region WASD Movement
 void AsassPlayer::MoveForward(float AxisValue) {
 	if (Controller != NULL && AxisValue != 0.0f) {
-		FRotator Rotation = GetMesh()->GetComponentRotation() - GetMesh()->RelativeRotation;
+		FRotator Rotation = GetMesh()->GetComponentRotation() - GetMesh()->GetRelativeRotation();
 		const FVector Direction = FRotationMatrix(Rotation).GetScaledAxis(EAxis::X);
 		AddMovementInput(Direction, AxisValue);
 	}
@@ -688,8 +688,8 @@ bool AsassPlayer::ShouldIgnoreLookInput()
 #pragma region Unit Interaction
 void AsassPlayer::TurnOffAllSelectionCircles()
 {
-	if (PlayerState == nullptr) { return; }
-	for (AActor* UnitIt : (((AsassPlayerState*)PlayerState)->ControlledBuildings)) {
+	if (GetPlayerState() == nullptr) { return; }
+	for (AActor* UnitIt : ((GetPlayerState<AsassPlayerState>())->ControlledBuildings)) {
 		AunitBase* Unit = Cast<AunitBase>(UnitIt);
 		if (Unit != nullptr) { Unit->SetDecalVisibility(false); }
 	}
@@ -701,7 +701,7 @@ void AsassPlayer::CreateSelectedUnitsArray(TArray<FHitResult> Hits, int32 Player
 		TurnOffAllSelectionCircles(); 
 		SelectedUnits.Empty(); 
 	}
-	AsassPlayerState* TempPlayerState = ((AsassPlayerState*)PlayerState);
+	AsassPlayerState* TempPlayerState = GetPlayerState<AsassPlayerState>();
 	
 	if (TempPlayerState == nullptr) { return; } //Shouldn't happen
 
@@ -756,7 +756,7 @@ void AsassPlayer::ServerSpawnBuilding_Implementation(AsassPlayerController* Play
 					}
 
 					if (SpawningBuilding) { NewSpawn->SetActorLocation(Hit.Location); }
-					AsassPlayerState* SassPlayerState = Cast<AsassPlayerState>(PlayerState);
+					AsassPlayerState* SassPlayerState = GetPlayerState<AsassPlayerState>();
 					if (SassPlayerState != nullptr) {
 						SassPlayerState->ControlledBuildings.Add(NewSpawn);
 						NewSpawn->SetOwner(PlayerController);
@@ -874,7 +874,7 @@ bool AsassPlayer::ColorPlayer_Validate(FLinearColor PlayerColor)
 bool AsassPlayer::CheckUnitLocation(FVector Center, FRotator Rotator, int32 PlayerID) {
 	TArray<AActor*> nullArray;
 	FHitResult Hit;
-	if (UKismetSystemLibrary::LineTraceSingle_NEW(GetWorld(), Center + FVector(0, 0, 55.0f), Center - FVector(0, 0, 15.0f), UEngineTypes::ConvertToTraceType(ECollisionChannel::ECC_GameTraceChannel1), false, nullArray, EDrawDebugTrace::ForOneFrame, Hit, true)) {
+	if (UKismetSystemLibrary::LineTraceSingle(GetWorld(), Center + FVector(0, 0, 55.0f), Center - FVector(0, 0, 15.0f), UEngineTypes::ConvertToTraceType(ECollisionChannel::ECC_GameTraceChannel1), false, nullArray, EDrawDebugTrace::ForOneFrame, Hit, true)) {
 		if (AbuildingBase* Bldg = Cast<AbuildingBase>(Hit.GetActor())) {
 			if (Bldg->OwningPlayerID == PlayerID) {
 				GEngine->AddOnScreenDebugMessage(-1, GetWorld()->DeltaTimeSeconds, FColor::Emerald, "SassPlayer CheckUnitLocation: good spawn inside TERRITORY");
@@ -918,7 +918,7 @@ bool AsassPlayer::CheckBldgCorners(TArray<FVector> ExtraLocs, FVector Center, FR
 	for (FVector Loc : ExtraLocs) {
 		float Magnitude = Loc.Size2D();
 		FVector Displacement = (Loc.Rotation() + Rotator).Vector()*Magnitude;
-		if (UKismetSystemLibrary::LineTraceSingle_NEW(GetWorld(), Center + Displacement + FVector(0, 0, 65.0f), Center + Displacement - FVector(0, 0, 15.0f), UEngineTypes::ConvertToTraceType(ECollisionChannel::ECC_GameTraceChannel1), false, nullArray, EDrawDebugTrace::ForOneFrame, Hit, true)){
+		if (UKismetSystemLibrary::LineTraceSingle(GetWorld(), Center + Displacement + FVector(0, 0, 65.0f), Center + Displacement - FVector(0, 0, 15.0f), UEngineTypes::ConvertToTraceType(ECollisionChannel::ECC_GameTraceChannel1), false, nullArray, EDrawDebugTrace::ForOneFrame, Hit, true)){
 			if (AbuildingBase* Bldg = Cast<AbuildingBase>(Hit.GetActor())) {
 				if (Bldg->OwningPlayerID != PlayerID) {
 					GEngine->AddOnScreenDebugMessage(-1, GetWorld()->DeltaTimeSeconds, FColor::Emerald, "SassPlayer CheckBldgCorners: OVERLAPS ENEMY TERRITORY");
@@ -934,7 +934,7 @@ bool AsassPlayer::CheckBldgCorners(TArray<FVector> ExtraLocs, FVector Center, FR
 
 	if (isCity) {
 		TArray<FHitResult> SphereHits;
-		UKismetSystemLibrary::SphereTraceMulti_NEW(GetWorld(), Center, Center + FVector(0,0,1), USassCStaticLibrary::CityDefaultInfluenceRange(), UEngineTypes::ConvertToTraceType(ECollisionChannel::ECC_GameTraceChannel1), false, nullArray, EDrawDebugTrace::ForOneFrame, SphereHits, true);
+		UKismetSystemLibrary::SphereTraceMulti(GetWorld(), Center, Center + FVector(0,0,1), USassCStaticLibrary::CityDefaultInfluenceRange(), UEngineTypes::ConvertToTraceType(ECollisionChannel::ECC_GameTraceChannel1), false, nullArray, EDrawDebugTrace::ForOneFrame, SphereHits, true);
 		for (FHitResult AHit : SphereHits) {
 			if (AbuildingBase* Bldg = Cast<AbuildingBase>(AHit.GetActor())) {
 				if (Bldg->OwningPlayerID != PlayerID) {

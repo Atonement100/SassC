@@ -13,18 +13,18 @@ AbuildingBase::AbuildingBase()
 	SceneComponent = CreateDefaultSubobject<USceneComponent>(TEXT("Root"));
 	SceneComponent->SetRelativeLocation(FVector::ZeroVector);
 	RootComponent = SceneComponent;
-	bReplicateMovement = true;
+	SetReplicateMovement(true);
 	bAlwaysRelevant = true;
 	bNetLoadOnClient = true;
 	bReplicates = true;
 
 	BuildingMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Building Mesh"));
-	BuildingMesh->AttachTo(RootComponent);
+	BuildingMesh->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepWorldTransform);
 	BuildingMesh->SetRelativeLocation(FVector(0, 0, 1));
 	BuildingMesh->SetRelativeScale3D(FVector(1.905));	//1.905 is the Hammer -> UE conversion
 
 	BuildingCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("Building Collision"));
-	BuildingCollision->AttachTo(RootComponent);
+	BuildingCollision->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepWorldTransform);
 	BuildingCollision->SetBoxExtent(CollisionBounds);
 	BuildingCollision->SetRelativeLocation(CollisionDisplacement);
 
@@ -105,7 +105,9 @@ UStaticMeshComponent* AbuildingBase::GetMesh(int MeshIndex)
 
 void AbuildingBase::NetFixSpawnLocation_Implementation(FVector RealLocation)
 {
-	Role = ROLE_Authority; //This is a horrible thing to do, but spawns are not sent to client with precision beyond int. I can only pray that the buildings do not rise up and attempt to take over servers. If that happens, we may all be doomed.
+	SetRole(ROLE_Authority); 
+	//This is a horrible thing to do, but spawns are not sent to client with precision beyond int. 
+	//I can only pray that the buildings do not rise up and attempt to take over servers. If that happens, we may all be doomed.
 	//SetActorLocation(RealLocation + FVector(10));
 	SetActorLocation(RealLocation);
 }

@@ -68,7 +68,7 @@ TArray<Awall*> Awall::FindWallTowersInRange(float Range, TArray<AActor*> ActorsT
 {
 	TArray<AActor*> IgnoreArray = ActorsToIgnore;
 	TArray<FHitResult> SphereHits;
-	UKismetSystemLibrary::SphereTraceMulti_NEW(GetWorld(), this->GetActorLocation(), this->GetActorLocation() + FVector(0, 0, 1), Range, UEngineTypes::ConvertToTraceType(ECollisionChannel::ECC_GameTraceChannel3), true, IgnoreArray, EDrawDebugTrace::ForOneFrame, SphereHits, true);
+	UKismetSystemLibrary::SphereTraceMulti(GetWorld(), this->GetActorLocation(), this->GetActorLocation() + FVector(0, 0, 1), Range, UEngineTypes::ConvertToTraceType(ECollisionChannel::ECC_GameTraceChannel3), true, IgnoreArray, EDrawDebugTrace::ForOneFrame, SphereHits, true);
 	TArray<Awall*> WallsInRange;
 	for (FHitResult Hit : SphereHits) {
 		if (!WallsInRange.Contains(Hit.GetActor()) && Hit.GetActor()->IsA(Awall::StaticClass())) {
