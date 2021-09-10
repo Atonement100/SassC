@@ -15,18 +15,19 @@ UCLASS()
 class SASSC_API AWallSegment : public ABuildingBase
 {
 	GENERATED_BODY()
-	
+
 public:
 	AWallSegment();
 	virtual void PostInitializeComponents() override;
 	virtual void BeginPlay() override;
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const;
-	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, class AActor* DamageCauser) override;
+	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent,
+	                         class AController* EventInstigator, class AActor* DamageCauser) override;
 	virtual void Tick(float DeltaSeconds) override;
 
 #pragma region Upgradeable Building Overrides
-	void TryRemove(ABuildingBase * RemoveFrom, bool IsLeftConnection);
-	int TryConnection(ABuildingBase * Connection, TArray<ABuildingBase*> &ConnectedBldgs, int8 Depth, bool TryLeft);
+	void TryRemove(ABuildingBase* RemoveFrom, bool IsLeftConnection);
+	int TryConnection(ABuildingBase* Connection, TArray<ABuildingBase*>& ConnectedBldgs, int8 Depth, bool TryLeft);
 	void HideMesh() override;
 	void ShowMesh() override;
 	virtual void PreviewUpgrade_Implementation() override;
@@ -42,7 +43,7 @@ public:
 	ABuildingBase* LeftConnection;
 	UPROPERTY(Replicated)
 	ABuildingBase* RightConnection;
-	
+
 	/*
 	UFUNCTION(Reliable, Server, WithValidation)
 	void FixSpawnLocation(FVector RealLocation);
@@ -65,12 +66,12 @@ protected:
 	AActor* TempRightWall;
 	UPROPERTY(Replicated)
 	int8 DamageLevel = 0;
-	
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Wall Segment")
 	UStaticMeshComponent* DamageOneMesh;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Wall Segment")
 	UStaticMeshComponent* DamageTwoMesh;
-	
+
 	/*
 	UFUNCTION(Reliable, NetMulticast, WithValidation)
 	void NetFixSpawnLocation(FVector RealLocation);

@@ -8,12 +8,13 @@
 class ABuildingBase;
 
 UENUM()
-enum class EProcessingCommandType : uint8 {
-	ORDER_IDLE			UMETA(DisplayName = "Idle"),
-	ORDER_UNIT			UMETA(DisplayName = "Unit"),
-	ORDER_BUILDING		UMETA(DisplayName = "Building"),
-	ORDER_WORLD			UMETA(DisplayName = "World"),
-	ORDER_STATIC_UNIT	UMETA(DisplayName = "StaticUnit")
+enum class EProcessingCommandType : uint8
+{
+	ORDER_IDLE UMETA(DisplayName = "Idle"),
+	ORDER_UNIT UMETA(DisplayName = "Unit"),
+	ORDER_BUILDING UMETA(DisplayName = "Building"),
+	ORDER_WORLD UMETA(DisplayName = "World"),
+	ORDER_STATIC_UNIT UMETA(DisplayName = "StaticUnit")
 };
 
 UCLASS()
@@ -26,21 +27,27 @@ public:
 	AUnitBase();
 
 	virtual void BeginPlay() override;
-	virtual void Tick( float DeltaSeconds ) override;
+	virtual void Tick(float DeltaSeconds) override;
 	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
 	virtual void PostInitializeComponents() override;
 
 	UFUNCTION()
-	virtual void OnOverlapBegin_DetectionSphere(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	virtual void OnOverlapBegin_DetectionSphere(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
+	                                            UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep,
+	                                            const FHitResult& SweepResult);
 	UFUNCTION()
-	virtual void OnOverlapEnd_DetectionSphere(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+	virtual void OnOverlapEnd_DetectionSphere(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
+	                                          UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 	UFUNCTION()
-	virtual void OnOverlapBegin_AggroSphere(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	virtual void OnOverlapBegin_AggroSphere(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
+	                                        UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep,
+	                                        const FHitResult& SweepResult);
 	UFUNCTION()
-	virtual void OnOverlapEnd_AggroSphere(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+	virtual void OnOverlapEnd_AggroSphere(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
+	                                      UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 
 	UFUNCTION(BlueprintCallable, Category = "Spawnables Functions")
-	virtual void SetDecalVisibility(bool isVisible);
+	virtual void SetDecalVisibility(bool bIsVisible);
 
 	UFUNCTION(BlueprintCallable, Category = "Spawnables Functions")
 	virtual void UpdateMaterial(FLinearColor PlayerColor);
@@ -99,7 +106,8 @@ public:
 	UDecalComponent* SelectionCircleDecal;
 
 	UFUNCTION()
-	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, class AActor* DamageCauser);
+	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent,
+	                         class AController* EventInstigator, class AActor* DamageCauser);
 
 	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadOnly, Category = "Unit Base")
 	int32 OwningPlayerID;
@@ -109,6 +117,15 @@ public:
 
 	UFUNCTION()
 	float GetHealth();
+
+	UFUNCTION()
+	virtual float GetAttackRange();
+
+	UFUNCTION()
+	virtual float GetAggroRange();
+
+	UFUNCTION()
+	virtual UClass* GetProjectileClass();
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Unit Base")
 	FVector TraceSize = FVector(5, 5, 10);
@@ -152,12 +169,18 @@ protected:
 	float TimeSinceOrdered = 0.0f;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
 	float TimeSinceAttack = 0.0f;
+	
+	const int SelectionSphereScaleMod = 100; //this should never ever be changed
+	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Unit Base")
 	float AttackDelay = 2.0f;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Unit Base")
 	float AttackRange = 13.0f;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Unit Base")
 	float AttackDamage = 15.0f;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Unit Base")
+	float AggroRange = GetAttackRange() / SelectionSphereScaleMod;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
 	TArray<AActor*> EnemiesInRange;
 	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
@@ -165,8 +188,6 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Unit Base") //Used for units with projectiles
 	UClass* ProjectileClass;
 
-	const int SelectionSphereScaleMod = 100; //this should never ever be changed
-	
 	UFUNCTION(Reliable, NetMulticast, WithValidation)
 	void NetFixSpawnLocation(FVector RealLocation);
 	virtual void NetFixSpawnLocation_Implementation(FVector RealLocation);

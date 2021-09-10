@@ -12,21 +12,20 @@ class SASSC_API ASassGameState : public AGameState
 	GENERATED_BODY()
 
 	ASassGameState();
-	
-public:
 
+public:
 	virtual void Tick(float DeltaSeconds) override;
-	
+
 	UPROPERTY(Replicated, BlueprintReadWrite)
-		float TimeKeeper = 0.0f;
+	float TimeKeeper = 0.0f;
 	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite)
-		float WarmUpTime = 10.0f;
+	float WarmUpTime = 10.0f;
 	UPROPERTY(Replicated, BlueprintReadWrite)
-		bool WinnerDeclared = false;
+	bool WinnerDeclared = false;
 	UPROPERTY(Replicated, BlueprintReadWrite)
-		bool PreGameActive = true;
+	bool PreGameActive = true;
 	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite)
-		float GoldGoal = 800.0f;
+	float GoldGoal = 800.0f;
 
 
 	UFUNCTION(Reliable, NetMulticast, WithValidation)
@@ -39,8 +38,6 @@ public:
 	virtual void LateStart_Implementation();
 	virtual bool LateStart_Validate();
 
-	
+
 private:
-	
-	
-	};
+};

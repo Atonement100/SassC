@@ -17,7 +17,7 @@ class SASSC_API ATower : public ABuildingBase
 	virtual void PostInitializeComponents() override;
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaSeconds) override;
-	
+
 public:
 #pragma region Upgradeable Building Overrides
 	virtual void PreviewUpgrade_Implementation() override;
@@ -33,5 +33,4 @@ protected:
 	UStaticMeshComponent* UpgradeOneMesh;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Tower")
 	UStaticMeshComponent* UpgradeTwoMesh;
-
 };

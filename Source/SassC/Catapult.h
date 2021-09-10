@@ -12,11 +12,14 @@ UCLASS()
 class SASSC_API ACatapult : public AUnitBase
 {
 	GENERATED_BODY()
-		ACatapult();
+	ACatapult();
+
+	virtual float GetAttackRange() override;
+	
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Unit Base")
-		float CatapultAttackRange = 60.0f;
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Building Base")
-		UBoxComponent* UnitCollision;
+	float AttackRange123 = 60.0f;
 	
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
+	UBoxComponent* UnitCollision;
 };

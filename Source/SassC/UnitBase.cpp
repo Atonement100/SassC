@@ -19,10 +19,10 @@ AUnitBase::AUnitBase()
 {
 	PrimaryActorTick.bCanEverTick = true;
 	NetUpdateFrequency = 30.0f;
-	
+
 	UnderUnitDecal = CreateDefaultSubobject<UDecalComponent>(TEXT("Under Unit Decal"));
 	UnderUnitDecal->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepWorldTransform);
-	UnderUnitDecal->FadeScreenSize = 0.0f;
+	UnderUnitDecal->SetFadeScreenSize(0.0f);
 	UnderUnitDecal->SetRelativeLocationAndRotation(FVector(0, 0, -10.2f), FQuat(FRotator(-90.0f, 0, 0)));
 	UnderUnitDecal->SetRelativeScale3D(FVector(10, 5, 5));
 	UnderUnitDecal->DecalSize = FVector(1, 1, 1);
@@ -30,7 +30,7 @@ AUnitBase::AUnitBase()
 	SelectionCircleDecal = CreateDefaultSubobject<UDecalComponent>(TEXT("Selection Circle Decal"));
 	SelectionCircleDecal->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepWorldTransform);
 	SelectionCircleDecal->SetVisibleFlag(false);
-	SelectionCircleDecal->FadeScreenSize = 0.0f;
+	SelectionCircleDecal->SetFadeScreenSize(0.0f);
 	SelectionCircleDecal->SetRelativeLocationAndRotation(FVector(0, 0, -9), FQuat(FRotator(-90.0f, 0, 0)));
 	SelectionCircleDecal->SetRelativeScale3D(FVector(10, 5, 5));
 	SelectionCircleDecal->DecalSize = FVector(1, 1, 1);
@@ -47,7 +47,8 @@ AUnitBase::AUnitBase()
 	AggroSphere->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepWorldTransform);
 	AggroSphere->OnComponentBeginOverlap.AddDynamic(this, &AUnitBase::OnOverlapBegin_AggroSphere);
 	AggroSphere->OnComponentEndOverlap.AddDynamic(this, &AUnitBase::OnOverlapEnd_AggroSphere);
-	AggroSphere->SetWorldScale3D(FVector(AttackRange / SelectionSphereScaleMod));
+	AggroSphere->SetWorldScale3D(FVector(AUnitBase::GetAggroRange()));
+
 	//Decide if I want to have smaller aggro radius than attack range for idle characters... This would cause some issues with aggroing 
 	//In situations where someone on the offensive sends units /near/ and enemy but does not click him. Maybe lower aggro radius after
 	//A period of idle time to offset this?
@@ -62,10 +63,9 @@ AUnitBase::AUnitBase()
 	CharMoveComp->MaxStepHeight = 0;
 	CharMoveComp->MaxWalkSpeed = 50.0f;
 	CharMoveComp->MaxWalkSpeedCrouched = 50.0f;
-
 }
 
-void AUnitBase::GetLifetimeReplicatedProps(TArray<FLifetimeProperty> &OutLifetimeProps) const
+void AUnitBase::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 	DOREPLIFETIME(AUnitBase, OwningPlayerID);
@@ -73,47 +73,66 @@ void AUnitBase::GetLifetimeReplicatedProps(TArray<FLifetimeProperty> &OutLifetim
 	DOREPLIFETIME(AUnitBase, Health);
 }
 
-void AUnitBase::PostInitializeComponents() {
+void AUnitBase::PostInitializeComponents()
+{
 	Super::PostInitializeComponents();
 	if (GetMesh()) { UnitMeshMaterialDynamic = GetMesh()->CreateDynamicMaterialInstance(0, GetMesh()->GetMaterial(0)); }
 }
 
 
-void AUnitBase::OnOverlapBegin_DetectionSphere(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) {
-	AsassPlayer* PlayerCharacterRef = (AsassPlayer*)UGameplayStatics::GetPlayerCharacter(this, 0);
+void AUnitBase::OnOverlapBegin_DetectionSphere(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor,
+                                               class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex,
+                                               bool bFromSweep, const FHitResult& SweepResult)
+{
+	ASassPlayer* PlayerCharacterRef = (ASassPlayer*)UGameplayStatics::GetPlayerCharacter(this, 0);
 
-	if (PlayerCharacterRef != nullptr && OtherActor == PlayerCharacterRef->GetSelectionSphereHolder()) {
+	if (PlayerCharacterRef != nullptr && OtherActor == PlayerCharacterRef->GetSelectionSphereHolder())
+	{
 		ASassPlayerState* PlayerStateRef = PlayerCharacterRef->GetPlayerState<ASassPlayerState>();
-		if (PlayerStateRef != nullptr && this->OwningPlayerID == PlayerStateRef->GetPlayerId()) {
+		if (PlayerStateRef != nullptr && this->OwningPlayerID == PlayerStateRef->GetPlayerId())
+		{
 			SetDecalVisibility(true);
 		}
 	}
 }
 
-void AUnitBase::OnOverlapEnd_DetectionSphere(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex) {
-	AsassPlayer* PlayerCharacterRef = (AsassPlayer*)UGameplayStatics::GetPlayerCharacter(this, 0);
+void AUnitBase::OnOverlapEnd_DetectionSphere(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor,
+                                             class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+{
+	ASassPlayer* PlayerCharacterRef = (ASassPlayer*)UGameplayStatics::GetPlayerCharacter(this, 0);
 
-	if (PlayerCharacterRef != nullptr && OtherActor == PlayerCharacterRef->GetSelectionSphereHolder()) {
+	if (PlayerCharacterRef != nullptr && OtherActor == PlayerCharacterRef->GetSelectionSphereHolder())
+	{
 		ASassPlayerState* PlayerStateRef = PlayerCharacterRef->GetPlayerState<ASassPlayerState>();
-		if (PlayerStateRef != nullptr && this->OwningPlayerID == PlayerStateRef->GetPlayerId()) {
+		if (PlayerStateRef != nullptr && this->OwningPlayerID == PlayerStateRef->GetPlayerId())
+		{
 			SetDecalVisibility(false);
 		}
 	}
 }
 
-void AUnitBase::OnOverlapBegin_AggroSphere(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) {
-	if (OtherActor != this && !OtherComp->ComponentHasTag(USassCStaticLibrary::NoAggroTag())) {
-		if (OtherActor->IsA(AUnitBase::StaticClass()) && Cast<AUnitBase>(OtherActor)->OwningPlayerID != OwningPlayerID) {
+void AUnitBase::OnOverlapBegin_AggroSphere(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor,
+                                           class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep,
+                                           const FHitResult& SweepResult)
+{
+	if (OtherActor != this && !OtherComp->ComponentHasTag(USassCStaticLibrary::NoAggroTag()))
+	{
+		if (OtherActor->IsA(AUnitBase::StaticClass()) && Cast<AUnitBase>(OtherActor)->OwningPlayerID != OwningPlayerID)
+		{
 			EnemiesInRange.Add(OtherActor);
 		}
-		else if (OtherActor->IsA(ABuildingBase::StaticClass()) && Cast<ABuildingBase>(OtherActor)->OwningPlayerID != OwningPlayerID) {
+		else if (OtherActor->IsA(ABuildingBase::StaticClass()) && Cast<ABuildingBase>(OtherActor)->OwningPlayerID !=
+			OwningPlayerID)
+		{
 			EnemiesInRange.Add(OtherActor);
 			if (OtherActor == BuildingToAttack) { ReachedBuilding = true; }
 		}
 	}
 }
 
-void AUnitBase::OnOverlapEnd_AggroSphere(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex) {
+void AUnitBase::OnOverlapEnd_AggroSphere(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor,
+                                         class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+{
 	if (!OtherActor) return;
 	EnemiesInRange.Remove(OtherActor);
 	if (OtherActor == BuildingToAttack) { ReachedBuilding = false; }
@@ -129,154 +148,198 @@ void AUnitBase::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 	TimeSinceAttack += DeltaTime;
 
-	switch (ActiveCommandType) {
+	switch (ActiveCommandType)
+	{
 	case EProcessingCommandType::ORDER_IDLE:
-		if (EnemiesInRange.Num() > 0 && TimeSinceAttack > AttackDelay && EnemiesInRange[0]) {
-			if (AUnitBase* Unit = Cast<AUnitBase>(EnemiesInRange[0])) {
-				if (Unit->OwningPlayerID != this->OwningPlayerID) {
+		if (EnemiesInRange.Num() > 0 && TimeSinceAttack > AttackDelay && EnemiesInRange[0])
+		{
+			if (AUnitBase* Unit = Cast<AUnitBase>(EnemiesInRange[0]))
+			{
+				if (Unit->OwningPlayerID != this->OwningPlayerID)
+				{
 					MoveToUnit(Unit, true);
 				}
-				else {
+				else
+				{
 					EnemiesInRange.RemoveAt(0);
 				}
 			}
-			else if (ABuildingBase* Bldg = Cast<ABuildingBase>(EnemiesInRange[0])) {
-				if (Bldg->OwningPlayerID != this->OwningPlayerID) {
+			else if (ABuildingBase* Bldg = Cast<ABuildingBase>(EnemiesInRange[0]))
+			{
+				if (Bldg->OwningPlayerID != this->OwningPlayerID)
+				{
 					MoveToBuilding(Bldg);
 				}
-				else {
+				else
+				{
 					EnemiesInRange.RemoveAt(0);
 				}
 			}
 		}
-		else if (IsAttacking && EnemiesInRange.Num() == 0) {
+		else if (IsAttacking && EnemiesInRange.Num() == 0)
+		{
 			SetIsAttacking(false);
 		}
 		break;
 	case EProcessingCommandType::ORDER_STATIC_UNIT:
-		if (ActorToFollow) {
+		if (ActorToFollow)
+		{
 			OrderDirection = ActorToFollow->GetActorLocation() - GetActorLocation();
-			if (OrderDirection.Size() < AttackRange) {
-				SetActorRotation(FRotator(0,OrderDirection.Rotation().Yaw,0));
-				if (TimeSinceAttack > AttackDelay){
+			if (OrderDirection.Size() < AttackRange)
+			{
+				SetActorRotation(FRotator(0, OrderDirection.Rotation().Yaw, 0));
+				if (TimeSinceAttack > AttackDelay)
+				{
 					GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Green, "Static Attack!!");
 					TimeSinceAttack = 0.0f;
-					if (ActorToFollow->GetHealth() > 0) {
+					if (ActorToFollow->GetHealth() > 0)
+					{
 						Attack(ActorToFollow);
 						if (!IsAttacking) SetIsAttacking(true);
 					}
-					else {
+					else
+					{
 						ActorToFollow = nullptr;
 						SwitchToIdle();
-						GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Silver, "Static Attack target has been killed");
+						GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Silver,
+						                                 "Static Attack target has been killed");
 					}
 				}
 			}
-			else {
+			else
+			{
 				ActorToFollow = nullptr;
 				SwitchToIdle();
 			}
 		}
-		else {
+		else
+		{
 			SwitchToIdle();
 			GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Silver, "UnitBase Unit Attack Chase Complete");
 		}
-	
+
 		break;
-	case EProcessingCommandType::ORDER_WORLD: 
+	case EProcessingCommandType::ORDER_WORLD:
 		AddMovementInput(OrderDirection, 1.0f);
 		TimeSinceOrdered += DeltaTime;
-		if ((OrderDestination - GetActorLocation()).Size2D() < 5.0f || TimeSinceOrdered > MaxTimeToMove) {
+		if ((OrderDestination - GetActorLocation()).Size2D() < 5.0f || TimeSinceOrdered > MaxTimeToMove)
+		{
 			GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Cyan, "UnitBase Movement Complete");
 			SwitchToIdle();
 		}
-	
+
 		break;
-	case EProcessingCommandType::ORDER_UNIT: 
-		if (ActorToFollow) {
+	case EProcessingCommandType::ORDER_UNIT:
+		if (ActorToFollow)
+		{
 			OrderDirection = ActorToFollow->GetActorLocation() - GetActorLocation();
 			if (OrderDirection.Size() > AttackRange) AddMovementInput(OrderDirection, 1.0f);
 			SetActorRotation(FRotator(0, OrderDirection.Rotation().Yaw, 0));
 
-			if (OrderDirection.Size() < AttackRange && TimeSinceAttack > AttackDelay) { //No need to check if unit is friendly or hostile for this attack, as "ActorToFollow" can only ever be hostile.
+			if (OrderDirection.Size() < AttackRange && TimeSinceAttack > AttackDelay)
+			{
+				//No need to check if unit is friendly or hostile for this attack, as "ActorToFollow" can only ever be hostile.
 				GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Green, "Attack!!");
 				TimeSinceAttack = 0.0f;
-				if (ActorToFollow->GetHealth() > 0) {
+				if (ActorToFollow->GetHealth() > 0)
+				{
 					Attack(ActorToFollow);
 					if (!IsAttacking) SetIsAttacking(true);
 				}
-				else {
+				else
+				{
 					ActorToFollow = nullptr;
-					GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Silver, "UnitBase Unit Attack Chase Complete (target has been killed)");
+					GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Silver,
+					                                 "UnitBase Unit Attack Chase Complete (target has been killed)");
 					SwitchToIdle();
 				}
 			}
 		}
-		else {
+		else
+		{
 			GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Silver, "UnitBase Unit Attack Chase Complete");
 			SwitchToIdle();
 		}
-	
-		break;
-	case EProcessingCommandType::ORDER_BUILDING: 
 
-		if (BuildingToAttack && BuildingToAttack->GetHealth() > 0) {
-			if (!ReachedBuilding) {
+		break;
+	case EProcessingCommandType::ORDER_BUILDING:
+
+		if (BuildingToAttack && BuildingToAttack->GetHealth() > 0)
+		{
+			if (!ReachedBuilding)
+			{
 				OrderDirection = BuildingToAttack->GetActorLocation() - this->GetActorLocation();
 				AddMovementInput(OrderDirection, 1.0f);
 				if (IsAttacking) SetIsAttacking(false);
 
 				TimeSinceOrdered += DeltaTime;
-				if (TimeSinceOrdered > MaxTimeToMove) {
-					GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Green, "Unitbase could not move to building in time");
+				if (TimeSinceOrdered > MaxTimeToMove)
+				{
+					GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Green,
+					                                 "Unitbase could not move to building in time");
 					SwitchToIdle();
 				}
 			}
-			else if (TimeSinceAttack > AttackDelay) {
-				if (BuildingToAttack->GetHealth() > 0) {
+			else if (TimeSinceAttack > AttackDelay)
+			{
+				if (BuildingToAttack->GetHealth() > 0)
+				{
 					GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Green, "UnitBase: City attack");
 					Attack(BuildingToAttack);
 					if (!IsAttacking) SetIsAttacking(true);
 				}
-				else {
-					GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Orange, "UnitBase Building Attack Complete (target has been killed)");
+				else
+				{
+					GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Orange,
+					                                 "UnitBase Building Attack Complete (target has been killed)");
 					BuildingToAttack = nullptr;
 					SwitchToIdle();
 				}
 			}
 		}
-		else {
+		else
+		{
 			SwitchToIdle();
 		}
-	
+
 		break;
-	default: 
+	default:
 		SwitchToIdle();
 		break;
 	}
 }
 
-void AUnitBase::SwitchToIdle() {
+void AUnitBase::SwitchToIdle()
+{
 	ActiveCommandType = EProcessingCommandType::ORDER_IDLE;
 	if (IsAttacking) SetIsAttacking(false);
-
 }
 
-void AUnitBase::Attack_Implementation(AActor* Target) {
+void AUnitBase::Attack_Implementation(AActor* Target)
+{
 	this->TimeSinceAttack = 0.0f;
 
-	if (!Target) {
+	if (!Target)
+	{
 		SetIsAttacking(false);
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, "UnitBase Attack: Attack failed, target does not exist");
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green,
+		                                 "UnitBase Attack: Attack failed, target does not exist");
 		return;
 	}
 
 	const FDamageEvent DamageInfo = FDamageEvent();
 	Target->TakeDamage(this->AttackDamage, DamageInfo, nullptr, this);
-	this->SetActorRotation(FRotator(0, UKismetMathLibrary::FindLookAtRotation(this->GetActorLocation(), Target->GetActorLocation()).Yaw, 0));
+	this->SetActorRotation(FRotator(
+		0, UKismetMathLibrary::FindLookAtRotation(this->GetActorLocation(), Target->GetActorLocation()).Yaw, 0));
+
+	if (this->GetProjectileClass())
+	{
+		SpawnProjectile(Target->GetActorLocation());
+	}
 }
 
-bool AUnitBase::Attack_Validate(AActor* Target) {
+bool AUnitBase::Attack_Validate(AActor* Target)
+{
 	return true;
 }
 
@@ -284,7 +347,8 @@ void AUnitBase::SpawnProjectile_Implementation(FVector TargetLocation)
 {
 	//This and related functions are not expressed in unitBase because each projectile-shooting 
 	//unit has the potential for very unreleated projectile logic.
-	FVector TargetDisplacement = ((TargetLocation + FVector(0,0,this->GetCapsuleComponent()->GetScaledCapsuleHalfHeight())) - this->GetActorLocation());
+	FVector TargetDisplacement = ((TargetLocation + FVector(
+		0, 0, this->GetCapsuleComponent()->GetScaledCapsuleHalfHeight())) - this->GetActorLocation());
 
 	FActorSpawnParameters TempParams = FActorSpawnParameters();
 	TempParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
@@ -303,19 +367,23 @@ bool AUnitBase::SpawnProjectile_Validate(FVector TargetLocation)
 }
 
 
-void AUnitBase::StartAttackAnimation_Implementation() {
+void AUnitBase::StartAttackAnimation_Implementation()
+{
 	this->IsAttacking = true;
 }
 
-bool AUnitBase::StartAttackAnimation_Validate() {
+bool AUnitBase::StartAttackAnimation_Validate()
+{
 	return true;
 }
 
-void AUnitBase::StopAttackAnimation_Implementation() {
+void AUnitBase::StopAttackAnimation_Implementation()
+{
 	this->IsAttacking = false;
 }
 
-bool AUnitBase::StopAttackAnimation_Validate() {
+bool AUnitBase::StopAttackAnimation_Validate()
+{
 	return true;
 }
 
@@ -334,7 +402,8 @@ void AUnitBase::SetupPlayerInputComponent(class UInputComponent* InputComponent)
 	Super::SetupPlayerInputComponent(InputComponent);
 }
 
-void AUnitBase::MoveToDest_Implementation(FVector Destination) {
+void AUnitBase::MoveToDest_Implementation(FVector Destination)
+{
 	if (IsAttacking)SetIsAttacking(false);
 	OrderDestination = Destination;
 	OrderDirection = Destination - GetActorLocation();
@@ -344,7 +413,8 @@ void AUnitBase::MoveToDest_Implementation(FVector Destination) {
 	ActiveCommandType = EProcessingCommandType::ORDER_WORLD;
 }
 
-bool AUnitBase::MoveToDest_Validate(FVector Destination) {
+bool AUnitBase::MoveToDest_Validate(FVector Destination)
+{
 	return true;
 }
 
@@ -352,10 +422,12 @@ void AUnitBase::MoveToUnit_Implementation(AActor* UnitToAttack, bool IsStaticAtt
 {
 	if (IsAttacking)SetIsAttacking(false);
 	ActorToFollow = Cast<AUnitBase>(UnitToAttack);
-	if (IsStaticAttack) {
+	if (IsStaticAttack)
+	{
 		ActiveCommandType = EProcessingCommandType::ORDER_STATIC_UNIT;
 	}
-	else {
+	else
+	{
 		ActiveCommandType = EProcessingCommandType::ORDER_UNIT;
 	}
 }
@@ -370,7 +442,7 @@ void AUnitBase::MoveToBuilding_Implementation(AActor* BuildingToTarget)
 	if (IsAttacking)SetIsAttacking(false);
 	OrderDirection = BuildingToTarget->GetActorLocation() - GetActorLocation();
 	TimeSinceOrdered = 0;
-	MaxTimeToMove = (OrderDirection.Size() / GetMovementComponent()->GetMaxSpeed()) * 1.4; 
+	MaxTimeToMove = (OrderDirection.Size() / GetMovementComponent()->GetMaxSpeed()) * 1.4;
 	//1.4 is a magic number, just want to give units more time than they should need to make it to buildings, 
 	//but also want to provide a timeout so they are stuck trying to get to a building that's surrounded 
 	//and will fall out to idle and pick up a target that way.
@@ -379,15 +451,18 @@ void AUnitBase::MoveToBuilding_Implementation(AActor* BuildingToTarget)
 	else { ReachedBuilding = false; }
 	ActiveCommandType = EProcessingCommandType::ORDER_BUILDING;
 }
+
 bool AUnitBase::MoveToBuilding_Validate(AActor* BuildingToTarget)
 {
 	return true;
 }
 
-float AUnitBase::TakeDamage(float DamageAmount, FDamageEvent const & DamageEvent, AController * EventInstigator, AActor * DamageCauser)
+float AUnitBase::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator,
+                            AActor* DamageCauser)
 {
 	Health -= DamageAmount;
-	if (Health <= 0.0f) {
+	if (Health <= 0.0f)
+	{
 		SetLifeSpan(0.001f);
 		//need to call for bloodsplat decal here :0
 		GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red, UKismetStringLibrary::Conv_FloatToString(Health));
@@ -402,35 +477,59 @@ void AUnitBase::UpdateMaterial(FLinearColor PlayerColor)
 	ColorUnit(PlayerColor);
 }
 
-void AUnitBase::ColorUnitDecal_Implementation(FLinearColor PlayerColor) {
-	if (UnitDecalMaterialDynamic != nullptr && UnderUnitDecal != nullptr) {
+void AUnitBase::ColorUnitDecal_Implementation(FLinearColor PlayerColor)
+{
+	if (UnitDecalMaterialDynamic != nullptr && UnderUnitDecal != nullptr)
+	{
 		UnitDecalMaterialDynamic->SetVectorParameterValue(ColorParameterName, PlayerColor);
 		UnderUnitDecal->SetDecalMaterial(UnitDecalMaterialDynamic);
 	}
-	else {
+	else
+	{
 		GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Green, "UnitBase ColorUnitDecal: decal doesn't exist");
 	}
 }
 
-bool AUnitBase::ColorUnitDecal_Validate(FLinearColor PlayerColor) {
+bool AUnitBase::ColorUnitDecal_Validate(FLinearColor PlayerColor)
+{
 	return true;
 }
 
-void AUnitBase::ColorUnit_Implementation(FLinearColor PlayerColor) {
+void AUnitBase::ColorUnit_Implementation(FLinearColor PlayerColor)
+{
 	if (UnitMeshMaterialDynamic) UnitMeshMaterialDynamic->SetVectorParameterValue(ColorParameterText, PlayerColor);
 }
 
-bool AUnitBase::ColorUnit_Validate(FLinearColor PlayerColor) {
+bool AUnitBase::ColorUnit_Validate(FLinearColor PlayerColor)
+{
 	return true;
 }
 
-void AUnitBase::SetDecalVisibility(bool isVisible) {
-	if (SelectionCircleDecal) SelectionCircleDecal->SetVisibility(isVisible);
+void AUnitBase::SetDecalVisibility(bool bIsVisible)
+{
+	if (SelectionCircleDecal) SelectionCircleDecal->SetVisibility(bIsVisible);
 }
 
-float AUnitBase::GetHealth() {
+float AUnitBase::GetHealth()
+{
 	return Health;
 }
+
+float AUnitBase::GetAttackRange()
+{
+	return AttackRange;
+}
+
+float AUnitBase::GetAggroRange()
+{
+	return AggroRange;
+}
+
+UClass* AUnitBase::GetProjectileClass()
+{
+	return ProjectileClass;
+}
+
 
 void AUnitBase::FixSpawnLocation_Implementation(FVector RealLocation)
 {

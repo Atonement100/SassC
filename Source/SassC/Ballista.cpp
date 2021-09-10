@@ -3,17 +3,18 @@
 #include "SassC.h"
 #include "Ballista.h"
 
-ABallista::ABallista() {
-	PrimaryActorTick.bCanEverTick = true;
-
-	AggroSphere->SetWorldScale3D(FVector(BallistaAttackRange / SelectionSphereScaleMod));
-
+ABallista::ABallista()
+{
 	UnitCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("Unit Collision"));
 	UnitCollision->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepWorldTransform);
 }
 
-void ABallista::Attack_Implementation(AActor* Target) {
-	if (!Target) return;
+void ABallista::Attack_Implementation(AActor* Target)
+{
 	Super::Attack_Implementation(Target);
-	SpawnProjectile(Target->GetActorLocation());
+}
+
+float ABallista::GetAttackRange()
+{
+	return AttackRange;
 }

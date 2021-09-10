@@ -8,12 +8,13 @@
 #include "Kismet/KismetMathLibrary.h"
 #include "sassGamemode.h"
 
-ASassGamemode::ASassGamemode() {
-
+ASassGamemode::ASassGamemode()
+{
 }
 
 /*Here, we want to assign players their color, and draw their HUD to catch them up if they are late*/
-void ASassGamemode::PostLogin(APlayerController* NewPlayer) {
+void ASassGamemode::PostLogin(APlayerController* NewPlayer)
+{
 	Super::PostLogin(NewPlayer);
 	ASassPlayerState* PlayerState = Cast<ASassPlayerState>(NewPlayer->PlayerState);
 	PlayerState->PlayerColor = ChoosePlayerColor();
@@ -27,4 +28,3 @@ FLinearColor ASassGamemode::ChoosePlayerColor()
 		UKismetMathLibrary::RandomFloatInRange(0, 1),
 		1.0f);
 }
-

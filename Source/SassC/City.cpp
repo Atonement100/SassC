@@ -6,8 +6,8 @@
 #include "Kismet/KismetStringLibrary.h"
 #include "City.h"
 
-ACity::ACity() {
-	PrimaryActorTick.bCanEverTick = true;
+ACity::ACity()
+{
 	/*
 	BuildingMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("City Mesh"));
 	BuildingMesh->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepWorldTransform);
@@ -32,41 +32,42 @@ ACity::ACity() {
 	InfluenceDecal->SetRelativeRotation(FQuat(FRotator(0, -90, 0)));
 	InfluenceDecal->SetRelativeLocation(FVector(.5, 3.5, 3.5));
 	InfluenceDecal->FadeScreenSize = 0.0f;
-
 }
 
-void ACity::PostInitializeComponents() {
+void ACity::PostInitializeComponents()
+{
 	Super::PostInitializeComponents();
-//	BldgMeshMaterialDynamic = BuildingMesh->CreateDynamicMaterialInstance(0, BuildingMesh->GetMaterial(0));
+	//	BldgMeshMaterialDynamic = BuildingMesh->CreateDynamicMaterialInstance(0, BuildingMesh->GetMaterial(0));
 
 
 	//FTransform CollisionTransform = BuildingCollision->GetRelativeTransform();
 	//CollisionTransform.SetLocation(CollisionDisplacement);
-	
+
 	//BuildingCollision->SetRelativeLocation(CollisionDisplacement);
 }
 
-void ACity::BeginPlay() {
+void ACity::BeginPlay()
+{
 	Super::BeginPlay();
-
 }
 
-void ACity::Tick(float DeltaTime) {
+void ACity::Tick(float DeltaTime)
+{
 	Super::Tick(DeltaTime);
 }
 
-void ACity::PostCreation_Implementation(FLinearColor PlayerColor) {
+void ACity::PostCreation_Implementation(FLinearColor PlayerColor)
+{
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, "City has been spawned for a player");
 	AreaOfInfluence->SetWorldScale3D(FVector(3.5f, 3.5f, 0.5f));
-	
 
 	UMaterialInstanceDynamic* DynamicDecal = InfluenceDecal->CreateDynamicMaterialInstance();
 	DynamicDecal->SetVectorParameterValue("PlayerColor", PlayerColor);
 	InfluenceDecal->SetDecalMaterial(DynamicDecal);
 	InfluenceDecal->SetVisibility(true);
-
 }
 
-bool ACity::PostCreation_Validate(FLinearColor PlayerColor) {
+bool ACity::PostCreation_Validate(FLinearColor PlayerColor)
+{
 	return true;
 }

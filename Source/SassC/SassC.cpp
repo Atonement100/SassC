@@ -2,4 +2,4 @@
 
 #include "SassC.h"
 
-IMPLEMENT_PRIMARY_GAME_MODULE( FDefaultGameModuleImpl, SassC, "SassC" );
+IMPLEMENT_PRIMARY_GAME_MODULE(FDefaultGameModuleImpl, SassC, "SassC");

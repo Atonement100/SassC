@@ -13,7 +13,7 @@ UCLASS()
 class SASSC_API USassCStaticLibrary : public UObject
 {
 	GENERATED_BODY()
-	
+
 public:
 	static FORCEINLINE bool Trace(
 		UWorld* World,
@@ -23,7 +23,7 @@ public:
 		FHitResult& HitOut,
 		FCollisionObjectQueryParams& ObjectQueryParams,
 		bool ReturnPhysMat = false
-		)
+	)
 	{
 		if (!World)
 		{
@@ -47,7 +47,7 @@ public:
 		FHitResult& HitOut,
 		FCollisionObjectQueryParams& ObjectQueryParams,
 		bool ReturnPhysMat = false
-		)
+	)
 	{
 		if (!World)
 		{
@@ -71,7 +71,7 @@ public:
 		FHitResult& HitOut,
 		ECollisionChannel CollisionChannel = ECC_Pawn,
 		bool ReturnPhysMat = false
-		) 
+	)
 	{
 		if (!World)
 		{
@@ -86,7 +86,7 @@ public:
 		World->LineTraceSingleByChannel(HitOut, Start, End, CollisionChannel, TraceParams);
 		return (HitOut.GetActor() != NULL);
 	}
-	
+
 	static FORCEINLINE bool Trace(
 		UWorld* World,
 		TArray<AActor*>& ActorsToIgnore,
@@ -95,10 +95,10 @@ public:
 		FHitResult& HitOut,
 		ECollisionChannel CollisionChannel = ECC_Pawn,
 		bool ReturnPhysMat = false
-		) 
+	)
 	{
 		if (!World)
-		{ 
+		{
 			return false;
 		}
 
@@ -111,12 +111,13 @@ public:
 		return (HitOut.GetActor() != NULL);
 	}
 
-	static FName NoAggroTag() {
+	static FName NoAggroTag()
+	{
 		return "NULLIFY_OVERLAP";
 	}
-	
-	static float CityDefaultInfluenceRange() {
+
+	static float CityDefaultInfluenceRange()
+	{
 		return 175.0f;
 	}
-
 };

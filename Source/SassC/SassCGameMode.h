@@ -12,8 +12,4 @@ UCLASS()
 class SASSC_API ASassCGameMode : public AGameMode
 {
 	GENERATED_BODY()
-	
-	
-	
-	
 };

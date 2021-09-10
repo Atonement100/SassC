@@ -22,12 +22,9 @@ AProjectileSmallArrow::AProjectileSmallArrow()
 void AProjectileSmallArrow::BeginPlay()
 {
 	Super::BeginPlay();
-	
 }
 
-void AProjectileSmallArrow::Tick( float DeltaTime )
+void AProjectileSmallArrow::Tick(const float DeltaSeconds)
 {
-	Super::Tick( DeltaTime );
-
+	Super::Tick(DeltaSeconds);
 }
-

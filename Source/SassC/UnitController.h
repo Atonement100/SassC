@@ -15,5 +15,4 @@ class SASSC_API AUnitController : public AAIController
 
 	virtual void OnPossess();
 	virtual void BeginPlay() override;
-
 };

@@ -21,10 +21,13 @@ public:
 
 	virtual void Attack_Implementation(AActor* Target) override;
 	virtual bool Attack_Validate(AActor* Target) override;
+
+	virtual float GetAttackRange() override;
+	
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Unit Base")
-	float ScallywagAttackRange = 70.0f;
-	
+	float AttackRange123 = 70.0f;
+
 	UFUNCTION(Reliable, Server, WithValidation)
 	void AddMeshRelativeLocation(float Velocity);
 	virtual void AddMeshRelativeLocation_Implementation(float Velocity);

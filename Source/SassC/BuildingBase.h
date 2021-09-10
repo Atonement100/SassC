@@ -10,13 +10,13 @@ UCLASS()
 class SASSC_API ABuildingBase : public AActor
 {
 	GENERATED_BODY()
-	
-public:	
+
+public:
 	ABuildingBase();
 
 	virtual void BeginPlay() override;
 	virtual void PostInitializeComponents() override;
-	virtual void Tick( float DeltaSeconds ) override;
+	virtual void Tick(float DeltaSeconds) override;
 
 	/*This function only calls ColorBldg. I believe I set it up this way because ColorBldg is a NetMulticast and needs a server-based actor, such as the bldg itself, to properly call NetMulticast events.*/
 	UFUNCTION(BlueprintCallable, Category = "Spawnables Functions")
@@ -34,7 +34,8 @@ public:
 	int32 OwningPlayerID;
 
 	UFUNCTION()
-	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, class AActor* DamageCauser);
+	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent,
+	                         class AController* EventInstigator, class AActor* DamageCauser);
 
 	UFUNCTION()
 	float GetHealth();
@@ -117,7 +118,4 @@ protected:
 	//For any buildings using these properties, each mesh must be individually declared in the specific blueprint.
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Building Base")
 	uint8 UpgradeLevel = 0;
-
-
-	
 };

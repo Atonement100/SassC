@@ -7,33 +7,43 @@
 #include "WallSegment.h"
 #include "Wall.h"
 
-AWall::AWall() {
+AWall::AWall()
+{
 	PrimaryActorTick.bCanEverTick = true;
 }
 
-void AWall::PostInitializeComponents() {
+void AWall::PostInitializeComponents()
+{
 	Super::PostInitializeComponents();
 }
 
-void AWall::BeginPlay() {
+void AWall::BeginPlay()
+{
 	Super::BeginPlay();
 }
 
-void AWall::Tick(float DeltaTime) {
+void AWall::Tick(float DeltaTime)
+{
 	Super::Tick(DeltaTime);
 }
 
-float AWall::TakeDamage(float DamageAmount, FDamageEvent const & DamageEvent, AController * EventInstigator, AActor * DamageCauser)
+float AWall::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator,
+                        AActor* DamageCauser)
 {
 	DamageAmount = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
-	if (Health <= 0.0f) {
-		for (ABuildingBase* Wall : ConnectedWalls) {
-			if (AWallSegment* WallSegmentCast = Cast<AWallSegment>(Wall)){
-				if (WallSegmentCast->LeftConnection->IsA(AWall::StaticClass())) {
+	if (Health <= 0.0f)
+	{
+		for (ABuildingBase* Wall : ConnectedWalls)
+		{
+			if (AWallSegment* WallSegmentCast = Cast<AWallSegment>(Wall))
+			{
+				if (WallSegmentCast->LeftConnection->IsA(AWall::StaticClass()))
+				{
 					WallSegmentCast->ChangeMesh(true);
 					WallSegmentCast->LeftConnection = nullptr;
 				}
-				else {
+				else
+				{
 					WallSegmentCast->ChangeMesh(false);
 					WallSegmentCast->RightConnection = nullptr;
 				}
@@ -44,16 +54,20 @@ float AWall::TakeDamage(float DamageAmount, FDamageEvent const & DamageEvent, AC
 	return DamageAmount;
 }
 
-AWall* AWall::GetClosestWallTowerInRange(float Range, TArray<AActor*> ActorsToIgnore) {
+AWall* AWall::GetClosestWallTowerInRange(float Range, TArray<AActor*> ActorsToIgnore)
+{
 	TArray<AWall*> Walls = this->FindWallTowersInRange(Range, ActorsToIgnore);
 	if (Walls.Num() == 0) return nullptr;
 	else if (Walls.Num() == 1) return Walls[0];
-	else {
+	else
+	{
 		AWall* WallToReturn = Walls[0];
 		float Dist = (Walls[0]->GetActorLocation() - this->GetActorLocation()).SizeSquared();
-		for (int WallIndex = 1; WallIndex < Walls.Num(); WallIndex++) {
+		for (int WallIndex = 1; WallIndex < Walls.Num(); WallIndex++)
+		{
 			float CompareDist = (Walls[WallIndex]->GetActorLocation() - this->GetActorLocation()).SizeSquared();
-			if (CompareDist < Dist){
+			if (CompareDist < Dist)
+			{
 				Dist = CompareDist;
 				WallToReturn = Walls[WallIndex];
 			}
@@ -68,10 +82,15 @@ TArray<AWall*> AWall::FindWallTowersInRange(float Range, TArray<AActor*> ActorsT
 {
 	TArray<AActor*> IgnoreArray = ActorsToIgnore;
 	TArray<FHitResult> SphereHits;
-	UKismetSystemLibrary::SphereTraceMulti(GetWorld(), this->GetActorLocation(), this->GetActorLocation() + FVector(0, 0, 1), Range, UEngineTypes::ConvertToTraceType(ECollisionChannel::ECC_GameTraceChannel3), true, IgnoreArray, EDrawDebugTrace::ForOneFrame, SphereHits, true);
+	UKismetSystemLibrary::SphereTraceMulti(GetWorld(), this->GetActorLocation(),
+	                                       this->GetActorLocation() + FVector(0, 0, 1), Range,
+	                                       UEngineTypes::ConvertToTraceType(ECollisionChannel::ECC_GameTraceChannel3),
+	                                       true, IgnoreArray, EDrawDebugTrace::ForOneFrame, SphereHits, true);
 	TArray<AWall*> WallsInRange;
-	for (FHitResult Hit : SphereHits) {
-		if (!WallsInRange.Contains(Hit.GetActor()) && Hit.GetActor()->IsA(AWall::StaticClass())) {
+	for (FHitResult Hit : SphereHits)
+	{
+		if (!WallsInRange.Contains(Hit.GetActor()) && Hit.GetActor()->IsA(AWall::StaticClass()))
+		{
 			float Distance = ((Hit.GetActor()->GetActorLocation()) - this->GetActorLocation()).Size();
 			WallsInRange.Add(Cast<AWall>(Hit.GetActor()));
 		}
@@ -103,14 +122,12 @@ TArray<AActor*> AWall::FindWallTowersInRange_Implementation()
 	return TArray<AActor*>();
 }
 
-void AWall::AddConnectedWallSegment_Implementation(ABuildingBase * NewSegment)
+void AWall::AddConnectedWallSegment_Implementation(ABuildingBase* NewSegment)
 {
 	ConnectedWalls.Add(NewSegment);
 }
 
-bool AWall::AddConnectedWallSegment_Validate(ABuildingBase * NewSegment)
+bool AWall::AddConnectedWallSegment_Validate(ABuildingBase* NewSegment)
 {
 	return true;
 }
-
-

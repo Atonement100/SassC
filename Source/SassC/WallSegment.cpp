@@ -7,39 +7,42 @@
 #include "Kismet/KismetStringLibrary.h"
 #include "WallSegment.h"
 
-AWallSegment::AWallSegment() {
+AWallSegment::AWallSegment()
+{
 	PrimaryActorTick.bCanEverTick = true;
 
 	DamageOneMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Damage One Mesh"));
 	DamageOneMesh->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepWorldTransform);
 	DamageTwoMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Damage Two Mesh"));
 	DamageTwoMesh->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepWorldTransform);
-
 }
 
-void AWallSegment::PostInitializeComponents() {
+void AWallSegment::PostInitializeComponents()
+{
 	Super::PostInitializeComponents();
 
 	//These are to include the additional meshes and materials in the dynamic material array, parent only adds one mesh and material by default.
 	BldgMeshMaterialDynamic.Add(DamageOneMesh->CreateDynamicMaterialInstance(0, DamageOneMesh->GetMaterial(0)));
-	BldgMeshMaterialDynamic.Add(DamageTwoMesh->CreateDynamicMaterialInstance(0, DamageTwoMesh->GetMaterial(0))); 
+	BldgMeshMaterialDynamic.Add(DamageTwoMesh->CreateDynamicMaterialInstance(0, DamageTwoMesh->GetMaterial(0)));
 
 	BuildingCollision->SetVisibility(false);
 	BuildingCollision->SetHiddenInGame(true);
 }
 
-void AWallSegment::BeginPlay() {
+void AWallSegment::BeginPlay()
+{
 	Super::BeginPlay();
 }
 
-void AWallSegment::Tick(float DeltaTime) {
+void AWallSegment::Tick(float DeltaTime)
+{
 	Super::Tick(DeltaTime);
 	//if (PreviewActive) { PreviewUpgrade(); }
 	//else if (!DelayReset && ResetRequired) { ResetPreview(); }
 	//DelayReset = false;	
 }
 
-void AWallSegment::GetLifetimeReplicatedProps(TArray<FLifetimeProperty> &OutLifetimeProps) const
+void AWallSegment::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
@@ -48,84 +51,111 @@ void AWallSegment::GetLifetimeReplicatedProps(TArray<FLifetimeProperty> &OutLife
 	DOREPLIFETIME(AWallSegment, DamageLevel);
 }
 
-void AWallSegment::HideMesh() {
+void AWallSegment::HideMesh()
+{
 	BuildingMesh->SetVisibility(false);
 	ResetRequired = true;
 	DelayReset = true;
 }
 
-void AWallSegment::ShowMesh() {
+void AWallSegment::ShowMesh()
+{
 	BuildingMesh->SetVisibility(true);
 	ResetRequired = false;
 }
 
-float AWallSegment::TakeDamage(float DamageAmount, FDamageEvent const & DamageEvent, AController* EventInstigator, AActor* DamageCauser)
+float AWallSegment::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator,
+                               AActor* DamageCauser)
 {
 	DamageAmount = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
-	if (Health <= 0.0f) {
-		if (LeftConnection) {
+	if (Health <= 0.0f)
+	{
+		if (LeftConnection)
+		{
 			TryRemove(LeftConnection, true);
-			if (LeftConnection->IsA(AWallSegment::StaticClass())) { Cast<AWallSegment>(LeftConnection)->ChangeMesh(false); }
+			if (LeftConnection->IsA(AWallSegment::StaticClass()))
+			{
+				Cast<AWallSegment>(LeftConnection)->ChangeMesh(false);
+			}
 		}
-		if (RightConnection) {
+		if (RightConnection)
+		{
 			TryRemove(RightConnection, false);
-			if (RightConnection->IsA(AWallSegment::StaticClass())) { Cast<AWallSegment>(RightConnection)->ChangeMesh(true); }
+			if (RightConnection->IsA(AWallSegment::StaticClass()))
+			{
+				Cast<AWallSegment>(RightConnection)->ChangeMesh(true);
+			}
 		}
-	
-	this->LeftConnection = nullptr;
-	this->RightConnection = nullptr;
 
+		this->LeftConnection = nullptr;
+		this->RightConnection = nullptr;
 	}
-	
+
 	return DamageAmount;
 }
 
-void AWallSegment::TryRemove(ABuildingBase* RemoveFrom, bool IsLeftConnection) {
-	if (AWall* WallTower = Cast<AWall>(RemoveFrom)) {
+void AWallSegment::TryRemove(ABuildingBase* RemoveFrom, bool IsLeftConnection)
+{
+	if (AWall* WallTower = Cast<AWall>(RemoveFrom))
+	{
 		WallTower->ConnectedWalls.Remove(this);
 	}
-	else if (IsLeftConnection) {
-		if (AWallSegment* Left = Cast<AWallSegment>(RemoveFrom)) {
-			if(Left->RightConnection) Left->RightConnection = nullptr;
-			
+	else if (IsLeftConnection)
+	{
+		if (AWallSegment* Left = Cast<AWallSegment>(RemoveFrom))
+		{
+			if (Left->RightConnection) Left->RightConnection = nullptr;
 		}
 	}
-	else if (!IsLeftConnection) {
-		if (AWallSegment* Right = Cast<AWallSegment>(RemoveFrom)) {
-			if(Right->LeftConnection) Right->LeftConnection = nullptr;		
+	else if (!IsLeftConnection)
+	{
+		if (AWallSegment* Right = Cast<AWallSegment>(RemoveFrom))
+		{
+			if (Right->LeftConnection) Right->LeftConnection = nullptr;
 		}
 	}
 }
 
-void AWallSegment::ChangeMesh_Implementation(bool LeftConnectionDestroyed) {
+void AWallSegment::ChangeMesh_Implementation(bool LeftConnectionDestroyed)
+{
 	NetChangeMesh(LeftConnectionDestroyed);
 }
 
-bool AWallSegment::ChangeMesh_Validate(bool LeftConnectionDestroyed){
+bool AWallSegment::ChangeMesh_Validate(bool LeftConnectionDestroyed)
+{
 	return true;
 }
 
-void AWallSegment::NetChangeMesh_Implementation(bool LeftConnectionDestroyed){
-	if (DamageLevel == 0) {
-		if (!LeftConnectionDestroyed) {
+void AWallSegment::NetChangeMesh_Implementation(bool LeftConnectionDestroyed)
+{
+	if (DamageLevel == 0)
+	{
+		if (!LeftConnectionDestroyed)
+		{
 			if (BuildingMesh) BuildingMesh->SetVisibility(false);
-			if (DamageOneMesh) {
+			if (DamageOneMesh)
+			{
 				DamageOneMesh->SetVisibility(true);
-				DamageOneMesh->SetRelativeRotation(FRotator(0, 180.0f, 0)); //Rotate crumbling side towards side without a wall
+				DamageOneMesh->SetRelativeRotation(FRotator(0, 180.0f, 0));
+				//Rotate crumbling side towards side without a wall
 			}
 		}
-		else if (LeftConnectionDestroyed) {
+		else if (LeftConnectionDestroyed)
+		{
 			if (BuildingMesh) BuildingMesh->SetVisibility(false);
-			if (DamageOneMesh) {
+			if (DamageOneMesh)
+			{
 				DamageOneMesh->SetVisibility(true);
-				DamageOneMesh->SetRelativeRotation(FRotator::ZeroRotator); //Shouldn't need to rotate, but for safety purposes.
+				DamageOneMesh->SetRelativeRotation(FRotator::ZeroRotator);
+				//Shouldn't need to rotate, but for safety purposes.
 			}
 		}
 		DamageLevel++;
 	}
-	else if (DamageLevel == 1) {
+	else if (DamageLevel == 1)
+	{
 		if (BuildingMesh) BuildingMesh->SetVisibility(false);
-		if (DamageOneMesh) DamageOneMesh->SetVisibility(false);	//Crumbling on both sides, no need to rotate
+		if (DamageOneMesh) DamageOneMesh->SetVisibility(false); //Crumbling on both sides, no need to rotate
 		if (DamageTwoMesh) DamageTwoMesh->SetVisibility(true);
 		DamageLevel++;
 	}
@@ -136,14 +166,18 @@ bool AWallSegment::NetChangeMesh_Validate(bool LeftConnectionDestroyed)
 	return true;
 }
 
-int AWallSegment::TryConnection(ABuildingBase* Connection, TArray<ABuildingBase*> &ConnectedBldgs, int8 Depth, bool TryLeft) {
+int AWallSegment::TryConnection(ABuildingBase* Connection, TArray<ABuildingBase*>& ConnectedBldgs, int8 Depth,
+                                bool TryLeft)
+{
 	if (!Connection || Depth == 4) return Depth;
-	if (Connection && Connection->IsA(AWallSegment::StaticClass())) {
+	if (Connection && Connection->IsA(AWallSegment::StaticClass()))
+	{
 		Connection->HideMesh();
 		Connection->DelayReset = true;
 		Connection->ResetRequired = true;
 	}
-	else {
+	else
+	{
 		return Depth;
 	}
 	ABuildingBase* NextConnection;
@@ -155,7 +189,8 @@ int AWallSegment::TryConnection(ABuildingBase* Connection, TArray<ABuildingBase*
 	return TryConnection(NextConnection, ConnectedBldgs, Depth + 1, TryLeft);
 }
 
-void AWallSegment::PreviewUpgrade_Implementation() {
+void AWallSegment::PreviewUpgrade_Implementation()
+{
 	/*
 	FActorSpawnParameters TempParams = FActorSpawnParameters();
 	TempParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
@@ -212,7 +247,8 @@ void AWallSegment::PreviewUpgrade_Implementation() {
 	*/
 }
 
-void AWallSegment::ResetPreview_Implementation() {
+void AWallSegment::ResetPreview_Implementation()
+{
 	/*
 	for (AbuildingBase* Wall : GatePreviewArray) {
 		Wall->ShowMesh();
@@ -225,20 +261,22 @@ void AWallSegment::ResetPreview_Implementation() {
 	*/
 }
 
-void AWallSegment::NetUpgradeBuilding_Implementation() {
+void AWallSegment::NetUpgradeBuilding_Implementation()
+{
 	ResetRequired = false;
 }
 
-bool AWallSegment::NetUpgradeBuilding_Validate() {
+bool AWallSegment::NetUpgradeBuilding_Validate()
+{
 	return true;
 }
 
-void AWallSegment::UpgradeBuilding_Implementation() {
+void AWallSegment::UpgradeBuilding_Implementation()
+{
 	NetUpgradeBuilding();
 }
 
-bool AWallSegment::UpgradeBuilding_Validate() {
+bool AWallSegment::UpgradeBuilding_Validate()
+{
 	return true;
 }
-
-

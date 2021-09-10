@@ -6,36 +6,35 @@
 
 AArcher::AArcher()
 {
-	PrimaryActorTick.bCanEverTick = true;
-
-	AggroSphere->SetWorldScale3D(FVector(ArcherAttackRange / SelectionSphereScaleMod));
+	
 }
 
 void AArcher::BeginPlay()
 {
 	Super::BeginPlay();
-
 }
 
-void AArcher::Tick(float DeltaTime)
+void AArcher::Tick(const float DeltaSeconds)
 {
-	Super::Tick(DeltaTime);
-
+	Super::Tick(DeltaSeconds);
 }
 
-void AArcher::SetupPlayerInputComponent(class UInputComponent* InputComponent)
+void AArcher::SetupPlayerInputComponent(UInputComponent* InputComponent)
 {
 	Super::SetupPlayerInputComponent(InputComponent);
-
 }
 
-void AArcher::Attack_Implementation(AActor * Target)
+void AArcher::Attack_Implementation(AActor* Target)
 {
-	if (!Target) return;
 	Super::Attack_Implementation(Target);
-	SpawnProjectile(Target->GetActorLocation());
 }
 
-bool AArcher::Attack_Validate(AActor* Target) {
+bool AArcher::Attack_Validate(AActor* Target)
+{
 	return true;
+}
+
+float AArcher::GetAttackRange()
+{
+	return AttackRange;
 }

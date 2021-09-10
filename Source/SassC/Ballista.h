@@ -12,14 +12,15 @@ UCLASS()
 class SASSC_API ABallista : public AUnitBase
 {
 	GENERATED_BODY()
-		ABallista();
+	ABallista();
 
 	virtual void Attack_Implementation(AActor* Target) override;
+	virtual float GetAttackRange() override;
 
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Unit Base")
-		float BallistaAttackRange = 60.0f;
+	float AttackRange123 = 60.0f;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Building Base")
-		UBoxComponent* UnitCollision;
-	
+	UBoxComponent* UnitCollision;
 };

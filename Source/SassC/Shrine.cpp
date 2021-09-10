@@ -3,7 +3,8 @@
 #include "SassC.h"
 #include "Shrine.h"
 
-AShrine::AShrine() {
+AShrine::AShrine()
+{
 	PrimaryActorTick.bCanEverTick = true;
 	/*
 	BuildingMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("shrine Mesh"));
@@ -17,9 +18,10 @@ AShrine::AShrine() {
 	*/
 }
 
-void AShrine::PostInitializeComponents() {
+void AShrine::PostInitializeComponents()
+{
 	Super::PostInitializeComponents();
-//	BldgMeshMaterialDynamic = BuildingMesh->CreateDynamicMaterialInstance(0, BuildingMesh->GetMaterial(0));
+	//	BldgMeshMaterialDynamic = BuildingMesh->CreateDynamicMaterialInstance(0, BuildingMesh->GetMaterial(0));
 
 	//FTransform CollisionTransform = BuildingCollision->GetRelativeTransform();
 	//CollisionTransform.SetLocation(CollisionDisplacement);
@@ -27,12 +29,12 @@ void AShrine::PostInitializeComponents() {
 	//BuildingCollision->SetRelativeLocation(CollisionDisplacement);
 }
 
-void AShrine::BeginPlay() {
+void AShrine::BeginPlay()
+{
 	Super::BeginPlay();
 }
 
-void AShrine::Tick(float DeltaTime) {
+void AShrine::Tick(float DeltaTime)
+{
 	Super::Tick(DeltaTime);
 }
-
-

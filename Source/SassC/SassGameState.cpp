@@ -8,11 +8,11 @@
 #include "SassPlayerState.h"
 #include "SassGameState.h"
 
-ASassGameState::ASassGameState() {
-	
+ASassGameState::ASassGameState()
+{
 }
 
-void ASassGameState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty> &OutLifetimeProps) const
+void ASassGameState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 	DOREPLIFETIME(ASassGameState, TimeKeeper);
@@ -20,35 +20,40 @@ void ASassGameState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty> &OutLi
 	DOREPLIFETIME(ASassGameState, WinnerDeclared);
 	DOREPLIFETIME(ASassGameState, PreGameActive);
 	DOREPLIFETIME(ASassGameState, GoldGoal);
-
 }
 
-void ASassGameState::Tick(float DeltaSeconds) {
-	GEngine->AddOnScreenDebugMessage(-1, DeltaSeconds, FColor::Turquoise, UKismetStringLibrary::Conv_FloatToString(TimeKeeper));
-	if (PreGameActive) {
+void ASassGameState::Tick(float DeltaSeconds)
+{
+	GEngine->AddOnScreenDebugMessage(-1, DeltaSeconds, FColor::Turquoise,
+	                                 UKismetStringLibrary::Conv_FloatToString(TimeKeeper));
+	if (PreGameActive)
+	{
 		TimeKeeper += DeltaSeconds;
-		if (TimeKeeper > WarmUpTime) {
+		if (TimeKeeper > WarmUpTime)
+		{
 			PreGameActive = false;
 			GameStart();
 		}
 	}
 }
 
-void ASassGameState::GameStart_Implementation() {
+void ASassGameState::GameStart_Implementation()
+{
 	GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Turquoise, "Gamestart Called");
-
-
-	AsassPlayer* Player = Cast<AsassPlayer>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+	
+	ASassPlayer* Player = Cast<ASassPlayer>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
 	Player->CreateGameHUD();
 
 	//Player->GetGameWidget(); Cast to SassilizationHUD_BP; Player->SetSassHUDWidget()
-	for (TActorIterator<AsassPlayer> PlayerItr(GetWorld()); PlayerItr; ++PlayerItr) {
+	for (TActorIterator<ASassPlayer> PlayerItr(GetWorld()); PlayerItr; ++PlayerItr)
+	{
 		GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Turquoise, "PlayerIterator");
 		PlayerItr->ColorPlayer(PlayerItr->GetPlayerState<ASassPlayerState>()->PlayerColor);
 	}
 }
 
-bool ASassGameState::GameStart_Validate() {
+bool ASassGameState::GameStart_Validate()
+{
 	return true;
 }
 

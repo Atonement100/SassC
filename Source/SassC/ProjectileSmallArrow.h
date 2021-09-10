@@ -9,21 +9,20 @@ UCLASS()
 class SASSC_API AProjectileSmallArrow : public AActor
 {
 	GENERATED_BODY()
-	
-public:	
+
+public:
 	// Sets default values for this actor's properties
 	AProjectileSmallArrow();
 
 	virtual void BeginPlay() override;
-	virtual void Tick( float DeltaSeconds ) override;
+	virtual void Tick(float DeltaSeconds) override;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Projectiles")
-		UProjectileMovementComponent* MovementComponent;
+	UProjectileMovementComponent* MovementComponent;
 
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Projectiles")
 	USceneComponent* SceneComponent;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Projectiles")
 	UStaticMeshComponent* ArrowMesh;
-
 };

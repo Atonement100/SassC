@@ -12,8 +12,4 @@ UCLASS()
 class SASSC_API ASassPlayerController : public APlayerController
 {
 	GENERATED_BODY()
-	
-	
-	
-	
 };

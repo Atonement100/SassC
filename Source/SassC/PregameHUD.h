@@ -12,8 +12,4 @@ UCLASS()
 class SASSC_API UPregameHUD : public UUserWidget
 {
 	GENERATED_BODY()
-	
-	
-	
-	
 };

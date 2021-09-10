@@ -3,15 +3,13 @@
 #include "SassC.h"
 #include "Catapult.h"
 
-ACatapult::ACatapult() {
-	PrimaryActorTick.bCanEverTick = true;
-
-	AggroSphere->SetWorldScale3D(FVector(CatapultAttackRange / SelectionSphereScaleMod));
-
+ACatapult::ACatapult()
+{
 	UnitCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("Unit Collision"));
 	UnitCollision->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepWorldTransform);
-
 }
 
-
-
+float ACatapult::GetAttackRange()
+{
+	return AttackRange;
+}

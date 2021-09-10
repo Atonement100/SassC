@@ -30,5 +30,5 @@ public:
 
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Workshop")
-		UStaticMeshComponent* UpgradeOneMesh;
+	UStaticMeshComponent* UpgradeOneMesh;
 };

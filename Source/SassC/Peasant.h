@@ -12,8 +12,4 @@ UCLASS()
 class SASSC_API APeasant : public AUnitBase
 {
 	GENERATED_BODY()
-	
-	
-	
-	
 };

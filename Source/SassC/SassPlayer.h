@@ -4,48 +4,48 @@
 
 #include "Blueprint/UserWidget.h"
 #include "Runtime/UMG/Public/UMG.h"
-#include "Runtime/UMG/Public/UMGStyle.h"
-#include "Runtime/UMG/Public/Slate/SObjectWidget.h"
-#include "Runtime/UMG/Public/IUMGModule.h"
-#include "Runtime/UMG/Public/Blueprint/UserWidget.h"
 #include "GameFramework/Character.h"
-#include "sassPlayer.generated.h"
+#include "SassPlayer.generated.h"
 
 class AUnitBase;
 class AWall;
 class ASassPlayerController;
 
 UENUM()
-enum class ETypeOfOrder : uint8 {
-	ORDER_UNIT			UMETA(DisplayName = "Unit"),
-	ORDER_BUILDING		UMETA(DisplayName = "Building"),
-	ORDER_WORLD			UMETA(DisplayName = "World")
+enum class ETypeOfOrder : uint8
+{
+	ORDER_UNIT UMETA(DisplayName = "Unit"),
+	ORDER_BUILDING UMETA(DisplayName = "Building"),
+	ORDER_WORLD UMETA(DisplayName = "World")
 };
 
 UENUM(BlueprintType)
-enum class ETypeOfSpawnable : uint8 {
-	BUILDING_CITY		UMETA(DisplayName = "City"),
-	BUILDING_WORKSHOP	UMETA(DisplayName = "Workshop"),
-	BUILDING_TOWER		UMETA(DisplayName = "Tower"),
-	BUILDING_WALL		UMETA(DisplayName = "Wall"),
-	BUILDING_GATE		UMETA(DisplayName = "Gate"),
+enum class ETypeOfSpawnable : uint8
+{
+	BUILDING_CITY UMETA(DisplayName = "City"),
+	BUILDING_WORKSHOP UMETA(DisplayName = "Workshop"),
+	BUILDING_TOWER UMETA(DisplayName = "Tower"),
+	BUILDING_WALL UMETA(DisplayName = "Wall"),
+	BUILDING_GATE UMETA(DisplayName = "Gate"),
 	BUILDING_SHIELDMONO UMETA(DisplayName = "Shield Monolith"),
-	BUILDING_SHRINE		UMETA(DisplayName = "Shrine"),				//Buildings are <= 6
-	UNIT_SOLDIER		UMETA(DisplayName = "Soldier"),				//Units are >= 7
-	UNIT_ARCHER			UMETA(DisplayName = "Archer"),
-	UNIT_SCALLYWAG		UMETA(DisplayName = "Scallywag"),
-	UNIT_BALLISTA		UMETA(DisplayName = "Ballista"),
-	UNIT_CATAPULT		UMETA(DisplayName = "Catapult")
+	BUILDING_SHRINE UMETA(DisplayName = "Shrine"),
+	//Buildings are <= 6
+	//Units are >= 7
+	UNIT_SOLDIER UMETA(DisplayName = "Soldier"),
+	UNIT_ARCHER UMETA(DisplayName = "Archer"),
+	UNIT_SCALLYWAG UMETA(DisplayName = "Scallywag"),
+	UNIT_BALLISTA UMETA(DisplayName = "Ballista"),
+	UNIT_CATAPULT UMETA(DisplayName = "Catapult")
 };
 
 UCLASS()
-class SASSC_API AsassPlayer : public ACharacter
+class SASSC_API ASassPlayer : public ACharacter
 {
 	GENERATED_BODY()
 
 public:
 	// Sets default values for this character's properties
-	AsassPlayer();
+	ASassPlayer();
 
 	// Input
 	/* Movement and client-state functions */
@@ -84,32 +84,45 @@ public:
 
 	virtual void BeginPlay() override;
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const;
-	virtual void Tick( float DeltaSeconds ) override;
+	virtual void Tick(float DeltaSeconds) override;
 	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
 
 	/*Dispatches units on server*/
 	UFUNCTION(Reliable, Server, WithValidation)
-	void CommandUnits(const TArray<AUnitBase*> &SelectedUnits, FHitResult RaycastHit, ETypeOfOrder OrderType);
-	virtual void CommandUnits_Implementation(const TArray<AUnitBase*> &SelectedUnits, FHitResult RaycastHit, ETypeOfOrder OrderType);
-	virtual bool CommandUnits_Validate(const TArray<AUnitBase*> &SelectedUnits, FHitResult RaycastHit, ETypeOfOrder OrderType);
+	void CommandUnits(const TArray<AUnitBase*>& SelectedUnits, FHitResult RaycastHit, ETypeOfOrder OrderType);
+	virtual void CommandUnits_Implementation(const TArray<AUnitBase*>& SelectedUnits, FHitResult RaycastHit,
+	                                         ETypeOfOrder OrderType);
+	virtual bool CommandUnits_Validate(const TArray<AUnitBase*>& SelectedUnits, FHitResult RaycastHit,
+	                                   ETypeOfOrder OrderType);
 
 	/*Registers sprinting movement with server*/
 	UFUNCTION(Reliable, Server, WithValidation)
-	void ServerSprint(bool isRunning, UCharacterMovementComponent *movementComponent);
-	virtual void ServerSprint_Implementation(bool isRunning, UCharacterMovementComponent *movementComponent);
-	virtual bool ServerSprint_Validate(bool isRunning, UCharacterMovementComponent *movementComponent);
+	void ServerSprint(bool isRunning, UCharacterMovementComponent* movementComponent);
+	virtual void ServerSprint_Implementation(bool isRunning, UCharacterMovementComponent* movementComponent);
+	virtual bool ServerSprint_Validate(bool isRunning, UCharacterMovementComponent* movementComponent);
 
 	/*Registers crouching movement with server*/
 	UFUNCTION(Reliable, Server, WithValidation)
-	void ServerCrouch(bool isCrouching, UCharacterMovementComponent *movementComponent);
-	virtual void ServerCrouch_Implementation(bool isCrouching, UCharacterMovementComponent *movementComponent);
-	virtual bool ServerCrouch_Validate(bool isCrouching, UCharacterMovementComponent *movementComponent);
+	void ServerCrouch(bool isCrouching, UCharacterMovementComponent* movementComponent);
+	virtual void ServerCrouch_Implementation(bool isCrouching, UCharacterMovementComponent* movementComponent);
+	virtual bool ServerCrouch_Validate(bool isCrouching, UCharacterMovementComponent* movementComponent);
 
 	/*Request from player to spawn building on server*/
 	UFUNCTION(Reliable, Server, WithValidation)
-	void ServerSpawnBuilding(ASassPlayerController* PlayerController, TSubclassOf<AActor> ActorToSpawn, FHitResult Hit, FRotator Rotator, const FVector &HalfHeight, const TArray<FVector> &Midpoints, const FVector &TraceSize, int32 PlayerID, const TArray<AActor*> &ActorsToIgnore = TArray<AActor*>());
-	virtual void ServerSpawnBuilding_Implementation(ASassPlayerController* PlayerController, TSubclassOf<AActor> ActorToSpawn, FHitResult Hit, FRotator Rotator, const FVector &HalfHeight, const TArray<FVector> &Midpoints, const FVector &TraceSize, int32 PlayerID, const TArray<AActor*> &ActorsToIgnore = TArray<AActor*>());
-	virtual bool ServerSpawnBuilding_Validate(ASassPlayerController* PlayerController, TSubclassOf<AActor> ActorToSpawn, FHitResult Hit, FRotator Rotator, const FVector &HalfHeight, const TArray<FVector> &Midpoints, const FVector &TraceSize, int32 PlayerID, const TArray<AActor*> &ActorsToIgnore = TArray<AActor*>());
+	void ServerSpawnBuilding(ASassPlayerController* PlayerController, TSubclassOf<AActor> ActorToSpawn, FHitResult Hit,
+	                         FRotator Rotator, const FVector& HalfHeight, const TArray<FVector>& Midpoints,
+	                         const FVector& TraceSize, int32 PlayerID,
+	                         const TArray<AActor*>& ActorsToIgnore = TArray<AActor*>());
+	virtual void ServerSpawnBuilding_Implementation(ASassPlayerController* PlayerController,
+	                                                TSubclassOf<AActor> ActorToSpawn, FHitResult Hit, FRotator Rotator,
+	                                                const FVector& HalfHeight, const TArray<FVector>& Midpoints,
+	                                                const FVector& TraceSize, int32 PlayerID,
+	                                                const TArray<AActor*>& ActorsToIgnore = TArray<AActor*>());
+	virtual bool ServerSpawnBuilding_Validate(ASassPlayerController* PlayerController, TSubclassOf<AActor> ActorToSpawn,
+	                                          FHitResult Hit, FRotator Rotator, const FVector& HalfHeight,
+	                                          const TArray<FVector>& Midpoints, const FVector& TraceSize,
+	                                          int32 PlayerID,
+	                                          const TArray<AActor*>& ActorsToIgnore = TArray<AActor*>());
 
 	/*Gets playercolor associated with a player when they spawn and updates their playermodel*/
 	UFUNCTION(Reliable, NetMulticast, WithValidation)
@@ -192,7 +205,7 @@ public:
 
 	/*Spawnable the player currently as selected, for verification and tick local-spawning*/
 	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, Category = "Sass Player")
-	UClass* SelectedSpawnableClass;			// This is set to default to city BP in sassplayer blueprint
+	UClass* SelectedSpawnableClass; // This is set to default to city BP in sassplayer blueprint
 
 	/*Reference to spawned game widget*/
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Sass Player")
@@ -203,7 +216,8 @@ public:
 
 	UFUNCTION(Reliable, Server, WithValidation)
 	void ServerSpawnWall(AWall* NewWall, AWall* TargetWall, int32 PlayerID, FLinearColor PlayerColor);
-	virtual void ServerSpawnWall_Implementation(AWall* NewWall, AWall* TargetWall, int32 PlayerID, FLinearColor PlayerColor);
+	virtual void ServerSpawnWall_Implementation(AWall* NewWall, AWall* TargetWall, int32 PlayerID,
+	                                            FLinearColor PlayerColor);
 	virtual bool ServerSpawnWall_Validate(AWall* NewWall, AWall* TargetWall, int32 PlayerID, FLinearColor PlayerColor);
 
 protected:
@@ -294,13 +308,14 @@ protected:
 	/*Enum array of world dynamic object type, for traces*/
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Sass Player")
 	TArray<TEnumAsByte<EObjectTypeQuery>> DynamicObjectTypes;
-	FCollisionObjectQueryParams WorldStatic = FCollisionObjectQueryParams(ECollisionChannel::ECC_WorldStatic); //const not allowed
-	
+	FCollisionObjectQueryParams WorldStatic = FCollisionObjectQueryParams(ECollisionChannel::ECC_WorldStatic);
+	//const not allowed
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sass Player")
 	ETypeOfSpawnable SelectedSpawnableType = ETypeOfSpawnable::BUILDING_CITY;
 
 	const int SelectionSphereScaleMod = 100; // this should never ever be changed
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Sass Player")
-	UClass*	WallClass;
+	UClass* WallClass;
 };

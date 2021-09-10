@@ -4,14 +4,13 @@
 #include "UnrealNetwork.h"
 #include "SassPlayerState.h"
 
-ASassPlayerState::ASassPlayerState() {
-
+ASassPlayerState::ASassPlayerState()
+{
 }
 
-void ASassPlayerState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty> &OutLifetimeProps) const
+void ASassPlayerState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 	DOREPLIFETIME(ASassPlayerState, PlayerColor);
 	DOREPLIFETIME(ASassPlayerState, ControlledBuildings);
 }
-

@@ -6,7 +6,6 @@
 #include "Wall.generated.h"
 
 
-
 /**
  * 
  */
@@ -22,11 +21,12 @@ public:
 	virtual void PostInitializeComponents() override;
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaSeconds) override;
-	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, class AActor* DamageCauser) override;
+	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent,
+	                         class AController* EventInstigator, class AActor* DamageCauser) override;
 
 	AActor* TempConnection;
 
-	AWall * GetClosestWallTowerInRange(float Range = 150.0f, TArray<AActor*> ActorsToIgnore = TArray<AActor*>());
+	AWall* GetClosestWallTowerInRange(float Range = 150.0f, TArray<AActor*> ActorsToIgnore = TArray<AActor*>());
 	TArray<AWall*> FindWallTowersInRange(float Range = 150.0f, TArray<AActor*> ActorsToIgnore = TArray<AActor*>());
 	virtual TArray<AActor*> FindWallTowersInRange_Implementation();
 
@@ -37,6 +37,4 @@ public:
 	TArray<ABuildingBase*> ConnectedWalls;
 
 protected:
-	
-
 };

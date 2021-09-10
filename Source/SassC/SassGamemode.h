@@ -18,13 +18,12 @@ class SASSC_API ASassGamemode : public AGameMode
 
 public:
 	UPROPERTY(BlueprintReadOnly, Category = "Gamemode")
-		TArray<AActor*> PlayerSpawns;
+	TArray<AActor*> PlayerSpawns;
 
 	UFUNCTION(BlueprintCallable, Category = "Gamemode")
-		void PostLogin(APlayerController* NewPlayer);
-//	UFUNCTION(BlueprintCallable, Category = "Gamemode")
-//		AActor* FindPlayerStart(AsassPlayerController* Player, FString IncomingName);
+	void PostLogin(APlayerController* NewPlayer);
+	//	UFUNCTION(BlueprintCallable, Category = "Gamemode")
+	//		AActor* FindPlayerStart(AsassPlayerController* Player, FString IncomingName);
 	UFUNCTION(BlueprintCallable, Category = "Gamemode")
-		FLinearColor ChoosePlayerColor();
-	
+	FLinearColor ChoosePlayerColor();
 };

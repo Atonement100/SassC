@@ -17,6 +17,4 @@ class SASSC_API USassilizationHUD : public UUserWidget
 public:
 	UPROPERTY(BlueprintReadWrite)
 	UWidgetComponent* TestComponent;
-	
-	
 };

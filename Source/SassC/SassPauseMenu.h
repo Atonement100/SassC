@@ -12,10 +12,8 @@ UCLASS()
 class SASSC_API USassPauseMenu : public UUserWidget
 {
 	GENERATED_BODY()
-	
+
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Pause Menu")
-		FString MyNewWidgetName;
-		
-	
+	FString MyNewWidgetName;
 };
