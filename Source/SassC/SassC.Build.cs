@@ -15,7 +15,7 @@ public class SassC : ModuleRules
 
 		// Uncomment if you are using online features
 		PrivateDependencyModuleNames.Add("OnlineSubsystem");
-		if ((Target.Platform == UnrealTargetPlatform.Win32) || (Target.Platform == UnrealTargetPlatform.Win64))
+		if (Target.Platform == UnrealTargetPlatform.Win64)
 		{
 			DynamicallyLoadedModuleNames.Add("OnlineSubsystemSteam");
 		}
