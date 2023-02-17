@@ -83,8 +83,3 @@ bool AScallywag::NetAddMeshRelativeLocation_Validate(float Velocity)
 {
 	return true;
 }
-
-float AScallywag::GetAttackRange()
-{
-	return AttackRange;
-}

@@ -13,8 +13,6 @@ class SASSC_API ACatapult : public AUnitBase
 {
 	GENERATED_BODY()
 	ACatapult();
-
-	virtual float GetAttackRange() override;
 	
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Unit Base")

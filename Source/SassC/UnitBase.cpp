@@ -20,6 +20,13 @@ AUnitBase::AUnitBase()
 	PrimaryActorTick.bCanEverTick = true;
 	NetUpdateFrequency = 30.0f;
 
+	UnitCombatProperties = Cast<AUnitBase>(this->GetClass()->GetDefaultObject())->UnitCombatProperties;
+	UnitCombatProperties.AggroRange = UnitCombatProperties.AttackRange / USassCStaticLibrary::AttackRangeToAggroRangeModifier();
+	if (GEngine)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, UnitCombatProperties.ToString());
+	}
+	
 	UnderUnitDecal = CreateDefaultSubobject<UDecalComponent>(TEXT("Under Unit Decal"));
 	UnderUnitDecal->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepWorldTransform);
 	UnderUnitDecal->SetFadeScreenSize(0.0f);
@@ -47,12 +54,13 @@ AUnitBase::AUnitBase()
 	AggroSphere->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepWorldTransform);
 	AggroSphere->OnComponentBeginOverlap.AddDynamic(this, &AUnitBase::OnOverlapBegin_AggroSphere);
 	AggroSphere->OnComponentEndOverlap.AddDynamic(this, &AUnitBase::OnOverlapEnd_AggroSphere);
-	AggroSphere->SetWorldScale3D(FVector(AUnitBase::GetAggroRange()));
-
 	//Decide if I want to have smaller aggro radius than attack range for idle characters... This would cause some issues with aggroing 
 	//In situations where someone on the offensive sends units /near/ and enemy but does not click him. Maybe lower aggro radius after
 	//A period of idle time to offset this?
+	FVector TransformToUse = FVector(UnitCombatProperties.AggroRange);
+	if (GEngine) GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, UKismetStringLibrary::Conv_VectorToString(TransformToUse));
 
+	AggroSphere->SetRelativeScale3D(TransformToUse);
 	//TextRender = CreateDefaultSubobject<UTextRenderComponent>(TEXT("Text Render"));
 	//TextRender->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepWorldTransform);
 
@@ -151,7 +159,7 @@ void AUnitBase::Tick(float DeltaTime)
 	switch (ActiveCommandType)
 	{
 	case EProcessingCommandType::ORDER_IDLE:
-		if (EnemiesInRange.Num() > 0 && TimeSinceAttack > AttackDelay && EnemiesInRange[0])
+		if (EnemiesInRange.Num() > 0 && TimeSinceAttack > UnitCombatProperties.AttackDelay && EnemiesInRange[0])
 		{
 			if (AUnitBase* Unit = Cast<AUnitBase>(EnemiesInRange[0]))
 			{
@@ -185,10 +193,10 @@ void AUnitBase::Tick(float DeltaTime)
 		if (ActorToFollow)
 		{
 			OrderDirection = ActorToFollow->GetActorLocation() - GetActorLocation();
-			if (OrderDirection.Size() < AttackRange)
+			if (OrderDirection.Size() < UnitCombatProperties.AttackRange)
 			{
 				SetActorRotation(FRotator(0, OrderDirection.Rotation().Yaw, 0));
-				if (TimeSinceAttack > AttackDelay)
+				if (TimeSinceAttack > UnitCombatProperties.AttackDelay)
 				{
 					GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Green, "Static Attack!!");
 					TimeSinceAttack = 0.0f;
@@ -233,10 +241,10 @@ void AUnitBase::Tick(float DeltaTime)
 		if (ActorToFollow)
 		{
 			OrderDirection = ActorToFollow->GetActorLocation() - GetActorLocation();
-			if (OrderDirection.Size() > AttackRange) AddMovementInput(OrderDirection, 1.0f);
+			if (OrderDirection.Size() > UnitCombatProperties.AttackRange) AddMovementInput(OrderDirection, 1.0f);
 			SetActorRotation(FRotator(0, OrderDirection.Rotation().Yaw, 0));
 
-			if (OrderDirection.Size() < AttackRange && TimeSinceAttack > AttackDelay)
+			if (OrderDirection.Size() < UnitCombatProperties.AttackRange && TimeSinceAttack > UnitCombatProperties.AttackDelay)
 			{
 				//No need to check if unit is friendly or hostile for this attack, as "ActorToFollow" can only ever be hostile.
 				GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Green, "Attack!!");
@@ -280,7 +288,7 @@ void AUnitBase::Tick(float DeltaTime)
 					SwitchToIdle();
 				}
 			}
-			else if (TimeSinceAttack > AttackDelay)
+			else if (TimeSinceAttack > UnitCombatProperties.AttackDelay)
 			{
 				if (BuildingToAttack->GetHealth() > 0)
 				{
@@ -328,7 +336,7 @@ void AUnitBase::Attack_Implementation(AActor* Target)
 	}
 
 	const FDamageEvent DamageInfo = FDamageEvent();
-	Target->TakeDamage(this->AttackDamage, DamageInfo, nullptr, this);
+	Target->TakeDamage(UnitCombatProperties.AttackDamage, DamageInfo, nullptr, this);
 	this->SetActorRotation(FRotator(
 		0, UKismetMathLibrary::FindLookAtRotation(this->GetActorLocation(), Target->GetActorLocation()).Yaw, 0));
 
@@ -515,21 +523,10 @@ float AUnitBase::GetHealth()
 	return Health;
 }
 
-float AUnitBase::GetAttackRange()
-{
-	return AttackRange;
-}
-
-float AUnitBase::GetAggroRange()
-{
-	return AggroRange;
-}
-
 UClass* AUnitBase::GetProjectileClass()
 {
 	return ProjectileClass;
 }
-
 
 void AUnitBase::FixSpawnLocation_Implementation(FVector RealLocation)
 {

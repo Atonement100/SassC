@@ -2,7 +2,12 @@
 
 #pragma once
 
+#include <ostream>
+#include <sstream>
+
 #include "GameFramework/Character.h"
+#include "SassCStaticLibrary.h"
+#include "Kismet/KismetStringLibrary.h"
 #include "UnitBase.generated.h"
 
 class ABuildingBase;
@@ -15,6 +20,41 @@ enum class EProcessingCommandType : uint8
 	ORDER_BUILDING UMETA(DisplayName = "Building"),
 	ORDER_WORLD UMETA(DisplayName = "World"),
 	ORDER_STATIC_UNIT UMETA(DisplayName = "StaticUnit")
+};
+
+USTRUCT()
+struct FUnitCombatProperties
+{
+	GENERATED_USTRUCT_BODY()
+	
+	UPROPERTY(EditDefaultsOnly, Category = "Unit Base")
+	float AttackDelay;
+	
+	UPROPERTY(EditDefaultsOnly, Category = "Unit Base")
+	float AttackRange;
+	
+	UPROPERTY(EditDefaultsOnly, Category = "Unit Base")
+	float AttackDamage;
+	
+	UPROPERTY(EditDefaultsOnly, Category = "Unit Base")
+	float AggroRange;
+
+	/** Defaults **/
+	FUnitCombatProperties()
+	{
+		AttackDelay = 2.0f;
+		AttackRange = 13.0f;
+		AttackDamage = 15.0f;
+		AggroRange = AttackRange / USassCStaticLibrary::AttackRangeToAggroRangeModifier();
+	}
+	
+	FString ToString() const
+	{
+		return "AttackDelay: " + UKismetStringLibrary::Conv_FloatToString(this->AttackDelay)
+			+ " AttackRange: " + UKismetStringLibrary::Conv_FloatToString(this->AttackRange)
+			+ " AttackDamage: " + UKismetStringLibrary::Conv_FloatToString(this->AttackDamage)
+			+ " AggroRange: " + UKismetStringLibrary::Conv_FloatToString(this->AggroRange);
+	}
 };
 
 UCLASS()
@@ -119,12 +159,6 @@ public:
 	float GetHealth();
 
 	UFUNCTION()
-	virtual float GetAttackRange();
-
-	UFUNCTION()
-	virtual float GetAggroRange();
-
-	UFUNCTION()
 	virtual UClass* GetProjectileClass();
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Unit Base")
@@ -137,6 +171,10 @@ public:
 
 protected:
 	void SwitchToIdle();
+
+	UPROPERTY(EditDefaultsOnly, Category = UnitBase)
+	FUnitCombatProperties UnitCombatProperties;
+	
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
 	UMaterialInstanceDynamic* UnitDecalMaterialDynamic;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
@@ -169,17 +207,6 @@ protected:
 	float TimeSinceOrdered = 0.0f;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
 	float TimeSinceAttack = 0.0f;
-	
-	const int SelectionSphereScaleMod = 100; //this should never ever be changed
-	
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Unit Base")
-	float AttackDelay = 2.0f;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Unit Base")
-	float AttackRange = 13.0f;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Unit Base")
-	float AttackDamage = 15.0f;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Unit Base")
-	float AggroRange = GetAttackRange() / SelectionSphereScaleMod;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
 	TArray<AActor*> EnemiesInRange;
@@ -197,8 +224,7 @@ protected:
 	void SpawnProjectile(FVector TargetLocation);
 	virtual void SpawnProjectile_Implementation(FVector TargetLocation);
 	virtual bool SpawnProjectile_Validate(FVector TargetLocation);
-
-
+	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Unit Base")
 	EProcessingCommandType ActiveCommandType = EProcessingCommandType::ORDER_IDLE;
 };

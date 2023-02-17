@@ -33,8 +33,3 @@ bool AArcher::Attack_Validate(AActor* Target)
 {
 	return true;
 }
-
-float AArcher::GetAttackRange()
-{
-	return AttackRange;
-}

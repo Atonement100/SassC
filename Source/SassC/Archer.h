@@ -22,7 +22,6 @@ public:
 
 	virtual void Attack_Implementation(AActor* Target) override;
 	virtual bool Attack_Validate(AActor* Target) override;
-	virtual float GetAttackRange() override;
 
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Unit Base")

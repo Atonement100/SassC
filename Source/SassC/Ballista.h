@@ -15,7 +15,6 @@ class SASSC_API ABallista : public AUnitBase
 	ABallista();
 
 	virtual void Attack_Implementation(AActor* Target) override;
-	virtual float GetAttackRange() override;
 
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Unit Base")

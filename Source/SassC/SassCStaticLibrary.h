@@ -120,4 +120,10 @@ public:
 	{
 		return 175.0f;
 	}
+
+	/** Standard conversion between the attack range radius as defined to the sphere representing automatic aggro range. **/
+	static int AttackRangeToAggroRangeModifier()
+	{
+		return 100;
+	}
 };

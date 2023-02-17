@@ -8,8 +8,3 @@ ACatapult::ACatapult()
 	UnitCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("Unit Collision"));
 	UnitCollision->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepWorldTransform);
 }
-
-float ACatapult::GetAttackRange()
-{
-	return AttackRange;
-}

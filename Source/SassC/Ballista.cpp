@@ -13,8 +13,3 @@ void ABallista::Attack_Implementation(AActor* Target)
 {
 	Super::Attack_Implementation(Target);
 }
-
-float ABallista::GetAttackRange()
-{
-	return AttackRange;
-}
