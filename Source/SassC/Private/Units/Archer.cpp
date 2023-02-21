@@ -1,8 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "SassC.h"
-#include "ProjectileSmallArrow.h"
-#include "Archer.h"
+#include "Effects/ProjectileSmallArrow.h"
+#include "Units/Archer.h"
 
 AArcher::AArcher()
 {

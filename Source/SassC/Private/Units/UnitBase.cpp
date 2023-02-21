@@ -1,19 +1,18 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "SassC.h"
-#include "BuildingBase.h"
-#include "SassPlayer.h"
-#include "SassPlayerState.h"
-#include "UnitController.h"
-#include "ProjectileSmallArrow.h"
+#include "Buildings/BuildingBase.h"
+#include "Player/SassPlayer.h"
+#include "Gamemode/Sassilization/SassPlayerState.h"
+#include "AI/UnitController.h"
+#include "Effects/ProjectileSmallArrow.h"
 #include "Net/UnrealNetwork.h"
-#include "SassCStaticLibrary.h"
-#include "Kismet/KismetSystemLibrary.h"
+#include "Core/SassCStaticLibrary.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetStringLibrary.h"
 #include "Kismet/KismetMathLibrary.h"
-#include "Kismet/KismetArrayLibrary.h"
-#include "UnitBase.h"
+#include "Units/UnitBase.h"
+#include "Engine/DamageEvents.h"
 
 AUnitBase::AUnitBase()
 {
@@ -417,7 +416,7 @@ void AUnitBase::MoveToDest_Implementation(FVector Destination)
 	OrderDirection = Destination - GetActorLocation();
 	TimeSinceOrdered = 0;
 	MaxTimeToMove = OrderDirection.Size() / GetMovementComponent()->GetMaxSpeed();
-	//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Cyan, "UnitBase MaxTimeToMove = " + UKismetStringLibrary::Conv_FloatToString(MaxTimeToMove));
+	//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Cyan, "UnitBase MaxTimeToMove = " + FString::SanitizeFloat(MaxTimeToMove));
 	ActiveCommandType = EProcessingCommandType::ORDER_WORLD;
 }
 
@@ -473,7 +472,7 @@ float AUnitBase::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent,
 	{
 		SetLifeSpan(0.001f);
 		//need to call for bloodsplat decal here :0
-		GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red, UKismetStringLibrary::Conv_FloatToString(Health));
+		GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red, FString::SanitizeFloat(Health));
 	}
 	return DamageAmount;
 }

@@ -2,8 +2,8 @@
 
 #include "SassC.h"
 #include "Kismet/KismetSystemLibrary.h"
-#include "ProjectileSmallArrow.h"
-#include "Scallywag.h"
+#include "Effects/ProjectileSmallArrow.h"
+#include "Units/Scallywag.h"
 
 AScallywag::AScallywag()
 {
