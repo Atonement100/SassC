@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "SassC.h"
-#include "Gate.h"
+#include "Buildings/Gate.h"
 
 AGate::AGate()
 {

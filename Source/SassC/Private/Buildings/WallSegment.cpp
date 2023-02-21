@@ -2,10 +2,10 @@
 
 #include "SassC.h"
 #include "UnrealNetwork.h"
-#include "Wall.h"
-#include "Gate.h"
+#include "Buildings/Wall.h"
+#include "Buildings/Gate.h"
 #include "Kismet/KismetStringLibrary.h"
-#include "WallSegment.h"
+#include "Buildings/WallSegment.h"
 
 AWallSegment::AWallSegment()
 {

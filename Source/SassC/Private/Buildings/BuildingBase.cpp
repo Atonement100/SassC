@@ -3,7 +3,7 @@
 #include "SassC.h"
 #include "Net/UnrealNetwork.h"
 #include "Kismet/KismetStringLibrary.h"
-#include "BuildingBase.h"
+#include "Buildings/BuildingBase.h"
 
 ABuildingBase::ABuildingBase()
 {

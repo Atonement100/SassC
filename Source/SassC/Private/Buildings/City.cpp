@@ -2,9 +2,9 @@
 
 
 #include "SassC.h"
-#include "SassCStaticLibrary.h"
+#include "Core/SassCStaticLibrary.h"
 #include "Kismet/KismetStringLibrary.h"
-#include "City.h"
+#include "Buildings/City.h"
 
 ACity::ACity()
 {

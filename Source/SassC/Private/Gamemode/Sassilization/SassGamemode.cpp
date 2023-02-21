@@ -1,12 +1,12 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "SassC.h"
-#include "sassPlayer.h"
-#include "sassPlayerController.h"
-#include "sassPlayerState.h"
-#include "sassGameState.h"
+#include "Player/SassPlayer.h"
+#include "Player/SassPlayerController.h"
+#include "Gamemode/Sassilization/SassGameState.h"
 #include "Kismet/KismetMathLibrary.h"
-#include "sassGamemode.h"
+#include "Gamemode/Sassilization/SassGamemode.h"
+#include "Gamemode/Sassilization/SassPlayerState.h"
 
 ASassGamemode::ASassGamemode()
 {

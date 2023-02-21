@@ -4,9 +4,9 @@
 #include "Net/UnrealNetwork.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetStringLibrary.h"
-#include "SassPlayer.h"
-#include "SassPlayerState.h"
-#include "SassGameState.h"
+#include "Player/SassPlayer.h"
+#include "Gamemode/Sassilization/SassPlayerState.h"
+#include "Gamemode/Sassilization/SassGameState.h"
 
 ASassGameState::ASassGameState()
 {

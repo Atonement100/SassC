@@ -2,7 +2,7 @@
 
 #include "SassC.h"
 #include "UnrealNetwork.h"
-#include "SassPlayerState.h"
+#include "Gamemode/Sassilization/SassPlayerState.h"
 
 ASassPlayerState::ASassPlayerState()
 {

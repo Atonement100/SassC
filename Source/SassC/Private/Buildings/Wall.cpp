@@ -4,8 +4,8 @@
 #include "Kismet/KismetSystemLibrary.h"
 #include "Kismet/KismetStringLibrary.h"
 #include "Kismet/KismetMathLibrary.h"
-#include "WallSegment.h"
-#include "Wall.h"
+#include "Buildings/WallSegment.h"
+#include "Buildings/Wall.h"
 
 AWall::AWall()
 {

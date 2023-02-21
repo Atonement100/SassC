@@ -5,7 +5,7 @@
 #include "Kismet/KismetSystemLibrary.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "ParticleDefinitions.h"
-#include "ShieldMonolith.h"
+#include "Buildings/ShieldMonolith.h"
 
 AShieldMonolith::AShieldMonolith()
 {

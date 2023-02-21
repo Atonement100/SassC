@@ -2,7 +2,7 @@
 
 #include "SassC.h"
 #include "Kismet/KismetStringLibrary.h"
-#include "Workshop.h"
+#include "Buildings/Workshop.h"
 
 AWorkshop::AWorkshop()
 {
