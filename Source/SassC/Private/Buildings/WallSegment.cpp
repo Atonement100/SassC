@@ -1,29 +1,18 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "SassC.h"
-#include "UnrealNetwork.h"
-#include "Buildings/Wall.h"
-#include "Buildings/Gate.h"
-#include "Kismet/KismetStringLibrary.h"
 #include "Buildings/WallSegment.h"
+#include "SassC.h"
+#include "Net/UnrealNetwork.h"
+#include "Buildings/Wall.h"
 
 AWallSegment::AWallSegment()
 {
 	PrimaryActorTick.bCanEverTick = true;
-
-	DamageOneMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Damage One Mesh"));
-	DamageOneMesh->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepWorldTransform);
-	DamageTwoMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Damage Two Mesh"));
-	DamageTwoMesh->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepWorldTransform);
 }
 
 void AWallSegment::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
-
-	//These are to include the additional meshes and materials in the dynamic material array, parent only adds one mesh and material by default.
-	BldgMeshMaterialDynamic.Add(DamageOneMesh->CreateDynamicMaterialInstance(0, DamageOneMesh->GetMaterial(0)));
-	BldgMeshMaterialDynamic.Add(DamageTwoMesh->CreateDynamicMaterialInstance(0, DamageTwoMesh->GetMaterial(0)));
 
 	BuildingCollision->SetVisibility(false);
 	BuildingCollision->SetHiddenInGame(true);
@@ -53,14 +42,14 @@ void AWallSegment::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLife
 
 void AWallSegment::HideMesh()
 {
-	BuildingMesh->SetVisibility(false);
+	GetMesh(0)->SetVisibility(false);
 	ResetRequired = true;
 	DelayReset = true;
 }
 
 void AWallSegment::ShowMesh()
 {
-	BuildingMesh->SetVisibility(true);
+	GetMesh(0)->SetVisibility(true);
 	ResetRequired = false;
 }
 
@@ -132,31 +121,31 @@ void AWallSegment::NetChangeMesh_Implementation(bool LeftConnectionDestroyed)
 	{
 		if (!LeftConnectionDestroyed)
 		{
-			if (BuildingMesh) BuildingMesh->SetVisibility(false);
-			if (DamageOneMesh)
+			if (AvailableBuildingMeshes.IsValidIndex(1))
 			{
-				DamageOneMesh->SetVisibility(true);
-				DamageOneMesh->SetRelativeRotation(FRotator(0, 180.0f, 0));
+				Cast<UStaticMeshComponent>(ActiveBuildingMesh)->SetStaticMesh(Cast<UStaticMesh>(AvailableBuildingMeshes[1]));
 				//Rotate crumbling side towards side without a wall
+				ActiveBuildingMesh->SetRelativeRotation(FRotator(0, 180.0f, 0));
 			}
 		}
 		else if (LeftConnectionDestroyed)
 		{
-			if (BuildingMesh) BuildingMesh->SetVisibility(false);
-			if (DamageOneMesh)
+			if (AvailableBuildingMeshes.IsValidIndex(1))
 			{
-				DamageOneMesh->SetVisibility(true);
-				DamageOneMesh->SetRelativeRotation(FRotator::ZeroRotator);
+				Cast<UStaticMeshComponent>(ActiveBuildingMesh)->SetStaticMesh(Cast<UStaticMesh>(AvailableBuildingMeshes[1]));
 				//Shouldn't need to rotate, but for safety purposes.
+				ActiveBuildingMesh->SetRelativeRotation(FRotator::ZeroRotator);
 			}
 		}
 		DamageLevel++;
 	}
 	else if (DamageLevel == 1)
 	{
-		if (BuildingMesh) BuildingMesh->SetVisibility(false);
-		if (DamageOneMesh) DamageOneMesh->SetVisibility(false); //Crumbling on both sides, no need to rotate
-		if (DamageTwoMesh) DamageTwoMesh->SetVisibility(true);
+		//Crumbling on both sides, no need to rotate
+		if (AvailableBuildingMeshes.IsValidIndex(2))
+		{
+			Cast<UStaticMeshComponent>(ActiveBuildingMesh)->SetStaticMesh(Cast<UStaticMesh>(AvailableBuildingMeshes[2]));
+		}
 		DamageLevel++;
 	}
 }

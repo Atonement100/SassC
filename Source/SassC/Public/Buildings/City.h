@@ -2,6 +2,7 @@
 
 #pragma once
 
+
 #include "BuildingBase.h"
 #include "City.generated.h"
 
@@ -22,11 +23,6 @@ class SASSC_API ACity : public ABuildingBase
 	virtual bool PostCreation_Validate(FLinearColor PlayerColor) override;
 
 protected:
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Building Base")
-	UStaticMeshComponent* AreaOfInfluence;
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "City")
-	UDecalComponent* InfluenceDecal;
-
 	FVector CollisionBounds = FVector(35.0f, 31.0f, 40.0f);
 	FVector CollisionDisplacement = FVector(0.0f, 1.0f, 20.0f);
 	FVector TraceSize = FVector(35.0f, 31.0f, 10.0f);

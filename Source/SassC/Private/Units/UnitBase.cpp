@@ -1,6 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "SassC.h"
+#include "Units/UnitBase.h"
 #include "Buildings/BuildingBase.h"
 #include "Player/SassPlayer.h"
 #include "Gamemode/Sassilization/SassPlayerState.h"
@@ -11,8 +11,8 @@
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetStringLibrary.h"
 #include "Kismet/KismetMathLibrary.h"
-#include "Units/UnitBase.h"
 #include "Engine/DamageEvents.h"
+#include "Gamemode/Sassilization/Empire.h"
 
 AUnitBase::AUnitBase()
 {
@@ -27,14 +27,14 @@ AUnitBase::AUnitBase()
 	}
 	
 	UnderUnitDecal = CreateDefaultSubobject<UDecalComponent>(TEXT("Under Unit Decal"));
-	UnderUnitDecal->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepWorldTransform);
+	UnderUnitDecal->SetupAttachment(RootComponent);
 	UnderUnitDecal->SetFadeScreenSize(0.0f);
 	UnderUnitDecal->SetRelativeLocationAndRotation(FVector(0, 0, -10.2f), FQuat(FRotator(-90.0f, 0, 0)));
 	UnderUnitDecal->SetRelativeScale3D(FVector(10, 5, 5));
 	UnderUnitDecal->DecalSize = FVector(1, 1, 1);
 
 	SelectionCircleDecal = CreateDefaultSubobject<UDecalComponent>(TEXT("Selection Circle Decal"));
-	SelectionCircleDecal->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepWorldTransform);
+	SelectionCircleDecal->SetupAttachment(RootComponent);
 	SelectionCircleDecal->SetVisibleFlag(false);
 	SelectionCircleDecal->SetFadeScreenSize(0.0f);
 	SelectionCircleDecal->SetRelativeLocationAndRotation(FVector(0, 0, -9), FQuat(FRotator(-90.0f, 0, 0)));
@@ -42,7 +42,7 @@ AUnitBase::AUnitBase()
 	SelectionCircleDecal->DecalSize = FVector(1, 1, 1);
 
 	DetectionSphere = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Detection Sphere"));
-	DetectionSphere->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepWorldTransform);
+	DetectionSphere->SetupAttachment(RootComponent);
 	DetectionSphere->SetRelativeLocation(FVector(0, 0, -9.0f));
 	DetectionSphere->SetRelativeScale3D(FVector(.32, .32, .2));
 	DetectionSphere->OnComponentBeginOverlap.AddDynamic(this, &AUnitBase::OnOverlapBegin_DetectionSphere);
@@ -50,7 +50,7 @@ AUnitBase::AUnitBase()
 
 	AggroSphere = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Aggro Sphere"));
 	AggroSphere->ComponentTags.Add(USassCStaticLibrary::NoAggroTag());
-	AggroSphere->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepWorldTransform);
+	AggroSphere->SetupAttachment(RootComponent);
 	AggroSphere->OnComponentBeginOverlap.AddDynamic(this, &AUnitBase::OnOverlapBegin_AggroSphere);
 	AggroSphere->OnComponentEndOverlap.AddDynamic(this, &AUnitBase::OnOverlapEnd_AggroSphere);
 	//Decide if I want to have smaller aggro radius than attack range for idle characters... This would cause some issues with aggroing 
@@ -64,7 +64,7 @@ AUnitBase::AUnitBase()
 	//TextRender->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepWorldTransform);
 
 	UCharacterMovementComponent* CharMoveComp = GetCharacterMovement();
-	CharMoveComp->CrouchedHalfHeight = 5.0f;
+	CharMoveComp->SetCrouchedHalfHeight(5.0f);
 	CharMoveComp->bOrientRotationToMovement = true;
 	CharMoveComp->DefaultWaterMovementMode = EMovementMode::MOVE_Walking;
 	CharMoveComp->MaxStepHeight = 0;
@@ -76,7 +76,7 @@ void AUnitBase::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetim
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 	DOREPLIFETIME(AUnitBase, OwningPlayerID);
-	DOREPLIFETIME(AUnitBase, IsAttacking);
+	DOREPLIFETIME(AUnitBase, bIsAttacking);
 	DOREPLIFETIME(AUnitBase, Health);
 }
 
@@ -183,7 +183,7 @@ void AUnitBase::Tick(float DeltaTime)
 				}
 			}
 		}
-		else if (IsAttacking && EnemiesInRange.Num() == 0)
+		else if (bIsAttacking && EnemiesInRange.Num() == 0)
 		{
 			SetIsAttacking(false);
 		}
@@ -202,7 +202,7 @@ void AUnitBase::Tick(float DeltaTime)
 					if (ActorToFollow->GetHealth() > 0)
 					{
 						Attack(ActorToFollow);
-						if (!IsAttacking) SetIsAttacking(true);
+						if (!bIsAttacking) SetIsAttacking(true);
 					}
 					else
 					{
@@ -251,7 +251,7 @@ void AUnitBase::Tick(float DeltaTime)
 				if (ActorToFollow->GetHealth() > 0)
 				{
 					Attack(ActorToFollow);
-					if (!IsAttacking) SetIsAttacking(true);
+					if (!bIsAttacking) SetIsAttacking(true);
 				}
 				else
 				{
@@ -277,7 +277,7 @@ void AUnitBase::Tick(float DeltaTime)
 			{
 				OrderDirection = BuildingToAttack->GetActorLocation() - this->GetActorLocation();
 				AddMovementInput(OrderDirection, 1.0f);
-				if (IsAttacking) SetIsAttacking(false);
+				if (bIsAttacking) SetIsAttacking(false);
 
 				TimeSinceOrdered += DeltaTime;
 				if (TimeSinceOrdered > MaxTimeToMove)
@@ -293,7 +293,7 @@ void AUnitBase::Tick(float DeltaTime)
 				{
 					GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Green, "UnitBase: City attack");
 					Attack(BuildingToAttack);
-					if (!IsAttacking) SetIsAttacking(true);
+					if (!bIsAttacking) SetIsAttacking(true);
 				}
 				else
 				{
@@ -319,7 +319,7 @@ void AUnitBase::Tick(float DeltaTime)
 void AUnitBase::SwitchToIdle()
 {
 	ActiveCommandType = EProcessingCommandType::ORDER_IDLE;
-	if (IsAttacking) SetIsAttacking(false);
+	if (bIsAttacking) SetIsAttacking(false);
 }
 
 void AUnitBase::Attack_Implementation(AActor* Target)
@@ -376,7 +376,7 @@ bool AUnitBase::SpawnProjectile_Validate(FVector TargetLocation)
 
 void AUnitBase::StartAttackAnimation_Implementation()
 {
-	this->IsAttacking = true;
+	this->bIsAttacking = true;
 }
 
 bool AUnitBase::StartAttackAnimation_Validate()
@@ -386,7 +386,7 @@ bool AUnitBase::StartAttackAnimation_Validate()
 
 void AUnitBase::StopAttackAnimation_Implementation()
 {
-	this->IsAttacking = false;
+	this->bIsAttacking = false;
 }
 
 bool AUnitBase::StopAttackAnimation_Validate()
@@ -396,7 +396,7 @@ bool AUnitBase::StopAttackAnimation_Validate()
 
 void AUnitBase::SetIsAttacking_Implementation(bool NewIsAttacking)
 {
-	this->IsAttacking = NewIsAttacking;
+	this->bIsAttacking = NewIsAttacking;
 }
 
 bool AUnitBase::SetIsAttacking_Validate(bool NewIsAttacking)
@@ -404,14 +404,14 @@ bool AUnitBase::SetIsAttacking_Validate(bool NewIsAttacking)
 	return true;
 }
 
-void AUnitBase::SetupPlayerInputComponent(class UInputComponent* InputComponent)
+void AUnitBase::SetupPlayerInputComponent(class UInputComponent* SetupInputComponent)
 {
-	Super::SetupPlayerInputComponent(InputComponent);
+	Super::SetupPlayerInputComponent(SetupInputComponent);
 }
 
 void AUnitBase::MoveToDest_Implementation(FVector Destination)
 {
-	if (IsAttacking)SetIsAttacking(false);
+	if (bIsAttacking)SetIsAttacking(false);
 	OrderDestination = Destination;
 	OrderDirection = Destination - GetActorLocation();
 	TimeSinceOrdered = 0;
@@ -427,7 +427,7 @@ bool AUnitBase::MoveToDest_Validate(FVector Destination)
 
 void AUnitBase::MoveToUnit_Implementation(AActor* UnitToAttack, bool IsStaticAttack)
 {
-	if (IsAttacking)SetIsAttacking(false);
+	if (bIsAttacking)SetIsAttacking(false);
 	ActorToFollow = Cast<AUnitBase>(UnitToAttack);
 	if (IsStaticAttack)
 	{
@@ -446,7 +446,7 @@ bool AUnitBase::MoveToUnit_Validate(AActor* UnitToAttack, bool IsStaticAttack)
 
 void AUnitBase::MoveToBuilding_Implementation(AActor* BuildingToTarget)
 {
-	if (IsAttacking)SetIsAttacking(false);
+	if (bIsAttacking)SetIsAttacking(false);
 	OrderDirection = BuildingToTarget->GetActorLocation() - GetActorLocation();
 	TimeSinceOrdered = 0;
 	MaxTimeToMove = (OrderDirection.Size() / GetMovementComponent()->GetMaxSpeed()) * 1.4;
@@ -535,6 +535,25 @@ void AUnitBase::FixSpawnLocation_Implementation(FVector RealLocation)
 bool AUnitBase::FixSpawnLocation_Validate(FVector RealLocation)
 {
 	return true;
+}
+
+bool AUnitBase::IsUnitSelected() const
+{
+	return this->bIsUnitSelected;
+}
+
+void AUnitBase::SelectUnit(const bool bShouldSelect)
+{
+	this->bIsUnitSelected = bShouldSelect;
+
+	if (UEmpire::IsEmpireValid(this->ControllingEmpire))
+	{
+		this->ControllingEmpire->SelectUnit(this, bShouldSelect);
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Empire not valid for unit %s"), *GetNameSafe(this));
+	}
 }
 
 void AUnitBase::NetFixSpawnLocation_Implementation(FVector RealLocation)

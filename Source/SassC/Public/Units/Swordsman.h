@@ -2,6 +2,7 @@
 
 #pragma once
 
+
 #include "UnitBase.h"
 #include "Swordsman.generated.h"
 
@@ -18,5 +19,5 @@ class SASSC_API ASwordsman : public AUnitBase
 public:
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaSeconds) override;
-	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
+	virtual void SetupPlayerInputComponent(class UInputComponent* SetupInputComponent) override;
 };

@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "SassC.h"
 #include "Effects/ProjectileSmallArrow.h"
+#include "SassC.h"
 
 
 AProjectileSmallArrow::AProjectileSmallArrow()
@@ -12,7 +12,7 @@ AProjectileSmallArrow::AProjectileSmallArrow()
 	RootComponent = SceneComponent;
 
 	ArrowMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Arrow Mesh"));
-	ArrowMesh->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepWorldTransform);
+	ArrowMesh->SetupAttachment(RootComponent);
 
 	MovementComponent = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("Projectile Movement Component"));
 	MovementComponent->UpdatedComponent = RootComponent;

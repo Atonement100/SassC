@@ -1,7 +1,17 @@
 ﻿#pragma once
 
-class BuildingType
+
+#include "BuildingType.generated.h"
+
+UENUM(BlueprintType)
+enum class EBuildingType : uint8
 {
-public:
-	
+	City,
+	Gate,
+	ShieldMonolith,
+	Shrine,
+	Tower,
+	Wall,
+	WallSegment,
+	Workshop
 };

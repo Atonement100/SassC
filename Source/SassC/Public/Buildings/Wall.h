@@ -2,6 +2,7 @@
 
 #pragma once
 
+
 #include "BuildingBase.h"
 #include "Wall.generated.h"
 

@@ -1,9 +1,9 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "SassC.h"
-#include "Net/UnrealNetwork.h"
-#include "Kismet/KismetStringLibrary.h"
 #include "Buildings/BuildingBase.h"
+#include "SassC.h"
+#include "Core/SassCStaticLibrary.h"
+#include "Net/UnrealNetwork.h"
 
 ABuildingBase::ABuildingBase()
 {
@@ -17,16 +17,17 @@ ABuildingBase::ABuildingBase()
 	bAlwaysRelevant = true;
 	bNetLoadOnClient = true;
 	bReplicates = true;
-
-	BuildingMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Building Mesh"));
-	BuildingMesh->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepWorldTransform);
-	BuildingMesh->SetRelativeLocation(FVector(0, 0, 1));
-	BuildingMesh->SetRelativeScale3D(FVector(1.905)); //1.905 is the Hammer -> UE conversion
-
+	
+	ActiveBuildingMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Active Building Mesh"));
+	ActiveBuildingMesh->SetupAttachment(RootComponent);
+	ActiveBuildingMesh->SetRelativeLocation(FVector(0, 0, 1));
+	ActiveBuildingMesh->SetRelativeScale3D(FVector(USassCStaticLibrary::HammerToUnrealScalar())); //1.905 is the Hammer -> UE conversion
+	
 	BuildingCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("Building Collision"));
-	BuildingCollision->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepWorldTransform);
+	BuildingCollision->SetupAttachment(RootComponent);
 	BuildingCollision->SetBoxExtent(CollisionBounds);
 	BuildingCollision->SetRelativeLocation(CollisionDisplacement);
+	BuildingCollision->SetRelativeScale3D(FVector(1.0f));
 }
 
 void ABuildingBase::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
@@ -37,13 +38,74 @@ void ABuildingBase::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLif
 	DOREPLIFETIME(ABuildingBase, OwningPlayerColor);
 }
 
+void ABuildingBase::PostActorCreated()
+{
+	Super::PostActorCreated();
+
+	if (AvailableBuildingMeshes.IsEmpty())
+	{
+		UE_LOG(LogTemp, Warning, TEXT("BuildingMeshes have not yet been set for %s"), *GetNameSafe(this));
+	}
+	else if (ActiveBuildingMesh)
+	{
+		if (AvailableBuildingMeshes[0]->IsA(UStaticMesh::StaticClass()))
+		{
+			Cast<UStaticMeshComponent>(ActiveBuildingMesh)->SetStaticMesh(Cast<UStaticMesh>(AvailableBuildingMeshes[0]));
+		}
+		else if (AvailableBuildingMeshes[0]->IsA(USkeletalMesh::StaticClass()))
+		{
+			Cast<USkeletalMeshComponent>(ActiveBuildingMesh)->SetSkeletalMesh(Cast<USkeletalMesh>(AvailableBuildingMeshes[0]));
+		}
+	}
+	
+	UE_LOG(LogTemp, Display, TEXT("PostActorCreated"));
+	if (!ActiveBuildingMesh)
+		UE_LOG(LogTemp, Display, TEXT("Not available in PostActorCreated"));
+}
+
+void ABuildingBase::PreInitializeComponents()
+{
+	Super::PreInitializeComponents();
+
+	UE_LOG(LogTemp, Display, TEXT("Number of components is %d!"), AvailableBuildingMeshes.Num());
+
+	if (!ActiveBuildingMesh)
+		UE_LOG(LogTemp, Display, TEXT("Not available in PreInitialize"));
+}
+
 void ABuildingBase::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
-	if (BuildingMesh)
+
+	UE_LOG(LogTemp, Display, TEXT("PostInitialize"));
+
+	if (!ActiveBuildingMesh)
+		UE_LOG(LogTemp, Display, TEXT("Not available in PostInitialize"));
+
+	//todo: confirm that applying dynamic material to main mesh will apply when replacing model w upgrades
+	if (ActiveBuildingMesh)
 	{
-		BldgMeshMaterialDynamic.Add(BuildingMesh->CreateDynamicMaterialInstance(0, BuildingMesh->GetMaterial(0)));
+		for (int Index = 0; Index < ActiveBuildingMesh->GetMaterials().Num(); Index++)
+		{
+			UMaterialInterface* Material = ActiveBuildingMesh->GetMaterial(Index);
+			BldgMeshMaterialDynamic.Add(ActiveBuildingMesh->CreateDynamicMaterialInstance(Index, Material));
+		}
 	}
+
+	//These are to include the additional meshes and materials in the dynamic material array, parent only adds one mesh and material by default.
+	// BldgMeshMaterialDynamic.Add(BuildingMesh->CreateDynamicMaterialInstance(1, BuildingMesh->GetMaterial(1)));
+	// for (int NumMaterials = 0; NumMaterials < UpgradeOneMesh->GetNumMaterials(); NumMaterials++)
+	// {
+	// 	BldgMeshMaterialDynamic.Add(
+	// 		UpgradeOneMesh->CreateDynamicMaterialInstance(NumMaterials, UpgradeOneMesh->GetMaterial(NumMaterials)));
+	// }
+	// for (int NumMaterials = 0; NumMaterials < UpgradeOneMesh->GetNumMaterials(); NumMaterials++)
+	// {
+	// 	BldgMeshMaterialDynamic.Add(
+	// 		UpgradeTwoMesh->CreateDynamicMaterialInstance(NumMaterials, UpgradeTwoMesh->GetMaterial(NumMaterials)));
+	// }
+	//This line is to include the second mesh in the dynamic material array, parent only allows for one mesh by default.
+	// BldgMeshMaterialDynamic.Add(UpgradeOneMesh->CreateDynamicMaterialInstance(0, UpgradeOneMesh->GetMaterial(0)));
 }
 
 void ABuildingBase::BeginPlay()
@@ -110,9 +172,9 @@ void ABuildingBase::ShowMesh()
 {
 }
 
-UStaticMeshComponent* ABuildingBase::GetMesh(int MeshIndex)
+UMeshComponent* ABuildingBase::GetMesh(int MeshIndex)
 {
-	return this->BuildingMesh;
+	return this->ActiveBuildingMesh;
 }
 
 void ABuildingBase::NetFixSpawnLocation_Implementation(FVector RealLocation)
@@ -142,27 +204,54 @@ bool ABuildingBase::PostCreation_Validate(FLinearColor PlayerColor)
 
 void ABuildingBase::PreviewUpgrade_Implementation()
 {
+	PreviewActive = false;
+	const short LevelToPreview = UpgradeLevel + 1;
+	
+	if (!AvailableBuildingMeshes.IsValidIndex(LevelToPreview))
+	{
+		UE_LOG(LogTemp, Display, TEXT("PreviewUpgrade_Implementation - Already at maximum level."));
+		return;		
+	}
+
+	ResetRequired = true;
+	
+	Cast<UStaticMeshComponent>(ActiveBuildingMesh)->SetStaticMesh(Cast<UStaticMesh>(AvailableBuildingMeshes[LevelToPreview]));
+	this->ColorBldg(FLinearColor::Green);
 }
 
 void ABuildingBase::ResetPreview_Implementation()
 {
+	ResetRequired = false;
+	
+	if (!AvailableBuildingMeshes.IsValidIndex(UpgradeLevel))
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Upgrade level %d is out of range of available building mesh."), UpgradeLevel);
+		return;		
+	}
+	
+	Cast<UStaticMeshComponent>(ActiveBuildingMesh)->SetStaticMesh(Cast<UStaticMesh>(AvailableBuildingMeshes[UpgradeLevel]));
+	this->ColorBldg(OwningPlayerColor);
 }
 
 void ABuildingBase::UpgradeBuilding_Implementation()
 {
+	NetUpgradeBuilding();
 }
 
 bool ABuildingBase::UpgradeBuilding_Validate()
 {
-	return false;
+	return true;
 }
 
 void ABuildingBase::NetUpgradeBuilding_Implementation()
 {
+	Cast<UStaticMeshComponent>(ActiveBuildingMesh)->SetStaticMesh(Cast<UStaticMesh>(AvailableBuildingMeshes[UpgradeLevel + 1]));
+	this->ColorBldg(OwningPlayerColor);
+	UpgradeLevel++;
 }
 
 bool ABuildingBase::NetUpgradeBuilding_Validate()
 {
-	return false;
+	return true;
 }
 #pragma endregion

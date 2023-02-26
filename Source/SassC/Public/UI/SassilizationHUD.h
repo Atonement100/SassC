@@ -2,7 +2,8 @@
 
 #pragma once
 
-#include "WidgetComponent.h"
+
+#include "Components/WidgetComponent.h"
 #include "Blueprint/UserWidget.h"
 #include "SassilizationHUD.generated.h"
 

@@ -2,6 +2,7 @@
 
 #pragma once
 
+
 #include "Blueprint/UserWidget.h"
 #include "Runtime/UMG/Public/UMG.h"
 #include "GameFramework/Character.h"
@@ -85,14 +86,14 @@ public:
 	virtual void BeginPlay() override;
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const;
 	virtual void Tick(float DeltaSeconds) override;
-	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
+	virtual void SetupPlayerInputComponent(class UInputComponent* SetupInputComponent) override;
 
 	/*Dispatches units on server*/
 	UFUNCTION(Reliable, Server, WithValidation)
-	void CommandUnits(const TArray<AUnitBase*>& SelectedUnits, FHitResult RaycastHit, ETypeOfOrder OrderType);
-	virtual void CommandUnits_Implementation(const TArray<AUnitBase*>& SelectedUnits, FHitResult RaycastHit,
+	void CommandUnits(const TArray<AUnitBase*>& UnitsToCommand, FHitResult RaycastHit, ETypeOfOrder OrderType);
+	virtual void CommandUnits_Implementation(const TArray<AUnitBase*>& UnitsToCommand, FHitResult RaycastHit,
 	                                         ETypeOfOrder OrderType);
-	virtual bool CommandUnits_Validate(const TArray<AUnitBase*>& SelectedUnits, FHitResult RaycastHit,
+	virtual bool CommandUnits_Validate(const TArray<AUnitBase*>& UnitsToCommand, FHitResult RaycastHit,
 	                                   ETypeOfOrder OrderType);
 
 	/*Registers sprinting movement with server*/
@@ -177,7 +178,7 @@ public:
 
 	/*Returns true if there is an issue with the spawn corners*/
 	UFUNCTION(BlueprintCallable, Category = "Spawnables")
-	bool CheckBldgCorners(TArray<FVector> ExtraLocs, FVector Center, FRotator Rotator, int32 PlayerID, bool isCity);
+	bool AreBuildingCornersBlocked(TArray<FVector> ExtraLocs, FVector Center, FRotator Rotator, int32 PlayerID, bool isCity);
 
 	/*Returns true if there is an issue with the spawn location*/
 	UFUNCTION(BlueprintCallable, Category = "Spawnables")

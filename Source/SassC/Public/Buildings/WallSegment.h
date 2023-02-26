@@ -2,6 +2,7 @@
 
 #pragma once
 
+
 #include "BuildingBase.h"
 #include "WallSegment.generated.h"
 
@@ -66,16 +67,4 @@ protected:
 	AActor* TempRightWall;
 	UPROPERTY(Replicated)
 	int8 DamageLevel = 0;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Wall Segment")
-	UStaticMeshComponent* DamageOneMesh;
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Wall Segment")
-	UStaticMeshComponent* DamageTwoMesh;
-
-	/*
-	UFUNCTION(Reliable, NetMulticast, WithValidation)
-	void NetFixSpawnLocation(FVector RealLocation);
-	virtual void NetFixSpawnLocation_Implementation(FVector RealLocation);
-	virtual bool NetFixSpawnLocation_Validate(FVector RealLocation);
-	*/
 };

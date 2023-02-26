@@ -2,7 +2,8 @@
 
 #pragma once
 
-#include "UnitBase.h"
+
+#include "Units/UnitBase.h"
 #include "GameFramework/PlayerState.h"
 #include "SassPlayerState.generated.h"
 
@@ -30,6 +31,12 @@ protected:
 	/*Spawnable currently selected to be spawned*/
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "PlayerState")
 	TSubclassOf<AActor> ActiveBuilding;
+
+	//todo replace gold etc with empire refs
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "PlayerState|Empire")
+	UEmpire* Empire;
+
+	// DEPRECATED below
 	/*Current rate of gold gain*/
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "PlayerState")
 	float DeltaGold = 1;

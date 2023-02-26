@@ -1,14 +1,14 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "SassC.h"
 #include "AI/UnitController.h"
+#include "SassC.h"
 
-void AUnitController::OnPossess()
+void AUnitController::OnPossess(APawn* InPawn)
 {
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Turquoise, "UnitController OnPossess");
+	UE_LOG(LogTemp, Display, TEXT("UnitController OnPossess"));
 }
 
 void AUnitController::BeginPlay()
 {
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Turquoise, "UnitController BeginPlay");
+	UE_LOG(LogTemp, Display, TEXT("UnitController BeginPlay"));
 }

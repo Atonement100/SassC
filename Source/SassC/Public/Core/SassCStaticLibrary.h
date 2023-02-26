@@ -2,7 +2,10 @@
 
 #pragma once
 
-#include "Object.h"
+#include "Engine/EngineTypes.h"
+#include "Engine/HitResult.h"
+#include "Engine/World.h"
+#include "CollisionQueryParams.h"
 #include "SassCStaticLibrary.generated.h"
 
 /**
@@ -125,5 +128,10 @@ public:
 	static int AttackRangeToAggroRangeModifier()
 	{
 		return 100;
+	}
+
+	static float HammerToUnrealScalar()
+	{
+		return 1.905f;
 	}
 };

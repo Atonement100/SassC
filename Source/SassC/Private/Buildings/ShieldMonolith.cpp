@@ -1,17 +1,17 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
+#include "Buildings/ShieldMonolith.h"
 #include "SassC.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetSystemLibrary.h"
-#include "Kismet/KismetMathLibrary.h"
 #include "ParticleDefinitions.h"
-#include "Buildings/ShieldMonolith.h"
+#include "Particles/ParticleSystemComponent.h"
 
 AShieldMonolith::AShieldMonolith()
 {
 	PrimaryActorTick.bCanEverTick = true;
 	BeamPSysSocket = CreateDefaultSubobject<USceneComponent>(TEXT("Beam Socket"));
-	BeamPSysSocket->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepWorldTransform);
+	BeamPSysSocket->SetupAttachment(RootComponent);
 }
 
 void AShieldMonolith::PostInitializeComponents()
@@ -32,15 +32,15 @@ void AShieldMonolith::Tick(float DeltaTime)
 void AShieldMonolith::PostCreation_Implementation(FLinearColor PlayerColor)
 {
 	UParticleSystemComponent* BubbleComponent = UGameplayStatics::SpawnEmitterAttached(
-		BubblePSys, BuildingMesh, NAME_None, BubblePSysLocation);
+		BubblePSys, this->GetMesh(0), NAME_None, BubblePSysLocation);
 	if (BubbleComponent) AttachedParticleSystems.Add(BubbleComponent);
 }
 
 void AShieldMonolith::SpawnBeamEmitter_Implementation(UParticleSystem* PSysToSpawn, AShieldMonolith* SourceMonolith,
                                                       AShieldMonolith* TargetMonolith)
 {
-	FVector Target = TargetMonolith->GetBeamSocket()->GetComponentLocation();
-	FVector Source = SourceMonolith->GetBeamSocket()->GetComponentLocation();
+	const FVector Target = TargetMonolith->GetBeamSocket()->GetComponentLocation();
+	const FVector Source = SourceMonolith->GetBeamSocket()->GetComponentLocation();
 
 	UParticleSystemComponent* NewPSys = UGameplayStatics::SpawnEmitterAttached(PSysToSpawn, this->GetBeamSocket());
 	if (NewPSys)
@@ -93,7 +93,7 @@ float AShieldMonolith::TakeDamage(float DamageAmount, FDamageEvent const& Damage
 	return DamageAmount;
 }
 
-TArray<AShieldMonolith*> AShieldMonolith::FindMonolithsInRange(float Range, TArray<AActor*> ActorsToIgnore)
+TArray<AShieldMonolith*> AShieldMonolith::FindMonolithsInRange(float Range, TArray<AActor*> ActorsToIgnore) const
 {
 	TArray<AActor*> IgnoreArray = ActorsToIgnore;
 	TArray<FHitResult> SphereHits;

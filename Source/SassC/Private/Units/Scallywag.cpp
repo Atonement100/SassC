@@ -1,9 +1,9 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
+#include "Units/Scallywag.h"
 #include "SassC.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "Effects/ProjectileSmallArrow.h"
-#include "Units/Scallywag.h"
 
 AScallywag::AScallywag()
 {
@@ -47,7 +47,7 @@ void AScallywag::AddMeshRelativeLocation_Implementation(float Velocity)
 {
 	//Should be moving and isn't too high
 	if ((ActiveCommandType >= EProcessingCommandType::ORDER_UNIT && ActiveCommandType <=
-		EProcessingCommandType::ORDER_STATIC_UNIT) || IsAttacking)
+		EProcessingCommandType::ORDER_STATIC_UNIT) || bIsAttacking)
 	{
 		if (UKismetSystemLibrary::LineTraceSingle(GetWorld(), GetActorLocation(),
 		                                          GetActorLocation() - FVector(0, 0, 90),

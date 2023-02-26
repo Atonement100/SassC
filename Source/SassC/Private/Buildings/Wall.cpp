@@ -1,11 +1,9 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
+#include "Buildings/Wall.h"
 #include "SassC.h"
 #include "Kismet/KismetSystemLibrary.h"
-#include "Kismet/KismetStringLibrary.h"
-#include "Kismet/KismetMathLibrary.h"
 #include "Buildings/WallSegment.h"
-#include "Buildings/Wall.h"
 
 AWall::AWall()
 {
@@ -111,7 +109,7 @@ TArray<AActor*> AWall::FindWallTowersInRange_Implementation()
 	for (FHitResult Hit : SphereHits) {
 		if (!nullArray.Contains(Hit.GetActor()) && Hit.GetActor()->IsA(AWall::StaticClass())) {
 			float Distance = UKismetMathLibrary::VSize((Hit.GetActor()->GetActorLocation()) - this->GetActorLocation());
-			GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Emerald, "Dist: " + UKismetStringLibrary::Conv_FloatToString(Distance));
+			GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Emerald, "Dist: " + FString::SanitizeFloat(Distance));
 			nullArray.Add(Hit.GetActor());
 		}
 	}

@@ -2,8 +2,18 @@
 
 #pragma once
 
+
+#include "Core/BuildingRequirements.h"
+#include "Core/BuildingType.h"
 #include "GameFramework/Actor.h"
-#include "SassPlayerState.h"
+#include "Gamemode/Sassilization/SassPlayerState.h"
+#include "Components/MeshComponent.h"
+#include "Engine/StaticMesh.h"
+#include "Engine/SkeletalMesh.h"
+#include "Components/StaticMeshComponent.h"
+#include "Components/SkeletalMeshComponent.h"
+#include "Engine/StreamableRenderAsset.h"
+#include "Materials/MaterialInstanceDynamic.h"
 #include "BuildingBase.generated.h"
 
 UCLASS()
@@ -15,6 +25,8 @@ public:
 	ABuildingBase();
 
 	virtual void BeginPlay() override;
+	virtual void PostActorCreated() override;
+	virtual void PreInitializeComponents() override;
 	virtual void PostInitializeComponents() override;
 	virtual void Tick(float DeltaSeconds) override;
 
@@ -35,7 +47,7 @@ public:
 
 	UFUNCTION()
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent,
-	                         class AController* EventInstigator, class AActor* DamageCauser);
+	                         class AController* EventInstigator, class AActor* DamageCauser) override;
 
 	UFUNCTION()
 	float GetHealth();
@@ -59,8 +71,9 @@ public:
 #pragma region Upgradable Building Functions
 	virtual void HideMesh();
 	virtual void ShowMesh();
-	virtual UStaticMeshComponent* GetMesh(int MeshIndex = 0);
+	virtual UMeshComponent* GetMesh(int MeshIndex = 0);
 
+	//todo I don't see why this would have needed to be an RPC
 	UFUNCTION(Unreliable, Client)
 	void PreviewUpgrade();
 	virtual void PreviewUpgrade_Implementation();
@@ -90,14 +103,56 @@ public:
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Building Base")
 	USceneComponent* SceneComponent;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Building Base")
+	TArray<FBuildingRequirements> LevelRequirements = TArray(std::initializer_list<FBuildingRequirements>(
+		{FBuildingRequirements(EBuildingType::City, FBuildingRequirement(1, 0))}));
+	
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Building Base")
-	UStaticMeshComponent* BuildingMesh;
+	UMeshComponent* ActiveBuildingMesh;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Building Base")
+	TArray<UStreamableRenderAsset*> AvailableBuildingMeshes;
+	
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Building Base")
 	UBoxComponent* BuildingCollision;
-	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, Category = "Building Base")
-	float Health = 500.0f;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Building Base")
 	TArray<UMaterialInstanceDynamic*> BldgMeshMaterialDynamic = TArray<UMaterialInstanceDynamic*>();
+	
+	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, Category = "Building Base")
+	float Health = 100.0f;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Building Base")
+	float IronCost = 50.0f;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Building Base")
+	float FoodCost = 50.0f;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Building Base")
+	float GoldCost = 50.0f;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Building Base")
+	float Influence = 50.0f;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Building Base")
+	float BuildTime = 50.0f;
+
+	/*
+	 * Base value of a building to be used when the building itself is destroyed.
+	 * This value is detracted from the player losing the building and awarded to
+	 * the player who destroyed it. Additional gold is awarded to the attacker,
+	 * of the sum GoldBonusOnDestroy.
+	 */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Building Base")
+	uint8 GoldValueOnDestroy = 10;
+	
+	/*
+	 * See also GoldValueOnDestroy. This sum is awarded to empire who destroyed
+	 * this building.
+	 */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Building Base")
+	uint8 GoldBonusOnDestroy = 8;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Building Base")
+	bool CanPlayerSpawn = false;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Building Base")
+	bool CanSpawnFoundation = false;
+	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Building Base")
 	ASassPlayerState* OwningPlayerState;
 	UPROPERTY(BlueprintReadOnly, VisibleDefaultsOnly)
@@ -106,6 +161,10 @@ protected:
 	FVector CollisionBounds = FVector(35.0f, 31.0f, 40.0f);
 	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly)
 	FVector CollisionDisplacement = FVector(0.0f, 1.0f, 20.0f);
+
+	
+	UPROPERTY(VisibleAnywhere, Category = "Unit Base")
+	UEmpire* ControllingEmpire;
 	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadWrite, Category = "Building Base")
 	FLinearColor OwningPlayerColor;
 

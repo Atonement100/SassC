@@ -2,6 +2,7 @@
 
 #pragma once
 
+
 #include "BuildingBase.h"
 #include "ShieldMonolith.generated.h"
 
@@ -42,7 +43,7 @@ public:
 	TArray<UParticleSystemComponent*> AttachedParticleSystems;
 	USceneComponent* GetBeamSocket();
 	TArray<AShieldMonolith*> FindMonolithsInRange(float Range = 80.0f,
-	                                              TArray<AActor*> ActorsToIgnore = TArray<AActor*>());
+	                                              TArray<AActor*> ActorsToIgnore = TArray<AActor*>()) const;
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Shield Monolith")
 	UParticleSystem* BubblePSys;

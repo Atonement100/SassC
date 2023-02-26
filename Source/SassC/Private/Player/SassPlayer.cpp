@@ -1,5 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
+#include "Player/SassPlayer.h"
 #include "AI/UnitController.h"
 #include "Buildings/BuildingBase.h"
 #include "Buildings/City.h"
@@ -17,12 +18,11 @@
 #include "Kismet/KismetStringLibrary.h" //necessary only for debugging
 #include "Kismet/KismetSystemLibrary.h"
 #include "ParticleDefinitions.h"
-#include "Player/SassPlayer.h"
 #include "Player/SassPlayerController.h"
 #include "Player/SelectionSphere.h"
 #include "UI/SassPauseMenu.h"
 #include "Units/UnitBase.h"
-#include "UnrealNetwork.h"
+#include "Net/UnrealNetwork.h"
 
 #define MAX_BLDG_CORNER_DIFFERENCE 6.0f
 
@@ -154,7 +154,7 @@ void ASassPlayer::Tick(float DeltaTime)
 				                                                  BoxTraceHit, true);
 				if (ABuildingBase* BuildingCast = Cast<ABuildingBase>(LocalObjectSpawn))
 				{
-					IsBadSpawn = IsBadSpawn | CheckBldgCorners(BuildingCast->CornerLocations, CursorHit.Location,
+					IsBadSpawn = IsBadSpawn | AreBuildingCornersBlocked(BuildingCast->CornerLocations, CursorHit.Location,
 					                                           PreviewRotation, GetPlayerState()->GetPlayerId(),
 					                                           (Cast<ACity>(LocalObjectSpawn) ? true : false));
 				}
@@ -251,10 +251,10 @@ void ASassPlayer::Tick(float DeltaTime)
 						else if (WallInstance->TempConnection)
 						{
 							//update existing
-							FVector Displacement = TargetWall->GetActorLocation() - WallInstance->GetActorLocation();
-							FTransform Transform = FTransform(Displacement.Rotation(),
-							                                  WallInstance->GetActorLocation() + (Displacement / 2),
-							                                  FVector(Displacement.Size() / 19, 1, 1));
+							FVector LocalDisplacement = TargetWall->GetActorLocation() - WallInstance->GetActorLocation();
+							FTransform Transform = FTransform(LocalDisplacement.Rotation(),
+							                                  WallInstance->GetActorLocation() + (LocalDisplacement / 2),
+							                                  FVector(LocalDisplacement.Size() / 19, 1, 1));
 							WallInstance->TempConnection->SetActorTransform(Transform);
 						}
 					}
@@ -320,10 +320,10 @@ void ASassPlayer::Tick(float DeltaTime)
 						else if (TargetWall->TempConnection)
 						{
 							//update existing
-							FVector Displacement = TargetWall->GetActorLocation() - WallCast->GetActorLocation();
-							FTransform Transform = FTransform(Displacement.Rotation(),
-							                                  WallCast->GetActorLocation() + (Displacement / 2),
-							                                  FVector(Displacement.Size() / 19, 1, 1));
+							FVector LocalDisplacement = TargetWall->GetActorLocation() - WallCast->GetActorLocation();
+							FTransform Transform = FTransform(LocalDisplacement.Rotation(),
+							                                  WallCast->GetActorLocation() + (LocalDisplacement / 2),
+							                                  FVector(LocalDisplacement.Size() / 19, 1, 1));
 							TargetWall->TempConnection->SetActorTransform(Transform);
 						}
 					}
@@ -499,36 +499,36 @@ void ASassPlayer::Tick(float DeltaTime)
 	}
 }
 
-void ASassPlayer::SetupPlayerInputComponent(class UInputComponent* InputComponent)
+void ASassPlayer::SetupPlayerInputComponent(class UInputComponent* SetupInputComponent)
 {
-	Super::SetupPlayerInputComponent(InputComponent);
+	Super::SetupPlayerInputComponent(SetupInputComponent);
 	//WASD Movement
-	InputComponent->BindAxis("MoveForward", this, &ASassPlayer::MoveForward);
-	InputComponent->BindAxis("MoveRight", this, &ASassPlayer::MoveRight);
+	SetupInputComponent->BindAxis("MoveForward", this, &ASassPlayer::MoveForward);
+	SetupInputComponent->BindAxis("MoveRight", this, &ASassPlayer::MoveRight);
 	//Camera Movement
-	InputComponent->BindAxis("PitchCamera", this, &ASassPlayer::PitchCamera);
-	InputComponent->BindAxis("YawCamera", this, &ASassPlayer::YawCamera);
+	SetupInputComponent->BindAxis("PitchCamera", this, &ASassPlayer::PitchCamera);
+	SetupInputComponent->BindAxis("YawCamera", this, &ASassPlayer::YawCamera);
 	//Mouse functions
-	InputComponent->BindAction("LeftClick", IE_Pressed, this, &ASassPlayer::LeftClickPressed);
-	InputComponent->BindAction("LeftClick", IE_Released, this, &ASassPlayer::LeftClickReleased);
-	InputComponent->BindAction("RightClick", IE_Pressed, this, &ASassPlayer::RightClickPressed);
-	InputComponent->BindAction("RightClick", IE_Released, this, &ASassPlayer::RightClickReleased);
+	SetupInputComponent->BindAction("LeftClick", IE_Pressed, this, &ASassPlayer::LeftClickPressed);
+	SetupInputComponent->BindAction("LeftClick", IE_Released, this, &ASassPlayer::LeftClickReleased);
+	SetupInputComponent->BindAction("RightClick", IE_Pressed, this, &ASassPlayer::RightClickPressed);
+	SetupInputComponent->BindAction("RightClick", IE_Released, this, &ASassPlayer::RightClickReleased);
 	//Sprint functions
-	InputComponent->BindAction("Sprint", IE_Pressed, this, &ASassPlayer::SprintPressed);
-	InputComponent->BindAction("Sprint", IE_Released, this, &ASassPlayer::SprintReleased);
+	SetupInputComponent->BindAction("Sprint", IE_Pressed, this, &ASassPlayer::SprintPressed);
+	SetupInputComponent->BindAction("Sprint", IE_Released, this, &ASassPlayer::SprintReleased);
 	//Crouch functions
-	InputComponent->BindAction("Crouch", IE_Pressed, this, &ASassPlayer::CrouchPressed);
-	InputComponent->BindAction("Crouch", IE_Released, this, &ASassPlayer::CrouchReleased);
+	SetupInputComponent->BindAction("Crouch", IE_Pressed, this, &ASassPlayer::CrouchPressed);
+	SetupInputComponent->BindAction("Crouch", IE_Released, this, &ASassPlayer::CrouchReleased);
 	//Jump function
-	InputComponent->BindAction("Jump", IE_Pressed, this, &ASassPlayer::JumpPressed);
+	SetupInputComponent->BindAction("Jump", IE_Pressed, this, &ASassPlayer::JumpPressed);
 	//Pause function
-	InputComponent->BindAction("Pause", IE_Pressed, this, &ASassPlayer::PausePressed);
+	SetupInputComponent->BindAction("Pause", IE_Pressed, this, &ASassPlayer::PausePressed);
 	//Quit function
-	InputComponent->BindAction("ForceQuit", IE_Pressed, this, &ASassPlayer::QuitGame);
+	SetupInputComponent->BindAction("ForceQuit", IE_Pressed, this, &ASassPlayer::QuitGame);
 	//UnitMenu function
-	InputComponent->BindAction("UnitMenu", IE_Pressed, this, &ASassPlayer::UnitMenuPressed);
+	SetupInputComponent->BindAction("UnitMenu", IE_Pressed, this, &ASassPlayer::UnitMenuPressed);
 	//test functions, default L
-	InputComponent->BindAction("Test", IE_Pressed, this, &ASassPlayer::testFunction);
+	SetupInputComponent->BindAction("Test", IE_Pressed, this, &ASassPlayer::testFunction);
 }
 
 void ASassPlayer::testFunction()
@@ -619,27 +619,27 @@ void ASassPlayer::RightClickReleased()
 	IsRightMouseDown = false;
 }
 
-void ASassPlayer::CommandUnits_Implementation(const TArray<AUnitBase*>& SelectedUnits, FHitResult RaycastHit,
+void ASassPlayer::CommandUnits_Implementation(const TArray<AUnitBase*>& UnitsToCommand, FHitResult RaycastHit,
                                               ETypeOfOrder OrderType)
 {
 	switch (OrderType)
 	{
 	case ETypeOfOrder::ORDER_UNIT:
-		for (AUnitBase* Unit : SelectedUnits) { if (Unit) Unit->MoveToUnit(RaycastHit.GetActor()); }
+		for (AUnitBase* Unit : UnitsToCommand) { if (Unit) Unit->MoveToUnit(RaycastHit.GetActor()); }
 		GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Emerald, "SassPlayer CommandUnits: Attack a unit");
 		break;
 	case ETypeOfOrder::ORDER_BUILDING:
-		for (AUnitBase* Unit : SelectedUnits) { if (Unit) Unit->MoveToBuilding(RaycastHit.GetActor()); }
+		for (AUnitBase* Unit : UnitsToCommand) { if (Unit) Unit->MoveToBuilding(RaycastHit.GetActor()); }
 		GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Emerald, "SassPlayer CommandUnits: Attack a building");
 		break;
 	case ETypeOfOrder::ORDER_WORLD:
 	default:
-		for (AUnitBase* Unit : SelectedUnits) { if (Unit) Unit->MoveToDest(RaycastHit.Location); }
+		for (AUnitBase* Unit : UnitsToCommand) { if (Unit) Unit->MoveToDest(RaycastHit.Location); }
 		break;
 	}
 }
 
-bool ASassPlayer::CommandUnits_Validate(const TArray<AUnitBase*>& SelectedUnits, FHitResult RaycastHit,
+bool ASassPlayer::CommandUnits_Validate(const TArray<AUnitBase*>& UnitsToCommand, FHitResult RaycastHit,
                                         ETypeOfOrder OrderType)
 {
 	return true;
@@ -760,7 +760,7 @@ void ASassPlayer::PausePressed()
 	{
 		if (PauseWidget != nullptr)
 		{
-			PauseWidget->RemoveFromViewport();
+			PauseWidget->RemoveFromParent();
 			PauseWidget = nullptr;
 		}
 		if (PlayerControllerPtr != nullptr)
@@ -777,7 +777,7 @@ void ASassPlayer::ChangePauseWidget(TSubclassOf<UUserWidget> NewWidgetClass)
 {
 	if (PauseWidget != nullptr)
 	{
-		PauseWidget->RemoveFromViewport();
+		PauseWidget->RemoveFromParent();
 		PauseWidget = nullptr;
 	}
 	if (NewWidgetClass != nullptr)
@@ -970,144 +970,12 @@ void ASassPlayer::ServerSpawnBuilding_Implementation(ASassPlayerController* Play
 
 	bool SpawningBuilding = ActorToSpawn.GetDefaultObject()->IsA(ABuildingBase::StaticClass());
 
-	if (Hit.GetActor() && !Hit.GetActor()->IsA(ABuildingBase::StaticClass()))
+	if (!Hit.GetActor())
 	{
-		if (Hit.Normal.Z >= .990)
-		{
-			const TArray<AActor*> BoxIgnore;
-			FHitResult BoxHit;
-
-			if (!UKismetSystemLibrary::BoxTraceSingle(GetWorld(), Hit.Location + FVector(0, 0, 2),
-			                                          Hit.Location + 2 * HalfHeight,
-			                                          FVector(TraceSize.X, TraceSize.Y, 0), Rotation,
-			                                          UEngineTypes::ConvertToTraceType(
-				                                          ECollisionChannel::ECC_GameTraceChannel2), true,
-			                                          ActorsToIgnore, EDrawDebugTrace::ForDuration, BoxHit, true))
-			{
-				GEngine->AddOnScreenDebugMessage(-1, 4.0f, FColor::Red,
-				                                 UKismetStringLibrary::Conv_VectorToString(Location));
-				//if there is no hit (good)
-				if ((ActorToSpawn.GetDefaultObject()->IsA(ABuildingBase::StaticClass()) && !CheckBldgCorners(
-						Midpoints, Hit.Location, PreviewRotation, PlayerID,
-						ActorToSpawn.GetDefaultObject()->IsA(ACity::StaticClass())))
-					|| ((ActorToSpawn.GetDefaultObject()->IsA(AUnitBase::StaticClass())) && !CheckUnitLocation(
-						Hit.Location, PreviewRotation, PlayerID)))
-				{
-					//if there is no obstruction (good)
-					AActor* NewSpawn = GetWorld()->SpawnActor(ActorToSpawn, &Location, &Rotation, SpawnParams);
-
-					if (NewSpawn == nullptr)
-					{
-						GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red,
-						                                 "SassPlayer ServerSpawnBuilding: Could not spawn, unknown reason");
-						return;
-					}
-
-					if (SpawningBuilding) { NewSpawn->SetActorLocation(Hit.Location); }
-					ASassPlayerState* SassPlayerState = GetPlayerState<ASassPlayerState>();
-					if (SassPlayerState != nullptr)
-					{
-						SassPlayerState->ControlledBuildings.Add(NewSpawn);
-						NewSpawn->SetOwner(PlayerController);
-					}
-
-					//@TODO: Should find a way to consolidate these... hard with units being ACharacter, buildings being AActor to give them a common unit
-					//try unit (more likely)
-					if (AUnitBase* NewUnit = Cast<AUnitBase>(NewSpawn))
-					{
-						NewUnit->UpdateMaterial(SassPlayerState->PlayerColor);
-						NewUnit->SpawnDefaultController();
-						NewUnit->OwningPlayerID = PlayerID;
-
-						//Don't think units need to have location fixed. Small change shouldn't matter. If it does an alternative solution will need to be found, as this causes issues.
-						//NewUnit->FixSpawnLocation(Location);
-					}
-						//try building
-					else
-					{
-						if (ABuildingBase* NewBuilding = Cast<ABuildingBase>(NewSpawn))
-						{
-							NewBuilding->UpdateMaterial(SassPlayerState->PlayerColor, true);
-							NewBuilding->OwningPlayerID = PlayerID;
-							NewBuilding->PostCreation(SassPlayerState->PlayerColor);
-							NewBuilding->FixSpawnLocation(Hit.Location);
-							if (AWall* WallCast = Cast<AWall>(NewBuilding))
-							{
-								TArray<AWall*> WallsInRange = WallCast->FindWallTowersInRange();
-								for (AWall* TargetWall : WallsInRange)
-								{
-									if (TargetWall->OwningPlayerID == PlayerID)
-									{
-										ServerSpawnWall(WallCast, TargetWall, PlayerID, SassPlayerState->PlayerColor);
-									}
-								}
-							}
-							else if (AGate* GateCast = Cast<AGate>(NewBuilding))
-							{
-								//@TODO Check if I can skip AActor* and just spawn in with Ignore.Add(Getworld. . .  .
-								const FVector LeftLoc = Hit.Location + HalfHeight + (Rotator + FRotator(0, 90, 0)).
-									Vector() * 50 + FVector(0, 0, -20);
-								const FVector RightLoc = Hit.Location + HalfHeight + (Rotator + FRotator(0, 90, 0)).
-									Vector() * -50 + FVector(0, 0, -20);
-								AActor* x = GetWorld()->SpawnActor(WallClass, &LeftLoc, &Rotation, WallParams);
-								AActor* y = GetWorld()->SpawnActor(WallClass, &RightLoc, &Rotation, WallParams);
-								TArray<AActor*> Ignore = TArray<AActor*>(ActorsToIgnore);
-								Ignore.Add(x);
-								Ignore.Add(y);
-
-								for (int SideNum = 0; SideNum < Ignore.Num(); SideNum++)
-								{
-									if (!Ignore[SideNum]) continue;
-									AWall* Wall = Cast<AWall>(Ignore[SideNum]);
-									Wall->OwningPlayerID = PlayerID;
-									Wall->UpdateMaterial(SassPlayerState->PlayerColor, true);
-									Wall->PostCreation(SassPlayerState->PlayerColor);
-									ServerSpawnWall(Wall, Wall->GetClosestWallTowerInRange(100.0f, Ignore), PlayerID,
-									                SassPlayerState->PlayerColor);
-								}
-							}
-							else if (AShieldMonolith* MonoCast = Cast<AShieldMonolith>(NewBuilding))
-							{
-								TArray<AShieldMonolith*> MonolithsInRange = MonoCast->FindMonolithsInRange();
-								if (MonolithsInRange.Num() > 0)
-								{
-									UParticleSystem* PSysToSpawn = MonoCast->BeamPSys;
-									for (AShieldMonolith* TargetMonolith : MonolithsInRange)
-									{
-										TargetMonolith->SpawnBeamEmitter(PSysToSpawn, MonoCast, TargetMonolith);
-									}
-								}
-							}
-						}
-						else
-						{
-							GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red,
-							                                 "SassPlayer ServerSpawnBuilding: Could not spawn, server could not determine what spawn was being asked for");
-						}
-					}
-				}
-				else
-				{
-					//Bad Spawn
-					GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red,
-					                                 "SassPlayer ServerSpawnBuilding: Could not spawn because corners were obstructed");
-				}
-			}
-			else
-			{
-				//Bad Spawn
-				GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red,
-				                                 "SassPlayer ServerSpawnBuilding: Could not spawn because trace hit something");
-			}
-		}
-		else
-		{
-			//Bad Spawn
-			GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red,
-			                                 "SassPlayer ServerSpawnBuilding: Could not spawn because location uneven");
-		}
+		return;
 	}
-	else if (Hit.GetActor())
+
+	if (Hit.GetActor()->IsA(ABuildingBase::StaticClass()))
 	{
 		if (ActorToSpawn.GetDefaultObject()->IsA(ATower::StaticClass()) && Hit.GetActor()->IsA(ATower::StaticClass()))
 		{
@@ -1120,7 +988,143 @@ void ASassPlayer::ServerSpawnBuilding_Implementation(ASassPlayerController* Play
 			AWorkshop* TempWorkshop = Cast<AWorkshop>(Hit.GetActor());
 			if (TempWorkshop->OwningPlayerID == PlayerID) TempWorkshop->UpgradeBuilding();
 		}
+
+		return;
 	}
+
+	if (Hit.Normal.Z < .990)
+	{
+		//Bad Spawn
+		GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red,
+										 "SassPlayer ServerSpawnBuilding: Could not spawn because location uneven");
+		return;
+	}
+
+	const TArray<AActor*> BoxIgnore;
+	FHitResult BoxHit;
+
+	if (UKismetSystemLibrary::BoxTraceSingle(GetWorld(), Hit.Location + FVector(0, 0, 2),
+											  Hit.Location + 2 * HalfHeight,
+											  FVector(TraceSize.X, TraceSize.Y, 0), Rotation,
+											  UEngineTypes::ConvertToTraceType(
+												  ECollisionChannel::ECC_GameTraceChannel2), true,
+											  ActorsToIgnore, EDrawDebugTrace::ForDuration, BoxHit, true))
+	{
+		//Bad Spawn
+		GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red,
+										 "SassPlayer ServerSpawnBuilding: Could not spawn because trace hit something");
+		return;
+	}
+
+	GEngine->AddOnScreenDebugMessage(-1, 4.0f, FColor::Red,
+	                                 UKismetStringLibrary::Conv_VectorToString(Location));
+
+	if ((!ActorToSpawn.GetDefaultObject()->IsA(ABuildingBase::StaticClass()) || AreBuildingCornersBlocked(
+			Midpoints, Hit.Location, PreviewRotation, PlayerID,
+			ActorToSpawn.GetDefaultObject()->IsA(ACity::StaticClass()))) && (!ActorToSpawn.GetDefaultObject()->IsA(AUnitBase::StaticClass()) || CheckUnitLocation(
+			Hit.Location, PreviewRotation, PlayerID)))
+	{
+		//Bad Spawn
+		GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red,
+										 "SassPlayer ServerSpawnBuilding: Could not spawn because corners were obstructed");
+		return;
+	}
+
+	
+	
+	// If all checks have passed so far, let's go ahead and spawn the actor.
+	AActor* NewSpawn = GetWorld()->SpawnActor(ActorToSpawn, &Location, &Rotation, SpawnParams);
+
+	if (NewSpawn == nullptr)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red,
+		                                 "SassPlayer ServerSpawnBuilding: Could not spawn, unknown reason");
+		return;
+	}
+
+	if (SpawningBuilding) { NewSpawn->SetActorLocation(Hit.Location); }
+	
+	ASassPlayerState* SassPlayerState = GetPlayerState<ASassPlayerState>();
+	if (SassPlayerState != nullptr)
+	{
+		SassPlayerState->ControlledBuildings.Add(NewSpawn);
+		NewSpawn->SetOwner(PlayerController);
+	}
+
+	//@TODO: Should find a way to consolidate these... hard with units being ACharacter, buildings being AActor to give them a common unit
+	//try unit (more likely)
+	if (AUnitBase* NewUnit = Cast<AUnitBase>(NewSpawn))
+	{
+		NewUnit->UpdateMaterial(SassPlayerState->PlayerColor);
+		NewUnit->SpawnDefaultController();
+		NewUnit->OwningPlayerID = PlayerID;
+
+		//Don't think units need to have location fixed. Small change shouldn't matter. If it does an alternative solution will need to be found, as this causes issues.
+		//NewUnit->FixSpawnLocation(Location);
+
+		return;
+	}
+	
+	//try building
+	if (ABuildingBase* NewBuilding = Cast<ABuildingBase>(NewSpawn))
+	{
+		NewBuilding->UpdateMaterial(SassPlayerState->PlayerColor, true);
+		NewBuilding->OwningPlayerID = PlayerID;
+		NewBuilding->PostCreation(SassPlayerState->PlayerColor);
+		NewBuilding->FixSpawnLocation(Hit.Location);
+		if (AWall* WallCast = Cast<AWall>(NewBuilding))
+		{
+			TArray<AWall*> WallsInRange = WallCast->FindWallTowersInRange();
+			for (AWall* TargetWall : WallsInRange)
+			{
+				if (TargetWall->OwningPlayerID == PlayerID)
+				{
+					ServerSpawnWall(WallCast, TargetWall, PlayerID, SassPlayerState->PlayerColor);
+				}
+			}
+		}
+		else if (AGate* GateCast = Cast<AGate>(NewBuilding))
+		{
+			//@TODO Check if I can skip AActor* and just spawn in with Ignore.Add(Getworld. . .  .
+			const FVector LeftLoc = Hit.Location + HalfHeight + (Rotator + FRotator(0, 90, 0)).
+				Vector() * 50 + FVector(0, 0, -20);
+			const FVector RightLoc = Hit.Location + HalfHeight + (Rotator + FRotator(0, 90, 0)).
+				Vector() * -50 + FVector(0, 0, -20);
+			AActor* x = GetWorld()->SpawnActor(WallClass, &LeftLoc, &Rotation, WallParams);
+			AActor* y = GetWorld()->SpawnActor(WallClass, &RightLoc, &Rotation, WallParams);
+			TArray<AActor*> Ignore = TArray<AActor*>(ActorsToIgnore);
+			Ignore.Add(x);
+			Ignore.Add(y);
+
+			for (int SideNum = 0; SideNum < Ignore.Num(); SideNum++)
+			{
+				if (!Ignore[SideNum]) continue;
+				AWall* Wall = Cast<AWall>(Ignore[SideNum]);
+				Wall->OwningPlayerID = PlayerID;
+				Wall->UpdateMaterial(SassPlayerState->PlayerColor, true);
+				Wall->PostCreation(SassPlayerState->PlayerColor);
+				ServerSpawnWall(Wall, Wall->GetClosestWallTowerInRange(100.0f, Ignore), PlayerID,
+				                SassPlayerState->PlayerColor);
+			}
+		}
+		else if (AShieldMonolith* MonoCast = Cast<AShieldMonolith>(NewBuilding))
+		{
+			TArray<AShieldMonolith*> MonolithsInRange = MonoCast->FindMonolithsInRange();
+			if (MonolithsInRange.Num() > 0)
+			{
+				UParticleSystem* PSysToSpawn = MonoCast->BeamPSys;
+				for (AShieldMonolith* TargetMonolith : MonolithsInRange)
+				{
+					TargetMonolith->SpawnBeamEmitter(PSysToSpawn, MonoCast, TargetMonolith);
+				}
+			}
+		}
+
+		return;
+	}
+
+	GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red,
+	                                 "SassPlayer ServerSpawnBuilding: Could not spawn, server could not determine what spawn was being asked for");
 }
 
 bool ASassPlayer::ServerSpawnBuilding_Validate(ASassPlayerController* PlayerController,
@@ -1137,7 +1141,7 @@ void ASassPlayer::GetAllPlayerColors()
 {
 	TArray<AActor*> FoundControllers;
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), PlayerControllerClass, FoundControllers);
-	for (AActor* Controller : FoundControllers)
+	for (AActor* FoundController : FoundControllers)
 	{
 	}
 }
@@ -1180,7 +1184,7 @@ bool ASassPlayer::CheckUnitLocation(FVector Center, FRotator Rotator, int32 Play
 	return true;
 }
 
-bool ASassPlayer::CheckBldgCorners(TArray<FVector> ExtraLocs, FVector Center, FRotator Rotator, int32 PlayerID,
+bool ASassPlayer::AreBuildingCornersBlocked(TArray<FVector> ExtraLocs, FVector Center, FRotator Rotator, int32 PlayerID,
                                    bool isCity)
 {
 	if (ExtraLocs.Num() == 0)
@@ -1227,31 +1231,31 @@ bool ASassPlayer::CheckBldgCorners(TArray<FVector> ExtraLocs, FVector Center, FR
 	TArray<AActor*> nullArray;
 	for (FVector Loc : ExtraLocs)
 	{
-		float Magnitude = Loc.Size2D();
-		FVector Displacement = (Loc.Rotation() + Rotator).Vector() * Magnitude;
-		if (UKismetSystemLibrary::LineTraceSingle(GetWorld(), Center + Displacement + FVector(0, 0, 65.0f),
-		                                          Center + Displacement - FVector(0, 0, 15.0f),
-		                                          UEngineTypes::ConvertToTraceType(
-			                                          ECollisionChannel::ECC_GameTraceChannel1), false, nullArray,
-		                                          EDrawDebugTrace::ForOneFrame, Hit, true))
-		{
-			if (ABuildingBase* Bldg = Cast<ABuildingBase>(Hit.GetActor()))
-			{
-				if (Bldg->OwningPlayerID != PlayerID)
-				{
-					GEngine->AddOnScreenDebugMessage(-1, GetWorld()->DeltaTimeSeconds, FColor::Emerald,
-					                                 "SassPlayer CheckBldgCorners: OVERLAPS ENEMY TERRITORY");
-					return true;
-				}
-			}
-		}
-		else if (!isCity)
-		{
-			//Trace did not hit
-			GEngine->AddOnScreenDebugMessage(-1, GetWorld()->DeltaTimeSeconds, FColor::Green,
-			                                 "SassPlayer CheckBldgCorners: TERRITORY TRACE DID NOT MAKE CONTACT");
-			return true;
-		}
+		// float Magnitude = Loc.Size2D();
+		// FVector Displacement = (Loc.Rotation() + Rotator).Vector() * Magnitude;
+		// if (UKismetSystemLibrary::LineTraceSingle(GetWorld(), Center + Displacement + FVector(0, 0, 65.0f),
+		//                                           Center + Displacement - FVector(0, 0, 15.0f),
+		//                                           UEngineTypes::ConvertToTraceType(
+		// 	                                          ECollisionChannel::ECC_GameTraceChannel1), false, nullArray,
+		//                                           EDrawDebugTrace::ForOneFrame, Hit, true))
+		// {
+		// 	if (ABuildingBase* Bldg = Cast<ABuildingBase>(Hit.GetActor()))
+		// 	{
+		// 		if (Bldg->OwningPlayerID != PlayerID)
+		// 		{
+		// 			GEngine->AddOnScreenDebugMessage(-1, GetWorld()->DeltaTimeSeconds, FColor::Emerald,
+		// 			                                 "SassPlayer CheckBldgCorners: OVERLAPS ENEMY TERRITORY");
+		// 			return true;
+		// 		}
+		// 	}
+		// }
+		// else if (!isCity)
+		// {
+		// 	//Trace did not hit
+		// 	GEngine->AddOnScreenDebugMessage(-1, GetWorld()->DeltaTimeSeconds, FColor::Green,
+		// 	                                 "SassPlayer CheckBldgCorners: TERRITORY TRACE DID NOT MAKE CONTACT");
+		// 	return true;
+		// }
 	}
 
 	if (isCity)

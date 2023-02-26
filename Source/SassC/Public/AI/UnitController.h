@@ -3,6 +3,7 @@
 #pragma once
 
 #include "AIController.h"
+#include "GameFramework/Pawn.h"
 #include "UnitController.generated.h"
 
 /**
@@ -13,6 +14,6 @@ class SASSC_API AUnitController : public AAIController
 {
 	GENERATED_BODY()
 
-	virtual void OnPossess();
+	virtual void OnPossess(APawn* InPawn) override;
 	virtual void BeginPlay() override;
 };

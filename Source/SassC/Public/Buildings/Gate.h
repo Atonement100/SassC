@@ -2,7 +2,8 @@
 
 #pragma once
 
-#include "buildingBase.h"
+#include "BuildingBase.h"
+#include "Components/SkeletalMeshComponent.h"
 #include "Gate.generated.h"
 
 /**
@@ -36,9 +37,8 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Gate")
 	bool ShouldBeOpen;
+	
 protected:
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Gate")
-	USkeletalMeshComponent* GateMesh;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Gate")
 	UBoxComponent* OpenTrigger;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Gate")

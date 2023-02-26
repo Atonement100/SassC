@@ -1,12 +1,10 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "SassC.h"
+#include "Gamemode/Sassilization/SassGameState.h"
 #include "Net/UnrealNetwork.h"
 #include "Kismet/GameplayStatics.h"
-#include "Kismet/KismetStringLibrary.h"
 #include "Player/SassPlayer.h"
 #include "Gamemode/Sassilization/SassPlayerState.h"
-#include "Gamemode/Sassilization/SassGameState.h"
 
 ASassGameState::ASassGameState()
 {
@@ -25,7 +23,7 @@ void ASassGameState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLi
 void ASassGameState::Tick(float DeltaSeconds)
 {
 	GEngine->AddOnScreenDebugMessage(-1, DeltaSeconds, FColor::Turquoise,
-	                                 UKismetStringLibrary::Conv_FloatToString(TimeKeeper));
+	                                 FString::SanitizeFloat(TimeKeeper));
 	if (PreGameActive)
 	{
 		TimeKeeper += DeltaSeconds;

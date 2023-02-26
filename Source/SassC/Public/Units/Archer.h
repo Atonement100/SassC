@@ -18,7 +18,7 @@ class SASSC_API AArcher : public AUnitBase
 public:
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaSeconds) override;
-	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
+	virtual void SetupPlayerInputComponent(class UInputComponent* SetupInputComponent) override;
 
 	virtual void Attack_Implementation(AActor* Target) override;
 	virtual bool Attack_Validate(AActor* Target) override;

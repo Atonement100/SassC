@@ -1,4 +1,6 @@
 ﻿#pragma once
+
+
 #include "BuildingType.h"
 #include "BuildingRequirements.generated.h"
 

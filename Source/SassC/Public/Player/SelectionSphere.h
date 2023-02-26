@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "Components/StaticMeshComponent.h"
 #include "GameFramework/Actor.h"
 #include "SelectionSphere.generated.h"
 

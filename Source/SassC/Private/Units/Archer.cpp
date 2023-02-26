@@ -1,8 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
+#include "Units/Archer.h"
 #include "SassC.h"
 #include "Effects/ProjectileSmallArrow.h"
-#include "Units/Archer.h"
 
 AArcher::AArcher()
 {
@@ -19,9 +19,9 @@ void AArcher::Tick(const float DeltaSeconds)
 	Super::Tick(DeltaSeconds);
 }
 
-void AArcher::SetupPlayerInputComponent(UInputComponent* InputComponent)
+void AArcher::SetupPlayerInputComponent(UInputComponent* SetupInputComponent)
 {
-	Super::SetupPlayerInputComponent(InputComponent);
+	Super::SetupPlayerInputComponent(SetupInputComponent);
 }
 
 void AArcher::Attack_Implementation(AActor* Target)

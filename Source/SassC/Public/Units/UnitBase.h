@@ -2,12 +2,12 @@
 
 #pragma once
 
-#include <ostream>
-#include <sstream>
-
+#include "Gamemode/Sassilization/Empire.h"
 #include "GameFramework/Character.h"
-#include "SassCStaticLibrary.h"
-#include "Kismet/KismetStringLibrary.h"
+#include "GameFramework/PawnMovementComponent.h"
+#include "Core/SassCStaticLibrary.h"
+#include "Components/TextRenderComponent.h"
+#include "Components/BoxComponent.h"
 #include "UnitBase.generated.h"
 
 class ABuildingBase;
@@ -50,10 +50,10 @@ struct FUnitCombatProperties
 	
 	FString ToString() const
 	{
-		return "AttackDelay: " + UKismetStringLibrary::Conv_FloatToString(this->AttackDelay)
-			+ " AttackRange: " + UKismetStringLibrary::Conv_FloatToString(this->AttackRange)
-			+ " AttackDamage: " + UKismetStringLibrary::Conv_FloatToString(this->AttackDamage)
-			+ " AggroRange: " + UKismetStringLibrary::Conv_FloatToString(this->AggroRange);
+		return "AttackDelay: " + FString::SanitizeFloat(this->AttackDelay)
+			+ " AttackRange: " + FString::SanitizeFloat(this->AttackRange)
+			+ " AttackDamage: " + FString::SanitizeFloat(this->AttackDamage)
+			+ " AggroRange: " + FString::SanitizeFloat(this->AggroRange);
 	}
 };
 
@@ -68,7 +68,7 @@ public:
 
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaSeconds) override;
-	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
+	virtual void SetupPlayerInputComponent(class UInputComponent* SetupInputComponent) override;
 	virtual void PostInitializeComponents() override;
 
 	UFUNCTION()
@@ -147,7 +147,7 @@ public:
 
 	UFUNCTION()
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent,
-	                         class AController* EventInstigator, class AActor* DamageCauser);
+	                         class AController* EventInstigator, class AActor* DamageCauser) override;
 
 	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadOnly, Category = "Unit Base")
 	int32 OwningPlayerID;
@@ -169,10 +169,17 @@ public:
 	virtual void FixSpawnLocation_Implementation(FVector RealLocation);
 	virtual bool FixSpawnLocation_Validate(FVector RealLocation);
 
+	UFUNCTION(BlueprintCallable, Category = "Empire|Unit")
+	bool IsUnitSelected() const;
+	UFUNCTION(BlueprintCallable, Category = "Empire|Unit")
+	void SelectUnit(bool bShouldSelect);
+
 protected:
 	void SwitchToIdle();
 
-	UPROPERTY(EditDefaultsOnly, Category = UnitBase)
+	UPROPERTY(VisibleAnywhere, Category = "Unit Base")
+	UEmpire* ControllingEmpire;
+	UPROPERTY(EditDefaultsOnly, Category = "Unit Base")
 	FUnitCombatProperties UnitCombatProperties;
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
@@ -211,7 +218,9 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
 	TArray<AActor*> EnemiesInRange;
 	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
-	bool IsAttacking;
+	bool bIsAttacking;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Unit Base")
+	bool bIsUnitSelected;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Unit Base") //Used for units with projectiles
 	UClass* ProjectileClass;
 
