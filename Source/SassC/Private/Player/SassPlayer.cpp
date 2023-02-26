@@ -692,6 +692,7 @@ void ASassPlayer::RemoveAllWidgets()
 
 void ASassPlayer::CreateGameHUD()
 {
+	//todo this seems to not work after 5.1 for the host of a multi-client PIE game. not sure if it's relevant to anything.
 	if (PlayerControllerPtr->IsLocalController())
 	{
 		RemoveAllWidgets();

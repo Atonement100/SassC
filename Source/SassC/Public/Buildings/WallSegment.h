@@ -31,14 +31,15 @@ public:
 	int TryConnection(ABuildingBase* Connection, TArray<ABuildingBase*>& ConnectedBldgs, int8 Depth, bool TryLeft);
 	void HideMesh() override;
 	void ShowMesh() override;
-	virtual void PreviewUpgrade_Implementation() override;
-	virtual void ResetPreview_Implementation() override;
+	virtual void PreviewUpgrade() override;
+	virtual void ResetPreview() override;
 	virtual void NetUpgradeBuilding_Implementation() override;
 	virtual bool NetUpgradeBuilding_Validate() override;
 	virtual void UpgradeBuilding_Implementation() override;
 	virtual bool UpgradeBuilding_Validate() override;
 #pragma endregion
 
+	UPROPERTY()
 	TArray<ABuildingBase*> GatePreviewArray;
 	UPROPERTY(Replicated)
 	ABuildingBase* LeftConnection;

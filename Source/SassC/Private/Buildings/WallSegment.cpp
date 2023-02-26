@@ -178,7 +178,7 @@ int AWallSegment::TryConnection(ABuildingBase* Connection, TArray<ABuildingBase*
 	return TryConnection(NextConnection, ConnectedBldgs, Depth + 1, TryLeft);
 }
 
-void AWallSegment::PreviewUpgrade_Implementation()
+void AWallSegment::PreviewUpgrade()
 {
 	/*
 	FActorSpawnParameters TempParams = FActorSpawnParameters();
@@ -236,7 +236,7 @@ void AWallSegment::PreviewUpgrade_Implementation()
 	*/
 }
 
-void AWallSegment::ResetPreview_Implementation()
+void AWallSegment::ResetPreview()
 {
 	/*
 	for (AbuildingBase* Wall : GatePreviewArray) {

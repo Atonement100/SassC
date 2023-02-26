@@ -82,7 +82,6 @@ void ABuildingBase::PostInitializeComponents()
 	if (!ActiveBuildingMesh)
 		UE_LOG(LogTemp, Display, TEXT("Not available in PostInitialize"));
 
-	//todo: confirm that applying dynamic material to main mesh will apply when replacing model w upgrades
 	if (ActiveBuildingMesh)
 	{
 		for (int Index = 0; Index < ActiveBuildingMesh->GetMaterials().Num(); Index++)
@@ -91,21 +90,6 @@ void ABuildingBase::PostInitializeComponents()
 			BldgMeshMaterialDynamic.Add(ActiveBuildingMesh->CreateDynamicMaterialInstance(Index, Material));
 		}
 	}
-
-	//These are to include the additional meshes and materials in the dynamic material array, parent only adds one mesh and material by default.
-	// BldgMeshMaterialDynamic.Add(BuildingMesh->CreateDynamicMaterialInstance(1, BuildingMesh->GetMaterial(1)));
-	// for (int NumMaterials = 0; NumMaterials < UpgradeOneMesh->GetNumMaterials(); NumMaterials++)
-	// {
-	// 	BldgMeshMaterialDynamic.Add(
-	// 		UpgradeOneMesh->CreateDynamicMaterialInstance(NumMaterials, UpgradeOneMesh->GetMaterial(NumMaterials)));
-	// }
-	// for (int NumMaterials = 0; NumMaterials < UpgradeOneMesh->GetNumMaterials(); NumMaterials++)
-	// {
-	// 	BldgMeshMaterialDynamic.Add(
-	// 		UpgradeTwoMesh->CreateDynamicMaterialInstance(NumMaterials, UpgradeTwoMesh->GetMaterial(NumMaterials)));
-	// }
-	//This line is to include the second mesh in the dynamic material array, parent only allows for one mesh by default.
-	// BldgMeshMaterialDynamic.Add(UpgradeOneMesh->CreateDynamicMaterialInstance(0, UpgradeOneMesh->GetMaterial(0)));
 }
 
 void ABuildingBase::BeginPlay()
@@ -202,7 +186,7 @@ bool ABuildingBase::PostCreation_Validate(FLinearColor PlayerColor)
 }
 
 
-void ABuildingBase::PreviewUpgrade_Implementation()
+void ABuildingBase::PreviewUpgrade()
 {
 	PreviewActive = false;
 	const short LevelToPreview = UpgradeLevel + 1;
@@ -219,7 +203,7 @@ void ABuildingBase::PreviewUpgrade_Implementation()
 	this->ColorBldg(FLinearColor::Green);
 }
 
-void ABuildingBase::ResetPreview_Implementation()
+void ABuildingBase::ResetPreview()
 {
 	ResetRequired = false;
 	

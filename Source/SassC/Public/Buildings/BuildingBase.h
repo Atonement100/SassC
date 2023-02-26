@@ -74,13 +74,13 @@ public:
 	virtual UMeshComponent* GetMesh(int MeshIndex = 0);
 
 	//todo I don't see why this would have needed to be an RPC
-	UFUNCTION(Unreliable, Client)
-	void PreviewUpgrade();
-	virtual void PreviewUpgrade_Implementation();
+	// UFUNCTION(Unreliable, Client)
+	virtual void PreviewUpgrade();
+	// virtual void PreviewUpgrade_Implementation();
 
-	UFUNCTION(Unreliable, Client)
-	void ResetPreview();
-	virtual void ResetPreview_Implementation();
+	// UFUNCTION(Unreliable, Client)
+	virtual void ResetPreview();
+	// virtual void ResetPreview_Implementation();
 
 	UFUNCTION(Reliable, NetMulticast, WithValidation)
 	void NetUpgradeBuilding();
