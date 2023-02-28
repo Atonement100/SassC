@@ -2,7 +2,6 @@
 
 #pragma once
 
-
 #include "GraphBorder.h"
 #include "GraphNode.h"
 #include "GraphBorderData.generated.h"
@@ -10,7 +9,7 @@
 /**
  * 
  */
-UCLASS()
+UCLASS(Blueprintable)
 class SASSC_API UGraphBorderData : public UObject
 {
 	GENERATED_BODY()
@@ -22,4 +21,12 @@ protected:
 	AGraphNode* Next;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	AGraphNode* Previous;
+
+public:
+	UGraphBorder* GetBorder() const;
+	void SetBorder(UGraphBorder* NewBorder);
+	AGraphNode* GetNext() const;
+	void SetNext(AGraphNode* NewNext);
+	AGraphNode* GetPrevious() const;
+	void SetPrevious(AGraphNode* NewPrevious);
 };

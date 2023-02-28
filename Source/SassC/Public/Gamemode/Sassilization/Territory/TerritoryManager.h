@@ -9,7 +9,7 @@
 /**
  * 
  */
-UCLASS()
+UCLASS(Blueprintable)
 class SASSC_API UTerritoryManager : public UObject
 {
 	GENERATED_BODY()

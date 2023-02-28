@@ -2,21 +2,27 @@
 
 #pragma once
 
-
-#include "GraphNode.h"
 #include "GraphBorder.generated.h"
+
+class AGraphNode;
 
 /**
  * 
  */
-UCLASS()
+UCLASS(Blueprintable)
 class SASSC_API UGraphBorder : public UObject
 {
 	GENERATED_BODY()
 
 protected:
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta=(ExposeOnSpawn="true"))
 	AGraphNode* Head;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta=(ExposeOnSpawn="true"))
 	AGraphNode* Tail;
+
+public:
+	AGraphNode* GetHead() const;
+	void SetHead(AGraphNode* NewHead);
+	AGraphNode* GetTail() const;
+	void SetTail(AGraphNode* NewTail);
 };

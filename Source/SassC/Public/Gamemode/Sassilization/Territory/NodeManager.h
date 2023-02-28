@@ -7,7 +7,7 @@
 #include "GameFramework/Actor.h"
 #include "NodeManager.generated.h"
 
-UCLASS()
+UCLASS(Blueprintable)
 class SASSC_API ANodeManager : public AActor
 {
 	GENERATED_BODY()
