@@ -11,8 +11,8 @@
 /**
  * 
  */
-UCLASS()
-class SASSC_API UEmpireManager : public UObject
+UCLASS(Blueprintable)
+class SASSC_API AEmpireManager : public AActor
 {
 	GENERATED_BODY()
 

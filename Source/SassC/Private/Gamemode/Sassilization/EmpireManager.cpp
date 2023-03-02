@@ -2,23 +2,23 @@
 
 #include "Gamemode/Sassilization/EmpireManager.h"
 
-const TMap<uint8, UEmpire*>& UEmpireManager::GetEmpires() const
+const TMap<uint8, UEmpire*>& AEmpireManager::GetEmpires() const
 {
 	return this->Empires;
 }
 
-UEmpire* UEmpireManager::GetEmpireById(const uint8 EmpireId) const
+UEmpire* AEmpireManager::GetEmpireById(const uint8 EmpireId) const
 {
 	return *(this->Empires.Find(EmpireId));
 }
 
-UEmpire* UEmpireManager::GetEmpireByPlayerId(const FString PlayerId) const
+UEmpire* AEmpireManager::GetEmpireByPlayerId(const FString PlayerId) const
 {
 	const uint8 EmpireId = *(this->PlayerIdToEmpireId.Find(PlayerId));
 	return this->GetEmpireById(EmpireId);
 }
 
-const FLinearColor& UEmpireManager::GetColorById(const int ColorId) const
+const FLinearColor& AEmpireManager::GetColorById(const int ColorId) const
 {
 	if (!this->AvailableColors.IsValidIndex(ColorId))
 	{
@@ -28,7 +28,7 @@ const FLinearColor& UEmpireManager::GetColorById(const int ColorId) const
 	return this->AvailableColors[ColorId];
 }
 
-TArray<ABuildingBase*> UEmpireManager::GetAllBuildings() const
+TArray<ABuildingBase*> AEmpireManager::GetAllBuildings() const
 {
 	TArray<ABuildingBase*> AllBuildings = TArray<ABuildingBase*>();
 	
@@ -47,7 +47,7 @@ TArray<ABuildingBase*> UEmpireManager::GetAllBuildings() const
 	return AllBuildings;
 }
 
-TArray<AUnitBase*> UEmpireManager::GetAllUnits() const
+TArray<AUnitBase*> AEmpireManager::GetAllUnits() const
 {
 	TArray<AUnitBase*> AllUnits = TArray<AUnitBase*>();
 	

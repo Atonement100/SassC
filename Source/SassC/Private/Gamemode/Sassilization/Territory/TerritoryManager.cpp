@@ -5,7 +5,7 @@
 
 #include "Kismet/KismetStringLibrary.h"
 
-bool UTerritoryManager::IsLocationInTerritory(const FVector Location, const uint8 EmpireId) const
+bool ATerritoryManager::IsLocationInTerritory(const FVector Location, const uint8 EmpireId) const
 {
 	const AGraphNode* NearestNode = NodeManager->FindNearestNode(Location, 1.0f);
 	

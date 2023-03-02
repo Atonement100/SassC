@@ -10,7 +10,7 @@
  * 
  */
 UCLASS(Blueprintable)
-class SASSC_API UTerritoryManager : public UObject
+class SASSC_API ATerritoryManager : public AActor
 {
 	GENERATED_BODY()
 
@@ -18,6 +18,6 @@ public:
 	bool IsLocationInTerritory(FVector Location, uint8 EmpireId) const;
 
 protected:
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(EditAnywhere)
 	ANodeManager* NodeManager;
 };

@@ -2,42 +2,16 @@
 
 #pragma once
 
-
 #include "Blueprint/UserWidget.h"
 #include "Runtime/UMG/Public/UMG.h"
 #include "GameFramework/Character.h"
+#include "Gamemode/Sassilization/TypeOfSpawnable.h"
+#include "Gamemode/Sassilization/TypeOfOrder.h"
 #include "SassPlayer.generated.h"
 
 class AUnitBase;
 class AWall;
 class ASassPlayerController;
-
-UENUM()
-enum class ETypeOfOrder : uint8
-{
-	ORDER_UNIT UMETA(DisplayName = "Unit"),
-	ORDER_BUILDING UMETA(DisplayName = "Building"),
-	ORDER_WORLD UMETA(DisplayName = "World")
-};
-
-UENUM(BlueprintType)
-enum class ETypeOfSpawnable : uint8
-{
-	BUILDING_CITY UMETA(DisplayName = "City"),
-	BUILDING_WORKSHOP UMETA(DisplayName = "Workshop"),
-	BUILDING_TOWER UMETA(DisplayName = "Tower"),
-	BUILDING_WALL UMETA(DisplayName = "Wall"),
-	BUILDING_GATE UMETA(DisplayName = "Gate"),
-	BUILDING_SHIELDMONO UMETA(DisplayName = "Shield Monolith"),
-	BUILDING_SHRINE UMETA(DisplayName = "Shrine"),
-	//Buildings are <= 6
-	//Units are >= 7
-	UNIT_SOLDIER UMETA(DisplayName = "Soldier"),
-	UNIT_ARCHER UMETA(DisplayName = "Archer"),
-	UNIT_SCALLYWAG UMETA(DisplayName = "Scallywag"),
-	UNIT_BALLISTA UMETA(DisplayName = "Ballista"),
-	UNIT_CATAPULT UMETA(DisplayName = "Catapult")
-};
 
 UCLASS()
 class SASSC_API ASassPlayer : public ACharacter
@@ -294,11 +268,15 @@ protected:
 	const float CrouchSpeed = 200.0f;
 	const float CrouchingEyeHeight = 40.0f;
 	const float StandingEyeHeight = 80.0f;
+	UPROPERTY()
 	UUserWidget* PauseWidget;
+	UPROPERTY()
 	UUserWidget* PregameWidget;
+	UPROPERTY()
 	APlayerController* PlayerControllerPtr;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Sass Player")
 	TArray<AUnitBase*> SelectedUnits;
+	UPROPERTY()
 	TArray<AActor*> WorldStaticObjects;
 	/*Enum array of world dynamic and world static object types, for traces*/
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Sass Player")
@@ -313,7 +291,7 @@ protected:
 	//const not allowed
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sass Player")
-	ETypeOfSpawnable SelectedSpawnableType = ETypeOfSpawnable::BUILDING_CITY;
+	ETypeOfSpawnable SelectedSpawnableType = ETypeOfSpawnable::Building_City;
 
 	const int SelectionSphereScaleMod = 100; // this should never ever be changed
 

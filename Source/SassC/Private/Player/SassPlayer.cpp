@@ -106,7 +106,7 @@ void ASassPlayer::Tick(float DeltaTime)
 			if (!IsRightMouseDown)
 			{
 				LocalObjectSpawn->SetActorLocation(
-					CursorHit.Location + ((SelectedSpawnableType < ETypeOfSpawnable::UNIT_SOLDIER)
+					CursorHit.Location + ((SelectedSpawnableType < ETypeOfSpawnable::Unit_Soldier)
 						                      ? FVector::ZeroVector
 						                      : CurrentHalfHeight));
 			}
@@ -561,7 +561,7 @@ void ASassPlayer::LeftClickPressed()
 			if (ABuildingBase* LocalBuildingRef = Cast<ABuildingBase>(LocalObjectSpawn))
 			{
 				LocationsToCheck = LocalBuildingRef->CornerLocations;
-				if (SelectedSpawnableType == ETypeOfSpawnable::BUILDING_GATE) { ActorsToIgnore = TempGateWalls; }
+				if (SelectedSpawnableType == ETypeOfSpawnable::Building_Gate) { ActorsToIgnore = TempGateWalls; }
 			}
 
 			const TArray<AActor*> ConfirmedToIgnore = ActorsToIgnore;
@@ -602,14 +602,14 @@ void ASassPlayer::RightClickPressed()
 				RaycastHit, true);
 		}
 		AActor* HitActor = RaycastHit.GetActor();
-		ETypeOfOrder OrderType = ETypeOfOrder::ORDER_WORLD;
+		ETypeOfOrder OrderType = ETypeOfOrder::Order_World;
 		if ((HitActor->IsA(AUnitBase::StaticClass()) || HitActor->IsA(ASelectionSphere::StaticClass())) && Cast<
 			AUnitBase>(HitActor)->OwningPlayerID != GetPlayerState()->GetPlayerId())
 		{
-			OrderType = ETypeOfOrder::ORDER_UNIT;
+			OrderType = ETypeOfOrder::Order_Unit;
 		}
 		if (HitActor->IsA(ABuildingBase::StaticClass()) && Cast<ABuildingBase>(HitActor)->OwningPlayerID !=
-			GetPlayerState()->GetPlayerId()) { OrderType = ETypeOfOrder::ORDER_BUILDING; }
+			GetPlayerState()->GetPlayerId()) { OrderType = ETypeOfOrder::Order_Building; }
 		CommandUnits(SelectedUnits, RaycastHit, OrderType);
 	}
 }
@@ -624,15 +624,15 @@ void ASassPlayer::CommandUnits_Implementation(const TArray<AUnitBase*>& UnitsToC
 {
 	switch (OrderType)
 	{
-	case ETypeOfOrder::ORDER_UNIT:
+	case ETypeOfOrder::Order_Unit:
 		for (AUnitBase* Unit : UnitsToCommand) { if (Unit) Unit->MoveToUnit(RaycastHit.GetActor()); }
 		GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Emerald, "SassPlayer CommandUnits: Attack a unit");
 		break;
-	case ETypeOfOrder::ORDER_BUILDING:
+	case ETypeOfOrder::Order_Building:
 		for (AUnitBase* Unit : UnitsToCommand) { if (Unit) Unit->MoveToBuilding(RaycastHit.GetActor()); }
 		GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Emerald, "SassPlayer CommandUnits: Attack a building");
 		break;
-	case ETypeOfOrder::ORDER_WORLD:
+	case ETypeOfOrder::Order_World:
 	default:
 		for (AUnitBase* Unit : UnitsToCommand) { if (Unit) Unit->MoveToDest(RaycastHit.Location); }
 		break;
@@ -1030,8 +1030,6 @@ void ASassPlayer::ServerSpawnBuilding_Implementation(ASassPlayerController* Play
 										 "SassPlayer ServerSpawnBuilding: Could not spawn because corners were obstructed");
 		return;
 	}
-
-	
 	
 	// If all checks have passed so far, let's go ahead and spawn the actor.
 	AActor* NewSpawn = GetWorld()->SpawnActor(ActorToSpawn, &Location, &Rotation, SpawnParams);

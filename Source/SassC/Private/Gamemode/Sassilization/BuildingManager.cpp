@@ -1,9 +1,10 @@
 ﻿// License information can be found at https://github.com/Atonement100/SassC/blob/master/LICENSE
 
-
 #include "Gamemode/Sassilization/BuildingManager.h"
+#include "Math/Rotator.h"
+#include "Math/Vector.h"
 
-bool UBuildingManager::CanBuild(UEmpire* Empire, EBuildingType BuildingType, bool IgnoreCost) const
+bool ABuildingManager::CanBuild(UEmpire* Empire, EBuildingType BuildingType, bool IgnoreCost) const
 {
 	if (!IsValid(Empire))
 	{
@@ -15,4 +16,11 @@ bool UBuildingManager::CanBuild(UEmpire* Empire, EBuildingType BuildingType, boo
 	// todo check building requirements
 	
 	return true;
+}
+
+void ABuildingManager::BuildBuilding(APlayerController* Player, TSubclassOf<AActor> ActorToSpawn, FVector Location, FRotator Rotator)
+{
+	FActorSpawnParameters SpawnParams = FActorSpawnParameters();
+	SpawnParams.bNoFail = true;
+	GetWorld()->SpawnActor(ActorToSpawn, &Location, &Rotator, SpawnParams);
 }

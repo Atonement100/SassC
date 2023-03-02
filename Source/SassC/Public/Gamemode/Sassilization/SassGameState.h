@@ -3,6 +3,7 @@
 #pragma once
 
 
+#include "SassGameManager.h"
 #include "GameFramework/GameState.h"
 #include "SassGameState.generated.h"
 
@@ -28,7 +29,9 @@ public:
 	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite)
 	float GoldGoal = 800.0f;
 
-
+	UFUNCTION(BlueprintCallable)
+	ASassGameManager* GetGameManager();
+	
 	UFUNCTION(Reliable, NetMulticast, WithValidation)
 	void GameStart();
 	virtual void GameStart_Implementation();
@@ -39,6 +42,9 @@ public:
 	virtual void LateStart_Implementation();
 	virtual bool LateStart_Validate();
 
-
+protected:
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	ASassGameManager* SassGameManager;
+	
 private:
 };

@@ -8,6 +8,7 @@
 
 ASassGameState::ASassGameState()
 {
+
 }
 
 void ASassGameState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
@@ -33,6 +34,25 @@ void ASassGameState::Tick(float DeltaSeconds)
 			GameStart();
 		}
 	}
+}
+
+ASassGameManager* ASassGameState::GetGameManager()
+{
+	if (!this->SassGameManager)
+	{
+		UE_LOG(LogTemp, Display, TEXT("SassGameManager does not already exist. Searching :)"))
+		TArray<AActor*>&& GameManagers = TArray<AActor*>();
+		UGameplayStatics::GetAllActorsOfClass(GetWorld(), ASassGameManager::StaticClass(), GameManagers);
+
+		if (GameManagers.Num() != 1)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Invalid number of SassGameManager found in the world. Found {%d}"), GameManagers.Num());
+		}
+
+		this->SassGameManager = Cast<ASassGameManager>(GameManagers[0]);
+	}
+	
+	return this->SassGameManager;
 }
 
 void ASassGameState::GameStart_Implementation()
