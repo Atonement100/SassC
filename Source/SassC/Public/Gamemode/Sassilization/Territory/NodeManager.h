@@ -3,7 +3,9 @@
 #pragma once
 
 
+#include "EmpireBorderData.h"
 #include "GraphNode.h"
+#include "TerritoryInfo.h"
 #include "GameFramework/Actor.h"
 #include "NodeManager.generated.h"
 

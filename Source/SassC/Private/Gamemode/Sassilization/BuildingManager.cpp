@@ -21,6 +21,6 @@ bool ABuildingManager::CanBuild(UEmpire* Empire, EBuildingType BuildingType, boo
 void ABuildingManager::BuildBuilding(APlayerController* Player, TSubclassOf<AActor> ActorToSpawn, FVector Location, FRotator Rotator)
 {
 	FActorSpawnParameters SpawnParams = FActorSpawnParameters();
-	SpawnParams.bNoFail = true;
+	
 	GetWorld()->SpawnActor(ActorToSpawn, &Location, &Rotator, SpawnParams);
 }
