@@ -42,6 +42,9 @@ public:
 	virtual void LateStart_Implementation();
 	virtual bool LateStart_Validate();
 
+	UFUNCTION(Reliable, NetMulticast, WithValidation)
+	void HandleNewPlayer(ASassPlayerState* PlayerState);
+
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	ASassGameManager* SassGameManager;

@@ -9,13 +9,19 @@
 
 UEmpire::UEmpire(){}
 
-UEmpire::UEmpire(const uint8 EmpireId, const FString PlayerId, const uint8 ColorId)
+void UEmpire::InitializeEmpire(const uint8 InitEmpireId, const int32 InitPlayerId, const FLinearColor InitEmpireColor)
 {
-	UE_LOG(LogTemp, Display, TEXT("Creating new Empire %d, %s, %d"), EmpireId, *PlayerId, ColorId);
+	UE_LOG(LogTemp, Display, TEXT("Initialize new Empire %d, %d, %s"), InitEmpireId, InitPlayerId, *InitEmpireColor.ToString());
 
-	this->EmpireId = EmpireId;
-	this->OwningPlayerId = PlayerId;
-	this->ColorId = ColorId;
+	this->EmpireId = InitEmpireId;
+	this->OwningPlayerId = InitPlayerId;
+	this->EmpireColor = InitEmpireColor;
+	
+	// todo: extract to gamemode defaults
+	this->SetGold(75);
+	this->SetFood(100);
+	this->SetIron(100);
+	this->CalculateSupply();
 }
 
 void UEmpire::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
@@ -23,7 +29,7 @@ void UEmpire::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeP
 	UObject::GetLifetimeReplicatedProps(OutLifetimeProps);
 	DOREPLIFETIME(UEmpire, EmpireId)
 	DOREPLIFETIME(UEmpire, OwningPlayerId)
-	DOREPLIFETIME(UEmpire, ColorId)
+	DOREPLIFETIME(UEmpire, EmpireColor)
 	//todo add the rest
 }
 
@@ -80,6 +86,11 @@ int32 UEmpire::GetIronIncome() const
 	return UKismetMathLibrary::FCeil(8 + this->GetNumFarms());
 }
 
+void UEmpire::CalculateSupply()
+{
+	this->SetSupplyMaximum(UKismetMathLibrary::FFloor(6 + this->GetNumCities() + this->GetNumHouses() * 0.5f));
+}
+
 bool UEmpire::HasColor() const
 {
 	return this->EmpireColor == NullColor;
@@ -90,7 +101,7 @@ void UEmpire::SetColor(const FColor NewColor)
 	this->EmpireColor = NewColor;
 }
 
-FColor UEmpire::GetColor() const
+FLinearColor UEmpire::GetColor() const
 {
 	return this->EmpireColor;
 }
@@ -138,6 +149,16 @@ void UEmpire::DeselectAllUnits()
 	}
 
 	this->SelectedUnits.Empty();
+}
+
+uint8 UEmpire::GetEmpireId() const
+{
+	return EmpireId;
+}
+
+void UEmpire::SetEmpireId(const uint8 NewEmpireId)
+{
+	this->EmpireId = NewEmpireId;
 }
 
 void UEmpire::AddGold(const int32 Amount)

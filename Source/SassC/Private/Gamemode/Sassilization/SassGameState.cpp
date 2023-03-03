@@ -65,8 +65,16 @@ void ASassGameState::GameStart_Implementation()
 	//Player->GetGameWidget(); Cast to SassilizationHUD_BP; Player->SetSassHUDWidget()
 	for (TActorIterator<ASassPlayer> PlayerItr(GetWorld()); PlayerItr; ++PlayerItr)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Turquoise, "PlayerIterator");
-		PlayerItr->ColorPlayer(PlayerItr->GetPlayerState<ASassPlayerState>()->PlayerColor);
+		GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Turquoise, "Setting color of player..");
+		UE_LOG(LogTemp, Display, TEXT("Setting color of player %s"), *(PlayerItr->GetPlayerState()->GetPlayerName()));
+
+		if (ASassPlayerState* PlayerState = PlayerItr->GetPlayerState<ASassPlayerState>())
+		{
+			if (PlayerState->GetEmpire())
+			{
+				PlayerItr->ColorPlayer(PlayerState->GetEmpire()->GetColor());
+			}
+		}
 	}
 }
 
@@ -81,6 +89,23 @@ void ASassGameState::LateStart_Implementation()
 }
 
 bool ASassGameState::LateStart_Validate()
+{
+	return true;
+}
+
+void ASassGameState::HandleNewPlayer_Implementation(ASassPlayerState* PlayerState)
+{
+	UEmpire* NewEmpire = GetGameManager()->GetEmpireManager()->RetrieveOrCreateNewEmpire(PlayerState->GetPlayerId(), PlayerState->GetPlayerName());
+
+	if (!NewEmpire)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Empire not found for new player %s"), *PlayerState->GetPlayerName())
+	}
+	
+	PlayerState->SetEmpire(NewEmpire);
+}
+
+bool ASassGameState::HandleNewPlayer_Validate(ASassPlayerState* PlayerState)
 {
 	return true;
 }

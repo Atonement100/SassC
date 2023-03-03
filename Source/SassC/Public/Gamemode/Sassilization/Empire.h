@@ -15,8 +15,10 @@ class SASSC_API UEmpire : public UObject
 
 public:
 	UEmpire();
-	UEmpire(uint8 EmpireId, FString PlayerId, uint8 ColorId);
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+
+	UFUNCTION(BlueprintCallable, Category = "Empire")
+	void InitializeEmpire(const uint8 InitEmpireId, const int32 InitPlayerId, const FLinearColor InitEmpireColor);
 
 	static bool IsEmpireValid(const UEmpire* Empire);
 	
@@ -42,6 +44,8 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Empire")
 	int32 GetIronIncome() const;
 
+	UFUNCTION(BlueprintCallable, Category = "Empire")
+	void CalculateSupply();
 	
 	UFUNCTION(BlueprintCallable, Category = "Empire")
 	bool HasColor() const;
@@ -50,7 +54,7 @@ public:
 	void SetColor(FColor NewColor);
 	
 	UFUNCTION(BlueprintCallable, Category = "Empire")
-	FColor GetColor() const;
+	FLinearColor GetColor() const;
 
 	
 	UFUNCTION(BlueprintCallable, Category = "Empire")
@@ -64,13 +68,15 @@ public:
 
 protected:
 	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadWrite, Category = "Empire")
-	uint8 EmpireId;
-	
+	uint8 EmpireId = -1;
+
+public:
+	uint8 GetEmpireId() const;
+	void SetEmpireId(const uint8 NewEmpireId);
+
+protected:
 	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadWrite, Category = "Empire")
-	FString OwningPlayerId;
-	
-	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadWrite, Category = "Empire")
-	uint8 ColorId;
+	int32 OwningPlayerId = 0;
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Empire")
 	TSet<ABuildingBase*> Buildings = TSet<ABuildingBase*>();
@@ -82,7 +88,7 @@ protected:
 	TSet<AUnitBase*> SelectedUnits = TSet<AUnitBase*>();
 
 	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadWrite, Category = "Empire")
-	FColor EmpireColor = NullColor;
+	FLinearColor EmpireColor = NullColor;
 	inline static FColor NullColor = FColor(0, 0, 0, 0);
 
 public:
@@ -169,35 +175,35 @@ public:
 
 protected:
 	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadWrite, Category = "Empire")
-	int32 Food;
+	int32 Food = 0;
 	
 	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadWrite, Category = "Empire|Resources")
-	int32 Iron;
+	int32 Iron = 0;
 	
 	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadWrite, Category = "Empire|Resources")
-	int32 Gold;
+	int32 Gold = 0;
 	
 	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadWrite, Category = "Empire|Resources")
-	int32 Creed;
+	int32 Creed = 0;
 	
 	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadWrite, Category = "Empire|Resources")
-	int32 SupplyMaximum;
+	int32 SupplyMaximum = 0;
 	
 	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadWrite, Category = "Empire|Resources")
-	int32 SupplyUsed;
+	int32 SupplyUsed = 0;
 	
 	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadWrite, Category = "Empire|Resources")
-	int32 NumCities;
+	int32 NumCities = 0;
 	
 	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadWrite, Category = "Empire|Resources")
-	int32 NumShrines;
+	int32 NumShrines = 0;
 	
 	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadWrite, Category = "Empire|Resources")
-	int32 NumHouses;
+	int32 NumHouses = 0;
 	
 	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadWrite, Category = "Empire|Resources")
-	int32 NumMines;
+	int32 NumMines = 0;
 	
 	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadWrite, Category = "Empire|Resources")
-	int32 NumFarms;
+	int32 NumFarms = 0;
 };

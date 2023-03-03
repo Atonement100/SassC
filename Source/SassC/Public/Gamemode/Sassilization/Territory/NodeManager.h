@@ -28,4 +28,7 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	AGraphNode* FindNearestNode(const FVector Location, const float Radius = 50.0f) const;
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
+	void FloodTerritory(const TArray<FTerritoryInfo>& TerritoryOrigins, const TArray<FEmpireBorderData>& TerritoryBordersResult);
+	void FloodTerritory_Implementation(const TArray<FTerritoryInfo>& TerritoryOrigins, const TArray<FEmpireBorderData>& TerritoryBordersResult);
 };

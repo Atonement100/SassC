@@ -17,8 +17,9 @@ class SASSC_API ABuildingManager : public AActor
 public:
 	UFUNCTION(BlueprintCallable, Category = "Buildings")
 	bool CanBuild(UEmpire* Empire, EBuildingType BuildingType, bool IgnoreCost) const;
+	UFUNCTION(BlueprintCallable)
 	void BuildBuilding(APlayerController* Player, TSubclassOf<AActor> ActorToSpawn, FVector Location, FRotator Rotator);
-
-protected:
+	// UFUNCTION(BlueprintCallable)
+	//
 	
 };

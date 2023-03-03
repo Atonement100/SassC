@@ -3,6 +3,7 @@
 #pragma once
 
 
+#include "SassGameManager.h"
 #include "GameFramework/GameMode.h"
 #include "SassGamemode.generated.h"
 
@@ -20,6 +21,8 @@ class SASSC_API ASassGamemode : public AGameMode
 public:
 	UPROPERTY(BlueprintReadOnly, Category = "Gamemode")
 	TArray<AActor*> PlayerSpawns;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Gamemode")
+	ASassGameManager* GameManager;
 
 	UFUNCTION(BlueprintCallable, Category = "Gamemode")
 	void PostLogin(APlayerController* NewPlayer);

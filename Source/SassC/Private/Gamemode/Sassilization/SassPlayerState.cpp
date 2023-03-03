@@ -7,6 +7,16 @@ ASassPlayerState::ASassPlayerState()
 {
 }
 
+UEmpire* ASassPlayerState::GetEmpire() const
+{
+	return Empire;
+}
+
+void ASassPlayerState::SetEmpire(UEmpire* const NewEmpire)
+{
+	this->Empire = NewEmpire;
+}
+
 void ASassPlayerState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

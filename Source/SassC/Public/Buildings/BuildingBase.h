@@ -13,6 +13,7 @@
 #include "Components/StaticMeshComponent.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Engine/StreamableRenderAsset.h"
+#include "Gamemode/Sassilization/Territory/TerritoryInfo.h"
 #include "Materials/MaterialInstanceDynamic.h"
 #include "BuildingBase.generated.h"
 
@@ -147,7 +148,19 @@ protected:
 	 */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Building Base")
 	uint8 GoldBonusOnDestroy = 8;
-	
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Building Base")
+	FTerritoryInfo TerritoryInfo;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Building Base")
+	bool bIsDestroyed = false;
+
+public:
+	FTerritoryInfo GetTerritoryInfo() const;
+	void SetTerritoryInfo(const FTerritoryInfo& NewTerritoryInfo);
+	bool IsDestroyed() const;
+	void SetIsDestroyed(const bool bNewIsDestroyed);
+
+protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Building Base")
 	bool CanPlayerSpawn = false;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Building Base")
@@ -174,7 +187,7 @@ protected:
 	virtual bool NetFixSpawnLocation_Validate(FVector RealLocation);
 
 	//These properties are used for buildings with upgrades, i.e. workshop, tower, and wall->gate. 
-	//For any buildings using these properties, each mesh must be individually declared in the specific blueprint.
+	//For any buildings using these properties, each mesh must be individually declared in AvailableBuildingMeshes.
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Building Base")
 	uint8 UpgradeLevel = 0;
 };

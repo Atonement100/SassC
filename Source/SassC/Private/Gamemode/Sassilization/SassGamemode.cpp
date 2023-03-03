@@ -1,6 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Gamemode/Sassilization/SassGamemode.h"
+
+#include "Gamemode/Sassilization/SassGameState.h"
 #include "Player/SassPlayer.h"
 #include "Player/SassPlayerController.h"
 #include "Kismet/KismetMathLibrary.h"
@@ -15,7 +17,11 @@ void ASassGamemode::PostLogin(APlayerController* NewPlayer)
 {
 	Super::PostLogin(NewPlayer);
 	ASassPlayerState* PlayerState = Cast<ASassPlayerState>(NewPlayer->PlayerState);
-	PlayerState->PlayerColor = ChoosePlayerColor();
+
+	if (ASassGameState* SassGameState = GetGameState<ASassGameState>())
+	{
+		SassGameState->HandleNewPlayer(PlayerState);
+	}
 }
 
 FLinearColor ASassGamemode::ChoosePlayerColor()

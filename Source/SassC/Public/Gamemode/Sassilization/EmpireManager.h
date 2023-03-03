@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include <atomic>
 
 #include "Buildings/BuildingBase.h"
 #include "Units/UnitBase.h"
@@ -24,7 +25,10 @@ public:
 	UEmpire* GetEmpireById(const uint8 EmpireId) const;
 	
 	UFUNCTION(BlueprintCallable, Category = "Empire")
-	UEmpire* GetEmpireByPlayerId(const FString PlayerId) const;
+	UEmpire* GetEmpireByPlayerId(const int32 PlayerId) const;
+
+	UFUNCTION(BlueprintCallable, Category = "Empire")
+	UEmpire* RetrieveOrCreateNewEmpire(const int32 PlayerId, const FString PlayerName);
 	
 	UFUNCTION(BlueprintCallable, Category = "Empire")
 	const FLinearColor& GetColorById(const int ColorId) const;
@@ -37,23 +41,25 @@ public:
 	
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Empire")
-	TMap<FString, uint8> PlayerIdToEmpireId = TMap<FString, uint8>();
+	TMap<int32, uint8> PlayerIdToEmpireId = TMap<int32, uint8>();
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Empire")
 	TMap<uint8, UEmpire*> Empires = TMap<uint8, UEmpire*>();
 	
+	std::atomic_int EmpireIdCounter = std::atomic_int(1);
+	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Empire")
 	TArray<FLinearColor> AvailableColors = TArray<FLinearColor>(std::initializer_list<FLinearColor>({
 		FColorList::Red,
-		FColorList::Grey, 
 		FColorList::Turquoise, 
 		FColorList::Yellow, 
 		FColorList::Pink,
-		FColorList::DarkPurple,
 		FColorList::Blue, 
 		FColorList::Brown, 
 		FColorList::Green, 
+		FColorList::DarkPurple,
 		FColorList::DarkOliveGreen,
+		FColorList::Grey, 
 		FColorList::Orange,
 		FColorList::LimeGreen,
 		FColorList::SpicyPink,

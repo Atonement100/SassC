@@ -15,9 +15,17 @@ class SASSC_API ATerritoryManager : public AActor
 	GENERATED_BODY()
 
 public:
+	ATerritoryManager();
+	
+	UFUNCTION(BlueprintCallable)
 	bool IsLocationInTerritory(FVector Location, uint8 EmpireId) const;
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
+	void UpdateTerritories();
+	void UpdateTerritories_Implementation();
 
 protected:
 	UPROPERTY(EditAnywhere)
 	ANodeManager* NodeManager;
+	UPROPERTY(VisibleAnywhere, Replicated)
+	TArray<FEmpireBorderData> TerritoryBorders;
 };

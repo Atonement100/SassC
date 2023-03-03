@@ -26,6 +26,11 @@ public:
 	/*Playercolor that is set on server join, set in postlogin gamemode*/
 	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadWrite, Category = "PlayerState")
 	FLinearColor PlayerColor;
+	
+	UFUNCTION(BlueprintCallable, Category = "PlayerState")
+	UEmpire* GetEmpire() const;
+	UFUNCTION(BlueprintCallable, Category = "PlayerState")
+	void SetEmpire(UEmpire* const NewEmpire);
 
 protected:
 	/*Spawnable currently selected to be spawned*/

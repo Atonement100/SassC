@@ -57,31 +57,17 @@ void ABuildingBase::PostActorCreated()
 			Cast<USkeletalMeshComponent>(ActiveBuildingMesh)->SetSkeletalMesh(Cast<USkeletalMesh>(AvailableBuildingMeshes[0]));
 		}
 	}
-	
-	UE_LOG(LogTemp, Display, TEXT("PostActorCreated"));
-	if (!ActiveBuildingMesh)
-		UE_LOG(LogTemp, Display, TEXT("Not available in PostActorCreated"));
 }
 
 void ABuildingBase::PreInitializeComponents()
 {
 	Super::PreInitializeComponents();
-
-	UE_LOG(LogTemp, Display, TEXT("Number of components is %d!"), AvailableBuildingMeshes.Num());
-
-	if (!ActiveBuildingMesh)
-		UE_LOG(LogTemp, Display, TEXT("Not available in PreInitialize"));
 }
 
 void ABuildingBase::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
-
-	UE_LOG(LogTemp, Display, TEXT("PostInitialize"));
-
-	if (!ActiveBuildingMesh)
-		UE_LOG(LogTemp, Display, TEXT("Not available in PostInitialize"));
-
+	
 	if (ActiveBuildingMesh)
 	{
 		for (int Index = 0; Index < ActiveBuildingMesh->GetMaterials().Num(); Index++)
@@ -159,6 +145,26 @@ void ABuildingBase::ShowMesh()
 UMeshComponent* ABuildingBase::GetMesh(int MeshIndex)
 {
 	return this->ActiveBuildingMesh;
+}
+
+FTerritoryInfo ABuildingBase::GetTerritoryInfo() const
+{
+	return TerritoryInfo;
+}
+
+void ABuildingBase::SetTerritoryInfo(const FTerritoryInfo& NewTerritoryInfo)
+{
+	this->TerritoryInfo = NewTerritoryInfo;
+}
+
+bool ABuildingBase::IsDestroyed() const
+{
+	return bIsDestroyed;
+}
+
+void ABuildingBase::SetIsDestroyed(const bool bNewIsDestroyed)
+{
+	this->bIsDestroyed = bNewIsDestroyed;
 }
 
 void ABuildingBase::NetFixSpawnLocation_Implementation(FVector RealLocation)

@@ -57,3 +57,9 @@ AGraphNode* ANodeManager::FindNearestNode(const FVector Location, const float Ra
 	return NearestNode;
 }
 
+void ANodeManager::FloodTerritory_Implementation(const TArray<FTerritoryInfo>& TerritoryOrigins,
+	const TArray<FEmpireBorderData>& TerritoryBordersResult)
+{
+	UE_LOG(LogTemp, Warning, TEXT("Called unimplemented function"));
+}
+
