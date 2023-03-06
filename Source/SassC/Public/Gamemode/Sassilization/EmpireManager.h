@@ -6,8 +6,24 @@
 
 #include "Buildings/BuildingBase.h"
 #include "Units/UnitBase.h"
-#include "Empire.h"
+#include "Gamemode/Sassilization/SassPlayerState.h"
+#include "Gamemode/Sassilization/Empire.h"
 #include "EmpireManager.generated.h"
+
+USTRUCT()
+struct FPlayerAndEmpire
+{
+	GENERATED_BODY()
+	
+	int32 PlayerId;
+	int32 EmpireId;
+	FPlayerAndEmpire()
+	{
+		PlayerId = -1;
+		EmpireId = -1;
+	};
+	FPlayerAndEmpire(const int32 NewPlayerId, const int32 NewEmpireId) : PlayerId(NewPlayerId), EmpireId(NewEmpireId){}
+};
 
 /**
  * 
@@ -18,17 +34,27 @@ class SASSC_API AEmpireManager : public AActor
 	GENERATED_BODY()
 
 public:
-	UFUNCTION(BlueprintCallable, Category = "Empire")
-	const TMap<uint8, UEmpire*>& GetEmpires() const;
+	AEmpireManager();
+	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 	
 	UFUNCTION(BlueprintCallable, Category = "Empire")
-	UEmpire* GetEmpireById(const uint8 EmpireId) const;
+	const TArray<AEmpire*>& GetEmpires() const;
 	
 	UFUNCTION(BlueprintCallable, Category = "Empire")
-	UEmpire* GetEmpireByPlayerId(const int32 PlayerId) const;
+	AEmpire* GetEmpireById(const uint8 EmpireId) const;
+	int16 GetEmpireIdForPlayerId(int32 PlayerId) const;
 
 	UFUNCTION(BlueprintCallable, Category = "Empire")
-	UEmpire* RetrieveOrCreateNewEmpire(const int32 PlayerId, const FString PlayerName);
+	AEmpire* GetEmpireByPlayerId(const int32 PlayerId) const;
+
+	UFUNCTION(BlueprintCallable, Category = "Empire")
+	AEmpire* RetrieveEmpire(const int32 PlayerId, const FString PlayerName);
+
+	UFUNCTION(Server, Reliable, WithValidation, Category = "Empire")
+	void ServerCreateNewEmpire(const int32 PlayerId, const FString& PlayerName, ASassPlayerState* SassPlayerState);
+
+	UFUNCTION(NetMulticast, Reliable, WithValidation, Category = "Empire")
+	void MulticastCreateNewEmpire(const int32 PlayerId, const int32 NewEmpireId, AEmpire* NewEmpire);
 	
 	UFUNCTION(BlueprintCallable, Category = "Empire")
 	const FLinearColor& GetColorById(const int ColorId) const;
@@ -40,11 +66,11 @@ public:
 	TArray<AUnitBase*> GetAllUnits() const;
 	
 protected:
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Empire")
-	TMap<int32, uint8> PlayerIdToEmpireId = TMap<int32, uint8>();
+	UPROPERTY(Replicated, VisibleAnywhere, Category = "Empire")
+	TArray<FPlayerAndEmpire> PlayerIdToEmpireId = TArray<FPlayerAndEmpire>();
 	
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Empire")
-	TMap<uint8, UEmpire*> Empires = TMap<uint8, UEmpire*>();
+	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadWrite, Category = "Empire")
+	TArray<AEmpire*> Empires = TArray<AEmpire*>();
 	
 	std::atomic_int EmpireIdCounter = std::atomic_int(1);
 	

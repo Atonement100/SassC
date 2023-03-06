@@ -2,55 +2,130 @@
 
 #include "Gamemode/Sassilization/EmpireManager.h"
 
-const TMap<uint8, UEmpire*>& AEmpireManager::GetEmpires() const
+#include "Net/UnrealNetwork.h"
+
+AEmpireManager::AEmpireManager()
+{
+	this->bReplicates = true;
+}
+
+void AEmpireManager::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+	DOREPLIFETIME(AEmpireManager, Empires)
+	DOREPLIFETIME(AEmpireManager, PlayerIdToEmpireId)
+}
+
+const TArray<AEmpire*>& AEmpireManager::GetEmpires() const
 {
 	return this->Empires;
 }
 
-UEmpire* AEmpireManager::GetEmpireById(const uint8 EmpireId) const
+AEmpire* AEmpireManager::GetEmpireById(const uint8 EmpireId) const
 {
-	UEmpire* const* FoundEmpire = this->Empires.Find(EmpireId);
-
-	if (!FoundEmpire)
+	for (AEmpire* const Empire : Empires)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Empire not found for EmpireId %d"), EmpireId)
-		return nullptr;
+		if (Empire && Empire->GetEmpireId() == EmpireId)
+		{
+			return Empire;
+		}
 	}
-
-	return *FoundEmpire;
+	
+	UE_LOG(LogTemp, Warning, TEXT("Empire not found for EmpireId %d"), EmpireId)
+	return nullptr;
 }
 
-UEmpire* AEmpireManager::GetEmpireByPlayerId(const int32 PlayerId) const
+int16 AEmpireManager::GetEmpireIdForPlayerId(const int32 PlayerId) const
 {
-	const uint8* EmpireId = this->PlayerIdToEmpireId.Find(PlayerId);
+	int16 EmpireId = -1;
+
+	for (const FPlayerAndEmpire PlayerAndEmpire : PlayerIdToEmpireId)
+	{
+		if (PlayerAndEmpire.PlayerId == PlayerId)
+		{
+			EmpireId = PlayerAndEmpire.EmpireId;
+			break;
+		}
+	}
+
+	return EmpireId;
+}
+
+AEmpire* AEmpireManager::GetEmpireByPlayerId(const int32 PlayerId) const
+{
+	const int16 EmpireId = GetEmpireIdForPlayerId(PlayerId);
 	
-	if (!EmpireId)
+	if (EmpireId == -1)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("EmpireId not found for PlayerId %d"), PlayerId)
 		return nullptr;
 	}
-	
-	return this->GetEmpireById(*EmpireId);
+
+	return this->GetEmpireById(EmpireId);
 }
 
-UEmpire* AEmpireManager::RetrieveOrCreateNewEmpire(const int32 PlayerId, const FString PlayerName)
+AEmpire* AEmpireManager::RetrieveEmpire(const int32 PlayerId, const FString PlayerName)
 {
-	if (UEmpire* PotentialEmpire = GetEmpireByPlayerId(PlayerId))
+	if (AEmpire* PotentialEmpire = GetEmpireByPlayerId(PlayerId))
 	{
 		UE_LOG(LogTemp, Display, TEXT("EmpireId %d already exists for player %s with id %d"), PotentialEmpire->GetEmpireId(), *PlayerName, PlayerId);
 		return PotentialEmpire;
 	}
 
+	UE_LOG(LogTemp, Warning, TEXT("Empire was not able to be retrieved.."))
+	return nullptr;
+	// ServerCreateNewEmpire(PlayerId, PlayerName);
+	//
+	// AEmpire* NewEmpire = GetEmpireByPlayerId(PlayerId);
+	//
+	// if (!NewEmpire)
+	// {
+	// 	UE_LOG(LogTemp, Warning, TEXT("Failed to create a new empire for player %s with id %d"), *PlayerName, PlayerId);
+	// }
+	
+	// return NewEmpire;
+
+}
+
+void AEmpireManager::ServerCreateNewEmpire_Implementation(const int32 PlayerId, const FString& PlayerName, ASassPlayerState* SassPlayerState)
+{
 	const int NewEmpireId = EmpireIdCounter.fetch_add(1);
 	UE_LOG(LogTemp, Display, TEXT("Creating a new empire for %s with empireId %d. Player's UniqueId is %d"), *PlayerName, NewEmpireId, PlayerId);
-	
-	UEmpire* NewEmpire = NewObject<UEmpire>();
-	NewEmpire->InitializeEmpire(NewEmpireId, PlayerId, GetColorById(NewEmpireId));
 
-	Empires.Add(NewEmpireId, NewEmpire);
-	PlayerIdToEmpireId.Add(PlayerId, NewEmpireId);
+	AEmpire* NewEmpire = GetWorld()->SpawnActor<AEmpire>(AEmpire::StaticClass());
+	NewEmpire->InitializeEmpire(NewEmpireId, PlayerId, GetColorById(NewEmpireId));
+	NewEmpire->AddFood(NewEmpireId);
+	Empires.Add(NewEmpire);
+	PlayerIdToEmpireId.Add(FPlayerAndEmpire(PlayerId, NewEmpireId));
+
+	SassPlayerState->SetEmpire(NewEmpire);
 	
-	return NewEmpire;
+	MulticastCreateNewEmpire(PlayerId, NewEmpireId, NewEmpire);
+}
+
+bool AEmpireManager::ServerCreateNewEmpire_Validate(const int32 PlayerId, const FString& PlayerName, ASassPlayerState* SassPlayerState)
+{
+	return true;
+}
+
+void AEmpireManager::MulticastCreateNewEmpire_Implementation(const int32 PlayerId, const int32 NewEmpireId,
+	AEmpire* NewEmpire)
+{
+	if (GetEmpireIdForPlayerId(PlayerId) != NewEmpireId)
+	{
+		PlayerIdToEmpireId.Add(FPlayerAndEmpire(PlayerId, NewEmpireId));
+	}
+
+	if (!GetEmpireById(NewEmpireId))
+	{
+		Empires.Add(NewEmpire);
+	}
+}
+
+bool AEmpireManager::MulticastCreateNewEmpire_Validate(const int32 PlayerId, const int32 NewEmpireId,
+	AEmpire* NewEmpire)
+{
+	return true;
 }
 
 const FLinearColor& AEmpireManager::GetColorById(const int ColorId) const
@@ -67,10 +142,8 @@ TArray<ABuildingBase*> AEmpireManager::GetAllBuildings() const
 {
 	TArray<ABuildingBase*> AllBuildings = TArray<ABuildingBase*>();
 	
-	for (const TPair<uint8, UEmpire*>& EmpirePair : this->Empires)
+	for (const AEmpire* Empire : this->Empires)
 	{
-		const UEmpire* Empire = EmpirePair.Value;
-		
 		for (ABuildingBase* const Building : Empire->GetBuildings())
 		{
 			if (!IsValid(Building))
@@ -86,10 +159,8 @@ TArray<AUnitBase*> AEmpireManager::GetAllUnits() const
 {
 	TArray<AUnitBase*> AllUnits = TArray<AUnitBase*>();
 	
-	for (const TPair<uint8, UEmpire*>& EmpirePair : this->Empires)
+	for (AEmpire* const Empire : this->Empires)
 	{
-		const UEmpire* Empire = EmpirePair.Value;
-		
 		for (AUnitBase* const Unit : Empire->GetUnits())
 		{
 			if (!IsValid(Unit))

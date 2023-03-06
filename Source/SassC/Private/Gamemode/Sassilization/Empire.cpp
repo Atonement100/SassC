@@ -7,9 +7,14 @@
 #include "Net/UnrealNetwork.h"
 #include "Kismet/KismetMathLibrary.h"
 
-UEmpire::UEmpire(){}
+AEmpire::AEmpire()
+{
+	this->bReplicates = true;
+	this->bAlwaysRelevant = true;
+	this->bNetLoadOnClient = true;
+}
 
-void UEmpire::InitializeEmpire(const uint8 InitEmpireId, const int32 InitPlayerId, const FLinearColor InitEmpireColor)
+void AEmpire::InitializeEmpire(const int32 InitEmpireId, const int32 InitPlayerId, const FLinearColor InitEmpireColor)
 {
 	UE_LOG(LogTemp, Display, TEXT("Initialize new Empire %d, %d, %s"), InitEmpireId, InitPlayerId, *InitEmpireColor.ToString());
 
@@ -24,41 +29,52 @@ void UEmpire::InitializeEmpire(const uint8 InitEmpireId, const int32 InitPlayerI
 	this->CalculateSupply();
 }
 
-void UEmpire::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+void AEmpire::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
-	UObject::GetLifetimeReplicatedProps(OutLifetimeProps);
-	DOREPLIFETIME(UEmpire, EmpireId)
-	DOREPLIFETIME(UEmpire, OwningPlayerId)
-	DOREPLIFETIME(UEmpire, EmpireColor)
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+	DOREPLIFETIME(AEmpire, EmpireId)
+	DOREPLIFETIME(AEmpire, OwningPlayerId)
+	DOREPLIFETIME(AEmpire, EmpireColor)
+	DOREPLIFETIME(AEmpire, Food)
+	DOREPLIFETIME(AEmpire, Iron)
+	DOREPLIFETIME(AEmpire, Gold)
+	DOREPLIFETIME(AEmpire, Creed)
+	DOREPLIFETIME(AEmpire, SupplyMaximum)
+	DOREPLIFETIME(AEmpire, SupplyUsed)
+	DOREPLIFETIME(AEmpire, NumCities)
+	DOREPLIFETIME(AEmpire, NumShrines)
+	DOREPLIFETIME(AEmpire, NumHouses)
+	DOREPLIFETIME(AEmpire, NumMines)
+	DOREPLIFETIME(AEmpire, NumFarms)
 	//todo add the rest
 }
 
-bool UEmpire::IsEmpireValid(const UEmpire* Empire)
+bool AEmpire::IsEmpireValid(const AEmpire* Empire)
 {
 	return Empire && IsValid(Empire);
 }
 
-const TSet<ABuildingBase*>& UEmpire::GetBuildings() const
+const TSet<ABuildingBase*>& AEmpire::GetBuildings() const
 {
 	return this->Buildings;
 }
 
-const TSet<AUnitBase*>& UEmpire::GetUnits() const
+const TSet<AUnitBase*>& AEmpire::GetUnits() const
 {
 	return this->Units;
 }
 
-const TSet<AUnitBase*>& UEmpire::GetSelectedUnits() const
+const TSet<AUnitBase*>& AEmpire::GetSelectedUnits() const
 {
 	return this->SelectedUnits;
 }
 
-int32 UEmpire::NumSelectedUnits() const
+int32 AEmpire::NumSelectedUnits() const
 {
 	return this->SelectedUnits.Num();
 }
 
-int32 UEmpire::GetGoldIncome() const
+int32 AEmpire::GetGoldIncome() const
 {
 	if (this->GetNumCities() > 0)
 	{
@@ -75,38 +91,38 @@ int32 UEmpire::GetGoldIncome() const
 	return 0;
 }
 
-int32 UEmpire::GetFoodIncome() const
+int32 AEmpire::GetFoodIncome() const
 {
 	// todo set the default income food and iron in common area
 	return UKismetMathLibrary::FCeil(8 + this->GetNumFarms() * 1.2);
 }
 
-int32 UEmpire::GetIronIncome() const
+int32 AEmpire::GetIronIncome() const
 {
 	return UKismetMathLibrary::FCeil(8 + this->GetNumFarms());
 }
 
-void UEmpire::CalculateSupply()
+void AEmpire::CalculateSupply()
 {
 	this->SetSupplyMaximum(UKismetMathLibrary::FFloor(6 + this->GetNumCities() + this->GetNumHouses() * 0.5f));
 }
 
-bool UEmpire::HasColor() const
+bool AEmpire::HasColor() const
 {
 	return this->EmpireColor == NullColor;
 }
 
-void UEmpire::SetColor(const FColor NewColor)
+void AEmpire::SetColor(const FColor NewColor)
 {
 	this->EmpireColor = NewColor;
 }
 
-FLinearColor UEmpire::GetColor() const
+FLinearColor AEmpire::GetColor() const
 {
 	return this->EmpireColor;
 }
 
-void UEmpire::Select()
+void AEmpire::Select()
 {
 	/* not sure the point and i dont see it used, maybe unneeded
 	 *
@@ -126,7 +142,7 @@ end
 	 */
 }
 
-void UEmpire::SelectUnit(AUnitBase* Unit, bool bShouldSelect)
+void AEmpire::SelectUnit(AUnitBase* Unit, bool bShouldSelect)
 {
 	if (bShouldSelect)
 	{
@@ -138,7 +154,7 @@ void UEmpire::SelectUnit(AUnitBase* Unit, bool bShouldSelect)
 	}
 }
 
-void UEmpire::DeselectAllUnits()
+void AEmpire::DeselectAllUnits()
 {
 	for (AUnitBase* Unit : this->SelectedUnits)
 	{
@@ -151,17 +167,17 @@ void UEmpire::DeselectAllUnits()
 	this->SelectedUnits.Empty();
 }
 
-uint8 UEmpire::GetEmpireId() const
+int32 AEmpire::GetEmpireId() const
 {
 	return EmpireId;
 }
 
-void UEmpire::SetEmpireId(const uint8 NewEmpireId)
+void AEmpire::SetEmpireId(const int32 NewEmpireId)
 {
 	this->EmpireId = NewEmpireId;
 }
 
-void UEmpire::AddGold(const int32 Amount)
+void AEmpire::AddGold(const int32 Amount)
 {
 	int32 NewAmount = this->GetGold() + Amount;
 	if (NewAmount < 0)
@@ -172,134 +188,132 @@ void UEmpire::AddGold(const int32 Amount)
 	this->SetGold(NewAmount);
 }
 
-void UEmpire::AddFood(const int32 Amount)
+void AEmpire::AddFood(const int32 Amount)
 {
 	this->SetFood(this->GetFood() + Amount);
 }
 
-void UEmpire::AddIron(const int32 Amount)
+void AEmpire::AddIron(const int32 Amount)
 {
 	this->SetIron(this->GetIron() + Amount);
 }
 
-void UEmpire::AddSupplyMaximum(const int32 Amount)
+void AEmpire::AddSupplyMaximum(const int32 Amount)
 {
 	this->SetCreed(this->GetCreed() + Amount);
 }
 
-void UEmpire::AddCreed(const int32 Amount)
+void AEmpire::AddCreed(const int32 Amount)
 {
 	this->SetCreed(this->GetCreed() + Amount);
 }
 
-int32 UEmpire::GetFood() const
+int32 AEmpire::GetFood() const
 {
 	return Food;
 }
 
-int32 UEmpire::GetIron() const
+int32 AEmpire::GetIron() const
 {
 	return Iron;
 }
 
-int32 UEmpire::GetGold() const
+int32 AEmpire::GetGold() const
 {
 	return Gold;
 }
 
-int32 UEmpire::GetCreed() const
+int32 AEmpire::GetCreed() const
 {
 	return Creed;
 }
 
-int32 UEmpire::GetSupplyMaximum() const
+int32 AEmpire::GetSupplyMaximum() const
 {
 	return SupplyMaximum;
 }
 
-int32 UEmpire::GetSupplyUsed() const
+int32 AEmpire::GetSupplyUsed() const
 {
 	return SupplyUsed;
 }
 
-int32 UEmpire::GetNumCities() const
+int32 AEmpire::GetNumCities() const
 {
 	return NumCities;
 }
 
-int32 UEmpire::GetNumShrines() const
+int32 AEmpire::GetNumShrines() const
 {
 	return NumShrines;
 }
 
-int32 UEmpire::GetNumHouses() const
+int32 AEmpire::GetNumHouses() const
 {
 	return NumHouses;
 }
 
-int32 UEmpire::GetNumMines() const
+int32 AEmpire::GetNumMines() const
 {
 	return NumMines;
 }
 
-int32 UEmpire::GetNumFarms() const
+int32 AEmpire::GetNumFarms() const
 {
 	return NumFarms;
 }
 
-void UEmpire::SetFood(const int32 NewFood)
+void AEmpire::SetFood(const int32 NewFood)
 {
 	this->Food = NewFood;
 }
 
-void UEmpire::SetIron(const int32 NewIron)
+void AEmpire::SetIron(const int32 NewIron)
 {
 	this->Iron = NewIron;
 }
 
-void UEmpire::SetGold(const int32 NewGold)
+void AEmpire::SetGold(const int32 NewGold)
 {
 	this->Gold = NewGold;
 }
 
-void UEmpire::SetCreed(const int32 NewCreed)
+void AEmpire::SetCreed(const int32 NewCreed)
 {
 	this->Creed = NewCreed;
 }
 
-void UEmpire::SetSupplyMaximum(const int32 NewSupplyMaximum)
+void AEmpire::SetSupplyMaximum(const int32 NewSupplyMaximum)
 {
 	this->SupplyMaximum = NewSupplyMaximum;
 }
 
-void UEmpire::SetSupplyUsed(const int32 NewSupplyUsed)
+void AEmpire::SetSupplyUsed(const int32 NewSupplyUsed)
 {
 	this->SupplyUsed = NewSupplyUsed;
 }
 
-void UEmpire::SetNumCities(const int32 NewNumCities)
+void AEmpire::SetNumCities(const int32 NewNumCities)
 {
 	this->NumCities = NewNumCities;
 }
 
-void UEmpire::SetNumShrines(const int32 NewNumShrines)
+void AEmpire::SetNumShrines(const int32 NewNumShrines)
 {
 	this->NumShrines = NewNumShrines;
 }
 
-void UEmpire::SetNumHouses(const int32 NewNumHouses)
+void AEmpire::SetNumHouses(const int32 NewNumHouses)
 {
 	this->NumHouses = NewNumHouses;
 }
 
-void UEmpire::SetNumMines(const int32 NewNumMines)
+void AEmpire::SetNumMines(const int32 NewNumMines)
 {
 	this->NumMines = NewNumMines;
 }
 
-void UEmpire::SetNumFarms(const int32 NewNumFarms)
+void AEmpire::SetNumFarms(const int32 NewNumFarms)
 {
 	this->NumFarms = NewNumFarms;
 }
-
-

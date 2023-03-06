@@ -18,7 +18,14 @@ class SASSC_API ASassPlayerController : public APlayerController
 public:
 	ASassPlayerController();
 	virtual void BeginPlay() override;
-
+	virtual void BeginPlayingState() override;
+	
+	UFUNCTION(BlueprintCallable)
+	void CreatePregameHUD();
+	UFUNCTION(BlueprintCallable)
+	void CreateGameHUD();
+	UFUNCTION(BlueprintCallable) 
+	void UpdateHUD(TSubclassOf<UUserWidget> WidgetToCreate);
 	UFUNCTION(BlueprintCallable)
 	bool IsSpawnableRequestValid();
 	UFUNCTION(BlueprintCallable)
@@ -28,5 +35,11 @@ public:
 
 protected:
 	UPROPERTY(VisibleAnywhere, Category = "Gamemode")
-	ASassGameManager* SassGameManager; 
+	ASassGameManager* SassGameManager;
+	UPROPERTY(EditAnywhere, Category = "HUD")
+	TSubclassOf<UUserWidget> PregameWidgetClass;
+	UPROPERTY(EditAnywhere, Category = "HUD")
+	TSubclassOf<UUserWidget> GameWidgetClass;
+	UPROPERTY(VisibleAnywhere, Category = "HUD")
+	UUserWidget* ActiveWidget;
 };

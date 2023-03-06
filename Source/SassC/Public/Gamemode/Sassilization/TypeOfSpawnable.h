@@ -5,17 +5,28 @@
 UENUM(BlueprintType)
 enum class ETypeOfSpawnable : uint8
 {
-	Building_City UMETA(DisplayName = "City"),
-	Building_Workshop UMETA(DisplayName = "Workshop"),
-	Building_Tower UMETA(DisplayName = "Tower"),
-	Building_Wall UMETA(DisplayName = "Wall"),
-	Building_Gate UMETA(DisplayName = "Gate"),
-	Building_ShieldMono UMETA(DisplayName = "Shield Monolith"),
-	Building_Shrine UMETA(DisplayName = "Shrine"),
+	Building UMETA(DisplayName = "Building"),
+	Unit UMETA(DisplayName = "Unit")
+};
 
-	Unit_Soldier UMETA(DisplayName = "Soldier"),
-	Unit_Archer UMETA(DisplayName = "Archer"),
-	Unit_Scallywag UMETA(DisplayName = "Scallywag"),
-	Unit_Ballista UMETA(DisplayName = "Ballista"),
-	Unit_Catapult UMETA(DisplayName = "Catapult")
+UENUM(BlueprintType)
+enum class ETypeOfBuilding : uint8
+{
+	City UMETA(DisplayName = "City"),
+	Workshop UMETA(DisplayName = "Workshop"),
+	Tower UMETA(DisplayName = "Tower"),
+	Wall UMETA(DisplayName = "Wall Tower"),
+	Gate UMETA(DisplayName = "Gate"),
+	ShieldMono UMETA(DisplayName = "Shield Monolith"),
+	Shrine UMETA(DisplayName = "Shrine"),
+};
+
+UENUM(BlueprintType)
+enum class ETypeOfUnit : uint8
+{
+	Soldier UMETA(DisplayName = "Soldier"),
+	Archer UMETA(DisplayName = "Archer"),
+	Scallywag UMETA(DisplayName = "Scallywag"),
+	Ballista UMETA(DisplayName = "Ballista"),
+	Catapult UMETA(DisplayName = "Catapult")
 };

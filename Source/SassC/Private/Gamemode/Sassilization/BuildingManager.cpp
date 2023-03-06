@@ -4,7 +4,7 @@
 #include "Math/Rotator.h"
 #include "Math/Vector.h"
 
-bool ABuildingManager::CanBuild(UEmpire* Empire, EBuildingType BuildingType, bool IgnoreCost) const
+bool ABuildingManager::CanBuild(AEmpire* Empire, EBuildingType BuildingType, bool IgnoreCost) const
 {
 	if (!IsValid(Empire))
 	{
@@ -18,9 +18,21 @@ bool ABuildingManager::CanBuild(UEmpire* Empire, EBuildingType BuildingType, boo
 	return true;
 }
 
-void ABuildingManager::BuildBuilding(APlayerController* Player, TSubclassOf<AActor> ActorToSpawn, FVector Location, FRotator Rotator)
+void ABuildingManager::BuildBuilding(APlayerController* Player, ETypeOfBuilding BuildingToSpawn, FVector Location, FRotator Rotator)
 {
-	FActorSpawnParameters SpawnParams = FActorSpawnParameters();
+	// ActorToSpawn->GetDefaultObject(true);
+	const TSubclassOf<ABuildingBase> ActorToSpawn = GetClassForBuildingType(BuildingToSpawn);
 	
+	FActorSpawnParameters SpawnParams = FActorSpawnParameters();
 	GetWorld()->SpawnActor(ActorToSpawn, &Location, &Rotator, SpawnParams);
+}
+
+TSubclassOf<ABuildingBase> ABuildingManager::GetClassForBuildingType(const ETypeOfBuilding TypeOfBuilding)
+{
+	if (!this->BuildingTypeToClass.Contains(TypeOfBuilding))
+	{
+		UE_LOG(LogTemp, Warning, TEXT("No class configured for building type %s"), *UEnum::GetValueAsString(TypeOfBuilding))
+	}
+	
+	return this->BuildingTypeToClass[TypeOfBuilding];
 }

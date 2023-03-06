@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Player/SassPlayer.h"
+#include "BlueprintEditor.h"
 #include "AI/UnitController.h"
 #include "Buildings/BuildingBase.h"
 #include "Buildings/City.h"
@@ -37,29 +38,25 @@ ASassPlayer::ASassPlayer()
 void ASassPlayer::BeginPlay()
 {
 	Super::BeginPlay();
-	PlayerControllerPtr = UGameplayStatics::GetPlayerController(this, 0);
-	CleanupHUD();
-
-	ASassGameState* SassGameStateRef = Cast<ASassGameState>(GetWorld()->GetGameState());
-	if (!SassGameStateRef->PreGameActive)
-	{
-		CreateGameHUD();
-	}
-	else
-	{
-		CreatePregameHUD();
-	}
+	PlayerControllerPtr = Cast<ASassPlayerController>(UGameplayStatics::GetPlayerController(this, 0));
 }
 
 void ASassPlayer::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
-	DOREPLIFETIME(ASassPlayer, SelectedSpawnableClass);
 }
 
 void ASassPlayer::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	
+	ASassPlayerState* ps = GetPlayerState<ASassPlayerState>();
+	// UE_LOG(LogTemp, Display, TEXT("Player Name: %s Empire Name: %s EmpireId: %d Role: %s"),
+	// 	ps ? *ps->GetPlayerName() : TEXT("null"),
+	// 	ps && ps->GetEmpire() ? *ps->GetEmpire()->GetName() : TEXT("null"),
+	// 	ps && ps->GetEmpire() ? ps->GetEmpire()->GetEmpireId() : 0,
+	// 	*UEnum::GetValueAsString(GetLocalRole()))
+	
 	if (IsUnitMenuOpen)
 	{
 		FHitResult CursorHit;
@@ -106,7 +103,7 @@ void ASassPlayer::Tick(float DeltaTime)
 			if (!IsRightMouseDown)
 			{
 				LocalObjectSpawn->SetActorLocation(
-					CursorHit.Location + ((SelectedSpawnableType < ETypeOfSpawnable::Unit_Soldier)
+					CursorHit.Location + ((SelectedSpawnableType == ETypeOfSpawnable::Building)
 						                      ? FVector::ZeroVector
 						                      : CurrentHalfHeight));
 			}
@@ -561,7 +558,7 @@ void ASassPlayer::LeftClickPressed()
 			if (ABuildingBase* LocalBuildingRef = Cast<ABuildingBase>(LocalObjectSpawn))
 			{
 				LocationsToCheck = LocalBuildingRef->CornerLocations;
-				if (SelectedSpawnableType == ETypeOfSpawnable::Building_Gate) { ActorsToIgnore = TempGateWalls; }
+				if (SelectedSpawnableType == ETypeOfSpawnable::Building) { ActorsToIgnore = TempGateWalls; }
 			}
 
 			const TArray<AActor*> ConfirmedToIgnore = ActorsToIgnore;
@@ -669,49 +666,6 @@ void ASassPlayer::UnitMenuPressed()
 		}
 		IsUnitMenuOpen = false;
 	}
-}
-
-void ASassPlayer::CreatePregameHUD()
-{
-	if (PlayerControllerPtr->IsLocalController() && PregameWidget == nullptr)
-	{
-		PregameWidget = CreateWidget<UUserWidget>(PlayerControllerPtr, PregameWidgetClass);
-		if (PregameWidget != nullptr) PregameWidget->AddToViewport();
-	}
-}
-
-void ASassPlayer::RemoveAllWidgets()
-{
-	for (TObjectIterator<UUserWidget> WidgetIter; WidgetIter; ++WidgetIter)
-	{
-		UUserWidget* CurrentWidget = *WidgetIter;
-		if (!CurrentWidget->GetWorld()) continue;
-		else CurrentWidget->RemoveFromParent();
-	}
-}
-
-void ASassPlayer::CreateGameHUD()
-{
-	//todo this seems to not work after 5.1 for the host of a multi-client PIE game. not sure if it's relevant to anything.
-	if (PlayerControllerPtr->IsLocalController())
-	{
-		RemoveAllWidgets();
-		GameWidget = CreateWidget<UUserWidget>(PlayerControllerPtr, GameWidgetClass);
-		if (GameWidget != nullptr) GameWidget->AddToViewport();
-		PlayerControllerPtr->SetInputMode(FInputModeGameOnly());
-		PlayerControllerPtr->bShowMouseCursor = false;
-		SetSassHUDRef();
-	}
-	else
-	{
-		GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Red,
-		                                 "SassPlayer Creategamehud - local controller not found");
-	}
-}
-
-UUserWidget* ASassPlayer::GetGameWidget()
-{
-	return GameWidget;
 }
 #pragma endregion
 

@@ -21,7 +21,7 @@ public:
 	AWallSegment();
 	virtual void PostInitializeComponents() override;
 	virtual void BeginPlay() override;
-	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const;
+	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent,
 	                         class AController* EventInstigator, class AActor* DamageCauser) override;
 	virtual void Tick(float DeltaSeconds) override;
@@ -29,8 +29,8 @@ public:
 #pragma region Upgradeable Building Overrides
 	void TryRemove(ABuildingBase* RemoveFrom, bool IsLeftConnection);
 	int TryConnection(ABuildingBase* Connection, TArray<ABuildingBase*>& ConnectedBldgs, int8 Depth, bool TryLeft);
-	void HideMesh() override;
-	void ShowMesh() override;
+	virtual void HideMesh() override;
+	virtual void ShowMesh() override;
 	virtual void PreviewUpgrade() override;
 	virtual void ResetPreview() override;
 	virtual void NetUpgradeBuilding_Implementation() override;
@@ -63,8 +63,11 @@ public:
 	virtual bool NetChangeMesh_Validate(bool LeftConnectionDestroyed = false);
 
 protected:
+	UPROPERTY()
 	AActor* TempGate;
+	UPROPERTY()
 	AActor* TempLeftWall;
+	UPROPERTY()
 	AActor* TempRightWall;
 	UPROPERTY(Replicated)
 	int8 DamageLevel = 0;

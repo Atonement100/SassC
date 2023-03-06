@@ -8,14 +8,80 @@
 
 ASassPlayerController::ASassPlayerController()
 {
-	
 }
 
 void ASassPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
+}
 
-	this->SassGameManager = Cast<ASassGameState>(GetWorld()->GetGameState())->GetGameManager();
+void ASassPlayerController::BeginPlayingState()
+{
+	Super::BeginPlayingState();
+	UE_LOG(LogTemp, Display, TEXT("Begin Playing State Called"))
+
+	ASassGameState* GameState = GetWorld()->GetGameState<ASassGameState>();
+	this->SassGameManager = GameState->GetGameManager();
+
+	if (IsLocalController())
+	{
+		switch (GameState->GetGameStatus())
+		{
+		case ESassGameStatus::PreGame:
+			CreatePregameHUD();
+			break;
+		case ESassGameStatus::GameActive:
+			CreateGameHUD();
+			break;
+		default:
+			UE_LOG(LogTemp, Warning, TEXT("Action not defined for Game Status %s"),
+			       *UEnum::GetValueAsString(GameState->GetGameStatus()))
+		}
+	}
+}
+
+void ASassPlayerController::CreatePregameHUD()
+{
+	UpdateHUD(PregameWidgetClass);
+}
+
+void ASassPlayerController::CreateGameHUD()
+{
+	UpdateHUD(GameWidgetClass);
+}
+
+void ASassPlayerController::UpdateHUD(TSubclassOf<UUserWidget> WidgetToCreate)
+{
+	if (!WidgetToCreate)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Widget To Create is not configured"))
+		return;
+	}
+
+	if (!this->IsLocalController())
+	{
+		UE_LOG(LogTemp, Warning, TEXT("UpdateHUD called on non-local controller"))
+		return;
+	}
+	
+	if (ActiveWidget)
+	{
+		ActiveWidget->RemoveFromParent();
+	}
+	
+	UUserWidget* NewWidget = CreateWidget<UUserWidget>(this, WidgetToCreate);
+
+	if (!NewWidget)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Failed to create new hud of class %s"), *WidgetToCreate->GetName())
+		return;
+	}
+
+	NewWidget->AddToViewport();
+	NewWidget->SetVisibility(ESlateVisibility::Visible);
+	ActiveWidget = NewWidget;
+	this->SetInputMode(FInputModeGameOnly());
+	this->bShowMouseCursor = false;
 }
 
 bool ASassPlayerController::IsSpawnableRequestValid()
@@ -25,24 +91,7 @@ bool ASassPlayerController::IsSpawnableRequestValid()
 
 bool ASassPlayerController::RequestSpawnable()
 {
-	ASassPlayer* SassPlayer = Cast<ASassPlayer>(this->GetPawn());
-	TArray<TEnumAsByte<EObjectTypeQuery>> StaticObjectTypes = TArray<TEnumAsByte<EObjectTypeQuery>>();
-	StaticObjectTypes.Add(EObjectTypeQuery::ObjectTypeQuery1);
-	const TArray<AActor*> RaycastIgnore;
-	float BaseEyeHeight = SassPlayer->BaseEyeHeight;
-	
-	FHitResult InitRaycastHit;
-	const FActorSpawnParameters SpawnParams = FActorSpawnParameters();
-	UKismetSystemLibrary::LineTraceSingleForObjects(
-		GetWorld(), SassPlayer->GetMesh()->GetComponentLocation() + FVector(0, 0, BaseEyeHeight + 80.0f),
-		SassPlayer->GetMesh()->GetComponentLocation() + FVector(0, 0, BaseEyeHeight + 80.0f) +
-		UKismetMathLibrary::GetForwardVector(this->GetControlRotation()) * 10000.0f,
-		StaticObjectTypes, true, RaycastIgnore, EDrawDebugTrace::ForOneFrame, InitRaycastHit, true);
-
-	FVector InitialHit = InitRaycastHit.Location;
-	
-	return SassGameManager->RequestBuildingSpawn(this, SassPlayer->SelectedSpawnableClass,
-		InitialHit, FRotator());
+	return false;
 }
 
 bool ASassPlayerController::RequestBuildingSpawn()
@@ -52,7 +101,7 @@ bool ASassPlayerController::RequestBuildingSpawn()
 	StaticObjectTypes.Add(EObjectTypeQuery::ObjectTypeQuery1);
 	const TArray<AActor*> RaycastIgnore;
 	float BaseEyeHeight = SassPlayer->BaseEyeHeight;
-	
+
 	FHitResult InitRaycastHit;
 	const FActorSpawnParameters SpawnParams = FActorSpawnParameters();
 	UKismetSystemLibrary::LineTraceSingleForObjects(
@@ -62,7 +111,7 @@ bool ASassPlayerController::RequestBuildingSpawn()
 		StaticObjectTypes, true, RaycastIgnore, EDrawDebugTrace::ForOneFrame, InitRaycastHit, true);
 
 	FVector InitialHit = InitRaycastHit.Location + 50.0f;
-	
-	return SassGameManager->RequestBuildingSpawn(this, SassPlayer->SelectedSpawnableClass,
-		InitialHit, FRotator(0, 0, 0));
+
+	return SassGameManager->RequestBuildingSpawn(this, GetPlayerState<ASassPlayerState>()->GetSelectedTypeOfBuilding(),
+	                                             InitialHit, FRotator(0, 0, 0));
 }

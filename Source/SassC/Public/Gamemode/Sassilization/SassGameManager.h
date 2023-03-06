@@ -6,7 +6,7 @@
 #include "BuildingManager.h"
 #include "EmpireManager.h"
 #include "Territory/TerritoryManager.h"
-#include "UObject/Object.h"
+#include "Gamemode/Sassilization/TypeOfSpawnable.h"
 #include "SassGameManager.generated.h"
 
 /**
@@ -19,19 +19,20 @@ class SASSC_API ASassGameManager : public AActor
 
 public:
 	ASassGameManager();
+	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 	
 	UFUNCTION(BlueprintCallable)
 	bool IsValidBuildLocation();
 
 	UFUNCTION(BlueprintCallable)
-	bool RequestBuildingSpawn(APlayerController* Player, TSubclassOf<AActor> ActorToSpawn, FVector Location, FRotator Rotator);
+	bool RequestBuildingSpawn(APlayerController* Player, ETypeOfBuilding BuildingToSpawn, FVector Location, FRotator Rotator);
 
 protected: 
-	UPROPERTY(EditAnywhere, Category = "Gamemode")
+	UPROPERTY(Replicated, EditAnywhere, Category = "Gamemode")
 	AEmpireManager* EmpireManager;
-	UPROPERTY(EditAnywhere, Category = "Gamemode")
+	UPROPERTY(Replicated, EditAnywhere, Category = "Gamemode")
 	ATerritoryManager* TerritoryManager;
-	UPROPERTY(EditAnywhere, Category = "Gamemode")
+	UPROPERTY(Replicated, EditAnywhere, Category = "Gamemode")
 	ABuildingManager* BuildingManager;
 	
 public:

@@ -546,7 +546,7 @@ void AUnitBase::SelectUnit(const bool bShouldSelect)
 {
 	this->bIsUnitSelected = bShouldSelect;
 
-	if (UEmpire::IsEmpireValid(this->ControllingEmpire))
+	if (AEmpire::IsEmpireValid(this->ControllingEmpire))
 	{
 		this->ControllingEmpire->SelectUnit(this, bShouldSelect);
 	}

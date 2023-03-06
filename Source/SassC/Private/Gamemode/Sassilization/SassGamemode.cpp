@@ -1,34 +1,51 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Gamemode/Sassilization/SassGamemode.h"
-
 #include "Gamemode/Sassilization/SassGameState.h"
 #include "Player/SassPlayer.h"
 #include "Player/SassPlayerController.h"
-#include "Kismet/KismetMathLibrary.h"
 #include "Gamemode/Sassilization/SassPlayerState.h"
 
 ASassGamemode::ASassGamemode()
 {
 }
 
-/*Here, we want to assign players their color, and draw their HUD to catch them up if they are late*/
+void ASassGamemode::BeginPlay()
+{
+}
+
 void ASassGamemode::PostLogin(APlayerController* NewPlayer)
 {
 	Super::PostLogin(NewPlayer);
-	ASassPlayerState* PlayerState = Cast<ASassPlayerState>(NewPlayer->PlayerState);
+	ASassPlayerState* const NewPlayerState = NewPlayer->GetPlayerState<ASassPlayerState>();
 
-	if (ASassGameState* SassGameState = GetGameState<ASassGameState>())
+	this->GameManager = GetGameState<ASassGameState>()->GetGameManager();
+	
+	while(!GameManager)
 	{
-		SassGameState->HandleNewPlayer(PlayerState);
+		UE_LOG(LogTemp, Warning, TEXT("GameManager not yet ready"))
+		FTimerHandle UnusedHandle;
+		GetWorldTimerManager()
+			.SetTimer(UnusedHandle, FTimerDelegate().CreateLambda([this](){}), 0.25f, false);
 	}
+
+	AEmpireManager* EmpireManager = this->GameManager->GetEmpireManager();
+	
+	while(!EmpireManager)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("EmpireManager not yet ready"))
+		FTimerHandle UnusedHandle;
+		GetWorldTimerManager()
+			.SetTimer(UnusedHandle, FTimerDelegate().CreateLambda([this](){}), 0.25f, false);
+		EmpireManager = this->GameManager->GetEmpireManager();
+	}
+	
+	EmpireManager->ServerCreateNewEmpire(NewPlayerState->GetPlayerId(), NewPlayerState->GetPlayerName(), NewPlayerState);
 }
 
-FLinearColor ASassGamemode::ChoosePlayerColor()
+/*Here, we want to assign players their color, and draw their HUD to catch them up if they are late*/
+void ASassGamemode::HandleStartingNewPlayer_Implementation(APlayerController* NewPlayer)
 {
-	return UKismetMathLibrary::MakeColor(
-		UKismetMathLibrary::RandomFloatInRange(0, 1),
-		UKismetMathLibrary::RandomFloatInRange(0, 1),
-		UKismetMathLibrary::RandomFloatInRange(0, 1),
-		1.0f);
+	Super::HandleStartingNewPlayer_Implementation(NewPlayer);
+
 }

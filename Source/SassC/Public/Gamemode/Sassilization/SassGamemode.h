@@ -17,6 +17,7 @@ class SASSC_API ASassGamemode : public AGameMode
 {
 	GENERATED_BODY()
 	ASassGamemode();
+	virtual void BeginPlay() override;
 
 public:
 	UPROPERTY(BlueprintReadOnly, Category = "Gamemode")
@@ -25,9 +26,8 @@ public:
 	ASassGameManager* GameManager;
 
 	UFUNCTION(BlueprintCallable, Category = "Gamemode")
-	void PostLogin(APlayerController* NewPlayer);
+	virtual void PostLogin(APlayerController* NewPlayer) override;
+	virtual void HandleStartingNewPlayer_Implementation(APlayerController* NewPlayer) override;
 	//	UFUNCTION(BlueprintCallable, Category = "Gamemode")
 	//		AActor* FindPlayerStart(AsassPlayerController* Player, FString IncomingName);
-	UFUNCTION(BlueprintCallable, Category = "Gamemode")
-	FLinearColor ChoosePlayerColor();
 };

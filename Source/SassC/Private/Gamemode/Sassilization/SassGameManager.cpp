@@ -3,8 +3,18 @@
 
 #include "Gamemode/Sassilization/SassGameManager.h"
 
+#include "Net/UnrealNetwork.h"
+
 ASassGameManager::ASassGameManager()
 {
+}
+
+void ASassGameManager::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+	DOREPLIFETIME(ASassGameManager, EmpireManager);
+	DOREPLIFETIME(ASassGameManager, TerritoryManager);
+	DOREPLIFETIME(ASassGameManager, BuildingManager);
 }
 
 
@@ -14,9 +24,9 @@ bool ASassGameManager::IsValidBuildLocation()//UEmpire* Empire, )
 	return true;
 }
 
-bool ASassGameManager::RequestBuildingSpawn(APlayerController* Player, TSubclassOf<AActor> ActorToSpawn, FVector Location, FRotator Rotator)
+bool ASassGameManager::RequestBuildingSpawn(APlayerController* Player, ETypeOfBuilding BuildingToSpawn, FVector Location, FRotator Rotator)
 {
-	BuildingManager->BuildBuilding(Player, ActorToSpawn, Location, Rotator);
+	BuildingManager->BuildBuilding(Player, BuildingToSpawn, Location, Rotator);
 	return true;
 }
 

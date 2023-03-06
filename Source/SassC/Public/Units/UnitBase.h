@@ -178,7 +178,7 @@ protected:
 	void SwitchToIdle();
 
 	UPROPERTY(VisibleAnywhere, Category = "Unit Base")
-	UEmpire* ControllingEmpire;
+	AEmpire* ControllingEmpire;
 	UPROPERTY(EditDefaultsOnly, Category = "Unit Base")
 	FUnitCombatProperties UnitCombatProperties;
 	

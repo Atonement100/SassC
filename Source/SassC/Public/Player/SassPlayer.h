@@ -58,7 +58,7 @@ public:
 	void testFunction();
 
 	virtual void BeginPlay() override;
-	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const;
+	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 	virtual void Tick(float DeltaSeconds) override;
 	virtual void SetupPlayerInputComponent(class UInputComponent* SetupInputComponent) override;
 
@@ -113,30 +113,10 @@ public:
 	/*Handles toggling of pause menu*/
 	UFUNCTION(BlueprintCallable, Category = "UI")
 	void ChangePauseWidget(TSubclassOf<UUserWidget> NewWidgetClass);
-
-	/*@DEPRECATED (Blueprint Implemented) Removes all widgets from HUD*/
-	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "HUD")
-	void CleanupHUD();
-
-	/*Creates HUD used for pregame, displays time to start*/
-	UFUNCTION(BlueprintCallable, Category = "HUD")
-	void CreatePregameHUD();
-
-	/*Creates main game HUD, including unit menu*/
-	UFUNCTION(BlueprintCallable, Category = "HUD")
-	void CreateGameHUD();
-
+	
 	/*Calls for all player models to be colored for clients when round starts (between pre-game and game start, when all clients should have connected)*/
 	UFUNCTION(BlueprintCallable, Category = "HUD")
 	void GetAllPlayerColors();
-
-	/*Removes all widgets from HUD*/
-	UFUNCTION(BlueprintCallable, Category = "HUD")
-	void RemoveAllWidgets();
-
-	/*@DEPRECATED Returns GameWidget (which has been made public)*/
-	UFUNCTION(BlueprintCallable, Category = "HUD")
-	UUserWidget* GetGameWidget();
 
 	/*Returns selection sphere reference*/
 	UFUNCTION(BlueprintCallable, Category = "Spawnables")
@@ -179,8 +159,9 @@ public:
 	UMaterialInstanceDynamic* DynamicPlayerMaterial;
 
 	/*Spawnable the player currently as selected, for verification and tick local-spawning*/
-	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, Category = "Sass Player")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sass Player")
 	UClass* SelectedSpawnableClass; // This is set to default to city BP in sassplayer blueprint
+	//todo convert this to enum split up too
 
 	/*Reference to spawned game widget*/
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Sass Player")
@@ -188,6 +169,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sass Player")
 	AActor* SelectionSphereHolder;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	ETypeOfSpawnable SelectedSpawnableType;
 
 	UFUNCTION(Reliable, Server, WithValidation)
 	void ServerSpawnWall(AWall* NewWall, AWall* TargetWall, int32 PlayerID, FLinearColor PlayerColor);
@@ -273,7 +257,7 @@ protected:
 	UPROPERTY()
 	UUserWidget* PregameWidget;
 	UPROPERTY()
-	APlayerController* PlayerControllerPtr;
+	ASassPlayerController* PlayerControllerPtr;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Sass Player")
 	TArray<AUnitBase*> SelectedUnits;
 	UPROPERTY()
@@ -289,9 +273,6 @@ protected:
 	TArray<TEnumAsByte<EObjectTypeQuery>> DynamicObjectTypes;
 	FCollisionObjectQueryParams WorldStatic = FCollisionObjectQueryParams(ECollisionChannel::ECC_WorldStatic);
 	//const not allowed
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sass Player")
-	ETypeOfSpawnable SelectedSpawnableType = ETypeOfSpawnable::Building_City;
 
 	const int SelectionSphereScaleMod = 100; // this should never ever be changed
 

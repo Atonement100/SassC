@@ -1,6 +1,7 @@
 ﻿// License information can be found at https://github.com/Atonement100/SassC/blob/master/LICENSE
 
 #pragma once
+#include "GameFramework/Info.h"
 
 
 #include "Empire.generated.h"
@@ -9,18 +10,18 @@
  * 
  */
 UCLASS()
-class SASSC_API UEmpire : public UObject
+class SASSC_API AEmpire : public AInfo
 {
 	GENERATED_BODY()
 
 public:
-	UEmpire();
+	AEmpire();
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
 	UFUNCTION(BlueprintCallable, Category = "Empire")
-	void InitializeEmpire(const uint8 InitEmpireId, const int32 InitPlayerId, const FLinearColor InitEmpireColor);
+	void InitializeEmpire(const int32 InitEmpireId, const int32 InitPlayerId, const FLinearColor InitEmpireColor);
 
-	static bool IsEmpireValid(const UEmpire* Empire);
+	static bool IsEmpireValid(const AEmpire* Empire);
 	
 	UFUNCTION(BlueprintCallable, Category = "Empire")
 	const TSet<ABuildingBase*>& GetBuildings() const;
@@ -68,11 +69,11 @@ public:
 
 protected:
 	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadWrite, Category = "Empire")
-	uint8 EmpireId = -1;
+	int32 EmpireId = -1;
 
 public:
-	uint8 GetEmpireId() const;
-	void SetEmpireId(const uint8 NewEmpireId);
+	int32 GetEmpireId() const;
+	void SetEmpireId(const int32 NewEmpireId);
 
 protected:
 	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadWrite, Category = "Empire")

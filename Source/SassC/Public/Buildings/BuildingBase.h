@@ -107,7 +107,7 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Building Base")
 	TArray<FBuildingRequirements> LevelRequirements = TArray(std::initializer_list<FBuildingRequirements>(
-		{FBuildingRequirements(EBuildingType::City, FBuildingRequirement(1, 0))}));
+		{FBuildingRequirements(ETypeOfBuilding::City, FBuildingRequirement(1, 0))}));
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Building Base")
 	UMeshComponent* ActiveBuildingMesh;
@@ -121,16 +121,26 @@ protected:
 	
 	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, Category = "Building Base")
 	float Health = 100.0f;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Building Base")
+	
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Building Base")
+	TArray<float> InitialHealths;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Building Base")
+	TArray<float> AttackSpeeds;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Building Base")
+	TArray<float> AttackRanges;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Building Base")
+	TArray<float> AttackDamages;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Building Base")
 	float IronCost = 50.0f;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Building Base")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Building Base")
 	float FoodCost = 50.0f;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Building Base")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Building Base")
 	float GoldCost = 50.0f;
 	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Building Base")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Building Base")
 	float Influence = 50.0f;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Building Base")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Building Base")
 	float BuildTime = 50.0f;
 
 	/*
@@ -139,14 +149,14 @@ protected:
 	 * the player who destroyed it. Additional gold is awarded to the attacker,
 	 * of the sum GoldBonusOnDestroy.
 	 */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Building Base")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Building Base")
 	uint8 GoldValueOnDestroy = 10;
 	
 	/*
 	 * See also GoldValueOnDestroy. This sum is awarded to empire who destroyed
 	 * this building.
 	 */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Building Base")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Building Base")
 	uint8 GoldBonusOnDestroy = 8;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Building Base")
@@ -177,7 +187,7 @@ protected:
 
 	
 	UPROPERTY(VisibleAnywhere, Category = "Unit Base")
-	UEmpire* ControllingEmpire;
+	AEmpire* ControllingEmpire;
 	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadWrite, Category = "Building Base")
 	FLinearColor OwningPlayerColor;
 

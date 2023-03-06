@@ -2,8 +2,8 @@
 
 #pragma once
 
-
 #include "Units/UnitBase.h"
+#include "TypeOfSpawnable.h"
 #include "GameFramework/PlayerState.h"
 #include "SassPlayerState.generated.h"
 
@@ -15,6 +15,7 @@ class SASSC_API ASassPlayerState : public APlayerState
 {
 	GENERATED_BODY()
 	ASassPlayerState();
+	virtual void BeginPlay() override;
 
 public:
 	/*All controlled buildings*/
@@ -28,18 +29,44 @@ public:
 	FLinearColor PlayerColor;
 	
 	UFUNCTION(BlueprintCallable, Category = "PlayerState")
-	UEmpire* GetEmpire() const;
+	AEmpire* GetEmpire() const;
 	UFUNCTION(BlueprintCallable, Category = "PlayerState")
-	void SetEmpire(UEmpire* const NewEmpire);
+	void SetEmpire(AEmpire* const NewEmpire);
+	UFUNCTION(BlueprintCallable, Category = "PlayerState")
+	ETypeOfSpawnable GetSelectedTypeOfSpawnable() const;
+	UFUNCTION(BlueprintCallable, Category = "PlayerState")
+	void SetSelectedTypeOfSpawnable(const ETypeOfSpawnable NewSelectedTypeOfSpawnable);
+	UFUNCTION(BlueprintCallable, Category = "PlayerState")
+	ETypeOfBuilding GetSelectedTypeOfBuilding() const;
+	UFUNCTION(BlueprintCallable, Category = "PlayerState")
+	void SetSelectedTypeOfBuilding(const ETypeOfBuilding NewSelectedTypeOfBuilding);
+	UFUNCTION(BlueprintCallable, Category = "PlayerState")
+	ETypeOfUnit GetSelectedTypeOfUnit() const;
+	UFUNCTION(BlueprintCallable, Category = "PlayerState")
+	void SetSelectedTypeOfUnit(const ETypeOfUnit NewSelectedTypeOfUnit);
 
+	UFUNCTION(BlueprintCallable, Category = "PlayerState")
+	void UpdateBuildingSelection(ETypeOfBuilding NewTypeOfBuilding);
+	UFUNCTION(BlueprintCallable, Category = "PlayerState")
+	void UpdateUnitSelection(ETypeOfUnit NewTypeOfUnit);
+	UFUNCTION(BlueprintCallable, Category = "PlayerState")
+	void UpdateSpawnableTypeSelection(ETypeOfSpawnable NewTypeOfSpawnable);
+	
 protected:
 	/*Spawnable currently selected to be spawned*/
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "PlayerState")
 	TSubclassOf<AActor> ActiveBuilding;
 
 	//todo replace gold etc with empire refs
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "PlayerState|Empire")
-	UEmpire* Empire;
+	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadWrite, Category = "PlayerState|Empire")
+	AEmpire* Empire;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerState")
+	ETypeOfSpawnable SelectedTypeOfSpawnable = ETypeOfSpawnable::Building;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerState")
+	ETypeOfBuilding SelectedTypeOfBuilding = ETypeOfBuilding::City;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerState")
+	ETypeOfUnit SelectedTypeOfUnit = ETypeOfUnit::Soldier;
 
 	// DEPRECATED below
 	/*Current rate of gold gain*/

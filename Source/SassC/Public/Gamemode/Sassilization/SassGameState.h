@@ -4,6 +4,7 @@
 
 
 #include "SassGameManager.h"
+#include "SassGameStatus.h"
 #include "GameFramework/GameState.h"
 #include "SassGameState.generated.h"
 
@@ -32,7 +33,7 @@ public:
 	UFUNCTION(BlueprintCallable)
 	ASassGameManager* GetGameManager();
 	
-	UFUNCTION(Reliable, NetMulticast, WithValidation)
+	UFUNCTION(Reliable, Client, WithValidation)
 	void GameStart();
 	virtual void GameStart_Implementation();
 	virtual bool GameStart_Validate();
@@ -45,9 +46,14 @@ public:
 	UFUNCTION(Reliable, NetMulticast, WithValidation)
 	void HandleNewPlayer(ASassPlayerState* PlayerState);
 
+	UFUNCTION(BlueprintCallable)
+	ESassGameStatus GetGameStatus() const;
+
 protected:
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadWrite)
 	ASassGameManager* SassGameManager;
+	UPROPERTY(Replicated, BlueprintReadWrite)
+	ESassGameStatus GameStatus = ESassGameStatus::PreGame;
 	
 private:
 };
