@@ -5,9 +5,18 @@
 #include "Gamemode/Sassilization/SassGameState.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "Player/SassPlayer.h"
+#include "UI/SassilizationHUD.h"
 
 ASassPlayerController::ASassPlayerController()
 {
+}
+
+void ASassPlayerController::SetupInputComponent()
+{
+	Super::SetupInputComponent();
+	
+	//UnitMenu function
+	InputComponent->BindAction("UnitMenu", IE_Pressed, this, &ASassPlayerController::UnitMenuPressed);
 }
 
 void ASassPlayerController::BeginPlay()
@@ -82,6 +91,11 @@ void ASassPlayerController::UpdateHUD(TSubclassOf<UUserWidget> WidgetToCreate)
 	ActiveWidget = NewWidget;
 	this->SetInputMode(FInputModeGameOnly());
 	this->bShowMouseCursor = false;
+
+	if (NewWidget->IsA(USassilizationHUD::StaticClass()))
+	{
+		StoreGameWidget(NewWidget);
+	}
 }
 
 bool ASassPlayerController::IsSpawnableRequestValid()

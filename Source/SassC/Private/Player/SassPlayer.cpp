@@ -522,8 +522,6 @@ void ASassPlayer::SetupPlayerInputComponent(class UInputComponent* SetupInputCom
 	SetupInputComponent->BindAction("Pause", IE_Pressed, this, &ASassPlayer::PausePressed);
 	//Quit function
 	SetupInputComponent->BindAction("ForceQuit", IE_Pressed, this, &ASassPlayer::QuitGame);
-	//UnitMenu function
-	SetupInputComponent->BindAction("UnitMenu", IE_Pressed, this, &ASassPlayer::UnitMenuPressed);
 	//test functions, default L
 	SetupInputComponent->BindAction("Test", IE_Pressed, this, &ASassPlayer::testFunction);
 }

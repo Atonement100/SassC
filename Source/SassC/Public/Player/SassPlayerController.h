@@ -17,6 +17,14 @@ class SASSC_API ASassPlayerController : public APlayerController
 
 public:
 	ASassPlayerController();
+
+	virtual void SetupInputComponent() override;
+
+	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent, Category = "HUD")
+	void UnitMenuPressed();
+	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent, Category = "HUD")
+	void StoreGameWidget(const UUserWidget* GameWidget);
+	
 	virtual void BeginPlay() override;
 	virtual void BeginPlayingState() override;
 	
@@ -36,10 +44,13 @@ public:
 protected:
 	UPROPERTY(VisibleAnywhere, Category = "Gamemode")
 	ASassGameManager* SassGameManager;
+
 	UPROPERTY(EditAnywhere, Category = "HUD")
 	TSubclassOf<UUserWidget> PregameWidgetClass;
 	UPROPERTY(EditAnywhere, Category = "HUD")
 	TSubclassOf<UUserWidget> GameWidgetClass;
-	UPROPERTY(VisibleAnywhere, Category = "HUD")
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "HUD")
 	UUserWidget* ActiveWidget;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "HUD")
+	bool bIsUnitMenuOpen;
 };
