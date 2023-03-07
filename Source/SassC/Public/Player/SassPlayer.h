@@ -42,8 +42,6 @@ public:
 	/*Handles unit dispatching*/
 	void RightClickPressed();
 	void RightClickReleased();
-	/*Toggles unit menu*/
-	void UnitMenuPressed();
 	/*Toggles escape/pause menu */
 	UFUNCTION(BlueprintCallable, Category = "Sass Player")
 	void PausePressed();

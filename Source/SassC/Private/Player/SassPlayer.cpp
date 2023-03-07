@@ -640,33 +640,6 @@ bool ASassPlayer::CommandUnits_Validate(const TArray<AUnitBase*>& UnitsToCommand
 	return true;
 }
 
-#pragma region HUD functions
-void ASassPlayer::UnitMenuPressed()
-{
-	if (!IsUnitMenuOpen)
-	{
-		if (PlayerControllerPtr != nullptr)
-		{
-			PlayerControllerPtr->bShowMouseCursor = true;
-			PlayerControllerPtr->SetInputMode(FInputModeGameAndUI());
-			OpenUnitMenu();
-			UpdateSelectedSpawnableClass(SelectedSpawnableClass, SelectedSpawnableType);
-		}
-		IsUnitMenuOpen = true;
-	}
-	else
-	{
-		if (PlayerControllerPtr != nullptr)
-		{
-			PlayerControllerPtr->bShowMouseCursor = false;
-			PlayerControllerPtr->SetInputMode(FInputModeGameOnly());
-			CloseUnitMenu();
-		}
-		IsUnitMenuOpen = false;
-	}
-}
-#pragma endregion
-
 void ASassPlayer::QuitGame()
 {
 	FGenericPlatformMisc::RequestExit(false);
