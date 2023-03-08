@@ -2,23 +2,22 @@
 
 #pragma once
 
-
 #include "Core/BuildingRequirements.h"
-#include "Core/BuildingType.h"
+#include "Core/EntityInterface.h"
 #include "GameFramework/Actor.h"
-#include "Gamemode/Sassilization/SassPlayerState.h"
-#include "Components/MeshComponent.h"
-#include "Engine/StaticMesh.h"
-#include "Engine/SkeletalMesh.h"
-#include "Components/StaticMeshComponent.h"
-#include "Components/SkeletalMeshComponent.h"
-#include "Engine/StreamableRenderAsset.h"
+#include "CoreMinimal.h"
 #include "Gamemode/Sassilization/Territory/TerritoryInfo.h"
-#include "Materials/MaterialInstanceDynamic.h"
 #include "BuildingBase.generated.h"
 
+class AEmpire;
+class UMeshComponent;
+class UBoxComponent;
+class UStreamableRenderAsset;
+class ASassPlayerState;
+class UMaterialInstanceDynamic;
+
 UCLASS()
-class SASSC_API ABuildingBase : public AActor
+class SASSC_API ABuildingBase : public AActor, public IEntityInterface
 {
 	GENERATED_BODY()
 
@@ -31,6 +30,10 @@ public:
 	virtual void PostInitializeComponents() override;
 	virtual void Tick(float DeltaSeconds) override;
 
+#pragma region IEntityInterface
+	virtual ETypeOfEntity GetTypeOfEntity() override {return ETypeOfEntity::City;}
+#pragma endregion 
+	
 	/*This function only calls ColorBldg. I believe I set it up this way because ColorBldg is a NetMulticast and needs a server-based actor, such as the bldg itself, to properly call NetMulticast events.*/
 	UFUNCTION(BlueprintCallable, Category = "Spawnables Functions")
 	virtual void UpdateMaterial(FLinearColor PlayerColor, bool SetPersistentColor = false);
@@ -107,7 +110,7 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Building Base")
 	TArray<FBuildingRequirements> LevelRequirements = TArray(std::initializer_list<FBuildingRequirements>(
-		{FBuildingRequirements(ETypeOfBuilding::City, FBuildingRequirement(1, 0))}));
+		{FBuildingRequirements(ETypeOfEntity::City, FBuildingRequirement(1, 0))}));
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Building Base")
 	UMeshComponent* ActiveBuildingMesh;
@@ -184,9 +187,8 @@ protected:
 	FVector CollisionBounds = FVector(35.0f, 31.0f, 40.0f);
 	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly)
 	FVector CollisionDisplacement = FVector(0.0f, 1.0f, 20.0f);
-
 	
-	UPROPERTY(VisibleAnywhere, Category = "Unit Base")
+	UPROPERTY(VisibleAnywhere, Category = "Empire")
 	AEmpire* ControllingEmpire;
 	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadWrite, Category = "Building Base")
 	FLinearColor OwningPlayerColor;

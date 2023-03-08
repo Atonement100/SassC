@@ -15,8 +15,11 @@ class SASSC_API ABallista : public AUnitBase
 	ABallista();
 
 	virtual void Attack_Implementation(AActor* Target) override;
+	virtual ETypeOfEntity GetTypeOfEntity() override {return this->TypeOfEntity;}
 
 protected:
+	ETypeOfEntity TypeOfEntity = ETypeOfEntity::Ballista;
+	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Unit Base")
 	float AttackRange123 = 60.0f;
 

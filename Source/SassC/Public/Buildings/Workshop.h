@@ -18,9 +18,10 @@ class SASSC_API AWorkshop : public ABuildingBase
 	virtual void PostInitializeComponents() override;
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaSeconds) override;
+	virtual ETypeOfEntity GetTypeOfEntity() override {return this->TypeOfBuilding;}
 
 public:
 
 protected:
-	
+	ETypeOfEntity TypeOfBuilding = ETypeOfEntity::Workshop;
 };

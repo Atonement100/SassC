@@ -1,7 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Units/Swordsman.h"
-#include "SassC.h"
 
 ASwordsman::ASwordsman()
 {

@@ -1,7 +1,13 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Buildings/BuildingBase.h"
-#include "SassC.h"
+#include "Components/MeshComponent.h"
+#include "Components/SkeletalMeshComponent.h"
+#include "Gamemode/Sassilization/SassPlayerState.h"
+#include "Materials/MaterialInstanceDynamic.h"
+#include "Engine/SkeletalMesh.h"
+#include "Engine/StaticMesh.h"
+#include "Engine/StreamableRenderAsset.h"
 #include "Core/SassCStaticLibrary.h"
 #include "Net/UnrealNetwork.h"
 

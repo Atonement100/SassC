@@ -17,4 +17,8 @@ class SASSC_API AShrine : public ABuildingBase
 	virtual void PostInitializeComponents() override;
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaSeconds) override;
+	virtual ETypeOfEntity GetTypeOfEntity() override {return this->TypeOfBuilding;}
+
+protected:
+	ETypeOfEntity TypeOfBuilding = ETypeOfEntity::Shrine;
 };

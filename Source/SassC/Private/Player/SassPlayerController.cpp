@@ -126,6 +126,16 @@ bool ASassPlayerController::RequestBuildingSpawn()
 
 	FVector InitialHit = InitRaycastHit.Location + 50.0f;
 
-	return SassGameManager->RequestBuildingSpawn(this, GetPlayerState<ASassPlayerState>()->GetSelectedTypeOfBuilding(),
+	return SassGameManager->RequestBuildingSpawn(this, GetPlayerState<ASassPlayerState>()->GetSelectedTypeOfEntity(),
 	                                             InitialHit, FRotator(0, 0, 0));
+}
+
+ASassGameManager* ASassPlayerController::GetSassGameManager() const
+{
+	return SassGameManager;
+}
+
+bool ASassPlayerController::IsUnitMenuOpen() const
+{
+	return bIsUnitMenuOpen;
 }

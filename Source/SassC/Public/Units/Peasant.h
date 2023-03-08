@@ -12,4 +12,8 @@ UCLASS()
 class SASSC_API APeasant : public AUnitBase
 {
 	GENERATED_BODY()
+	virtual ETypeOfEntity GetTypeOfEntity() override {return this->TypeOfEntity;}
+
+protected:
+	ETypeOfEntity TypeOfEntity = ETypeOfEntity::Peasant;
 };

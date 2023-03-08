@@ -14,13 +14,13 @@ class SASSC_API ATower : public ABuildingBase
 {
 	GENERATED_BODY()
 
+public:
 	ATower();
 	virtual void PostInitializeComponents() override;
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaSeconds) override;
-
-public:
+	virtual ETypeOfEntity GetTypeOfEntity() override {return this->TypeOfBuilding;}
 
 protected:
-
+	ETypeOfEntity TypeOfBuilding = ETypeOfEntity::Tower;
 };

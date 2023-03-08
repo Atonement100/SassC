@@ -45,6 +45,10 @@ protected:
 	UPROPERTY(VisibleAnywhere, Category = "Gamemode")
 	ASassGameManager* SassGameManager;
 
+public:
+	ASassGameManager* GetSassGameManager() const;
+
+protected:
 	UPROPERTY(EditAnywhere, Category = "HUD")
 	TSubclassOf<UUserWidget> PregameWidgetClass;
 	UPROPERTY(EditAnywhere, Category = "HUD")
@@ -53,4 +57,9 @@ protected:
 	UUserWidget* ActiveWidget;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "HUD")
 	bool bIsUnitMenuOpen;
+
+public:
+	bool IsUnitMenuOpen() const;
+	// UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Gamemode|Spawnables")
+	
 };

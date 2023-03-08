@@ -48,49 +48,12 @@ void ASassPlayerState::SetEmpire(AEmpire* const NewEmpire)
 	this->Empire = NewEmpire;
 }
 
-ETypeOfSpawnable ASassPlayerState::GetSelectedTypeOfSpawnable() const
+ETypeOfEntity ASassPlayerState::GetSelectedTypeOfEntity() const
 {
-	return SelectedTypeOfSpawnable;
+	return SelectedTypeOfEntity;
 }
 
-void ASassPlayerState::SetSelectedTypeOfSpawnable(const ETypeOfSpawnable NewSelectedTypeOfSpawnable)
+void ASassPlayerState::SetSelectedTypeOfEntity(const ETypeOfEntity NewSelectedTypeOfSpawnable)
 {
-	this->SelectedTypeOfSpawnable = NewSelectedTypeOfSpawnable;
-}
-
-ETypeOfBuilding ASassPlayerState::GetSelectedTypeOfBuilding() const
-{
-	return SelectedTypeOfBuilding;
-}
-
-void ASassPlayerState::SetSelectedTypeOfBuilding(const ETypeOfBuilding NewSelectedTypeOfBuilding)
-{
-	this->SelectedTypeOfBuilding = NewSelectedTypeOfBuilding;
-}
-
-ETypeOfUnit ASassPlayerState::GetSelectedTypeOfUnit() const
-{
-	return SelectedTypeOfUnit;
-}
-
-void ASassPlayerState::SetSelectedTypeOfUnit(const ETypeOfUnit NewSelectedTypeOfUnit)
-{
-	this->SelectedTypeOfUnit = NewSelectedTypeOfUnit;
-}
-
-void ASassPlayerState::UpdateBuildingSelection(const ETypeOfBuilding NewTypeOfBuilding)
-{
-	this->SelectedTypeOfBuilding = NewTypeOfBuilding;
-	this->UpdateSpawnableTypeSelection(ETypeOfSpawnable::Building);
-}
-
-void ASassPlayerState::UpdateUnitSelection(const ETypeOfUnit NewTypeOfUnit)
-{
-	this->SelectedTypeOfUnit = NewTypeOfUnit;
-	this->UpdateSpawnableTypeSelection(ETypeOfSpawnable::Unit);
-}
-
-void ASassPlayerState::UpdateSpawnableTypeSelection(const ETypeOfSpawnable NewTypeOfSpawnable)
-{
-	this->SelectedTypeOfSpawnable = NewTypeOfSpawnable;
+	this->SelectedTypeOfEntity = NewSelectedTypeOfSpawnable;
 }

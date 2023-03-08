@@ -24,9 +24,15 @@ bool ASassGameManager::IsValidBuildLocation()//UEmpire* Empire, )
 	return true;
 }
 
-bool ASassGameManager::RequestBuildingSpawn(APlayerController* Player, ETypeOfBuilding BuildingToSpawn, FVector Location, FRotator Rotator)
+AActor* ASassGameManager::RequestGhostSpawn(APlayerController* Player, ETypeOfEntity BuildingToSpawn,
+	FVector Location, FRotator Rotator) const
 {
-	BuildingManager->BuildBuilding(Player, BuildingToSpawn, Location, Rotator);
+	return BuildingManager->SpawnGhost(Player, BuildingToSpawn, Location, Rotator);
+}
+
+bool ASassGameManager::RequestBuildingSpawn(APlayerController* Player, ETypeOfEntity BuildingToSpawn, FVector Location, FRotator Rotator)
+{
+	BuildingManager->SpawnBuilding(Player, BuildingToSpawn, Location, Rotator);
 	return true;
 }
 

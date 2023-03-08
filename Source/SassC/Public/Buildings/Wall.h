@@ -24,6 +24,7 @@ public:
 	virtual void Tick(float DeltaSeconds) override;
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent,
 	                         class AController* EventInstigator, class AActor* DamageCauser) override;
+	virtual ETypeOfEntity GetTypeOfEntity() override {return this->TypeOfBuilding;}
 
 	AActor* TempConnection;
 
@@ -38,4 +39,5 @@ public:
 	TArray<ABuildingBase*> ConnectedWalls;
 
 protected:
+	ETypeOfEntity TypeOfBuilding = ETypeOfEntity::Wall;
 };

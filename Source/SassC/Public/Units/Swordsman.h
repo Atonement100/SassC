@@ -20,4 +20,8 @@ public:
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaSeconds) override;
 	virtual void SetupPlayerInputComponent(class UInputComponent* SetupInputComponent) override;
+	virtual ETypeOfEntity GetTypeOfEntity() override {return this->TypeOfEntity;}
+
+protected:
+	ETypeOfEntity TypeOfEntity = ETypeOfEntity::Swordsman;
 };

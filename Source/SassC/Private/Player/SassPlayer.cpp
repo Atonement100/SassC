@@ -12,6 +12,7 @@
 #include "Buildings/WallSegment.h"
 #include "Buildings/Workshop.h"
 #include "Core/SassCStaticLibrary.h"
+#include "Core/ChannelDefines.h"
 #include "Gamemode/Sassilization/SassGameState.h"
 #include "Gamemode/Sassilization/SassPlayerState.h"
 #include "Kismet/GameplayStatics.h"
@@ -50,62 +51,43 @@ void ASassPlayer::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	
-	ASassPlayerState* ps = GetPlayerState<ASassPlayerState>();
-	// UE_LOG(LogTemp, Display, TEXT("Player Name: %s Empire Name: %s EmpireId: %d Role: %s"),
-	// 	ps ? *ps->GetPlayerName() : TEXT("null"),
-	// 	ps && ps->GetEmpire() ? *ps->GetEmpire()->GetName() : TEXT("null"),
-	// 	ps && ps->GetEmpire() ? ps->GetEmpire()->GetEmpireId() : 0,
-	// 	*UEnum::GetValueAsString(GetLocalRole()))
+	ASassPlayerState* SassPlayerState = GetPlayerState<ASassPlayerState>();
 	
-	if (IsUnitMenuOpen)
+	if (PlayerControllerPtr->IsUnitMenuOpen())
 	{
 		FHitResult CursorHit;
 
-		//@TODO: Find a better solution for this. Perhaps custom constructor taking in bNoCollisionFail value.
-		FActorSpawnParameters TempParams = FActorSpawnParameters();
-		TempParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-		const FActorSpawnParameters SpawnParams = FActorSpawnParameters(TempParams);
-
-		if (LocalObjectSpawn != nullptr && !UKismetMathLibrary::EqualEqual_ClassClass(
-			SelectedSpawnableClass, LocalObjectClass))
+		if (LocalObjectSpawn &&
+			Cast<IEntityInterface>(LocalObjectSpawn)->GetTypeOfEntity() != SassPlayerState->GetSelectedTypeOfEntity())
 		{
 			LocalObjectSpawn->Destroy();
 			ActorSpawnLatch = true;
+			UE_LOG(LogTemp, Display, TEXT("Resetting ActorSpawnLatch"))
 		}
 
+		PlayerControllerPtr->GetHitResultUnderCursorByChannel(
+			UEngineTypes::ConvertToTraceType(ECC_LEVEL_MESH), true, CursorHit);
+		
 		if (ActorSpawnLatch)
 		{
-			if (PlayerControllerPtr) PlayerControllerPtr->GetHitResultUnderCursorByChannel(
-				UEngineTypes::ConvertToTraceType(ECC_Visibility), true, CursorHit);
-			FTransform Transform = FTransform(PreviewRotation, CursorHit.Location, FVector(1));
-
-			LocalObjectSpawn = GetWorld()->SpawnActor(SelectedSpawnableClass, &Transform, SpawnParams);
-			if (LocalObjectSpawn != nullptr)
-			{
-				LocalObjectSpawn->SetOwner(PlayerControllerPtr); //I don't know if this line actually works, honestly
-				LocalObjectSpawn->SetActorEnableCollision(false);
-			}
-			else
-			{
-				GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Green, "SassPlayer Tick LocalObject didn't spawn");
-			}
-			LocalObjectClass = SelectedSpawnableClass;
+			// When this moves to PlayerController it will make a little more sense..
+			LocalObjectSpawn = PlayerControllerPtr->GetSassGameManager()->RequestGhostSpawn(PlayerControllerPtr,
+				SassPlayerState->GetSelectedTypeOfEntity(), CursorHit.Location, PreviewRotation);
+			
 			if (SelectionSphereHolder) SelectionSphereHolder->Destroy();
 			SphereSpawnLatch = true;
 			ActorDestroyLatch = true;
 			ActorSpawnLatch = false;
 		}
 
-		if (PlayerControllerPtr != nullptr) PlayerControllerPtr->GetHitResultUnderCursorByChannel(
-			UEngineTypes::ConvertToTraceType(ECC_Visibility), true, CursorHit);
-		if (LocalObjectSpawn != nullptr)
+
+		if (LocalObjectSpawn)
 		{
 			if (!IsRightMouseDown)
 			{
 				LocalObjectSpawn->SetActorLocation(
-					CursorHit.Location + ((SelectedSpawnableType == ETypeOfSpawnable::Building)
-						                      ? FVector::ZeroVector
-						                      : CurrentHalfHeight));
+					CursorHit.Location + ((FTypeOfEntity::IsBuilding(SelectedSpawnableType))
+						? FVector::ZeroVector : CurrentHalfHeight));
 			}
 			else if (IsRightMouseDown)
 			{
@@ -134,10 +116,6 @@ void ASassPlayer::Tick(float DeltaTime)
 			}
 			if (CursorHit.Normal.Z > .990)
 			{
-				//@TODO: HalfHeight and TraceSize will only ever change when spawnable changes. Instead of checking this on tick, check it when spawnable is switched.
-				FVector HalfHeight = CurrentHalfHeight, TraceSize = CurrentTraceSize;
-
-
 				FHitResult BoxTraceHit;
 				TArray<AActor*> ActorsToIgnore;
 				ActorsToIgnore.Add(LocalObjectSpawn);
@@ -145,8 +123,7 @@ void ASassPlayer::Tick(float DeltaTime)
 				                                                  CursorHit.Location + 2 * CurrentHalfHeight,
 				                                                  FVector(CurrentTraceSize.X, CurrentTraceSize.Y, 0),
 				                                                  PreviewRotation,
-				                                                  UEngineTypes::ConvertToTraceType(
-					                                                  ECollisionChannel::ECC_GameTraceChannel2), true,
+				                                                  UEngineTypes::ConvertToTraceType(ECC_SPAWNING), true,
 				                                                  ActorsToIgnore, EDrawDebugTrace::ForOneFrame,
 				                                                  BoxTraceHit, true);
 				if (ABuildingBase* BuildingCast = Cast<ABuildingBase>(LocalObjectSpawn))
@@ -183,6 +160,9 @@ void ASassPlayer::Tick(float DeltaTime)
 			}
 			else if (AUnitBase* UnitCast = Cast<AUnitBase>(LocalObjectSpawn)) { UnitCast->UpdateMaterial(NewColor); }
 
+			FActorSpawnParameters SpawnParams = FActorSpawnParameters();
+			SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+			
 			if (AGate* GateCast = Cast<AGate>(LocalObjectSpawn))
 			{
 				ResetGatePreviewLatch = true;
@@ -193,6 +173,8 @@ void ASassPlayer::Tick(float DeltaTime)
 				                                             LocalObjectSpawn->GetActorLocation() + (PreviewRotation +
 					                                             FRotator(0, 90, 0)).Vector() * -50);
 
+
+				
 				if (TempGateWalls[0] != nullptr) TempGateWalls[0]->SetActorTransform(LeftTransform);
 				else if (!TempGateWalls[0])
 				{
@@ -543,7 +525,7 @@ void ASassPlayer::LeftClickPressed()
 	IsLeftMouseDown = true;
 	if (!IsRightMouseDown)
 	{
-		if (IsUnitMenuOpen)
+		if (PlayerControllerPtr->IsUnitMenuOpen())
 		{
 			if (PlayerControllerPtr == nullptr) return;
 			FHitResult Hit;
@@ -556,7 +538,7 @@ void ASassPlayer::LeftClickPressed()
 			if (ABuildingBase* LocalBuildingRef = Cast<ABuildingBase>(LocalObjectSpawn))
 			{
 				LocationsToCheck = LocalBuildingRef->CornerLocations;
-				if (SelectedSpawnableType == ETypeOfSpawnable::Building) { ActorsToIgnore = TempGateWalls; }
+				if (SelectedSpawnableType == ETypeOfEntity::Gate) { ActorsToIgnore = TempGateWalls; }
 			}
 
 			const TArray<AActor*> ConfirmedToIgnore = ActorsToIgnore;
@@ -579,7 +561,7 @@ void ASassPlayer::RightClickPressed()
 	FHitResult RaycastHit;
 	const TArray<AActor*> RaycastIgnores;
 
-	if (!IsUnitMenuOpen)
+	if (!PlayerControllerPtr->IsUnitMenuOpen())
 	{
 		UKismetSystemLibrary::LineTraceSingle(
 			GetWorld(), GetMesh()->GetComponentLocation() + FVector(0, 0, BaseEyeHeight + 80.0f),
@@ -645,7 +627,7 @@ void ASassPlayer::QuitGame()
 	FGenericPlatformMisc::RequestExit(false);
 }
 
-void ASassPlayer::UpdateSelectedSpawnableClass(UClass* NewClass, ETypeOfSpawnable NewTypeOfSpawnable)
+void ASassPlayer::UpdateSelectedSpawnableClass(UClass* NewClass, ETypeOfEntity NewTypeOfSpawnable)
 {
 	if (!NewClass) return;
 	SelectedSpawnableClass = NewClass;
@@ -830,7 +812,7 @@ void ASassPlayer::YawCamera(float AxisValue)
 
 bool ASassPlayer::ShouldIgnoreLookInput()
 {
-	return (IsUnitMenuOpen && IsRightMouseDown);
+	return (PlayerControllerPtr->IsUnitMenuOpen() && IsRightMouseDown);
 }
 #pragma endregion
 
@@ -957,7 +939,8 @@ void ASassPlayer::ServerSpawnBuilding_Implementation(ASassPlayerController* Play
 	}
 	
 	// If all checks have passed so far, let's go ahead and spawn the actor.
-	AActor* NewSpawn = GetWorld()->SpawnActor(ActorToSpawn, &Location, &Rotation, SpawnParams);
+	FVector NewLocation = (Location + FVector(50,50, 50));
+	AActor* NewSpawn = GetWorld()->SpawnActor(ActorToSpawn, &NewLocation, &Rotation, SpawnParams);
 
 	if (NewSpawn == nullptr)
 	{
@@ -1298,17 +1281,3 @@ bool ASassPlayer::ServerSpawnWall_Validate(AWall* NewWall, AWall* TargetWall, in
 {
 	return true;
 }
-
-#pragma region Blueprint Implementables
-void ASassPlayer::SetSassHUDRef_Implementation()
-{
-}
-
-void ASassPlayer::OpenUnitMenu_Implementation()
-{
-}
-
-void ASassPlayer::CloseUnitMenu_Implementation()
-{
-}
-#pragma endregion

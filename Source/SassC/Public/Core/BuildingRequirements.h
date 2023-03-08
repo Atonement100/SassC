@@ -2,7 +2,7 @@
 
 
 #include "BuildingType.h"
-#include "Gamemode/Sassilization/TypeOfSpawnable.h"
+#include "Gamemode/Sassilization/TypeOfEntity.h"
 #include "BuildingRequirements.generated.h"
 
 USTRUCT(BlueprintType)
@@ -29,21 +29,21 @@ struct FBuildingRequirements
 
 	FBuildingRequirements(){}
 
-	FBuildingRequirements(const TMap<ETypeOfBuilding, FBuildingRequirement> Required)
+	FBuildingRequirements(const TMap<ETypeOfEntity, FBuildingRequirement> Required)
 	{
 		this->BuildingsRequired = Required;
 	}
 	
-	FBuildingRequirements(const ETypeOfBuilding BuildingType, const FBuildingRequirement BuildingRequirement)
+	FBuildingRequirements(const ETypeOfEntity BuildingType, const FBuildingRequirement BuildingRequirement)
 	{
 		AddRequirement(BuildingType, BuildingRequirement);
 	}
 
-	void AddRequirement(const ETypeOfBuilding BuildingType, const FBuildingRequirement BuildingRequirement)
+	void AddRequirement(const ETypeOfEntity BuildingType, const FBuildingRequirement BuildingRequirement)
 	{
 		BuildingsRequired.Add(BuildingType, BuildingRequirement);
 	}
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	TMap<ETypeOfBuilding, FBuildingRequirement> BuildingsRequired = TMap<ETypeOfBuilding, FBuildingRequirement>();
+	TMap<ETypeOfEntity, FBuildingRequirement> BuildingsRequired = TMap<ETypeOfEntity, FBuildingRequirement>();
 };

@@ -1,9 +1,10 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Buildings/WallSegment.h"
-#include "SassC.h"
-#include "Net/UnrealNetwork.h"
 #include "Buildings/Wall.h"
+#include "Components/BoxComponent.h"
+#include "Engine/StaticMesh.h"
+#include "Net/UnrealNetwork.h"
 
 AWallSegment::AWallSegment()
 {

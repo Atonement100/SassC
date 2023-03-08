@@ -4,13 +4,13 @@
 
 #include "Gamemode/Sassilization/Empire.h"
 #include "GameFramework/Character.h"
-#include "GameFramework/PawnMovementComponent.h"
 #include "Core/SassCStaticLibrary.h"
-#include "Components/TextRenderComponent.h"
 #include "Components/BoxComponent.h"
+#include "Core/EntityInterface.h"
 #include "UnitBase.generated.h"
 
 class ABuildingBase;
+class UTextRenderComponent;
 
 UENUM()
 enum class EProcessingCommandType : uint8
@@ -58,7 +58,7 @@ struct FUnitCombatProperties
 };
 
 UCLASS()
-class SASSC_API AUnitBase : public ACharacter
+class SASSC_API AUnitBase : public ACharacter, public IEntityInterface
 {
 	GENERATED_BODY()
 
@@ -70,6 +70,10 @@ public:
 	virtual void Tick(float DeltaSeconds) override;
 	virtual void SetupPlayerInputComponent(class UInputComponent* SetupInputComponent) override;
 	virtual void PostInitializeComponents() override;
+
+#pragma region IEntityInterface
+	virtual ETypeOfEntity GetTypeOfEntity() override {return ETypeOfEntity::Peasant;};
+#pragma endregion 
 
 	UFUNCTION()
 	virtual void OnOverlapBegin_DetectionSphere(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,

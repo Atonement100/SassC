@@ -13,8 +13,11 @@ class SASSC_API ACatapult : public AUnitBase
 {
 	GENERATED_BODY()
 	ACatapult();
-	
+	virtual ETypeOfEntity GetTypeOfEntity() override {return this->TypeOfEntity;}
+
 protected:
+	ETypeOfEntity TypeOfEntity = ETypeOfEntity::Catapult;
+	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Unit Base")
 	float AttackRange123 = 60.0f;
 	

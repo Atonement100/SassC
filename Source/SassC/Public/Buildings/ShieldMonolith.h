@@ -2,7 +2,6 @@
 
 #pragma once
 
-
 #include "BuildingBase.h"
 #include "ShieldMonolith.generated.h"
 
@@ -21,6 +20,8 @@ public:
 
 	float TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator,
 	                 AActor* DamageCauser) override;
+	
+	virtual ETypeOfEntity GetTypeOfEntity() override {return this->TypeOfBuilding;}
 
 	void PostCreation_Implementation(FLinearColor PlayerColor) override;
 
@@ -51,4 +52,6 @@ protected:
 	FVector BubblePSysLocation = FVector(0, 0, 20);
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Shield Monolith")
 	USceneComponent* BeamPSysSocket;
+
+	ETypeOfEntity TypeOfBuilding = ETypeOfEntity::ShieldMono;
 };

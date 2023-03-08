@@ -21,8 +21,10 @@ public:
 
 	virtual void Attack_Implementation(AActor* Target) override;
 	virtual bool Attack_Validate(AActor* Target) override;
-	
+	virtual ETypeOfEntity GetTypeOfEntity() override {return this->TypeOfEntity;}
+
 protected:
+	ETypeOfEntity TypeOfEntity = ETypeOfEntity::Scallywag;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Unit Base")
 	float AttackRange123 = 70.0f;
 

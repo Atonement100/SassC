@@ -6,10 +6,11 @@
 
 #include "CoreMinimal.h"
 #include "Core/BuildingRequirements.h"
-#include "Engine/StreamableRenderAsset.h"
-#include "Gamemode/Sassilization/TypeOfSpawnable.h"
 #include "Engine/DataAsset.h"
+#include "Gamemode/Sassilization/TypeOfEntity.h"
 #include "BuildingData.generated.h"
+
+class UStreamableRenderAsset;
 
 /**
  * 
@@ -46,7 +47,7 @@ public:
 	bool CanSpawnFoundation;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	TArray<FBuildingRequirements> LevelRequirements = TArray(std::initializer_list<FBuildingRequirements>(
-		{FBuildingRequirements(ETypeOfBuilding::City, FBuildingRequirement(1, 0))}));
+		{FBuildingRequirements(ETypeOfEntity::City, FBuildingRequirement(1, 0))}));
 	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	TArray<float> AttackSpeed;
@@ -54,5 +55,4 @@ public:
 	TArray<float> AttackRange;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	TArray<float> AttackDamage;
-	
 };

@@ -2,11 +2,12 @@
 
 #pragma once
 
-#include "Buildings/BuildingBase.h"
-#include "Gamemode/Sassilization/Empire.h"
-#include "Gamemode/Sassilization/TypeOfSpawnable.h"
+#include "GameFramework/Actor.h"
+#include "Gamemode/Sassilization/TypeOfEntity.h"
 #include "Buildings/Data/BuildingData.h"
 #include "BuildingManager.generated.h"
+
+class AEmpire;
 
 /**
  * 
@@ -19,12 +20,13 @@ class SASSC_API ABuildingManager : public AActor
 public:
 	UFUNCTION(BlueprintCallable, Category = "Buildings")
 	bool CanBuild(AEmpire* Empire, EBuildingType BuildingType, bool IgnoreCost) const;
+	AActor* SpawnGhost(APlayerController* Player, ETypeOfEntity BuildingToSpawn, FVector Location, FRotator Rotator);
 	UFUNCTION(BlueprintCallable)
-	void BuildBuilding(APlayerController* Player, ETypeOfBuilding BuildingToSpawn, FVector Location, FRotator Rotator);
+	void SpawnBuilding(APlayerController* Player, ETypeOfEntity BuildingToSpawn, FVector Location, FRotator Rotator);
 	UFUNCTION(BlueprintCallable)
-	TSubclassOf<ABuildingBase> GetClassForBuildingType(const ETypeOfBuilding TypeOfBuilding);
+	TSubclassOf<AActor> GetClassForBuildingType(const ETypeOfEntity TypeOfBuilding);
 
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	TMap<ETypeOfBuilding, TSubclassOf<ABuildingBase>> BuildingTypeToClass;
+	TMap<ETypeOfEntity, TSubclassOf<AActor>> BuildingTypeToClass;
 };

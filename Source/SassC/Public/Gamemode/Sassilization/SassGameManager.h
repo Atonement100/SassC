@@ -6,7 +6,7 @@
 #include "BuildingManager.h"
 #include "EmpireManager.h"
 #include "Territory/TerritoryManager.h"
-#include "Gamemode/Sassilization/TypeOfSpawnable.h"
+#include "Gamemode/Sassilization/TypeOfEntity.h"
 #include "SassGameManager.generated.h"
 
 /**
@@ -23,9 +23,11 @@ public:
 	
 	UFUNCTION(BlueprintCallable)
 	bool IsValidBuildLocation();
+	AActor* RequestGhostSpawn(APlayerController* Player, ETypeOfEntity BuildingToSpawn, FVector Location, FRotator Rotator) const;
 
 	UFUNCTION(BlueprintCallable)
-	bool RequestBuildingSpawn(APlayerController* Player, ETypeOfBuilding BuildingToSpawn, FVector Location, FRotator Rotator);
+	bool RequestBuildingSpawn(APlayerController* Player, ETypeOfEntity BuildingToSpawn, FVector Location,
+		FRotator Rotator);
 
 protected: 
 	UPROPERTY(Replicated, EditAnywhere, Category = "Gamemode")
