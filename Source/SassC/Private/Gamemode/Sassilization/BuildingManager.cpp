@@ -25,6 +25,11 @@ bool ABuildingManager::CanBuild(AEmpire* Empire, EBuildingType BuildingType, boo
 AActor* ABuildingManager::SpawnGhost(APlayerController* Player, const ETypeOfEntity BuildingToSpawn,
 	const FVector Location, const FRotator Rotator)
 {
+	if (!Player->IsLocalController())
+	{
+		return nullptr;
+	}
+	
 	UE_LOG(LogTemp, Display, TEXT("Spawning building %s for player %s at location %s with rotation %s..."),
 		*UEnum::GetValueAsString(BuildingToSpawn), *Player->GetPlayerState<ASassPlayerState>()->GetPlayerName(),
 		*Location.ToString(), *Rotator.ToString())
@@ -36,7 +41,9 @@ AActor* ABuildingManager::SpawnGhost(APlayerController* Player, const ETypeOfEnt
 	SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 	
 	AActor* NewActor = Cast<AActor>(GetWorld()->SpawnActor(ActorToSpawn, &Location, &Rotator, SpawnParams));
-
+	NewActor->bOnlyRelevantToOwner = true;
+	NewActor->SetReplicates(false);
+	
 	if (!NewActor)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Building %s failed to spawn for player %s at location %s with rotation %s..."),

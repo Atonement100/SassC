@@ -1,8 +1,11 @@
 ﻿// License information can be found at https://github.com/Atonement100/SassC/blob/master/LICENSE
 
 #include "Gamemode/Sassilization/EmpireManager.h"
-
+#include "Buildings/BuildingBase.h"
+#include "Units/UnitBase.h"
+#include "Gamemode/Sassilization/Empire.h"
 #include "Net/UnrealNetwork.h"
+#include "Gamemode/Sassilization/SassPlayerState.h"
 
 AEmpireManager::AEmpireManager()
 {

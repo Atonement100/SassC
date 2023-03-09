@@ -3,11 +3,13 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "BuildingManager.h"
-#include "EmpireManager.h"
-#include "Territory/TerritoryManager.h"
+#include "GameFramework/Actor.h"
 #include "Gamemode/Sassilization/TypeOfEntity.h"
 #include "SassGameManager.generated.h"
+
+class ABuildingManager;
+class AEmpireManager;
+class ATerritoryManager;
 
 /**
  * 

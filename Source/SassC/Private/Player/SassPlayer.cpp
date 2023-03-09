@@ -19,7 +19,7 @@
 #include "Kismet/KismetMathLibrary.h"
 #include "Kismet/KismetStringLibrary.h" //necessary only for debugging
 #include "Kismet/KismetSystemLibrary.h"
-#include "ParticleDefinitions.h"
+#include "Gamemode/Sassilization/SassGameManager.h"
 #include "Player/SassPlayerController.h"
 #include "Player/SelectionSphere.h"
 #include "UI/SassPauseMenu.h"
@@ -50,6 +50,11 @@ void ASassPlayer::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifet
 void ASassPlayer::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	if (!IsLocallyControlled())
+	{
+		return;
+	}
 	
 	ASassPlayerState* SassPlayerState = GetPlayerState<ASassPlayerState>();
 	
@@ -569,7 +574,7 @@ void ASassPlayer::RightClickPressed()
 			UKismetMathLibrary::GetForwardVector(PlayerControllerPtr->GetControlRotation()) * 10000.0f,
 			UEngineTypes::ConvertToTraceType(ECC_Visibility), true, RaycastIgnores, EDrawDebugTrace::ForDuration,
 			RaycastHit, true);
-		if (RaycastHit.GetComponent()->ComponentHasTag(USassCStaticLibrary::NoAggroTag()))
+		if (RaycastHit.GetComponent() && RaycastHit.GetComponent()->ComponentHasTag(USassCStaticLibrary::NoAggroTag()))
 		{
 			UKismetSystemLibrary::LineTraceSingle(
 				GetWorld(), GetMesh()->GetComponentLocation() + FVector(0, 0, BaseEyeHeight + 80.0f),

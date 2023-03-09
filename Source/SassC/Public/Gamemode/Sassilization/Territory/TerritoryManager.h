@@ -2,9 +2,11 @@
 
 #pragma once
 
-
-#include "NodeManager.h"
+#include "GameFramework/Actor.h"
+#include "Gamemode/Sassilization/Territory/EmpireBorderData.h"
 #include "TerritoryManager.generated.h"
+
+class ANodeManager;
 
 /**
  * 

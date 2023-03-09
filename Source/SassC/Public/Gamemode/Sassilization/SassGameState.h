@@ -2,12 +2,11 @@
 
 #pragma once
 
-
-#include "SassGameManager.h"
 #include "SassGameStatus.h"
 #include "GameFramework/GameState.h"
 #include "SassGameState.generated.h"
 
+class ASassGameManager;
 
 UCLASS()
 class SASSC_API ASassGameState : public AGameState

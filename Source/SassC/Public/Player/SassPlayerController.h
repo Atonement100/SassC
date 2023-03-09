@@ -2,10 +2,10 @@
 
 #pragma once
 
-
 #include "GameFramework/PlayerController.h"
-#include "Gamemode/Sassilization/SassGameManager.h"
 #include "SassPlayerController.generated.h"
+
+class ASassGameManager;
 
 /**
  * 

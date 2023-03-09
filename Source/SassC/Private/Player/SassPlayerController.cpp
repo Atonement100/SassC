@@ -2,6 +2,8 @@
 
 #include "Player/SassPlayerController.h"
 
+#include "Gamemode/Sassilization/SassPlayerState.h"
+#include "Gamemode/Sassilization/SassGameManager.h"
 #include "Gamemode/Sassilization/SassGameState.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "Player/SassPlayer.h"

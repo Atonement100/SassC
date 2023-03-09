@@ -4,6 +4,7 @@
 #include "Net/UnrealNetwork.h"
 #include "Kismet/GameplayStatics.h"
 #include "Player/SassPlayer.h"
+#include "Gamemode/Sassilization/SassGameManager.h"
 #include "Gamemode/Sassilization/SassPlayerState.h"
 #include "Player/SassPlayerController.h"
 

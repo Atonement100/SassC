@@ -2,7 +2,9 @@
 
 
 #include "Gamemode/Sassilization/SassGameManager.h"
-
+#include "Gamemode/Sassilization/BuildingManager.h"
+#include "Gamemode/Sassilization/EmpireManager.h"
+#include "Gamemode/Sassilization/Territory/TerritoryManager.h"
 #include "Net/UnrealNetwork.h"
 
 ASassGameManager::ASassGameManager()

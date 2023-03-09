@@ -6,7 +6,7 @@
 #include "Buildings/City.h"
 #include "Gamemode/Sassilization/Territory/GraphNode.h"
 #include "Kismet/GameplayStatics.h"
-
+#include "Gamemode/Sassilization/Territory/NodeManager.h"
 #include "Kismet/KismetStringLibrary.h"
 #include "Net/UnrealNetwork.h"
 

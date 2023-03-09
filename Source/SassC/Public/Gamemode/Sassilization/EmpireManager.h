@@ -3,12 +3,12 @@
 #pragma once
 
 #include <atomic>
-
-#include "Buildings/BuildingBase.h"
-#include "Units/UnitBase.h"
-#include "Gamemode/Sassilization/SassPlayerState.h"
-#include "Gamemode/Sassilization/Empire.h"
+#include "GameFramework/Actor.h"
 #include "EmpireManager.generated.h"
+
+class ABuildingBase;
+class AUnitBase;
+class AEmpire;
 
 USTRUCT()
 struct FPlayerAndEmpire

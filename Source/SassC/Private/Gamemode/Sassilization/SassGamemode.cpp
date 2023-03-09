@@ -1,5 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
+#include "Gamemode/Sassilization/EmpireManager.h"
 #include "Gamemode/Sassilization/SassGamemode.h"
 #include "Gamemode/Sassilization/SassGameState.h"
 #include "Player/SassPlayer.h"
