@@ -24,7 +24,7 @@ void ASassGamemode::PostLogin(APlayerController* NewPlayer)
 	
 	while(!GameManager)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("GameManager not yet ready"))
+		UE_LOG(Sassilization, Warning, TEXT("GameManager not yet ready"))
 		FTimerHandle UnusedHandle;
 		GetWorldTimerManager()
 			.SetTimer(UnusedHandle, FTimerDelegate().CreateLambda([this](){}), 0.25f, false);
@@ -34,7 +34,7 @@ void ASassGamemode::PostLogin(APlayerController* NewPlayer)
 	
 	while(!EmpireManager)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("EmpireManager not yet ready"))
+		UE_LOG(Sassilization, Warning, TEXT("EmpireManager not yet ready"))
 		FTimerHandle UnusedHandle;
 		GetWorldTimerManager()
 			.SetTimer(UnusedHandle, FTimerDelegate().CreateLambda([this](){}), 0.25f, false);

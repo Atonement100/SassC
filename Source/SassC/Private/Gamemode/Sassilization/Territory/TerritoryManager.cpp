@@ -37,11 +37,11 @@ bool ATerritoryManager::IsLocationInTerritory(const FVector Location, const uint
 
 	if (!NearestNode)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("No node found in range when performing territory check. Loc %s EmpireId %d"), *Location.ToString(), EmpireId)
+		UE_LOG(Sassilization, Warning, TEXT("No node found in range when performing territory check. Loc %s EmpireId %d"), *Location.ToString(), EmpireId)
 		return false;
 	}
 	
-	UE_LOG(LogTemp, Display, TEXT("Found Node %s at %s with empire %d while querying for Empire %d"),
+	UE_LOG(Sassilization, Display, TEXT("Found Node %s at %s with empire %d while querying for Empire %d"),
 		*GetNameSafe(NearestNode), *UKismetStringLibrary::Conv_VectorToString(Location), NearestNode->GetEmpireId(), EmpireId)
 
 	return NearestNode->GetEmpireId() == EmpireId;
@@ -70,7 +70,7 @@ void ATerritoryManager::Test_ColorTerritoryBorderNodes()
 
 void ATerritoryManager::UpdateTerritories_Implementation()
 {
-	UE_LOG(LogTemp, Display, TEXT("Trying to update territories"))
+	UE_LOG(Sassilization, Display, TEXT("Trying to update territories"))
 	TArray<FTerritoryInfo> Origins = TArray<FTerritoryInfo>();
 	TArray<AActor*> Buildings;
 	
@@ -89,17 +89,17 @@ void ATerritoryManager::UpdateTerritories_Implementation()
 			continue;
 		}
 
-		UE_LOG(LogTemp, Display, TEXT("Adding TerritoryInfo %s"), *BuildingBase->GetTerritoryInfo().ToString())
+		UE_LOG(Sassilization, Display, TEXT("Adding TerritoryInfo %s"), *BuildingBase->GetTerritoryInfo().ToString())
 		Origins.Add(BuildingBase->GetTerritoryInfo());
 	}
 	
 	TArray<FEmpireBorderData> NewTerritoryBorders = TArray<FEmpireBorderData>();
 
-	UE_LOG(LogTemp, Display, TEXT("Found %d territory origins"), Origins.Num())
+	UE_LOG(Sassilization, Display, TEXT("Found %d territory origins"), Origins.Num())
 	
 	this->NodeManager->FloodTerritory(Origins, NewTerritoryBorders);
 
-	UE_LOG(LogTemp, Display, TEXT("Found %d new territory borders"), NewTerritoryBorders.Num())
+	UE_LOG(Sassilization, Display, TEXT("Found %d new territory borders"), NewTerritoryBorders.Num())
 	
 	this->TerritoryBorders = NewTerritoryBorders;
 	this->Test_ColorTerritoryBorderNodes();

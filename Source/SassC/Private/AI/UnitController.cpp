@@ -5,10 +5,10 @@
 
 void AUnitController::OnPossess(APawn* InPawn)
 {
-	UE_LOG(LogTemp, Display, TEXT("UnitController OnPossess"));
+	UE_LOG(Sassilization, Display, TEXT("UnitController OnPossess"));
 }
 
 void AUnitController::BeginPlay()
 {
-	UE_LOG(LogTemp, Display, TEXT("UnitController BeginPlay"));
+	UE_LOG(Sassilization, Display, TEXT("UnitController BeginPlay"));
 }

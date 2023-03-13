@@ -29,7 +29,7 @@ void ASassPlayerController::BeginPlay()
 void ASassPlayerController::BeginPlayingState()
 {
 	Super::BeginPlayingState();
-	UE_LOG(LogTemp, Display, TEXT("Begin Playing State Called"))
+	UE_LOG(Sassilization, Display, TEXT("Begin Playing State Called"))
 
 	ASassGameState* GameState = GetWorld()->GetGameState<ASassGameState>();
 	this->SassGameManager = GameState->GetGameManager();
@@ -45,7 +45,7 @@ void ASassPlayerController::BeginPlayingState()
 			CreateGameHUD();
 			break;
 		default:
-			UE_LOG(LogTemp, Warning, TEXT("Action not defined for Game Status %s"),
+			UE_LOG(Sassilization, Warning, TEXT("Action not defined for Game Status %s"),
 			       *UEnum::GetValueAsString(GameState->GetGameStatus()))
 		}
 	}
@@ -65,13 +65,13 @@ void ASassPlayerController::UpdateHUD(TSubclassOf<UUserWidget> WidgetToCreate)
 {
 	if (!WidgetToCreate)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Widget To Create is not configured"))
+		UE_LOG(Sassilization, Warning, TEXT("Widget To Create is not configured"))
 		return;
 	}
 
 	if (!this->IsLocalController())
 	{
-		UE_LOG(LogTemp, Warning, TEXT("UpdateHUD called on non-local controller"))
+		UE_LOG(Sassilization, Warning, TEXT("UpdateHUD called on non-local controller"))
 		return;
 	}
 	
@@ -84,7 +84,7 @@ void ASassPlayerController::UpdateHUD(TSubclassOf<UUserWidget> WidgetToCreate)
 
 	if (!NewWidget)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Failed to create new hud of class %s"), *WidgetToCreate->GetName())
+		UE_LOG(Sassilization, Warning, TEXT("Failed to create new hud of class %s"), *WidgetToCreate->GetName())
 		return;
 	}
 

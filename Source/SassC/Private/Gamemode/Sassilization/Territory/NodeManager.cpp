@@ -38,7 +38,7 @@ AGraphNode* ANodeManager::FindNearestNode(const FVector Location, const float Ra
 
 	if (!bWasOverlapping)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("No nodes found in range."));
+		UE_LOG(Sassilization, Warning, TEXT("No nodes found in range."));
 		return NearestNode;
 	}
 
@@ -59,6 +59,6 @@ AGraphNode* ANodeManager::FindNearestNode(const FVector Location, const float Ra
 
 void ANodeManager::FloodTerritory_Implementation(const TArray<FTerritoryInfo>& TerritoryOrigins, TArray<FEmpireBorderData>& TerritoryBordersResult)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Called unimplemented function"))
+	UE_LOG(Sassilization, Warning, TEXT("Called unimplemented function"))
 }
 

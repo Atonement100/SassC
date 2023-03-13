@@ -33,7 +33,7 @@ void ASassGameState::Tick(float DeltaSeconds)
 		TimeKeeper += DeltaSeconds;
 		if (TimeKeeper > WarmUpTime)
 		{
-			UE_LOG(LogTemp, Display, TEXT("GameState warm up time over. Game starting..."))
+			UE_LOG(Sassilization, Display, TEXT("GameState warm up time over. Game starting..."))
 			GameStatus = ESassGameStatus::GameActive;
 			GameStart();
 		}
@@ -44,13 +44,13 @@ ASassGameManager* ASassGameState::GetGameManager()
 {
 	if (!this->SassGameManager)
 	{
-		UE_LOG(LogTemp, Display, TEXT("SassGameManager does not already exist. Searching :)"))
+		UE_LOG(Sassilization, Display, TEXT("SassGameManager does not already exist. Searching :)"))
 		TArray<AActor*>&& GameManagers = TArray<AActor*>();
 		UGameplayStatics::GetAllActorsOfClass(GetWorld(), ASassGameManager::StaticClass(), GameManagers);
 
 		if (GameManagers.Num() != 1)
 		{
-			UE_LOG(LogTemp, Warning, TEXT("Invalid number of SassGameManager found in the world. Found {%d}"), GameManagers.Num());
+			UE_LOG(Sassilization, Warning, TEXT("Invalid number of SassGameManager found in the world. Found {%d}"), GameManagers.Num());
 		}
 
 		this->SassGameManager = Cast<ASassGameManager>(GameManagers[0]);
@@ -61,7 +61,7 @@ ASassGameManager* ASassGameState::GetGameManager()
 
 void ASassGameState::GameStart_Implementation()
 {
-	UE_LOG(LogTemp, Display, TEXT("GameStart called"))
+	UE_LOG(Sassilization, Display, TEXT("GameStart called"))
 
 	ASassPlayerController* PlayerController = Cast<ASassPlayerController>(UGameplayStatics::GetPlayerController(this, 0));
 	PlayerController->CreateGameHUD();
@@ -71,12 +71,12 @@ void ASassGameState::GameStart_Implementation()
 	{
 		if(!PlayerItr)
 		{
-			UE_LOG(LogTemp, Warning, TEXT("PlayerIterator did not exist in GameStart Impl"))
+			UE_LOG(Sassilization, Warning, TEXT("PlayerIterator did not exist in GameStart Impl"))
 		}
 
 		if (ASassPlayerState* PlayerState = PlayerItr->GetPlayerState<ASassPlayerState>())
 		{
-			UE_LOG(LogTemp, Display, TEXT("Setting color of player %s on %s's device."),
+			UE_LOG(Sassilization, Display, TEXT("Setting color of player %s on %s's device."),
 				*PlayerItr->GetPlayerState()->GetPlayerName(), *PlayerController->GetPlayerState<ASassPlayerState>()->GetPlayerName());
 			
 			if (PlayerState->GetEmpire())
@@ -94,7 +94,7 @@ bool ASassGameState::GameStart_Validate()
 
 void ASassGameState::LateStart_Implementation()
 {
-	UE_LOG(LogTemp, Display, TEXT("LateStart implementation called"))
+	UE_LOG(Sassilization, Display, TEXT("LateStart implementation called"))
 	GameStart();
 }
 
@@ -112,7 +112,7 @@ void ASassGameState::HandleNewPlayer_Implementation(ASassPlayerState* PlayerStat
 {
 	if (!PlayerState)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("PlayerState not found?"));
+		UE_LOG(Sassilization, Warning, TEXT("PlayerState not found?"));
 		return;
 	}
 	
@@ -123,7 +123,7 @@ void ASassGameState::HandleNewPlayer_Implementation(ASassPlayerState* PlayerStat
 	//
 	// if (!NewEmpire)
 	// {
-	// 	UE_LOG(LogTemp, Warning, TEXT("Empire not found for new player %s"), PlayerState ? *PlayerName : TEXT("UNKNOWNNAME"))
+	// 	UE_LOG(Sassilization, Warning, TEXT("Empire not found for new player %s"), PlayerState ? *PlayerName : TEXT("UNKNOWNNAME"))
 	// }
 	//
 	// PlayerState->SetEmpire(NewEmpire);

@@ -8,7 +8,7 @@
 #include "Territory/GraphNode.h"
 #include "SassGameManager.generated.h"
 
-class ABuildingManager;
+class AEntityManager;
 class AEmpireManager;
 class ATerritoryManager;
 
@@ -40,15 +40,15 @@ protected:
 	UPROPERTY(Replicated, EditAnywhere, Category = "Gamemode")
 	ATerritoryManager* TerritoryManager;
 	UPROPERTY(Replicated, EditAnywhere, Category = "Gamemode")
-	ABuildingManager* BuildingManager;
+	AEntityManager* EntityManager;
 	
 public:
 	AEmpireManager* GetEmpireManager() const;
 	void SetEmpireManager(AEmpireManager* NewEmpireManager);
 	ATerritoryManager* GetTerritoryManager() const;
 	void SetTerritoryManager(ATerritoryManager* NewTerritoryManager);
-	ABuildingManager* GetBuildingManager() const;
-	void SetBuildingManager(ABuildingManager* NewBuildingManager);
+	AEntityManager* GetEntityManager() const;
+	void SetEntityManager(AEntityManager* NewEntityManager);
 
 
 };

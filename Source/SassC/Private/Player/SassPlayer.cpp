@@ -67,7 +67,7 @@ void ASassPlayer::Tick(float DeltaTime)
 		{
 			LocalObjectSpawn->Destroy();
 			ActorSpawnLatch = true;
-			UE_LOG(LogTemp, Display, TEXT("Resetting ActorSpawnLatch"))
+			UE_LOG(Sassilization, Display, TEXT("Resetting ActorSpawnLatch"))
 		}
 
 		PlayerControllerPtr->GetHitResultUnderCursorByChannel(

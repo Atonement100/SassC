@@ -1,6 +1,6 @@
 ﻿// License information can be found at https://github.com/Atonement100/SassC/blob/master/LICENSE
 
-#include "Gamemode/Sassilization/BuildingManager.h"
+#include "Gamemode/Sassilization/EntityManager.h"
 
 #include "TimerManager.h"
 #include "Buildings/BuildingBase.h"
@@ -18,14 +18,14 @@
 #include "Math/Rotator.h"
 #include "Math/Vector.h"
 
-bool ABuildingManager::CanAfford(AEmpire* Empire, ETypeOfEntity BuildingType, bool IgnoreCost) const
+bool AEntityManager::CanAfford(AEmpire* Empire, ETypeOfEntity EntityType, bool IgnoreCost) const
 {
 	if (!IsValid(Empire))
 	{
 		return false;
 	}
 	
-	const TSubclassOf<AActor> ActorToSpawn = GetClassForBuildingType(BuildingType);
+	const TSubclassOf<AActor> ActorToSpawn = GetClassForEntityType(EntityType);
 	const IEntityInterface* DefaultEntity = Cast<IEntityInterface>(ActorToSpawn.GetDefaultObject());
 
 	if (!ActorToSpawn) return false;
@@ -37,22 +37,22 @@ bool ABuildingManager::CanAfford(AEmpire* Empire, ETypeOfEntity BuildingType, bo
 		const FResourceCosts Costs = DefaultEntity->GetResourceCosts();
 		if (Costs.Gold > Empire->GetGold()) 
 		{
-			UE_LOG(LogTemp, Display, TEXT("Not enough Gold")) 
+			UE_LOG(Sassilization, Display, TEXT("Not enough Gold")) 
 			return false;
 		}
 		if (Costs.Food > Empire->GetFood()) 
 		{
-			UE_LOG(LogTemp, Display, TEXT("Not enough Food")) 
+			UE_LOG(Sassilization, Display, TEXT("Not enough Food")) 
 			return false;
 		}
 		if (Costs.Iron > Empire->GetIron()) 
 		{
-			UE_LOG(LogTemp, Display, TEXT("Not enough Iron")) 
+			UE_LOG(Sassilization, Display, TEXT("Not enough Iron")) 
 			return false;
 		}
 		if (DefaultEntity->IsUnit() && Empire->GetSupplyUsed() + Costs.Supply > Empire->GetSupplyMaximum())
 		{
-			UE_LOG(LogTemp, Display, TEXT("Not enough Supply")) 
+			UE_LOG(Sassilization, Display, TEXT("Not enough Supply")) 
 			return false;
 		}
 	}
@@ -62,8 +62,8 @@ bool ABuildingManager::CanAfford(AEmpire* Empire, ETypeOfEntity BuildingType, bo
 	{
 		if (!Empire->MeetsBuildingRequirement(Requirement.Key, Requirement.Value))
 		{
-			UE_LOG(LogTemp, Display, TEXT("Couldn't spawn %s because Empire %d did not meet the requirement %s for %s"),
-				*UEnum::GetValueAsString(BuildingType), Empire->GetEmpireId(), *Requirement.Value.ToString(), *UEnum::GetValueAsString(Requirement.Key))
+			UE_LOG(Sassilization, Display, TEXT("Couldn't spawn %s because Empire %d did not meet the requirement %s for %s"),
+				*UEnum::GetValueAsString(EntityType), Empire->GetEmpireId(), *Requirement.Value.ToString(), *UEnum::GetValueAsString(Requirement.Key))
 			return false;
 		}
 	}
@@ -71,11 +71,11 @@ bool ABuildingManager::CanAfford(AEmpire* Empire, ETypeOfEntity BuildingType, bo
 	return true;
 }
 
-bool ABuildingManager::AreCornersValid(TArray<FVector> CornerLocations, double& MaxHeight, double& MinHeight) const
+bool AEntityManager::AreCornersValid(TArray<FVector> CornerLocations, double& MaxHeight, double& MinHeight) const
 {
 	if (CornerLocations.Num() == 0)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("No corner locations were provided"))
+		UE_LOG(Sassilization, Warning, TEXT("No corner locations were provided"))
 		return false;
 	}
 
@@ -89,16 +89,16 @@ bool ABuildingManager::AreCornersValid(TArray<FVector> CornerLocations, double& 
 	{
 		FVector Start = Corner + FVector(0, 0, 57.15f);
 		FVector End = Corner - FVector(0, 0, 19.05f);
-		UE_LOG(LogTemp, Display, TEXT("Corner %s Start %s End %s"), *Corner.ToString(), *Start.ToString(), *End.ToString())
+		UE_LOG(Sassilization, Display, TEXT("Corner %s Start %s End %s"), *Corner.ToString(), *Start.ToString(), *End.ToString())
 		bool bWasHit = UKismetSystemLibrary::LineTraceSingle(GetWorld(), Start,
 			End, UEngineTypes::ConvertToTraceType(ECC_LEVEL_MESH),
 			true, TArray<AActor*>(), EDrawDebugTrace::ForDuration, Hit, true);
 
-		UE_LOG(LogTemp, Display, TEXT("Trace Details: %s"), *Hit.ToString())
+		UE_LOG(Sassilization, Display, TEXT("Trace Details: %s"), *Hit.ToString())
 		
 		if (!bWasHit || Hit.Time == 0)
 		{
-			UE_LOG(LogTemp, Display, TEXT("Trace at %s had no hit or was inside something (time = 0)"), *Hit.TraceStart.ToString())
+			UE_LOG(Sassilization, Display, TEXT("Trace at %s had no hit or was inside something (time = 0)"), *Hit.TraceStart.ToString())
 			return false;
 		}
 
@@ -112,12 +112,12 @@ bool ABuildingManager::AreCornersValid(TArray<FVector> CornerLocations, double& 
 	return true;
 }
 
-bool ABuildingManager::CanFit(FHitResult PlayerToLocTraceResult, FBox EntityBoundingBox,
+bool AEntityManager::CanFit(FHitResult PlayerToLocTraceResult, FBox EntityBoundingBox,
 	FRotator Rotation, bool bCheckWalls, bool bFoundation) const
 {
 	if (!PlayerToLocTraceResult.bBlockingHit || PlayerToLocTraceResult.Normal.Z < .7)
 	{
-		UE_LOG(LogTemp, Display, TEXT("Blocking Hit? %s Normal Z? %f"),
+		UE_LOG(Sassilization, Display, TEXT("Blocking Hit? %s Normal Z? %f"),
 			PlayerToLocTraceResult.bBlockingHit ? TEXT("true") : TEXT("false"), PlayerToLocTraceResult.Normal.Z)
 		return false;
 	}
@@ -127,8 +127,8 @@ bool ABuildingManager::CanFit(FHitResult PlayerToLocTraceResult, FBox EntityBoun
 							+ PlayerToLocTraceResult.Normal * .1905;
 	FVector BoxCenter = EntityBoundingBox.GetExtent() * 2;
 	
-	UE_LOG(LogTemp, Display, TEXT("BoundingBox %s"), *EntityBoundingBox.ToString());
-	UE_LOG(LogTemp, Display, TEXT("BoxCenter %s"), *BoxCenter.ToString());
+	UE_LOG(Sassilization, Display, TEXT("BoundingBox %s"), *EntityBoundingBox.ToString());
+	UE_LOG(Sassilization, Display, TEXT("BoxCenter %s"), *BoxCenter.ToString());
 	
 	TArray<FVector> Corners = {
 		FVector(BoxCenter.X, BoxCenter.Y, 0),
@@ -143,10 +143,10 @@ bool ABuildingManager::CanFit(FHitResult PlayerToLocTraceResult, FBox EntityBoun
 		Corners[Index] = (Corners[Index].Rotation() + Rotation).Vector() * Magnitude + HitLocation;
 	}
 
-	UE_LOG(LogTemp, Display, TEXT("Corners: "))
+	UE_LOG(Sassilization, Display, TEXT("Corners: "))
 	for (FVector Corner : Corners)
 	{
-		UE_LOG(LogTemp, Display, TEXT("Corner : %s"), *Corner.ToString())
+		UE_LOG(Sassilization, Display, TEXT("Corner : %s"), *Corner.ToString())
 	}
 	
 	// TODO: if target location or corners are translucent or underwater return then fail the check
@@ -155,7 +155,7 @@ bool ABuildingManager::CanFit(FHitResult PlayerToLocTraceResult, FBox EntityBoun
 
 	if (!bAreCornersValid)
 	{
-		UE_LOG(LogTemp, Display, TEXT("Corners are not valid."))
+		UE_LOG(Sassilization, Display, TEXT("Corners are not valid."))
 		return false;
 	}
 	
@@ -168,7 +168,7 @@ bool ABuildingManager::CanFit(FHitResult PlayerToLocTraceResult, FBox EntityBoun
 										  FVector(EntityBoundingBox.Max.X, EntityBoundingBox.Max.Y, 0), Rotation,
 										  UEngineTypes::ConvertToTraceType(ECC_SPAWNING), true,
 										  TArray<AActor*>(), EDrawDebugTrace::ForDuration, BoxHit, true);
-	UE_LOG(LogTemp, Display, TEXT("BoxTrace: %s"), *BoxHit.ToString());
+	UE_LOG(Sassilization, Display, TEXT("BoxTrace: %s"), *BoxHit.ToString());
 	if (bDidBoxHit)
 	{
 		if (!BoxHit.GetActor()->IsA(AStaticMeshActor::StaticClass()) || bFoundation)
@@ -190,13 +190,13 @@ bool ABuildingManager::CanFit(FHitResult PlayerToLocTraceResult, FBox EntityBoun
         if (UKismetSystemLibrary::SphereOverlapActors(GetWorld(), HitLocation, EntityBoundingBox.GetSize().Size(),
         								  TraceTypes, AWallSegment::StaticClass(), TArray<AActor*>(), HitActors))
         {
-        	UE_LOG(LogTemp, Display, TEXT("Found %d actors in Wall Check."), HitActors.Num())
+        	UE_LOG(Sassilization, Display, TEXT("Found %d actors in Wall Check."), HitActors.Num())
 
         	for (AActor* Actor : HitActors)
         	{
                 if (UKismetMathLibrary::IsPointInBox_Box(Actor->GetActorLocation(), FBox(Corners[0], Corners[0] + EntityBoundingBox.Max)))
                 {
-        	        UE_LOG(LogTemp, Display, TEXT("Actor %s caused failure in wall check at location %s"), *Actor->GetName(), *Actor->GetActorLocation().ToString())
+        	        UE_LOG(Sassilization, Display, TEXT("Actor %s caused failure in wall check at location %s"), *Actor->GetName(), *Actor->GetActorLocation().ToString())
                     return false;
                 }
         	}
@@ -206,7 +206,7 @@ bool ABuildingManager::CanFit(FHitResult PlayerToLocTraceResult, FBox EntityBoun
 	return true;
 }
 
-AActor* ABuildingManager::SpawnGhost(APlayerController* Player, const ETypeOfEntity BuildingToSpawn,
+AActor* AEntityManager::SpawnGhost(APlayerController* Player, const ETypeOfEntity EntityToSpawn,
 	const FVector Location, const FRotator Rotator) const
 {
 	if (!Player->IsLocalController())
@@ -214,11 +214,11 @@ AActor* ABuildingManager::SpawnGhost(APlayerController* Player, const ETypeOfEnt
 		return nullptr;
 	}
 	
-	UE_LOG(LogTemp, Display, TEXT("Spawning building %s for player %s at location %s with rotation %s..."),
-		*UEnum::GetValueAsString(BuildingToSpawn), *Player->GetPlayerState<ASassPlayerState>()->GetPlayerName(),
+	UE_LOG(Sassilization, Display, TEXT("Spawning entity %s for player %s at location %s with rotation %s..."),
+		*UEnum::GetValueAsString(EntityToSpawn), *Player->GetPlayerState<ASassPlayerState>()->GetPlayerName(),
 		*Location.ToString(), *Rotator.ToString())
 	
-	const TSubclassOf<AActor> ActorToSpawn = GetClassForBuildingType(BuildingToSpawn);
+	const TSubclassOf<AActor> ActorToSpawn = GetClassForEntityType(EntityToSpawn);
 	
 	FActorSpawnParameters SpawnParams = FActorSpawnParameters();
 	SpawnParams.Owner = Player;
@@ -230,8 +230,8 @@ AActor* ABuildingManager::SpawnGhost(APlayerController* Player, const ETypeOfEnt
 	
 	if (!NewActor)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Building %s failed to spawn for player %s at location %s with rotation %s..."),
-			*UEnum::GetValueAsString(BuildingToSpawn), *Player->GetPlayerState<ASassPlayerState>()->GetPlayerName(),
+		UE_LOG(Sassilization, Warning, TEXT("Entity %s failed to spawn for player %s at location %s with rotation %s..."),
+			*UEnum::GetValueAsString(EntityToSpawn), *Player->GetPlayerState<ASassPlayerState>()->GetPlayerName(),
 			*Location.ToString(), *Rotator.ToString())
 		return nullptr;
 	}
@@ -241,33 +241,33 @@ AActor* ABuildingManager::SpawnGhost(APlayerController* Player, const ETypeOfEnt
 	return NewActor;
 }
 
-void ABuildingManager::SpawnBuilding(APlayerController* Player, ETypeOfEntity BuildingToSpawn, FVector TargetLocation, FRotator Rotator, ATerritoryManager* TerritoryManager)
+void AEntityManager::SpawnEntity(APlayerController* Player, ETypeOfEntity EntityToSpawn, FVector TargetLocation, FRotator Rotator, ATerritoryManager* TerritoryManager)
 {
 	if (!Player) return;
 	
 	ASassPlayerState* SassPlayerState = Player->GetPlayerState<ASassPlayerState>();
 	if (!SassPlayerState) return;
-	if (!SassPlayerState->IsAllowedToSpawnBuilding())
+	if (!SassPlayerState->IsAllowedToSpawnEntity())
 	{
-		UE_LOG(LogTemp, Display, TEXT("%s is currently timed out from being able to spawn building."), *SassPlayerState->GetPlayerName())
+		UE_LOG(Sassilization, Display, TEXT("%s is currently timed out from being able to spawn an entity."), *SassPlayerState->GetPlayerName())
 		return;
 	}
 	
-	SassPlayerState->SetAllowedToSpawnBuilding(false);
+	SassPlayerState->SetAllowedToSpawnEntity(false);
 	FTimerHandle TimerHandle;
 	GetWorldTimerManager().SetTimer(TimerHandle, FTimerDelegate::CreateLambda(
-		[SassPlayerState]{SassPlayerState->SetAllowedToSpawnBuilding(true);}), 0.05f, false);
+		[SassPlayerState]{SassPlayerState->SetAllowedToSpawnEntity(true);}), 0.05f, false);
 	
 	AEmpire* PlayerEmpire = SassPlayerState->GetEmpire();
 	if (!PlayerEmpire) return;
 	
-	if (!CanAfford(PlayerEmpire, BuildingToSpawn))
+	if (!CanAfford(PlayerEmpire, EntityToSpawn))
 	{
-		UE_LOG(LogTemp, Display, TEXT("Player %s tried to spawn %s but couldn't afford it."), *SassPlayerState->GetPlayerName(), *UEnum::GetValueAsString(BuildingToSpawn))
+		UE_LOG(Sassilization, Display, TEXT("Player %s tried to spawn %s but couldn't afford it."), *SassPlayerState->GetPlayerName(), *UEnum::GetValueAsString(EntityToSpawn))
 		return;
 	}
 
-	const TSubclassOf<AActor> ActorToSpawn = GetClassForBuildingType(BuildingToSpawn);
+	const TSubclassOf<AActor> ActorToSpawn = GetClassForEntityType(EntityToSpawn);
 	
 	// Always spawn because we will check the permissibility of a spawn ourselves..
 	FTransform TemporaryTransform = FTransform(FVector(-1000, -1000, -1000));
@@ -293,7 +293,7 @@ void ABuildingManager::SpawnBuilding(APlayerController* Player, ETypeOfEntity Bu
 	
 	if (!CanFit(EyeToLocTraceHit, BoundingBox, Rotator, true, true))
 	{
-		UE_LOG(LogTemp, Display, TEXT("CanFit check failed."))
+		UE_LOG(Sassilization, Display, TEXT("CanFit check failed."))
 		NewActor->Destroy();
 		return;
 	}
@@ -302,7 +302,7 @@ void ABuildingManager::SpawnBuilding(APlayerController* Player, ETypeOfEntity Bu
     {
         if (!TerritoryManager->IsLocationInTerritory(TargetLocation, PlayerEmpire->GetEmpireId()))
         {
-            UE_LOG(LogTemp, Display, TEXT("Target Location was not in player's territory but requires a city. Loc %s EmpireId %d"), *TargetLocation.ToString(), PlayerEmpire->GetEmpireId())
+            UE_LOG(Sassilization, Display, TEXT("Target Location was not in player's territory but requires a city. Loc %s EmpireId %d"), *TargetLocation.ToString(), PlayerEmpire->GetEmpireId())
         	NewActor->Destroy();
             return;
         }
@@ -311,7 +311,7 @@ void ABuildingManager::SpawnBuilding(APlayerController* Player, ETypeOfEntity Bu
     {
     	if (!TerritoryManager->IsLocationInTerritory(TargetLocation, 0))
     	{
-    		UE_LOG(LogTemp, Display, TEXT("Target Location was not in empty territory but needed to be Loc %s EmpireId %d"), *TargetLocation.ToString(), PlayerEmpire->GetEmpireId())
+    		UE_LOG(Sassilization, Display, TEXT("Target Location was not in empty territory but needed to be Loc %s EmpireId %d"), *TargetLocation.ToString(), PlayerEmpire->GetEmpireId())
     		NewActor->Destroy();
     		return;
     	}
@@ -325,7 +325,7 @@ void ABuildingManager::SpawnBuilding(APlayerController* Player, ETypeOfEntity Bu
 			if (Cast<IEntityInterface>(WallActor)->GetEmpire() == PlayerEmpire &&
 				FVector::Dist(WallActor->GetActorLocation(), TargetLocation) < 60.96f)
 			{
-				UE_LOG(LogTemp, Display, TEXT("Wall was too close to %s"), *WallActor->GetName())
+				UE_LOG(Sassilization, Display, TEXT("Wall was too close to %s"), *WallActor->GetName())
 				NewActor->Destroy();
 				return;
 			}
@@ -340,44 +340,40 @@ void ABuildingManager::SpawnBuilding(APlayerController* Player, ETypeOfEntity Bu
 
 	if (!NewActor)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Actor failed to spawn!! Type: %s, Loc: %s, Rot: %s"),
-			*UEnum::GetValueAsString(BuildingToSpawn), *TargetLocation.ToString(), *Rotator.ToString())
+		UE_LOG(Sassilization, Warning, TEXT("Actor failed to spawn!! Type: %s, Loc: %s, Rot: %s"),
+			*UEnum::GetValueAsString(EntityToSpawn), *TargetLocation.ToString(), *Rotator.ToString())
 	}
 	
 	FTransform FinalTransform = FTransform(Rotator, TargetLocation + NewEntity->GetSpawnOffset());
 	NewActor->FinishSpawning(FinalTransform);
 
-	UE_LOG(LogTemp, Display, TEXT("Finished Spawning.. Initializing and adding %s to empire %d"), *NewActor->GetName(), PlayerEmpire->GetEmpireId());
+	UE_LOG(Sassilization, Display, TEXT("Finished Spawning.. Initializing and adding %s to empire %d"), *NewActor->GetName(), PlayerEmpire->GetEmpireId());
 	
 	NewEntity->Initialize(PlayerEmpire);
 	PlayerEmpire->AddEntity(NewActor);
-
-	//TODO: Factor this into IEntityInterface. Have generic "on spawn" entry point that delegates accordingly, sets up build timer, and so on.
-	if (ABuildingBase* Building = Cast<ABuildingBase>(NewActor))
-	{
-		Building->WhenBuilt();
-	}
+	//TODO: Have generic "on spawn" entry point that delegates to relevant functions accordingly, sets up build timer, and so on.
+	NewEntity->WhenBuilt();
 }
 
-TSubclassOf<AActor> ABuildingManager::GetClassForBuildingType(const ETypeOfEntity TypeOfBuilding) const 
+TSubclassOf<AActor> AEntityManager::GetClassForEntityType(const ETypeOfEntity TypeOfEntity) const 
 {
-	if (!this->BuildingTypeToClass.Contains(TypeOfBuilding))
+	if (!this->EntityTypeToClass.Contains(TypeOfEntity))
 	{
-		UE_LOG(LogTemp, Warning, TEXT("No class configured for building type %s"), *UEnum::GetValueAsString(TypeOfBuilding))
+		UE_LOG(Sassilization, Warning, TEXT("No class configured for entity type %s"), *UEnum::GetValueAsString(TypeOfEntity))
 		return nullptr;
 	}
 	
-	return this->BuildingTypeToClass[TypeOfBuilding];
+	return this->EntityTypeToClass[TypeOfEntity];
 }
 
-TArray<AActor*> ABuildingManager::GetEntitiesOfTypeInSphere(ETypeOfEntity TypeOfEntity, FVector Location, float Radius) const
+TArray<AActor*> AEntityManager::GetEntitiesOfTypeInSphere(ETypeOfEntity TypeOfEntity, FVector Location, float Radius) const
 {
 	TArray<AActor*> OverlappingActors;
 	TArray<TEnumAsByte<EObjectTypeQuery>> TraceObjectTypes;
 	TraceObjectTypes.Add(UEngineTypes::ConvertToObjectType(ECollisionChannel::ECC_WorldStatic));
 
 	UKismetSystemLibrary::SphereOverlapActors(GetWorld(), Location, Radius,
-		TraceObjectTypes, GetClassForBuildingType(TypeOfEntity), TArray<AActor*>(), OverlappingActors);
+		TraceObjectTypes, GetClassForEntityType(TypeOfEntity), TArray<AActor*>(), OverlappingActors);
 
 	return OverlappingActors;
 }

@@ -20,20 +20,20 @@ class SASSC_API AEntityManager : public AActor
 
 public:
 	UFUNCTION(BlueprintCallable, Category = "Buildings")
-	bool CanAfford(AEmpire* Empire, ETypeOfEntity BuildingType, bool IgnoreCost = false) const;
+	bool CanAfford(AEmpire* Empire, ETypeOfEntity EntityType, bool IgnoreCost = false) const;
 	bool AreCornersValid(TArray<FVector> CornerLocations,
 	                     double& MaxHeight, double& MinHeight) const;
 	bool CanFit(FHitResult PlayerToLocTraceResult, FBox EntityBoundingBox, FRotator Rotation, bool bCheckWalls,
 	            bool bFoundation) const;
-	AActor* SpawnGhost(APlayerController* Player, ETypeOfEntity BuildingToSpawn, FVector Location, FRotator Rotator) const;
+	AActor* SpawnGhost(APlayerController* Player, ETypeOfEntity EntityToSpawn, FVector Location, FRotator Rotator) const;
 	UFUNCTION(BlueprintCallable)
-	void SpawnBuilding(APlayerController* Player, ETypeOfEntity BuildingToSpawn, FVector TargetLocation, FRotator Rotator, ATerritoryManager* TerritoryManager);
+	void SpawnEntity(APlayerController* Player, ETypeOfEntity EntityToSpawn, FVector TargetLocation, FRotator Rotator, ATerritoryManager* TerritoryManager);
 	UFUNCTION(BlueprintCallable)
-	TSubclassOf<AActor> GetClassForBuildingType(const ETypeOfEntity TypeOfBuilding) const;
+	TSubclassOf<AActor> GetClassForEntityType(const ETypeOfEntity TypeOfEntity) const;
 	UFUNCTION(BlueprintCallable)
 	TArray<AActor*> GetEntitiesOfTypeInSphere(ETypeOfEntity TypeOfEntity, FVector Location, float Radius) const;
 
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	TMap<ETypeOfEntity, TSubclassOf<AActor>> BuildingTypeToClass;
+	TMap<ETypeOfEntity, TSubclassOf<AActor>> EntityTypeToClass;
 };

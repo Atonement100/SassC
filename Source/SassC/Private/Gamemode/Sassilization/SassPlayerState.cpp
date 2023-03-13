@@ -17,7 +17,7 @@ void ASassPlayerState::BeginPlay()
 
 	if (!SassGameState)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("SassGameState not found by playerstate.."))
+		UE_LOG(Sassilization, Warning, TEXT("SassGameState not found by playerstate.."))
 	}
 	
 	SassGameState->HandleNewPlayer(this);
@@ -35,7 +35,7 @@ AEmpire* ASassPlayerState::GetEmpire() const
 {
 	if (!Empire)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Empire does not exist?!"))
+		UE_LOG(Sassilization, Warning, TEXT("Empire does not exist?!"))
 	}
 	
 	return Empire;
@@ -43,7 +43,7 @@ AEmpire* ASassPlayerState::GetEmpire() const
 
 void ASassPlayerState::SetEmpire(AEmpire* const NewEmpire)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Setting empire to %s"), NewEmpire ? *NewEmpire->GetName() : TEXT("NULL"))
+	UE_LOG(Sassilization, Warning, TEXT("Setting empire to %s"), NewEmpire ? *NewEmpire->GetName() : TEXT("NULL"))
 	
 	this->Empire = NewEmpire;
 }
@@ -58,12 +58,12 @@ void ASassPlayerState::SetSelectedTypeOfEntity(const ETypeOfEntity NewSelectedTy
 	this->SelectedTypeOfEntity = NewSelectedTypeOfSpawnable;
 }
 
-bool ASassPlayerState::IsAllowedToSpawnBuilding() const
+bool ASassPlayerState::IsAllowedToSpawnEntity() const
 {
-	return bAllowedToSpawnBuilding;
+	return bAllowedToSpawnEntity;
 }
 
-void ASassPlayerState::SetAllowedToSpawnBuilding(const bool bNewAllowedToSpawnBuilding)
+void ASassPlayerState::SetAllowedToSpawnEntity(const bool bNewAllowedToSpawnBuilding)
 {
-	bAllowedToSpawnBuilding = bNewAllowedToSpawnBuilding;
+	bAllowedToSpawnEntity = bNewAllowedToSpawnBuilding;
 }

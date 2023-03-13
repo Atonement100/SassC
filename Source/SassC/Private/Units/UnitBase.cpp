@@ -564,7 +564,7 @@ void AUnitBase::SelectUnit(const bool bShouldSelect)
 	}
 	else
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Empire not valid for unit %s"), *GetNameSafe(this));
+		UE_LOG(Sassilization, Warning, TEXT("Empire not valid for unit %s"), *GetNameSafe(this));
 	}
 }
 

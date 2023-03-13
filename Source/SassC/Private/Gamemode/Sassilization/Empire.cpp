@@ -18,7 +18,7 @@ AEmpire::AEmpire()
 
 void AEmpire::InitializeEmpire(const int32 InitEmpireId, const int32 InitPlayerId, const FLinearColor InitEmpireColor)
 {
-	UE_LOG(LogTemp, Display, TEXT("Initialize new Empire %d, %d, %s"), InitEmpireId, InitPlayerId, *InitEmpireColor.ToString());
+	UE_LOG(Sassilization, Display, TEXT("Initialize new Empire %d, %d, %s"), InitEmpireId, InitPlayerId, *InitEmpireColor.ToString());
 
 	this->EmpireId = InitEmpireId;
 	this->OwningPlayerId = InitPlayerId;
@@ -102,7 +102,7 @@ void AEmpire::AddEntity(AActor* NewEntity)
 	
 	if (!NewEntityInterface)
 	{
-		UE_LOG(LogTemp, Warning,
+		UE_LOG(Sassilization, Warning,
 			TEXT("Tried to add entity %s to empire but it was null or does not implement IEntityInterface."),
 			*NewEntity->GetName())
 		return;

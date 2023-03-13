@@ -36,8 +36,8 @@ public:
 	ETypeOfEntity GetSelectedTypeOfEntity() const;
 	UFUNCTION(BlueprintCallable, Category = "PlayerState")
 	void SetSelectedTypeOfEntity(const ETypeOfEntity NewSelectedTypeOfSpawnable);
-	bool IsAllowedToSpawnBuilding() const;
-	void SetAllowedToSpawnBuilding(const bool bAllowedToSpawnBuilding);
+	bool IsAllowedToSpawnEntity() const;
+	void SetAllowedToSpawnEntity(const bool bAllowedToSpawnBuilding);
 
 protected:
 	/*Spawnable currently selected to be spawned*/
@@ -49,7 +49,7 @@ protected:
 	AEmpire* Empire;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "PlayerState|Empire")
-	bool bAllowedToSpawnBuilding = true;;
+	bool bAllowedToSpawnEntity = true;;
 
 	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, Category = "PlayerState")
 	ETypeOfEntity SelectedTypeOfEntity = ETypeOfEntity::City;

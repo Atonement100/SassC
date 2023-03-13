@@ -52,7 +52,7 @@ void ABuildingBase::PostActorCreated()
 
 	if (AvailableBuildingMeshes.IsEmpty())
 	{
-		UE_LOG(LogTemp, Warning, TEXT("BuildingMeshes have not yet been set for %s"), *GetNameSafe(this));
+		UE_LOG(Sassilization, Warning, TEXT("BuildingMeshes have not yet been set for %s"), *GetNameSafe(this));
 	}
 	else if (ActiveBuildingMesh)
 	{
@@ -98,24 +98,24 @@ void ABuildingBase::Tick(const float DeltaSeconds)
 
 void ABuildingBase::WhenBuilt()
 {
-	UE_LOG(LogTemp, Display, TEXT("Triggering WhenBuilt for %s"), *this->GetName());
+	UE_LOG(Sassilization, Display, TEXT("Triggering WhenBuilt for %s"), *this->GetName());
 
 	IEntityInterface::WhenBuilt();
 
 	const ASassGameManager* GameManager = GetWorld()->GetGameState<ASassGameState>()->GetGameManager();
 
-	UE_LOG(LogTemp, Display, TEXT("GameManager %s"), *GameManager->GetName());
+	UE_LOG(Sassilization, Display, TEXT("GameManager %s"), *GameManager->GetName());
 	
 	AGraphNode* ClosestNode = GameManager->GetClosestNode(GetActorLocation(), 10.f);
 
-	UE_LOG(LogTemp, Display, TEXT("WhenBuilt Closest Node %s Controlling Empire %s"), *ClosestNode->GetName(), *GetNameSafe(ControllingEmpire));
+	UE_LOG(Sassilization, Display, TEXT("WhenBuilt Closest Node %s Controlling Empire %s"), *ClosestNode->GetName(), *GetNameSafe(ControllingEmpire));
 	
 	this->TerritoryInfo = FTerritoryInfo();
 	TerritoryInfo.Influence = this->GetInfluence();
 	TerritoryInfo.EmpireId = ControllingEmpire->GetEmpireId();
 	TerritoryInfo.ParentGraphNode = ClosestNode;
 
-	UE_LOG(LogTemp, Display, TEXT("TerritoryInfo %s"), *this->TerritoryInfo.ToString());
+	UE_LOG(Sassilization, Display, TEXT("TerritoryInfo %s"), *this->TerritoryInfo.ToString());
 
 	this->bIsBuilt = true;
 	GameManager->UpdateTerritories();
@@ -243,7 +243,7 @@ void ABuildingBase::PreviewUpgrade()
 	
 	if (!AvailableBuildingMeshes.IsValidIndex(LevelToPreview))
 	{
-		UE_LOG(LogTemp, Display, TEXT("PreviewUpgrade_Implementation - Already at maximum level."));
+		UE_LOG(Sassilization, Display, TEXT("PreviewUpgrade_Implementation - Already at maximum level."));
 		return;		
 	}
 
@@ -259,7 +259,7 @@ void ABuildingBase::ResetPreview()
 	
 	if (!AvailableBuildingMeshes.IsValidIndex(UpgradeLevel))
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Upgrade level %d is out of range of available building mesh."), UpgradeLevel);
+		UE_LOG(Sassilization, Warning, TEXT("Upgrade level %d is out of range of available building mesh."), UpgradeLevel);
 		return;		
 	}
 	

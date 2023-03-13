@@ -34,7 +34,7 @@ AEmpire* AEmpireManager::GetEmpireById(const uint8 EmpireId) const
 		}
 	}
 	
-	UE_LOG(LogTemp, Warning, TEXT("Empire not found for EmpireId %d"), EmpireId)
+	UE_LOG(Sassilization, Warning, TEXT("Empire not found for EmpireId %d"), EmpireId)
 	return nullptr;
 }
 
@@ -60,7 +60,7 @@ AEmpire* AEmpireManager::GetEmpireByPlayerId(const int32 PlayerId) const
 	
 	if (EmpireId == -1)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("EmpireId not found for PlayerId %d"), PlayerId)
+		UE_LOG(Sassilization, Warning, TEXT("EmpireId not found for PlayerId %d"), PlayerId)
 		return nullptr;
 	}
 
@@ -71,11 +71,11 @@ AEmpire* AEmpireManager::RetrieveEmpire(const int32 PlayerId, const FString Play
 {
 	if (AEmpire* PotentialEmpire = GetEmpireByPlayerId(PlayerId))
 	{
-		UE_LOG(LogTemp, Display, TEXT("EmpireId %d already exists for player %s with id %d"), PotentialEmpire->GetEmpireId(), *PlayerName, PlayerId);
+		UE_LOG(Sassilization, Display, TEXT("EmpireId %d already exists for player %s with id %d"), PotentialEmpire->GetEmpireId(), *PlayerName, PlayerId);
 		return PotentialEmpire;
 	}
 
-	UE_LOG(LogTemp, Warning, TEXT("Empire was not able to be retrieved.."))
+	UE_LOG(Sassilization, Warning, TEXT("Empire was not able to be retrieved.."))
 	return nullptr;
 	// ServerCreateNewEmpire(PlayerId, PlayerName);
 	//
@@ -83,7 +83,7 @@ AEmpire* AEmpireManager::RetrieveEmpire(const int32 PlayerId, const FString Play
 	//
 	// if (!NewEmpire)
 	// {
-	// 	UE_LOG(LogTemp, Warning, TEXT("Failed to create a new empire for player %s with id %d"), *PlayerName, PlayerId);
+	// 	UE_LOG(Sassilization, Warning, TEXT("Failed to create a new empire for player %s with id %d"), *PlayerName, PlayerId);
 	// }
 	
 	// return NewEmpire;
@@ -93,7 +93,7 @@ AEmpire* AEmpireManager::RetrieveEmpire(const int32 PlayerId, const FString Play
 void AEmpireManager::ServerCreateNewEmpire_Implementation(const int32 PlayerId, const FString& PlayerName, ASassPlayerState* SassPlayerState)
 {
 	const int NewEmpireId = EmpireIdCounter.fetch_add(1);
-	UE_LOG(LogTemp, Display, TEXT("Creating a new empire for %s with empireId %d. Player's UniqueId is %d"), *PlayerName, NewEmpireId, PlayerId);
+	UE_LOG(Sassilization, Display, TEXT("Creating a new empire for %s with empireId %d. Player's UniqueId is %d"), *PlayerName, NewEmpireId, PlayerId);
 
 	AEmpire* NewEmpire = GetWorld()->SpawnActor<AEmpire>(AEmpire::StaticClass());
 	NewEmpire->InitializeEmpire(NewEmpireId, PlayerId, GetColorById(NewEmpireId));
@@ -135,7 +135,7 @@ const FLinearColor& AEmpireManager::GetColorById(const int ColorId) const
 {
 	if (!this->AvailableColors.IsValidIndex(ColorId))
 	{
-		UE_LOG(LogTemp, Warning, TEXT("ColorId Not Valid %d"), ColorId);
+		UE_LOG(Sassilization, Warning, TEXT("ColorId Not Valid %d"), ColorId);
 	}
 
 	return this->AvailableColors[ColorId];

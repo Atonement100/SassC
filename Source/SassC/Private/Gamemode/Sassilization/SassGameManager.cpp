@@ -2,7 +2,7 @@
 
 
 #include "Gamemode/Sassilization/SassGameManager.h"
-#include "Gamemode/Sassilization/BuildingManager.h"
+#include "Gamemode/Sassilization/EntityManager.h"
 #include "Gamemode/Sassilization/EmpireManager.h"
 #include "Gamemode/Sassilization/Territory/TerritoryInfo.h"
 #include "Gamemode/Sassilization/Territory/TerritoryManager.h"
@@ -17,7 +17,7 @@ void ASassGameManager::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& Out
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 	DOREPLIFETIME(ASassGameManager, EmpireManager);
 	DOREPLIFETIME(ASassGameManager, TerritoryManager);
-	DOREPLIFETIME(ASassGameManager, BuildingManager);
+	DOREPLIFETIME(ASassGameManager, EntityManager);
 }
 
 
@@ -30,12 +30,12 @@ bool ASassGameManager::IsValidBuildLocation()//UEmpire* Empire, )
 AActor* ASassGameManager::RequestGhostSpawn(APlayerController* Player, ETypeOfEntity BuildingToSpawn,
 	FVector Location, FRotator Rotator) const
 {
-	return BuildingManager->SpawnGhost(Player, BuildingToSpawn, Location, Rotator);
+	return EntityManager->SpawnGhost(Player, BuildingToSpawn, Location, Rotator);
 }
 
 bool ASassGameManager::RequestBuildingSpawn(APlayerController* Player, ETypeOfEntity BuildingToSpawn, FVector Location, FRotator Rotator)
 {
-	BuildingManager->SpawnBuilding(Player, BuildingToSpawn, Location, Rotator, GetTerritoryManager());
+	EntityManager->SpawnEntity(Player, BuildingToSpawn, Location, Rotator, GetTerritoryManager());
 	return true;
 }
 
@@ -69,13 +69,13 @@ void ASassGameManager::SetTerritoryManager(ATerritoryManager* NewTerritoryManage
 	this->TerritoryManager = NewTerritoryManager;
 }
 
-ABuildingManager* ASassGameManager::GetBuildingManager() const
+AEntityManager* ASassGameManager::GetEntityManager() const
 {
-	return BuildingManager;
+	return EntityManager;
 }
 
-void ASassGameManager::SetBuildingManager(ABuildingManager* NewBuildingManager)
+void ASassGameManager::SetEntityManager(AEntityManager* NewEntityManager)
 {
-	this->BuildingManager = NewBuildingManager;
+	this->EntityManager = NewEntityManager;
 }
 
