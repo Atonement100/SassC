@@ -2,6 +2,7 @@
 
 #include "Buildings/City.h"
 #include "SassC.h"
+#include "Gamemode/Sassilization/Empire.h"
 
 ACity::ACity()
 {
@@ -30,4 +31,17 @@ void ACity::PostCreation_Implementation(FLinearColor PlayerColor)
 bool ACity::PostCreation_Validate(FLinearColor PlayerColor)
 {
 	return true;
+}
+
+void ACity::WhenBuilt()
+{
+	Super::WhenBuilt();
+
+	if (ControllingEmpire)
+	{
+		ControllingEmpire->SetNumCities(ControllingEmpire->GetNumCities() + 1);
+		ControllingEmpire->CalculateSupply();
+	}
+
+	//TODO: Implement post-build work including expansions
 }

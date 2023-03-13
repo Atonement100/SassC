@@ -21,7 +21,8 @@ public:
 
 	virtual void Attack_Implementation(AActor* Target) override;
 	virtual bool Attack_Validate(AActor* Target) override;
-	virtual ETypeOfEntity GetTypeOfEntity() override {return this->TypeOfEntity;}
+	virtual ETypeOfEntity GetTypeOfEntity() const override {return this->TypeOfEntity;}
+	virtual FResourceCosts GetResourceCosts() const override {return FResourceCosts(17, 12, 1);}
 
 protected:
 	ETypeOfEntity TypeOfEntity = ETypeOfEntity::Scallywag;

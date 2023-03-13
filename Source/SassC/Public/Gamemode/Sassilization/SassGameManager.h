@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Gamemode/Sassilization/TypeOfEntity.h"
+#include "Territory/GraphNode.h"
 #include "SassGameManager.generated.h"
 
 class ABuildingManager;
@@ -30,6 +31,8 @@ public:
 	UFUNCTION(BlueprintCallable)
 	bool RequestBuildingSpawn(APlayerController* Player, ETypeOfEntity BuildingToSpawn, FVector Location,
 		FRotator Rotator);
+	AGraphNode* GetClosestNode(FVector Location, float SearchRadius) const;
+	void UpdateTerritories() const;
 
 protected: 
 	UPROPERTY(Replicated, EditAnywhere, Category = "Gamemode")

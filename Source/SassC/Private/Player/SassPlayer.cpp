@@ -547,9 +547,11 @@ void ASassPlayer::LeftClickPressed()
 			}
 
 			const TArray<AActor*> ConfirmedToIgnore = ActorsToIgnore;
-			ServerSpawnBuilding(Cast<ASassPlayerController>(PlayerControllerPtr), SelectedSpawnableClass, Hit,
-			                    PreviewRotation, CurrentHalfHeight, LocationsToCheck, CurrentTraceSize,
-			                    GetPlayerState()->GetPlayerId(), ConfirmedToIgnore);
+			PlayerControllerPtr->ServerRequestBuildingSpawn(GetPlayerState<ASassPlayerState>()->GetSelectedTypeOfEntity(), Hit.Location, PreviewRotation);
+			
+			// ServerSpawnBuilding(Cast<ASassPlayerController>(PlayerControllerPtr), SelectedSpawnableClass, Hit,
+			//                     PreviewRotation, CurrentHalfHeight, LocationsToCheck, CurrentTraceSize,
+			//                     GetPlayerState()->GetPlayerId(), ConfirmedToIgnore);
 		}
 	}
 }
@@ -585,14 +587,17 @@ void ASassPlayer::RightClickPressed()
 		}
 		AActor* HitActor = RaycastHit.GetActor();
 		ETypeOfOrder OrderType = ETypeOfOrder::Order_World;
-		if ((HitActor->IsA(AUnitBase::StaticClass()) || HitActor->IsA(ASelectionSphere::StaticClass())) && Cast<
-			AUnitBase>(HitActor)->OwningPlayerID != GetPlayerState()->GetPlayerId())
+		if (HitActor)
 		{
-			OrderType = ETypeOfOrder::Order_Unit;
+			if ((HitActor->IsA(AUnitBase::StaticClass()) || HitActor->IsA(ASelectionSphere::StaticClass())) &&
+				Cast<AUnitBase>(HitActor)->OwningPlayerID != GetPlayerState()->GetPlayerId())
+			{
+				OrderType = ETypeOfOrder::Order_Unit;
+			}
+			if (HitActor->IsA(ABuildingBase::StaticClass()) && Cast<ABuildingBase>(HitActor)->OwningPlayerID !=
+				GetPlayerState()->GetPlayerId()) { OrderType = ETypeOfOrder::Order_Building; }
+			CommandUnits(SelectedUnits, RaycastHit, OrderType);
 		}
-		if (HitActor->IsA(ABuildingBase::StaticClass()) && Cast<ABuildingBase>(HitActor)->OwningPlayerID !=
-			GetPlayerState()->GetPlayerId()) { OrderType = ETypeOfOrder::Order_Building; }
-		CommandUnits(SelectedUnits, RaycastHit, OrderType);
 	}
 }
 
@@ -919,8 +924,7 @@ void ASassPlayer::ServerSpawnBuilding_Implementation(ASassPlayerController* Play
 	if (UKismetSystemLibrary::BoxTraceSingle(GetWorld(), Hit.Location + FVector(0, 0, 2),
 											  Hit.Location + 2 * HalfHeight,
 											  FVector(TraceSize.X, TraceSize.Y, 0), Rotation,
-											  UEngineTypes::ConvertToTraceType(
-												  ECollisionChannel::ECC_GameTraceChannel2), true,
+											  UEngineTypes::ConvertToTraceType(ECC_SPAWNING), true,
 											  ActorsToIgnore, EDrawDebugTrace::ForDuration, BoxHit, true))
 	{
 		//Bad Spawn
@@ -944,7 +948,7 @@ void ASassPlayer::ServerSpawnBuilding_Implementation(ASassPlayerController* Play
 	}
 	
 	// If all checks have passed so far, let's go ahead and spawn the actor.
-	FVector NewLocation = (Location + FVector(50,50, 50));
+	FVector NewLocation = (Location);
 	AActor* NewSpawn = GetWorld()->SpawnActor(ActorToSpawn, &NewLocation, &Rotation, SpawnParams);
 
 	if (NewSpawn == nullptr)
@@ -1101,7 +1105,7 @@ bool ASassPlayer::AreBuildingCornersBlocked(TArray<FVector> ExtraLocs, FVector C
 {
 	if (ExtraLocs.Num() == 0)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Red, "No extre locs");
+		GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Red, "No extra locs");
 		return true;
 	}
 

@@ -15,7 +15,8 @@ class SASSC_API ABallista : public AUnitBase
 	ABallista();
 
 	virtual void Attack_Implementation(AActor* Target) override;
-	virtual ETypeOfEntity GetTypeOfEntity() override {return this->TypeOfEntity;}
+	virtual ETypeOfEntity GetTypeOfEntity() const override {return this->TypeOfEntity;}
+	virtual FResourceCosts GetResourceCosts() const override {return FResourceCosts(30, 25, 5);}
 
 protected:
 	ETypeOfEntity TypeOfEntity = ETypeOfEntity::Ballista;

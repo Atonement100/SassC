@@ -18,11 +18,13 @@ class SASSC_API ATerritoryManager : public AActor
 
 public:
 	ATerritoryManager();
-	
+
+	AGraphNode* GetNearestNode(FVector Location, float SearchRadius) const;
 	UFUNCTION(BlueprintCallable)
 	bool IsLocationInTerritory(FVector Location, uint8 EmpireId) const;
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
 	void UpdateTerritories();
+	void Test_ColorTerritoryBorderNodes();
 	void UpdateTerritories_Implementation();
 
 protected:

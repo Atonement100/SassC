@@ -9,6 +9,8 @@
 #include "Engine/StaticMesh.h"
 #include "Engine/StreamableRenderAsset.h"
 #include "Core/SassCStaticLibrary.h"
+#include "Gamemode/Sassilization/SassGameManager.h"
+#include "Gamemode/Sassilization/SassGameState.h"
 #include "Net/UnrealNetwork.h"
 
 ABuildingBase::ABuildingBase()
@@ -94,12 +96,48 @@ void ABuildingBase::Tick(const float DeltaSeconds)
 	Super::Tick(DeltaSeconds);
 }
 
-void ABuildingBase::UpdateMaterial(FLinearColor PlayerColor, bool SetPersistentColor)
+void ABuildingBase::WhenBuilt()
 {
-	ColorBldg(PlayerColor, SetPersistentColor);
+	UE_LOG(LogTemp, Display, TEXT("Triggering WhenBuilt for %s"), *this->GetName());
+
+	IEntityInterface::WhenBuilt();
+
+	const ASassGameManager* GameManager = GetWorld()->GetGameState<ASassGameState>()->GetGameManager();
+
+	UE_LOG(LogTemp, Display, TEXT("GameManager %s"), *GameManager->GetName());
+	
+	AGraphNode* ClosestNode = GameManager->GetClosestNode(GetActorLocation(), 10.f);
+
+	UE_LOG(LogTemp, Display, TEXT("WhenBuilt Closest Node %s Controlling Empire %s"), *ClosestNode->GetName(), *GetNameSafe(ControllingEmpire));
+	
+	this->TerritoryInfo = FTerritoryInfo();
+	TerritoryInfo.Influence = this->GetInfluence();
+	TerritoryInfo.EmpireId = ControllingEmpire->GetEmpireId();
+	TerritoryInfo.ParentGraphNode = ClosestNode;
+
+	UE_LOG(LogTemp, Display, TEXT("TerritoryInfo %s"), *this->TerritoryInfo.ToString());
+
+	this->bIsBuilt = true;
+	GameManager->UpdateTerritories();
 }
 
-void ABuildingBase::ColorBldg_Implementation(FLinearColor PlayerColor, bool SetPersistentColor)
+void ABuildingBase::Initialize(AEmpire* NewEmpire)
+{
+	this->SetControl(NewEmpire);
+}
+
+void ABuildingBase::SetControl(AEmpire* NewEmpire)
+{
+	this->ControllingEmpire = NewEmpire;
+	this->ColorBuilding(NewEmpire->GetColor(), true);
+}
+
+void ABuildingBase::UpdateMaterial(FLinearColor PlayerColor, bool SetPersistentColor)
+{
+	ColorBuilding(PlayerColor, SetPersistentColor);
+}
+
+void ABuildingBase::ColorBuilding_Implementation(FLinearColor PlayerColor, bool SetPersistentColor)
 {
 	for (UMaterialInstanceDynamic* Material : BldgMeshMaterialDynamic)
 	{
@@ -108,7 +146,7 @@ void ABuildingBase::ColorBldg_Implementation(FLinearColor PlayerColor, bool SetP
 	if (SetPersistentColor) { this->OwningPlayerColor = PlayerColor; }
 }
 
-bool ABuildingBase::ColorBldg_Validate(FLinearColor PlayerColor, bool SetPersistentColor)
+bool ABuildingBase::ColorBuilding_Validate(FLinearColor PlayerColor, bool SetPersistentColor)
 {
 	return true;
 }
@@ -212,7 +250,7 @@ void ABuildingBase::PreviewUpgrade()
 	ResetRequired = true;
 	
 	Cast<UStaticMeshComponent>(ActiveBuildingMesh)->SetStaticMesh(Cast<UStaticMesh>(AvailableBuildingMeshes[LevelToPreview]));
-	this->ColorBldg(FLinearColor::Green);
+	this->ColorBuilding(FLinearColor::Green);
 }
 
 void ABuildingBase::ResetPreview()
@@ -226,7 +264,7 @@ void ABuildingBase::ResetPreview()
 	}
 	
 	Cast<UStaticMeshComponent>(ActiveBuildingMesh)->SetStaticMesh(Cast<UStaticMesh>(AvailableBuildingMeshes[UpgradeLevel]));
-	this->ColorBldg(OwningPlayerColor);
+	this->ColorBuilding(OwningPlayerColor);
 }
 
 void ABuildingBase::UpgradeBuilding_Implementation()
@@ -242,7 +280,7 @@ bool ABuildingBase::UpgradeBuilding_Validate()
 void ABuildingBase::NetUpgradeBuilding_Implementation()
 {
 	Cast<UStaticMeshComponent>(ActiveBuildingMesh)->SetStaticMesh(Cast<UStaticMesh>(AvailableBuildingMeshes[UpgradeLevel + 1]));
-	this->ColorBldg(OwningPlayerColor);
+	this->ColorBuilding(OwningPlayerColor);
 	UpgradeLevel++;
 }
 

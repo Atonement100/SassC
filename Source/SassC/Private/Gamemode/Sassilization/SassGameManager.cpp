@@ -4,6 +4,7 @@
 #include "Gamemode/Sassilization/SassGameManager.h"
 #include "Gamemode/Sassilization/BuildingManager.h"
 #include "Gamemode/Sassilization/EmpireManager.h"
+#include "Gamemode/Sassilization/Territory/TerritoryInfo.h"
 #include "Gamemode/Sassilization/Territory/TerritoryManager.h"
 #include "Net/UnrealNetwork.h"
 
@@ -34,8 +35,18 @@ AActor* ASassGameManager::RequestGhostSpawn(APlayerController* Player, ETypeOfEn
 
 bool ASassGameManager::RequestBuildingSpawn(APlayerController* Player, ETypeOfEntity BuildingToSpawn, FVector Location, FRotator Rotator)
 {
-	BuildingManager->SpawnBuilding(Player, BuildingToSpawn, Location, Rotator);
+	BuildingManager->SpawnBuilding(Player, BuildingToSpawn, Location, Rotator, GetTerritoryManager());
 	return true;
+}
+
+AGraphNode* ASassGameManager::GetClosestNode(const FVector Location, const float SearchRadius) const
+{
+	return this->GetTerritoryManager()->GetNearestNode(Location, SearchRadius);
+}
+
+void ASassGameManager::UpdateTerritories() const 
+{
+	this->TerritoryManager->UpdateTerritories();
 }
 
 AEmpireManager* ASassGameManager::GetEmpireManager() const

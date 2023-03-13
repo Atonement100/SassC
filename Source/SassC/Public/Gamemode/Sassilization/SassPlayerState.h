@@ -36,6 +36,8 @@ public:
 	ETypeOfEntity GetSelectedTypeOfEntity() const;
 	UFUNCTION(BlueprintCallable, Category = "PlayerState")
 	void SetSelectedTypeOfEntity(const ETypeOfEntity NewSelectedTypeOfSpawnable);
+	bool IsAllowedToSpawnBuilding() const;
+	void SetAllowedToSpawnBuilding(const bool bAllowedToSpawnBuilding);
 
 protected:
 	/*Spawnable currently selected to be spawned*/
@@ -45,7 +47,10 @@ protected:
 	//todo replace gold etc with empire refs
 	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadWrite, Category = "PlayerState|Empire")
 	AEmpire* Empire;
-	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerState")
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "PlayerState|Empire")
+	bool bAllowedToSpawnBuilding = true;;
+
+	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, Category = "PlayerState")
 	ETypeOfEntity SelectedTypeOfEntity = ETypeOfEntity::City;
 };

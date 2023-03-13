@@ -1,11 +1,12 @@
 ﻿// License information can be found at https://github.com/Atonement100/SassC/blob/master/LICENSE
 
 #pragma once
+#include "TypeOfEntity.h"
+#include "Core/BuildingRequirements.h"
 #include "GameFramework/Info.h"
-
-
 #include "Empire.generated.h"
 
+class IEntityInterface;
 /**
  * 
  */
@@ -20,19 +21,24 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Empire")
 	void InitializeEmpire(const int32 InitEmpireId, const int32 InitPlayerId, const FLinearColor InitEmpireColor);
+	
+	bool MeetsBuildingRequirement(ETypeOfEntity TypeOfEntity, const FBuildingRequirement& BuildingRequirement, bool bShouldCheckAmount = false);
 
 	static bool IsEmpireValid(const AEmpire* Empire);
+
+	UFUNCTION(BlueprintCallable, Category = "Empire|Buildings")
+	void AddEntity(AActor* NewEntity);
 	
-	UFUNCTION(BlueprintCallable, Category = "Empire")
+	UFUNCTION(BlueprintCallable, Category = "Empire|Buildings")
 	const TSet<ABuildingBase*>& GetBuildings() const;
-	
-	UFUNCTION(BlueprintCallable, Category = "Empire")
+
+	UFUNCTION(BlueprintCallable, Category = "Empire|Units")
 	const TSet<AUnitBase*>& GetUnits() const;
 	
-	UFUNCTION(BlueprintCallable, Category = "Empire")
+	UFUNCTION(BlueprintCallable, Category = "Empire|Units")
 	const TSet<AUnitBase*>& GetSelectedUnits() const;
 	
-	UFUNCTION(BlueprintCallable, Category = "Empire")
+	UFUNCTION(BlueprintCallable, Category = "Empire|Units")
 	int32 NumSelectedUnits() const;
 
 	
@@ -84,10 +90,13 @@ protected:
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Empire")
 	TSet<AUnitBase*> Units = TSet<AUnitBase*>();
+
+	/* Do not use for gameplay purposes */
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Empire")
+	TMap<ETypeOfEntity, int> LifetimeSpawns;
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Empire")
 	TSet<AUnitBase*> SelectedUnits = TSet<AUnitBase*>();
-
 	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadWrite, Category = "Empire")
 	FLinearColor EmpireColor = NullColor;
 	inline static FColor NullColor = FColor(0, 0, 0, 0);
@@ -109,13 +118,13 @@ public:
 	void AddCreed(int32 Amount);
 	
 	UFUNCTION(BlueprintCallable, Category = "Empire|Resources")
-	int32 GetFood() const;
+	float GetFood() const;
 	
 	UFUNCTION(BlueprintCallable, Category = "Empire|Resources")
-	int32 GetIron() const;
+	float GetIron() const;
 	
 	UFUNCTION(BlueprintCallable, Category = "Empire|Resources")
-	int32 GetGold() const;
+	float GetGold() const;
 	
 	UFUNCTION(BlueprintCallable, Category = "Empire|Resources")
 	int32 GetCreed() const;
@@ -142,13 +151,13 @@ public:
 	int32 GetNumFarms() const;
 
 	UFUNCTION(BlueprintCallable, Category = "Empire|Resources")
-	void SetFood(int32 NewFood);
+	void SetFood(float NewFood);
 
 	UFUNCTION(BlueprintCallable, Category = "Empire|Resources")
-	void SetIron(int32 NewIron);
+	void SetIron(float NewIron);
 
 	UFUNCTION(BlueprintCallable, Category = "Empire|Resources")
-	void SetGold(int32 NewGold);
+	void SetGold(float NewGold);
 
 	UFUNCTION(BlueprintCallable, Category = "Empire|Resources")
 	void SetCreed(int32 NewCreed);
@@ -175,14 +184,14 @@ public:
 	void SetNumFarms(int32 NewNumFarms);
 
 protected:
-	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadWrite, Category = "Empire")
-	int32 Food = 0;
+	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadWrite, Category = "Empire|Resources")
+	float Food = 0;
 	
 	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadWrite, Category = "Empire|Resources")
-	int32 Iron = 0;
+	float Iron = 0;
 	
 	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadWrite, Category = "Empire|Resources")
-	int32 Gold = 0;
+	float Gold = 0;
 	
 	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadWrite, Category = "Empire|Resources")
 	int32 Creed = 0;

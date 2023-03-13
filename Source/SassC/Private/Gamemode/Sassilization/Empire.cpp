@@ -3,9 +3,11 @@
 
 #include "Gamemode/Sassilization/Empire.h"
 
+#include "Buildings/BuildingBase.h"
 #include "Units/UnitBase.h"
 #include "Net/UnrealNetwork.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "Microsoft/AllowMicrosoftPlatformTypes.h"
 
 AEmpire::AEmpire()
 {
@@ -46,7 +48,6 @@ void AEmpire::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeP
 	DOREPLIFETIME(AEmpire, NumHouses)
 	DOREPLIFETIME(AEmpire, NumMines)
 	DOREPLIFETIME(AEmpire, NumFarms)
-	//todo add the rest
 }
 
 bool AEmpire::IsEmpireValid(const AEmpire* Empire)
@@ -57,6 +58,68 @@ bool AEmpire::IsEmpireValid(const AEmpire* Empire)
 const TSet<ABuildingBase*>& AEmpire::GetBuildings() const
 {
 	return this->Buildings;
+}
+
+//TODO? Maybe makes sense to just keep a map of these.
+bool AEmpire::MeetsBuildingRequirement(ETypeOfEntity TypeOfEntity, const FBuildingRequirement& BuildingRequirement, bool bShouldCheckAmount)
+{
+	int MatchingCount = 0;
+	for (ABuildingBase* Building : this->Buildings)
+	{
+		const IEntityInterface* Entity = Cast<IEntityInterface>(Building);
+
+		if (Entity->GetTypeOfEntity() == TypeOfEntity && Building->IsBuilt())
+		{
+			if (BuildingRequirement.ShouldTrackLevel()) 
+			{
+				if (Building->GetUpgradeLevel() >= BuildingRequirement.LevelRequired)
+				{
+					return true;
+				}
+			}
+			else if (!BuildingRequirement.ShouldTrackAmount())
+			{
+				return true;
+			}
+			else
+			{
+				MatchingCount += 1;
+			}
+		}
+	}
+
+	if (BuildingRequirement.ShouldTrackAmount())
+	{
+		return MatchingCount >= BuildingRequirement.AmountRequired;
+	}
+
+	return false;
+}
+
+void AEmpire::AddEntity(AActor* NewEntity)
+{
+	const IEntityInterface* NewEntityInterface = Cast<IEntityInterface>(NewEntity);
+	
+	if (!NewEntityInterface)
+	{
+		UE_LOG(LogTemp, Warning,
+			TEXT("Tried to add entity %s to empire but it was null or does not implement IEntityInterface."),
+			*NewEntity->GetName())
+		return;
+	}
+	
+	if (NewEntityInterface->IsBuilding())
+	{
+		this->Buildings.Add(Cast<ABuildingBase>(NewEntity));
+	}
+	else
+	{
+		this->Units.Add(Cast<AUnitBase>(NewEntity));
+	}
+
+	const ETypeOfEntity NewTypeOfEntity = NewEntityInterface->GetTypeOfEntity();
+	const int32 NewCount = LifetimeSpawns.FindOrAdd(NewTypeOfEntity, 0) + 1;
+	LifetimeSpawns.Add(NewTypeOfEntity, NewCount);
 }
 
 const TSet<AUnitBase*>& AEmpire::GetUnits() const
@@ -208,17 +271,17 @@ void AEmpire::AddCreed(const int32 Amount)
 	this->SetCreed(this->GetCreed() + Amount);
 }
 
-int32 AEmpire::GetFood() const
+float AEmpire::GetFood() const
 {
 	return Food;
 }
 
-int32 AEmpire::GetIron() const
+float AEmpire::GetIron() const
 {
 	return Iron;
 }
 
-int32 AEmpire::GetGold() const
+float AEmpire::GetGold() const
 {
 	return Gold;
 }
@@ -263,17 +326,17 @@ int32 AEmpire::GetNumFarms() const
 	return NumFarms;
 }
 
-void AEmpire::SetFood(const int32 NewFood)
+void AEmpire::SetFood(const float NewFood)
 {
 	this->Food = NewFood;
 }
 
-void AEmpire::SetIron(const int32 NewIron)
+void AEmpire::SetIron(const float NewIron)
 {
 	this->Iron = NewIron;
 }
 
-void AEmpire::SetGold(const int32 NewGold)
+void AEmpire::SetGold(const float NewGold)
 {
 	this->Gold = NewGold;
 }

@@ -22,10 +22,16 @@ public:
 	virtual void PostInitializeComponents() override;
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaSeconds) override;
-	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent,
-	                         class AController* EventInstigator, class AActor* DamageCauser) override;
-	virtual ETypeOfEntity GetTypeOfEntity() override {return this->TypeOfBuilding;}
 
+	virtual ETypeOfEntity GetTypeOfEntity() const override {return this->TypeOfBuilding;}
+	virtual FResourceCosts GetResourceCosts() const override {return FResourceCosts(1, .75, .2);}
+
+	virtual float GetInfluence() override {return this->Influence;}
+	virtual TArray<FBuildingRequirements> GetBuildingRequirements() const override { return this->LevelRequirements; }
+	
+	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent,
+		class AController* EventInstigator, class AActor* DamageCauser) override;
+	
 	AActor* TempConnection;
 
 	AWall* GetClosestWallTowerInRange(float Range = 150.0f, TArray<AActor*> ActorsToIgnore = TArray<AActor*>());
@@ -40,4 +46,8 @@ public:
 
 protected:
 	ETypeOfEntity TypeOfBuilding = ETypeOfEntity::Wall;
+	float Influence = 0.f;
+	TArray<FBuildingRequirements> LevelRequirements = {
+		{ FBuildingRequirements( { {ETypeOfEntity::City, FBuildingRequirement::LevelOnly(0)} }) }
+	};
 };

@@ -4,6 +4,7 @@
 
 
 #include "BuildingBase.h"
+#include "Engine/StaticMesh.h"
 #include "City.generated.h"
 
 /**
@@ -21,7 +22,16 @@ class SASSC_API ACity : public ABuildingBase
 	virtual void Tick(float DeltaSeconds) override;
 	virtual void PostCreation_Implementation(FLinearColor PlayerColor) override;
 	virtual bool PostCreation_Validate(FLinearColor PlayerColor) override;
-	virtual ETypeOfEntity GetTypeOfEntity() override {return this->TypeOfBuilding;}
+	virtual ETypeOfEntity GetTypeOfEntity() const override { return this->TypeOfBuilding; }
+	virtual FResourceCosts GetResourceCosts() const override { return FResourceCosts(50, 50, 32); }
+	virtual FBox GetSpawnBoundingBox() const override 
+	{
+		return Cast<UStaticMesh>(this->AvailableBuildingMeshes[0])->GetBoundingBox();
+	}
+	virtual void WhenBuilt() override;
+	
+	virtual float GetInfluence() override {return this->Influence;}
+	virtual TArray<FBuildingRequirements> GetBuildingRequirements() const override { return this->LevelRequirements; }
 
 protected:
 	FVector CollisionBounds = FVector(35.0f, 31.0f, 40.0f);
@@ -29,4 +39,6 @@ protected:
 	FVector TraceSize = FVector(35.0f, 31.0f, 10.0f);
 	FVector HalfHeight = FVector(0.0f, 0.0f, 20.0f);
 	ETypeOfEntity TypeOfBuilding = ETypeOfEntity::City;
+	float Influence = 95.25f;
+	TArray<FBuildingRequirements> LevelRequirements = {};
 };

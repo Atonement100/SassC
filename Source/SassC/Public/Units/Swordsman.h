@@ -20,7 +20,8 @@ public:
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaSeconds) override;
 	virtual void SetupPlayerInputComponent(class UInputComponent* SetupInputComponent) override;
-	virtual ETypeOfEntity GetTypeOfEntity() override {return this->TypeOfEntity;}
+	virtual ETypeOfEntity GetTypeOfEntity() const override {return this->TypeOfEntity;}
+	virtual FResourceCosts GetResourceCosts() const override {return FResourceCosts(10, 12, .5);}
 
 protected:
 	ETypeOfEntity TypeOfEntity = ETypeOfEntity::Swordsman;

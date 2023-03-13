@@ -11,15 +11,10 @@ struct FEmpireBorderData
 {
 	GENERATED_USTRUCT_BODY()
 
-	FEmpireBorderData(): EmpireId(0)
-	{
-	}
-
-	FEmpireBorderData(const uint8 EmpireId, const TArray<AGraphNode*> BorderNodes):
-		EmpireId(EmpireId), BorderNodes(BorderNodes) {}	
+	FEmpireBorderData(): EmpireId(0), BorderNodes(TArray<AGraphNode*>()) {}
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	uint8 EmpireId;
+	int32 EmpireId;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TArray<AGraphNode*> BorderNodes;

@@ -12,8 +12,6 @@ AGraphNode::AGraphNode()
 	PrimaryActorTick.bCanEverTick = false;
 	Connections.SetNum(8, false);
 	HasVisited.SetNum(8, false);
-	// DebugMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Debug Visual"));
-	// DebugMeshComponent->SetupAttachment(RootComponent);
 }
 
 // Called when the game starts or when spawned
@@ -23,7 +21,7 @@ void AGraphNode::BeginPlay()
 
 }
 
-uint8 AGraphNode::GetEmpireId() const
+int32 AGraphNode::GetEmpireId() const
 {
 	return UKismetMathLibrary::Round(this->GetAStarFScore());
 }

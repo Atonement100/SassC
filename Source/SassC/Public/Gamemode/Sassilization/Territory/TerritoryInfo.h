@@ -18,17 +18,19 @@ struct FTerritoryInfo
 	{
 	}
 
-	FTerritoryInfo(const uint8 EmpireId, AGraphNode* ParentGraphNode, float Influence):
-		EmpireId(EmpireId), ParentGraphNode(ParentGraphNode), Influence(Influence)
-	{
-	}
-
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	uint8 EmpireId;
+	int32 EmpireId;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	AGraphNode* ParentGraphNode;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float Influence;
+
+	FString ToString() const 
+	{
+		return "EmpireId: " + FString::FromInt(EmpireId) +
+				" ParentGraphNode: " + (ParentGraphNode ? ParentGraphNode->GetName() : "NULL") +
+				" Influence: " + FString::SanitizeFloat(Influence);
+	}
 };

@@ -110,26 +110,14 @@ bool ASassPlayerController::RequestSpawnable()
 	return false;
 }
 
-bool ASassPlayerController::RequestBuildingSpawn()
+bool ASassPlayerController::ServerRequestBuildingSpawn_Validate(ETypeOfEntity TypeOfEntity, FVector Location, FRotator Rotation)
 {
-	ASassPlayer* SassPlayer = Cast<ASassPlayer>(this->GetPawn());
-	TArray<TEnumAsByte<EObjectTypeQuery>> StaticObjectTypes = TArray<TEnumAsByte<EObjectTypeQuery>>();
-	StaticObjectTypes.Add(EObjectTypeQuery::ObjectTypeQuery1);
-	const TArray<AActor*> RaycastIgnore;
-	float BaseEyeHeight = SassPlayer->BaseEyeHeight;
+	return true;
+}
 
-	FHitResult InitRaycastHit;
-	const FActorSpawnParameters SpawnParams = FActorSpawnParameters();
-	UKismetSystemLibrary::LineTraceSingleForObjects(
-		GetWorld(), SassPlayer->GetMesh()->GetComponentLocation() + FVector(0, 0, BaseEyeHeight + 80.0f),
-		SassPlayer->GetMesh()->GetComponentLocation() + FVector(0, 0, BaseEyeHeight + 80.0f) +
-		UKismetMathLibrary::GetForwardVector(this->GetControlRotation()) * 10000.0f,
-		StaticObjectTypes, true, RaycastIgnore, EDrawDebugTrace::ForOneFrame, InitRaycastHit, true);
-
-	FVector InitialHit = InitRaycastHit.Location + 50.0f;
-
-	return SassGameManager->RequestBuildingSpawn(this, GetPlayerState<ASassPlayerState>()->GetSelectedTypeOfEntity(),
-	                                             InitialHit, FRotator(0, 0, 0));
+void ASassPlayerController::ServerRequestBuildingSpawn_Implementation(ETypeOfEntity TypeOfEntity, FVector Location, FRotator Rotation)
+{
+	SassGameManager->RequestBuildingSpawn(this, TypeOfEntity, Location, Rotation);
 }
 
 ASassGameManager* ASassPlayerController::GetSassGameManager() const

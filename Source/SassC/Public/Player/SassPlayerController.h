@@ -38,8 +38,8 @@ public:
 	bool IsSpawnableRequestValid();
 	UFUNCTION(BlueprintCallable)
 	bool RequestSpawnable();
-	UFUNCTION(BlueprintCallable)
-	bool RequestBuildingSpawn();
+	UFUNCTION(Reliable, Server, WithValidation, BlueprintCallable)
+	void ServerRequestBuildingSpawn(ETypeOfEntity TypeOfEntity, FVector Location, FRotator Rotation);
 
 protected:
 	UPROPERTY(VisibleAnywhere, Category = "Gamemode")

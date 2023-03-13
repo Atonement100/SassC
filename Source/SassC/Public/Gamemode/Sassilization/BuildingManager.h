@@ -7,6 +7,7 @@
 #include "Buildings/Data/BuildingData.h"
 #include "BuildingManager.generated.h"
 
+class ATerritoryManager;
 class AEmpire;
 
 /**
@@ -19,12 +20,18 @@ class SASSC_API ABuildingManager : public AActor
 
 public:
 	UFUNCTION(BlueprintCallable, Category = "Buildings")
-	bool CanBuild(AEmpire* Empire, EBuildingType BuildingType, bool IgnoreCost) const;
-	AActor* SpawnGhost(APlayerController* Player, ETypeOfEntity BuildingToSpawn, FVector Location, FRotator Rotator);
+	bool CanAfford(AEmpire* Empire, ETypeOfEntity BuildingType, bool IgnoreCost = false) const;
+	bool AreCornersValid(TArray<FVector> CornerLocations,
+	                     double& MaxHeight, double& MinHeight) const;
+	bool CanFit(FHitResult PlayerToLocTraceResult, FBox EntityBoundingBox, FRotator Rotation, bool bCheckWalls,
+	            bool bFoundation) const;
+	AActor* SpawnGhost(APlayerController* Player, ETypeOfEntity BuildingToSpawn, FVector Location, FRotator Rotator) const;
 	UFUNCTION(BlueprintCallable)
-	void SpawnBuilding(APlayerController* Player, ETypeOfEntity BuildingToSpawn, FVector Location, FRotator Rotator);
+	void SpawnBuilding(APlayerController* Player, ETypeOfEntity BuildingToSpawn, FVector TargetLocation, FRotator Rotator, ATerritoryManager* TerritoryManager);
 	UFUNCTION(BlueprintCallable)
-	TSubclassOf<AActor> GetClassForBuildingType(const ETypeOfEntity TypeOfBuilding);
+	TSubclassOf<AActor> GetClassForBuildingType(const ETypeOfEntity TypeOfBuilding) const;
+	UFUNCTION(BlueprintCallable)
+	TArray<AActor*> GetEntitiesOfTypeInSphere(ETypeOfEntity TypeOfEntity, FVector Location, float Radius) const;
 
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)

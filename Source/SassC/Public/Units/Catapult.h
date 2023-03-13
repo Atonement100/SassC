@@ -13,7 +13,8 @@ class SASSC_API ACatapult : public AUnitBase
 {
 	GENERATED_BODY()
 	ACatapult();
-	virtual ETypeOfEntity GetTypeOfEntity() override {return this->TypeOfEntity;}
+	virtual ETypeOfEntity GetTypeOfEntity() const override {return this->TypeOfEntity;}
+	virtual FResourceCosts GetResourceCosts() const override {return FResourceCosts(38, 50, 5);}
 
 protected:
 	ETypeOfEntity TypeOfEntity = ETypeOfEntity::Catapult;

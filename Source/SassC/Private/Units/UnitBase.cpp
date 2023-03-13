@@ -88,6 +88,17 @@ void AUnitBase::PostInitializeComponents()
 }
 
 
+void AUnitBase::Initialize(AEmpire* NewEmpire)
+{
+	this->SetControl(NewEmpire);
+}
+
+void AUnitBase::SetControl(AEmpire* NewEmpire)
+{
+	this->ControllingEmpire = NewEmpire;
+	this->ColorUnit(NewEmpire->GetColor());
+}
+
 void AUnitBase::OnOverlapBegin_DetectionSphere(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor,
                                                class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex,
                                                bool bFromSweep, const FHitResult& SweepResult)

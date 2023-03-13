@@ -3,9 +3,13 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "BuildingRequirements.h"
+#include "ResourceCosts.h"
 #include "Gamemode/Sassilization/TypeOfEntity.h"
 #include "UObject/Interface.h"
 #include "EntityInterface.generated.h"
+
+class AEmpire;
 
 // This class does not need to be modified.
 UINTERFACE(BlueprintType)
@@ -23,5 +27,14 @@ class SASSC_API IEntityInterface
 
 	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:
-	virtual ETypeOfEntity GetTypeOfEntity() {return ETypeOfEntity::City;};
+	virtual ETypeOfEntity GetTypeOfEntity() const {return ETypeOfEntity::City;}
+	virtual FResourceCosts GetResourceCosts() const {return FResourceCosts();}
+	virtual FBuildingRequirements GetRequirementsForLevel(int Level) const {return FBuildingRequirements();}
+	virtual FBox GetSpawnBoundingBox() const {return FBox();}
+	virtual bool IsBuilding() const {return false;}
+	virtual bool IsUnit() const {return false;}
+	virtual void Initialize(AEmpire* NewEmpire) {}
+	virtual void WhenBuilt() {}
+	virtual void SetControl(AEmpire* NewEmpire) {}
+	virtual AEmpire* GetEmpire() const {return nullptr;}
 };

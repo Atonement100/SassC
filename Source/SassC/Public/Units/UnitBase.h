@@ -72,7 +72,19 @@ public:
 	virtual void PostInitializeComponents() override;
 
 #pragma region IEntityInterface
-	virtual ETypeOfEntity GetTypeOfEntity() override {return ETypeOfEntity::Peasant;};
+	virtual ETypeOfEntity GetTypeOfEntity() const override {return ETypeOfEntity::Peasant;}
+	virtual FResourceCosts GetResourceCosts() const override {return FResourceCosts();}
+	virtual FBox GetSpawnBoundingBox() const override 
+	{
+		FVector Origin, Extent;
+		Cast<AActor>(this)->GetActorBounds(true, Origin, Extent);
+		return FBox(Origin, Extent);
+	}
+	virtual bool IsBuilding() const override {return false;}
+	virtual bool IsUnit() const override {return true;}
+	virtual void Initialize(AEmpire* NewEmpire) override;
+	virtual void SetControl(AEmpire* NewEmpire) override;
+	virtual AEmpire* GetEmpire() const override {return this->ControllingEmpire;}
 #pragma endregion 
 
 	UFUNCTION()

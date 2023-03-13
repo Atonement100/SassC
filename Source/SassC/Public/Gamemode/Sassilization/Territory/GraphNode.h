@@ -53,7 +53,7 @@ public:
 	float GetAStarFScore() const;
 
 	UFUNCTION(BlueprintCallable)
-	uint8 GetEmpireId() const;
+	int32 GetEmpireId() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
 	void ColorSelf(FLinearColor NewColor) const;

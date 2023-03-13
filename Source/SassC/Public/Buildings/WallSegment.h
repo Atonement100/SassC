@@ -25,7 +25,10 @@ public:
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent,
 	                         class AController* EventInstigator, class AActor* DamageCauser) override;
 	virtual void Tick(float DeltaSeconds) override;
-	virtual ETypeOfEntity GetTypeOfEntity() override {return this->TypeOfBuilding;}
+	
+	virtual ETypeOfEntity GetTypeOfEntity() const override {return this->TypeOfBuilding;}
+	virtual float GetInfluence() override {return this->Influence;}
+	virtual TArray<FBuildingRequirements> GetBuildingRequirements() const override { return this->LevelRequirements; }
 
 #pragma region Upgradeable Building Overrides
 	void TryRemove(ABuildingBase* RemoveFrom, bool IsLeftConnection);
@@ -73,4 +76,6 @@ protected:
 	UPROPERTY(Replicated)
 	int8 DamageLevel = 0;
 	ETypeOfEntity TypeOfBuilding = ETypeOfEntity::WallSegment;
+	float Influence = 0.f;
+	TArray<FBuildingRequirements> LevelRequirements = {};
 };

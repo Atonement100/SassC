@@ -22,7 +22,8 @@ public:
 
 	virtual void Attack_Implementation(AActor* Target) override;
 	virtual bool Attack_Validate(AActor* Target) override;
-	virtual ETypeOfEntity GetTypeOfEntity() override {return this->TypeOfEntity;}
+	virtual ETypeOfEntity GetTypeOfEntity() const override {return this->TypeOfEntity;}
+	virtual FResourceCosts GetResourceCosts() const override {return FResourceCosts(11, 9, 0);}
 
 protected:
 	ETypeOfEntity TypeOfEntity = ETypeOfEntity::Archer;

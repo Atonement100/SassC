@@ -3,7 +3,6 @@
 #pragma once
 
 #include "BuildingBase.h"
-#include "Components/SkeletalMeshComponent.h"
 #include "Gate.generated.h"
 
 /**
@@ -20,13 +19,12 @@ public:
 	virtual void PostInitializeComponents() override;
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaSeconds) override;
+	virtual ETypeOfEntity GetTypeOfEntity() const override {return this->TypeOfBuilding;}
+	virtual FResourceCosts GetResourceCosts() const override {return FResourceCosts(8, 1, 5);}
 
-	/*
-		UFUNCTION(Reliable, NetMulticast, WithValidation)
-		void ColorBldg(FLinearColor PlayerColor);
-		virtual void ColorBldg_Implementation(FLinearColor PlayerColor) override;
-		virtual bool ColorBldg_Validate(FLinearColor PlayerColor) override;
-		*/
+	virtual float GetInfluence() override {return this->Influence;}
+	virtual TArray<FBuildingRequirements> GetBuildingRequirements() const override { return this->LevelRequirements; }
+
 	UFUNCTION()
 	virtual void OnOverlapBegin_GateTrigger(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
 	                                        UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep,
@@ -37,9 +35,7 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Gate")
 	bool ShouldBeOpen;
-	
-	virtual ETypeOfEntity GetTypeOfEntity() override {return this->TypeOfBuilding;}
-	
+
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Gate")
 	UBoxComponent* OpenTrigger;
@@ -47,4 +43,11 @@ protected:
 	int32 UnitsInRange;
 	
 	ETypeOfEntity TypeOfBuilding = ETypeOfEntity::Gate;
+	float Influence = 0.f;
+	TArray<FBuildingRequirements> LevelRequirements = {
+		{ FBuildingRequirements( {
+			{ETypeOfEntity::City, FBuildingRequirement::LevelOnly(0)},
+			{ETypeOfEntity::Workshop, FBuildingRequirement::LevelOnly(0)}
+		}) }
+	};
 };

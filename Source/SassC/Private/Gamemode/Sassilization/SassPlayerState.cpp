@@ -57,3 +57,13 @@ void ASassPlayerState::SetSelectedTypeOfEntity(const ETypeOfEntity NewSelectedTy
 {
 	this->SelectedTypeOfEntity = NewSelectedTypeOfSpawnable;
 }
+
+bool ASassPlayerState::IsAllowedToSpawnBuilding() const
+{
+	return bAllowedToSpawnBuilding;
+}
+
+void ASassPlayerState::SetAllowedToSpawnBuilding(const bool bNewAllowedToSpawnBuilding)
+{
+	bAllowedToSpawnBuilding = bNewAllowedToSpawnBuilding;
+}

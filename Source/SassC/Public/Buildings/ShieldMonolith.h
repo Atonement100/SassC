@@ -17,12 +17,16 @@ public:
 	virtual void PostInitializeComponents() override;
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaSeconds) override;
-
+	
+	virtual ETypeOfEntity GetTypeOfEntity() const override {return this->TypeOfBuilding;}
+	virtual FResourceCosts GetResourceCosts() const override {return FResourceCosts(25, 15, 10);}
+	
+	virtual float GetInfluence() override {return this->Influence;}
+	virtual TArray<FBuildingRequirements> GetBuildingRequirements() const override { return this->LevelRequirements; }
+	
 	float TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator,
 	                 AActor* DamageCauser) override;
 	
-	virtual ETypeOfEntity GetTypeOfEntity() override {return this->TypeOfBuilding;}
-
 	void PostCreation_Implementation(FLinearColor PlayerColor) override;
 
 	UFUNCTION(Reliable, NetMulticast, WithValidation)
@@ -54,4 +58,11 @@ protected:
 	USceneComponent* BeamPSysSocket;
 
 	ETypeOfEntity TypeOfBuilding = ETypeOfEntity::ShieldMono;
+	float Influence = 0.f;
+	TArray<FBuildingRequirements> LevelRequirements = {
+		{ FBuildingRequirements( {
+			{ETypeOfEntity::City, FBuildingRequirement::LevelOnly(0)},
+			{ETypeOfEntity::Workshop, FBuildingRequirement::LevelOnly(0)}
+		}) }
+	};
 };

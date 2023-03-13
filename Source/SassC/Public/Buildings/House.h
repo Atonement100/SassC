@@ -13,8 +13,10 @@ class SASSC_API AHouse : public ABuildingBase
 public:
 	// Sets default values for this actor's properties
 	AHouse();
-	virtual ETypeOfEntity GetTypeOfEntity() override {return this->TypeOfBuilding;}
-
+	virtual ETypeOfEntity GetTypeOfEntity() const override {return this->TypeOfBuilding;}
+	virtual float GetInfluence() override {return this->Influence;}
+	virtual TArray<FBuildingRequirements> GetBuildingRequirements() const override { return this->LevelRequirements; }
+	
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -23,4 +25,6 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 	ETypeOfEntity TypeOfBuilding = ETypeOfEntity::House;
+	float Influence = 128.5875f;
+	TArray<FBuildingRequirements> LevelRequirements = {};
 };
