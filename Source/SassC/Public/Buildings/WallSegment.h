@@ -29,6 +29,7 @@ public:
 	virtual ETypeOfEntity GetTypeOfEntity() const override {return this->TypeOfBuilding;}
 	virtual float GetInfluence() override {return this->Influence;}
 	virtual TArray<FBuildingRequirements> GetBuildingRequirements() const override { return this->LevelRequirements; }
+	virtual bool CanPlayerSpawn() const override {return false;}
 
 #pragma region Upgradeable Building Overrides
 	void TryRemove(ABuildingBase* RemoveFrom, bool IsLeftConnection);

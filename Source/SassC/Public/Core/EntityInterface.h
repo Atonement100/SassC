@@ -33,8 +33,10 @@ public:
 	virtual FBox GetSpawnBoundingBox() const {return FBox();}
 	virtual bool IsBuilding() const {return false;}
 	virtual bool IsUnit() const {return false;}
+	virtual bool CanPlayerSpawn() const {return true;}
 	virtual void Initialize(AEmpire* NewEmpire) {}
 	virtual void WhenBuilt() {}
 	virtual void SetControl(AEmpire* NewEmpire) {}
 	virtual AEmpire* GetEmpire() const {return nullptr;}
+	virtual FVector GetSpawnOffset() {return FVector::Zero();}
 };

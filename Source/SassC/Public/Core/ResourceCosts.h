@@ -14,12 +14,12 @@ struct FResourceCosts
 {
 	GENERATED_BODY()
 
-	FResourceCosts(): Iron(10000), Food(10000), Gold(10000)
+	FResourceCosts(): Iron(10000), Food(10000), Gold(10000), Supply(10000)
 	{
 	}
 
-	FResourceCosts(const float Iron, const float Food, const float Gold):
-		Iron(Iron), Food(Food), Gold(Gold)
+	FResourceCosts(const float Iron, const float Food, const float Gold, const float Supply = 0):
+		Iron(Iron), Food(Food), Gold(Gold), Supply(Supply)
 	{
 	}
 
@@ -29,4 +29,6 @@ struct FResourceCosts
 	float Food;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float Gold;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float Supply;
 };

@@ -37,7 +37,7 @@ public:
 	{
 		FVector Origin, Extent;
 		GetActorBounds(true, Origin, Extent, true);
-		return FBox(Origin, Extent);
+		return FBox(FVector::Zero(), Extent);
 	}
 	
 	virtual FBuildingRequirements GetRequirementsForLevel(int Level) const override

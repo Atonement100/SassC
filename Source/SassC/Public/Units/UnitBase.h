@@ -6,6 +6,7 @@
 #include "GameFramework/Character.h"
 #include "Core/SassCStaticLibrary.h"
 #include "Components/BoxComponent.h"
+#include "Components/CapsuleComponent.h"
 #include "Core/EntityInterface.h"
 #include "UnitBase.generated.h"
 
@@ -76,16 +77,28 @@ public:
 	virtual FResourceCosts GetResourceCosts() const override {return FResourceCosts();}
 	virtual FBox GetSpawnBoundingBox() const override 
 	{
-		FVector Origin, Extent;
-		Cast<AActor>(this)->GetActorBounds(true, Origin, Extent);
-		return FBox(Origin, Extent);
+		return this->GetCapsuleComponent()->GetLocalBounds().GetBox();
 	}
+	
+	virtual FBuildingRequirements GetRequirementsForLevel(int Level) const override
+	{
+		if (!GetBuildingRequirements().IsValidIndex(Level))
+		{
+			return FBuildingRequirements();
+		}
+
+		return GetBuildingRequirements()[Level];
+	}
+	
 	virtual bool IsBuilding() const override {return false;}
 	virtual bool IsUnit() const override {return true;}
 	virtual void Initialize(AEmpire* NewEmpire) override;
 	virtual void SetControl(AEmpire* NewEmpire) override;
 	virtual AEmpire* GetEmpire() const override {return this->ControllingEmpire;}
-#pragma endregion 
+	virtual FVector GetSpawnOffset() override {return FVector(0, 0, this->GetCapsuleComponent()->GetScaledCapsuleHalfHeight());}
+#pragma endregion
+
+	virtual TArray<FBuildingRequirements> GetBuildingRequirements() const { return {FBuildingRequirements()};};
 
 	UFUNCTION()
 	virtual void OnOverlapBegin_DetectionSphere(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,

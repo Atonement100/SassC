@@ -21,8 +21,15 @@ public:
 	virtual void Tick(float DeltaSeconds) override;
 	virtual void SetupPlayerInputComponent(class UInputComponent* SetupInputComponent) override;
 	virtual ETypeOfEntity GetTypeOfEntity() const override {return this->TypeOfEntity;}
-	virtual FResourceCosts GetResourceCosts() const override {return FResourceCosts(10, 12, .5);}
+	virtual FResourceCosts GetResourceCosts() const override {return FResourceCosts(10, 12, .5, 1);}
+	virtual TArray<FBuildingRequirements> GetBuildingRequirements() const override { return this->LevelRequirements; }
 
 protected:
 	ETypeOfEntity TypeOfEntity = ETypeOfEntity::Swordsman;
+
+	TArray<FBuildingRequirements> LevelRequirements = {
+		{ FBuildingRequirements( {
+			{ETypeOfEntity::City, FBuildingRequirement::LevelOnly(0)}
+		}) }
+	};
 };

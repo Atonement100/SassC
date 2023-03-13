@@ -16,7 +16,8 @@ public:
 	virtual ETypeOfEntity GetTypeOfEntity() const override {return this->TypeOfBuilding;}
 	virtual float GetInfluence() override {return this->Influence;}
 	virtual TArray<FBuildingRequirements> GetBuildingRequirements() const override { return this->LevelRequirements; }
-	
+	virtual bool CanPlayerSpawn() const override {return false;}
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

@@ -15,8 +15,11 @@ class SASSC_API ABallista : public AUnitBase
 	ABallista();
 
 	virtual void Attack_Implementation(AActor* Target) override;
-	virtual ETypeOfEntity GetTypeOfEntity() const override {return this->TypeOfEntity;}
-	virtual FResourceCosts GetResourceCosts() const override {return FResourceCosts(30, 25, 5);}
+	virtual ETypeOfEntity GetTypeOfEntity() const override { return this->TypeOfEntity; }
+	virtual FResourceCosts GetResourceCosts() const override { return FResourceCosts(30, 25, 5, 2); }
+	virtual TArray<FBuildingRequirements> GetBuildingRequirements() const override { return this->LevelRequirements; }
+	virtual FBox GetSpawnBoundingBox() const override { return this->UnitCollision->GetLocalBounds().GetBox(); }
+	virtual FVector GetSpawnOffset() override { return FVector(0, 0, this->GetCapsuleComponent()->GetScaledCapsuleHalfHeight()); }
 
 protected:
 	ETypeOfEntity TypeOfEntity = ETypeOfEntity::Ballista;
@@ -26,4 +29,11 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Building Base")
 	UBoxComponent* UnitCollision;
+
+	TArray<FBuildingRequirements> LevelRequirements = {
+		{ FBuildingRequirements( {
+			{ETypeOfEntity::City, FBuildingRequirement::LevelOnly(0)},
+			{ETypeOfEntity::Workshop, FBuildingRequirement::LevelOnly(1)}
+		}) }
+	};
 };

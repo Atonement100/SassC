@@ -30,12 +30,31 @@ bool ABuildingManager::CanAfford(AEmpire* Empire, ETypeOfEntity BuildingType, bo
 
 	if (!ActorToSpawn) return false;
 
+	if (!DefaultEntity->CanPlayerSpawn()) return false;
+	
 	if (!IgnoreCost)
 	{
 		const FResourceCosts Costs = DefaultEntity->GetResourceCosts();
-		if (Costs.Gold > Empire->GetGold()) return false;
-		if (Costs.Food > Empire->GetFood()) return false;
-		if (Costs.Iron > Empire->GetIron()) return false;
+		if (Costs.Gold > Empire->GetGold()) 
+		{
+			UE_LOG(LogTemp, Display, TEXT("Not enough Gold")) 
+			return false;
+		}
+		if (Costs.Food > Empire->GetFood()) 
+		{
+			UE_LOG(LogTemp, Display, TEXT("Not enough Food")) 
+			return false;
+		}
+		if (Costs.Iron > Empire->GetIron()) 
+		{
+			UE_LOG(LogTemp, Display, TEXT("Not enough Iron")) 
+			return false;
+		}
+		if (DefaultEntity->IsUnit() && Empire->GetSupplyUsed() + Costs.Supply > Empire->GetSupplyMaximum())
+		{
+			UE_LOG(LogTemp, Display, TEXT("Not enough Supply")) 
+			return false;
+		}
 	}
 
 	FBuildingRequirements BuildingRequirements = DefaultEntity->GetRequirementsForLevel(0);
@@ -62,7 +81,6 @@ bool ABuildingManager::AreCornersValid(TArray<FVector> CornerLocations, double& 
 
 	FHitResult Hit;
 	TArray<float> TraceHeights;
-	TArray<AActor*> ActorsToIgnore;
 
 	MaxHeight = -DBL_MAX;
 	MinHeight = DBL_MAX;
@@ -74,7 +92,7 @@ bool ABuildingManager::AreCornersValid(TArray<FVector> CornerLocations, double& 
 		UE_LOG(LogTemp, Display, TEXT("Corner %s Start %s End %s"), *Corner.ToString(), *Start.ToString(), *End.ToString())
 		bool bWasHit = UKismetSystemLibrary::LineTraceSingle(GetWorld(), Start,
 			End, UEngineTypes::ConvertToTraceType(ECC_LEVEL_MESH),
-			true, ActorsToIgnore, EDrawDebugTrace::ForDuration, Hit, true);
+			true, TArray<AActor*>(), EDrawDebugTrace::ForDuration, Hit, true);
 
 		UE_LOG(LogTemp, Display, TEXT("Trace Details: %s"), *Hit.ToString())
 		
@@ -243,35 +261,32 @@ void ABuildingManager::SpawnBuilding(APlayerController* Player, ETypeOfEntity Bu
 	AEmpire* PlayerEmpire = SassPlayerState->GetEmpire();
 	if (!PlayerEmpire) return;
 	
-	const TSubclassOf<AActor> ActorToSpawn = GetClassForBuildingType(BuildingToSpawn);
-	const IEntityInterface* DefaultEntity = Cast<IEntityInterface>(ActorToSpawn.GetDefaultObject());
-
 	if (!CanAfford(PlayerEmpire, BuildingToSpawn))
 	{
 		UE_LOG(LogTemp, Display, TEXT("Player %s tried to spawn %s but couldn't afford it."), *SassPlayerState->GetPlayerName(), *UEnum::GetValueAsString(BuildingToSpawn))
 		return;
 	}
+
+	const TSubclassOf<AActor> ActorToSpawn = GetClassForBuildingType(BuildingToSpawn);
 	
 	// Always spawn because we will check the permissibility of a spawn ourselves..
 	FTransform TemporaryTransform = FTransform(FVector(-1000, -1000, -1000));
 	AActor* NewActor = GetWorld()->SpawnActorDeferred<AActor>(ActorToSpawn, TemporaryTransform, Player,
 		Player->GetPawn(), ESpawnActorCollisionHandlingMethod::AlwaysSpawn);
 
-	FVector Origin, BoxExtent;
-	NewActor->GetActorBounds(true, Origin, BoxExtent);
-	UE_LOG(LogTemp, Display, TEXT("Box extent %s"), *BoxExtent.ToString())
-	FBox BoundingBox = FBox(FVector::Zero(), BoxExtent);
+	IEntityInterface* NewEntity = Cast<IEntityInterface>(NewActor);
+	
+	FBox BoundingBox = NewEntity->GetSpawnBoundingBox();
 	FHitResult EyeToLocTraceHit;
 	FVector EyeLocation;
 	FRotator EyeRotation;
-	TArray<AActor*> ActorsToIgnore;
 	Player->GetPawn()->GetActorEyesViewPoint(EyeLocation, EyeRotation);
 	bool bWasHit = UKismetSystemLibrary::LineTraceSingle(GetWorld(), EyeLocation,
 		TargetLocation + UKismetMathLibrary::GetDirectionUnitVector(EyeLocation, TargetLocation) * 2048.0f,
-		UEngineTypes::ConvertToTraceType(ECC_SPAWNING),true, ActorsToIgnore,
+		UEngineTypes::ConvertToTraceType(ECC_SPAWNING),true, TArray<AActor*>(),
 		EDrawDebugTrace::ForDuration, EyeToLocTraceHit, true);
 	
-	if (DefaultEntity->GetTypeOfEntity() == ETypeOfEntity::Gate)
+	if (NewEntity->GetTypeOfEntity() == ETypeOfEntity::Gate)
 	{
 		//TODO: Implement Gate Spawning
 	}
@@ -283,7 +298,7 @@ void ABuildingManager::SpawnBuilding(APlayerController* Player, ETypeOfEntity Bu
 		return;
 	}
 	
-	if (DefaultEntity->GetRequirementsForLevel(0).IsEntityRequired(ETypeOfEntity::City))
+	if (NewEntity->GetRequirementsForLevel(0).IsEntityRequired(ETypeOfEntity::City))
     {
         if (!TerritoryManager->IsLocationInTerritory(TargetLocation, PlayerEmpire->GetEmpireId()))
         {
@@ -302,7 +317,7 @@ void ABuildingManager::SpawnBuilding(APlayerController* Player, ETypeOfEntity Bu
     	}
     }
 
-	if (DefaultEntity->GetTypeOfEntity() == ETypeOfEntity::Wall)
+	if (NewEntity->GetTypeOfEntity() == ETypeOfEntity::Wall)
 	{
 		TArray<AActor*> NearbyWalls = GetEntitiesOfTypeInSphere(ETypeOfEntity::Wall, TargetLocation, 243.84f);
 		for (AActor* WallActor : NearbyWalls)
@@ -319,9 +334,9 @@ void ABuildingManager::SpawnBuilding(APlayerController* Player, ETypeOfEntity Bu
 	
 	//TODO: Implement spawning statistics recording functionality
 
-	PlayerEmpire->AddFood(+DefaultEntity->GetResourceCosts().Food);
-	PlayerEmpire->AddIron(+DefaultEntity->GetResourceCosts().Iron);
-	PlayerEmpire->AddGold(+DefaultEntity->GetResourceCosts().Gold);
+	PlayerEmpire->AddFood(+NewEntity->GetResourceCosts().Food);
+	PlayerEmpire->AddIron(+NewEntity->GetResourceCosts().Iron);
+	PlayerEmpire->AddGold(+NewEntity->GetResourceCosts().Gold);
 
 	if (!NewActor)
 	{
@@ -329,9 +344,7 @@ void ABuildingManager::SpawnBuilding(APlayerController* Player, ETypeOfEntity Bu
 			*UEnum::GetValueAsString(BuildingToSpawn), *TargetLocation.ToString(), *Rotator.ToString())
 	}
 	
-	IEntityInterface* NewEntity = Cast<IEntityInterface>(NewActor);
-
-	FTransform FinalTransform = FTransform(Rotator, TargetLocation);
+	FTransform FinalTransform = FTransform(Rotator, TargetLocation + NewEntity->GetSpawnOffset());
 	NewActor->FinishSpawning(FinalTransform);
 
 	UE_LOG(LogTemp, Display, TEXT("Finished Spawning.. Initializing and adding %s to empire %d"), *NewActor->GetName(), PlayerEmpire->GetEmpireId());

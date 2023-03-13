@@ -22,7 +22,8 @@ public:
 	virtual void Attack_Implementation(AActor* Target) override;
 	virtual bool Attack_Validate(AActor* Target) override;
 	virtual ETypeOfEntity GetTypeOfEntity() const override {return this->TypeOfEntity;}
-	virtual FResourceCosts GetResourceCosts() const override {return FResourceCosts(17, 12, 1);}
+	virtual FResourceCosts GetResourceCosts() const override {return FResourceCosts(17, 12, 1, 1.5);}
+	virtual TArray<FBuildingRequirements> GetBuildingRequirements() const override { return this->LevelRequirements; }
 
 protected:
 	ETypeOfEntity TypeOfEntity = ETypeOfEntity::Scallywag;
@@ -41,4 +42,11 @@ protected:
 
 	const TArray<AActor*> ActorsToIgnore = TArray<AActor*>();
 	FHitResult Hit;
+
+	TArray<FBuildingRequirements> LevelRequirements = {
+		{ FBuildingRequirements( {
+			{ETypeOfEntity::City, FBuildingRequirement::LevelOnly(0)},
+			{ETypeOfEntity::Workshop, FBuildingRequirement::LevelOnly(0)}
+		}) }
+	};
 };

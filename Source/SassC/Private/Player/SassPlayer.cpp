@@ -71,7 +71,7 @@ void ASassPlayer::Tick(float DeltaTime)
 		}
 
 		PlayerControllerPtr->GetHitResultUnderCursorByChannel(
-			UEngineTypes::ConvertToTraceType(ECC_LEVEL_MESH), true, CursorHit);
+			UEngineTypes::ConvertToTraceType(ECC_WorldStatic), true, CursorHit);
 		
 		if (ActorSpawnLatch)
 		{
@@ -84,15 +84,12 @@ void ASassPlayer::Tick(float DeltaTime)
 			ActorDestroyLatch = true;
 			ActorSpawnLatch = false;
 		}
-
-
+		
 		if (LocalObjectSpawn)
 		{
 			if (!IsRightMouseDown)
 			{
-				LocalObjectSpawn->SetActorLocation(
-					CursorHit.Location + ((FTypeOfEntity::IsBuilding(SelectedSpawnableType))
-						? FVector::ZeroVector : CurrentHalfHeight));
+				LocalObjectSpawn->SetActorLocation(CursorHit.Location + Cast<IEntityInterface>(LocalObjectSpawn)->GetSpawnOffset());
 			}
 			else if (IsRightMouseDown)
 			{
@@ -446,8 +443,8 @@ void ASassPlayer::Tick(float DeltaTime)
 					StaticObjectTypes, true, RaycastIgnore, EDrawDebugTrace::ForOneFrame, InitRaycastHit, true);
 				InitialHit = InitRaycastHit.Location;
 				FTransform Transform = FTransform(FRotator::ZeroRotator, InitialHit, FVector(1));
-				SelectionSphereHolder = (ASelectionSphere*)(GetWorld()->SpawnActor(
-					SelectionSphereClass, &Transform, SpawnParams));
+				SelectionSphereHolder = Cast<ASelectionSphere>((GetWorld()->SpawnActor(
+					SelectionSphereClass, &Transform, SpawnParams)));
 				if (!ShouldAddToSelection) TurnOffAllSelectionCircles();
 				SphereDestroyLatch = true;
 				ActorSpawnLatch = true;
@@ -851,10 +848,9 @@ void ASassPlayer::CreateSelectedUnitsArray(TArray<FHitResult> Hits, int32 Player
 	for (FHitResult Hit : Hits)
 	{
 		AUnitBase* Unit = Cast<AUnitBase>(Hit.GetActor());
-
-
-		if (Unit && !Hit.GetComponent()->ComponentHasTag(USassCStaticLibrary::NoAggroTag()) && (Unit->OwningPlayerID ==
-			PlayerID))
+		
+		if (Unit && !Hit.GetComponent()->ComponentHasTag(USassCStaticLibrary::NoAggroTag()) && (Unit->GetEmpire()->GetEmpireId() ==
+			TempPlayerState->GetEmpire()->GetEmpireId()))
 		{
 			SelectedUnits.Add(Unit);
 			Unit->SetDecalVisibility(true);

@@ -5,7 +5,7 @@
 #include "GameFramework/Actor.h"
 #include "Gamemode/Sassilization/TypeOfEntity.h"
 #include "Buildings/Data/BuildingData.h"
-#include "BuildingManager.generated.h"
+#include "EntityManager.generated.h"
 
 class ATerritoryManager;
 class AEmpire;
@@ -14,7 +14,7 @@ class AEmpire;
  * 
  */
 UCLASS(Blueprintable)
-class SASSC_API ABuildingManager : public AActor
+class SASSC_API AEntityManager : public AActor
 {
 	GENERATED_BODY()
 
