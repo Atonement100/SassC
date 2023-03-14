@@ -116,43 +116,8 @@ void ASassPlayer::Tick(float DeltaTime)
 				LocalObjectSpawn->SetActorHiddenInGame(false);
 				ResetLocalView = false;
 			}
-			if (CursorHit.Normal.Z > .990)
-			{
-				FHitResult BoxTraceHit;
-				TArray<AActor*> ActorsToIgnore;
-				ActorsToIgnore.Add(LocalObjectSpawn);
-				IsBadSpawn = UKismetSystemLibrary::BoxTraceSingle(GetWorld(), CursorHit.Location + FVector(0, 0, 2),
-				                                                  CursorHit.Location + 2 * CurrentHalfHeight,
-				                                                  FVector(CurrentTraceSize.X, CurrentTraceSize.Y, 0),
-				                                                  PreviewRotation,
-				                                                  UEngineTypes::ConvertToTraceType(ECC_SPAWNING), true,
-				                                                  ActorsToIgnore, EDrawDebugTrace::ForOneFrame,
-				                                                  BoxTraceHit, true);
-				if (ABuildingBase* BuildingCast = Cast<ABuildingBase>(LocalObjectSpawn))
-				{
-					IsBadSpawn = IsBadSpawn | AreBuildingCornersBlocked(BuildingCast->CornerLocations, CursorHit.Location,
-					                                           PreviewRotation, GetPlayerState()->GetPlayerId(),
-					                                           (Cast<ACity>(LocalObjectSpawn) ? true : false));
-				}
-				else if (AUnitBase* UnitCast = Cast<AUnitBase>(LocalObjectSpawn))
-				{
-					IsBadSpawn = IsBadSpawn | CheckUnitLocation(CursorHit.Location, PreviewRotation,
-					                                            GetPlayerState()->GetPlayerId());
-				}
-			}
-			else
-			{
-				IsBadSpawn = true;
-				for (AWall* Wall : WallsBeingPreviewed)
-				{
-					if (Wall->TempConnection)
-					{
-						Wall->TempConnection->Destroy();
-						Wall->TempConnection = nullptr;
-					}
-				}
-				WallsBeingPreviewed.Empty();
-			}
+
+			IsBadSpawn = !PlayerControllerPtr->IsSpawnableRequestValid(LocalObjectSpawn, CursorHit.Location, PreviewRotation);
 
 			FLinearColor NewColor = IsBadSpawn ? FLinearColor(.7f, 0.0f, .058f) : FLinearColor(.093f, .59f, .153f);
 
@@ -529,26 +494,9 @@ void ASassPlayer::LeftClickPressed()
 	{
 		if (PlayerControllerPtr->IsUnitMenuOpen())
 		{
-			if (PlayerControllerPtr == nullptr) return;
 			FHitResult Hit;
-			TArray<FVector> LocationsToCheck;
-			TArray<AActor*> ActorsToIgnore = TArray<AActor*>();
-
-			PlayerControllerPtr->GetHitResultUnderCursorByChannel(UEngineTypes::ConvertToTraceType(ECC_Visibility),
-			                                                      true, Hit); // Assign Hit
-
-			if (ABuildingBase* LocalBuildingRef = Cast<ABuildingBase>(LocalObjectSpawn))
-			{
-				LocationsToCheck = LocalBuildingRef->CornerLocations;
-				if (SelectedSpawnableType == ETypeOfEntity::Gate) { ActorsToIgnore = TempGateWalls; }
-			}
-
-			const TArray<AActor*> ConfirmedToIgnore = ActorsToIgnore;
+			PlayerControllerPtr->GetHitResultUnderCursorByChannel(UEngineTypes::ConvertToTraceType(ECC_Visibility),true, Hit);
 			PlayerControllerPtr->ServerRequestBuildingSpawn(GetPlayerState<ASassPlayerState>()->GetSelectedTypeOfEntity(), Hit.Location, PreviewRotation);
-			
-			// ServerSpawnBuilding(Cast<ASassPlayerController>(PlayerControllerPtr), SelectedSpawnableClass, Hit,
-			//                     PreviewRotation, CurrentHalfHeight, LocationsToCheck, CurrentTraceSize,
-			//                     GetPlayerState()->GetPlayerId(), ConfirmedToIgnore);
 		}
 	}
 }
@@ -634,27 +582,6 @@ void ASassPlayer::QuitGame()
 	FGenericPlatformMisc::RequestExit(false);
 }
 
-void ASassPlayer::UpdateSelectedSpawnableClass(UClass* NewClass, ETypeOfEntity NewTypeOfSpawnable)
-{
-	if (!NewClass) return;
-	SelectedSpawnableClass = NewClass;
-	SelectedSpawnableType = NewTypeOfSpawnable;
-	UObject* NewActor = SelectedSpawnableClass->GetDefaultObject();
-
-	if (NewActor->IsA(ABuildingBase::StaticClass()))
-	{
-		ABuildingBase* SelectedBuilding = Cast<ABuildingBase>(NewActor);
-		CurrentHalfHeight = SelectedBuilding->HalfHeight;
-		CurrentTraceSize = SelectedBuilding->TraceSize;
-	}
-	else if (NewActor->IsA(AUnitBase::StaticClass()))
-	{
-		AUnitBase* SelectedUnit = Cast<AUnitBase>(NewActor);
-		CurrentHalfHeight = FVector(0, 0, SelectedUnit->GetCapsuleComponent()->GetScaledCapsuleHalfHeight());
-		CurrentTraceSize = SelectedUnit->TraceSize;
-	}
-}
-
 #pragma region Pause functions
 void ASassPlayer::PausePressed()
 {
@@ -725,13 +652,13 @@ void ASassPlayer::CrouchReleased()
 	ServerCrouch(false, GetCharacterMovement());
 }
 
-void ASassPlayer::ServerCrouch_Implementation(bool isCrouching, UCharacterMovementComponent* movementComponent)
+void ASassPlayer::ServerCrouch_Implementation(bool bIsCrouching, UCharacterMovementComponent* MovementComponent)
 {
-	if (isCrouching) { movementComponent->MaxWalkSpeed = CrouchSpeed; }
-	else { movementComponent->MaxWalkSpeed = WalkSpeed; }
+	if (bIsCrouching) { MovementComponent->MaxWalkSpeed = CrouchSpeed; }
+	else { MovementComponent->MaxWalkSpeed = WalkSpeed; }
 }
 
-bool ASassPlayer::ServerCrouch_Validate(bool isCrouching, UCharacterMovementComponent* movementComponent)
+bool ASassPlayer::ServerCrouch_Validate(bool bIsCrouching, UCharacterMovementComponent* MovementComponent)
 {
 	return true;
 }
@@ -752,13 +679,13 @@ void ASassPlayer::SprintReleased()
 	ServerSprint(false, GetCharacterMovement());
 }
 
-void ASassPlayer::ServerSprint_Implementation(bool isRunning, UCharacterMovementComponent* movementComponent)
+void ASassPlayer::ServerSprint_Implementation(bool bIsRunning, UCharacterMovementComponent* MovementComponent)
 {
-	if (isRunning) movementComponent->MaxWalkSpeed = SprintSpeed;
-	else movementComponent->MaxWalkSpeed = WalkSpeed;
+	if (bIsRunning) MovementComponent->MaxWalkSpeed = SprintSpeed;
+	else MovementComponent->MaxWalkSpeed = WalkSpeed;
 }
 
-bool ASassPlayer::ServerSprint_Validate(bool isRunning, UCharacterMovementComponent* movementComponent)
+bool ASassPlayer::ServerSprint_Validate(bool bIsRunning, UCharacterMovementComponent* MovementComponent)
 {
 	return true;
 }
@@ -864,189 +791,6 @@ AActor* ASassPlayer::GetSelectionSphereHolder()
 {
 	return SelectionSphereHolder;
 }
-
-#pragma endregion
-
-#pragma region Server-side Spawning
-void ASassPlayer::ServerSpawnBuilding_Implementation(ASassPlayerController* PlayerController,
-                                                     TSubclassOf<AActor> ActorToSpawn, FHitResult Hit, FRotator Rotator,
-                                                     const FVector& HalfHeight, const TArray<FVector>& Midpoints,
-                                                     const FVector& TraceSize, int32 PlayerID,
-                                                     const TArray<AActor*>& ActorsToIgnore)
-{
-	const FActorSpawnParameters SpawnParams = FActorSpawnParameters();
-	FActorSpawnParameters TempParams = FActorSpawnParameters();
-	TempParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-	const FActorSpawnParameters WallParams = FActorSpawnParameters(TempParams);
-
-	const FVector Location = Hit.Location + HalfHeight;
-	const FRotator Rotation = Rotator;
-
-	bool SpawningBuilding = ActorToSpawn.GetDefaultObject()->IsA(ABuildingBase::StaticClass());
-
-	if (!Hit.GetActor())
-	{
-		return;
-	}
-
-	if (Hit.GetActor()->IsA(ABuildingBase::StaticClass()))
-	{
-		if (ActorToSpawn.GetDefaultObject()->IsA(ATower::StaticClass()) && Hit.GetActor()->IsA(ATower::StaticClass()))
-		{
-			ATower* TempTower = Cast<ATower>(Hit.GetActor());
-			if (TempTower->OwningPlayerID == PlayerID) TempTower->UpgradeBuilding();
-		}
-		else if (ActorToSpawn.GetDefaultObject()->IsA(AWorkshop::StaticClass()) && Hit.GetActor()->IsA(
-			AWorkshop::StaticClass()))
-		{
-			AWorkshop* TempWorkshop = Cast<AWorkshop>(Hit.GetActor());
-			if (TempWorkshop->OwningPlayerID == PlayerID) TempWorkshop->UpgradeBuilding();
-		}
-
-		return;
-	}
-
-	if (Hit.Normal.Z < .990)
-	{
-		//Bad Spawn
-		GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red,
-										 "SassPlayer ServerSpawnBuilding: Could not spawn because location uneven");
-		return;
-	}
-
-	const TArray<AActor*> BoxIgnore;
-	FHitResult BoxHit;
-
-	if (UKismetSystemLibrary::BoxTraceSingle(GetWorld(), Hit.Location + FVector(0, 0, 2),
-											  Hit.Location + 2 * HalfHeight,
-											  FVector(TraceSize.X, TraceSize.Y, 0), Rotation,
-											  UEngineTypes::ConvertToTraceType(ECC_SPAWNING), true,
-											  ActorsToIgnore, EDrawDebugTrace::ForDuration, BoxHit, true))
-	{
-		//Bad Spawn
-		GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red,
-										 "SassPlayer ServerSpawnBuilding: Could not spawn because trace hit something");
-		return;
-	}
-
-	GEngine->AddOnScreenDebugMessage(-1, 4.0f, FColor::Red,
-	                                 UKismetStringLibrary::Conv_VectorToString(Location));
-
-	if ((!ActorToSpawn.GetDefaultObject()->IsA(ABuildingBase::StaticClass()) || AreBuildingCornersBlocked(
-			Midpoints, Hit.Location, PreviewRotation, PlayerID,
-			ActorToSpawn.GetDefaultObject()->IsA(ACity::StaticClass()))) && (!ActorToSpawn.GetDefaultObject()->IsA(AUnitBase::StaticClass()) || CheckUnitLocation(
-			Hit.Location, PreviewRotation, PlayerID)))
-	{
-		//Bad Spawn
-		GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red,
-										 "SassPlayer ServerSpawnBuilding: Could not spawn because corners were obstructed");
-		return;
-	}
-	
-	// If all checks have passed so far, let's go ahead and spawn the actor.
-	FVector NewLocation = (Location);
-	AActor* NewSpawn = GetWorld()->SpawnActor(ActorToSpawn, &NewLocation, &Rotation, SpawnParams);
-
-	if (NewSpawn == nullptr)
-	{
-		GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red,
-		                                 "SassPlayer ServerSpawnBuilding: Could not spawn, unknown reason");
-		return;
-	}
-
-	if (SpawningBuilding) { NewSpawn->SetActorLocation(Hit.Location); }
-	
-	ASassPlayerState* SassPlayerState = GetPlayerState<ASassPlayerState>();
-	if (SassPlayerState != nullptr)
-	{
-		SassPlayerState->ControlledBuildings.Add(NewSpawn);
-		NewSpawn->SetOwner(PlayerController);
-	}
-
-	//@TODO: Should find a way to consolidate these... hard with units being ACharacter, buildings being AActor to give them a common unit
-	//try unit (more likely)
-	if (AUnitBase* NewUnit = Cast<AUnitBase>(NewSpawn))
-	{
-		NewUnit->UpdateMaterial(SassPlayerState->PlayerColor);
-		NewUnit->SpawnDefaultController();
-		NewUnit->OwningPlayerID = PlayerID;
-
-		//Don't think units need to have location fixed. Small change shouldn't matter. If it does an alternative solution will need to be found, as this causes issues.
-		//NewUnit->FixSpawnLocation(Location);
-
-		return;
-	}
-	
-	//try building
-	if (ABuildingBase* NewBuilding = Cast<ABuildingBase>(NewSpawn))
-	{
-		NewBuilding->UpdateMaterial(SassPlayerState->PlayerColor, true);
-		NewBuilding->OwningPlayerID = PlayerID;
-		NewBuilding->PostCreation(SassPlayerState->PlayerColor);
-		NewBuilding->FixSpawnLocation(Hit.Location);
-		if (AWall* WallCast = Cast<AWall>(NewBuilding))
-		{
-			TArray<AWall*> WallsInRange = WallCast->FindWallTowersInRange();
-			for (AWall* TargetWall : WallsInRange)
-			{
-				if (TargetWall->OwningPlayerID == PlayerID)
-				{
-					ServerSpawnWall(WallCast, TargetWall, PlayerID, SassPlayerState->PlayerColor);
-				}
-			}
-		}
-		else if (AGate* GateCast = Cast<AGate>(NewBuilding))
-		{
-			//@TODO Check if I can skip AActor* and just spawn in with Ignore.Add(Getworld. . .  .
-			const FVector LeftLoc = Hit.Location + HalfHeight + (Rotator + FRotator(0, 90, 0)).
-				Vector() * 50 + FVector(0, 0, -20);
-			const FVector RightLoc = Hit.Location + HalfHeight + (Rotator + FRotator(0, 90, 0)).
-				Vector() * -50 + FVector(0, 0, -20);
-			AActor* x = GetWorld()->SpawnActor(WallClass, &LeftLoc, &Rotation, WallParams);
-			AActor* y = GetWorld()->SpawnActor(WallClass, &RightLoc, &Rotation, WallParams);
-			TArray<AActor*> Ignore = TArray<AActor*>(ActorsToIgnore);
-			Ignore.Add(x);
-			Ignore.Add(y);
-
-			for (int SideNum = 0; SideNum < Ignore.Num(); SideNum++)
-			{
-				if (!Ignore[SideNum]) continue;
-				AWall* Wall = Cast<AWall>(Ignore[SideNum]);
-				Wall->OwningPlayerID = PlayerID;
-				Wall->UpdateMaterial(SassPlayerState->PlayerColor, true);
-				Wall->PostCreation(SassPlayerState->PlayerColor);
-				ServerSpawnWall(Wall, Wall->GetClosestWallTowerInRange(100.0f, Ignore), PlayerID,
-				                SassPlayerState->PlayerColor);
-			}
-		}
-		else if (AShieldMonolith* MonoCast = Cast<AShieldMonolith>(NewBuilding))
-		{
-			TArray<AShieldMonolith*> MonolithsInRange = MonoCast->FindMonolithsInRange();
-			if (MonolithsInRange.Num() > 0)
-			{
-				UParticleSystem* PSysToSpawn = MonoCast->BeamPSys;
-				for (AShieldMonolith* TargetMonolith : MonolithsInRange)
-				{
-					TargetMonolith->SpawnBeamEmitter(PSysToSpawn, MonoCast, TargetMonolith);
-				}
-			}
-		}
-
-		return;
-	}
-
-	GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red,
-	                                 "SassPlayer ServerSpawnBuilding: Could not spawn, server could not determine what spawn was being asked for");
-}
-
-bool ASassPlayer::ServerSpawnBuilding_Validate(ASassPlayerController* PlayerController,
-                                               TSubclassOf<AActor> ActorToSpawn, FHitResult Hit, FRotator Rotator,
-                                               const FVector& HalfHeight, const TArray<FVector>& Midpoints,
-                                               const FVector& TraceSize, int32 PlayerID,
-                                               const TArray<AActor*>& ActorsToIgnore)
-{
-	return true;
-}
 #pragma endregion
 
 void ASassPlayer::GetAllPlayerColors()
@@ -1074,127 +818,6 @@ bool ASassPlayer::ColorPlayer_Validate(FLinearColor PlayerColor)
 	return true;
 }
 
-bool ASassPlayer::CheckUnitLocation(FVector Center, FRotator Rotator, int32 PlayerID)
-{
-	TArray<AActor*> nullArray;
-	FHitResult Hit;
-	if (UKismetSystemLibrary::LineTraceSingle(GetWorld(), Center + FVector(0, 0, 55.0f), Center - FVector(0, 0, 15.0f),
-	                                          UEngineTypes::ConvertToTraceType(
-		                                          ECollisionChannel::ECC_GameTraceChannel1), false, nullArray,
-	                                          EDrawDebugTrace::ForOneFrame, Hit, true))
-	{
-		if (ABuildingBase* Bldg = Cast<ABuildingBase>(Hit.GetActor()))
-		{
-			if (Bldg->OwningPlayerID == PlayerID)
-			{
-				GEngine->AddOnScreenDebugMessage(-1, GetWorld()->DeltaTimeSeconds, FColor::Emerald,
-				                                 "SassPlayer CheckUnitLocation: good spawn inside TERRITORY");
-				return false;
-			}
-		}
-	}
-	return true;
-}
-
-bool ASassPlayer::AreBuildingCornersBlocked(TArray<FVector> ExtraLocs, FVector Center, FRotator Rotator, int32 PlayerID,
-                                   bool isCity)
-{
-	if (ExtraLocs.Num() == 0)
-	{
-		GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Red, "No extra locs");
-		return true;
-	}
-
-	FHitResult Hit;
-	FVector DirectionUnitVector = (Rotator).Vector();
-	TArray<float> TraceHeights;
-	TArray<AActor*> Ignore;
-
-	for (FVector Loc : ExtraLocs)
-	{
-		float Magnitude = Loc.Size2D();
-		FVector Displacement = (Loc.Rotation() + Rotator).Vector() * Magnitude;
-		if (UKismetSystemLibrary::LineTraceSingleForObjects(GetWorld(), Center + Displacement + FVector(0, 0, 15.0f),
-		                                                    Center + Displacement - FVector(0, 0, 15.0f),
-		                                                    StaticObjectTypes, true, Ignore,
-		                                                    EDrawDebugTrace::ForOneFrame, Hit, true))
-		{
-			TraceHeights.Add(Hit.Location.Z);
-		}
-		else
-		{
-			GEngine->AddOnScreenDebugMessage(-1, GetWorld()->DeltaTimeSeconds, FColor::Emerald,
-			                                 "SassPlayer CheckBldgCorners: TRACE MADE NO CONTACT");
-			return true;
-		}
-	}
-	float first = TraceHeights[0];
-	for (float Height : TraceHeights)
-	{
-		if (FMath::Abs(Height - first) > MAX_BLDG_CORNER_DIFFERENCE)
-		{
-			GEngine->AddOnScreenDebugMessage(-1, GetWorld()->DeltaTimeSeconds, FColor::Emerald,
-			                                 "SassPlayer CheckBldgCorners: HEIGHTS NOT EQUAL");
-			return true;
-		}
-	}
-
-
-	TArray<AActor*> nullArray;
-	for (FVector Loc : ExtraLocs)
-	{
-		// float Magnitude = Loc.Size2D();
-		// FVector Displacement = (Loc.Rotation() + Rotator).Vector() * Magnitude;
-		// if (UKismetSystemLibrary::LineTraceSingle(GetWorld(), Center + Displacement + FVector(0, 0, 65.0f),
-		//                                           Center + Displacement - FVector(0, 0, 15.0f),
-		//                                           UEngineTypes::ConvertToTraceType(
-		// 	                                          ECollisionChannel::ECC_GameTraceChannel1), false, nullArray,
-		//                                           EDrawDebugTrace::ForOneFrame, Hit, true))
-		// {
-		// 	if (ABuildingBase* Bldg = Cast<ABuildingBase>(Hit.GetActor()))
-		// 	{
-		// 		if (Bldg->OwningPlayerID != PlayerID)
-		// 		{
-		// 			GEngine->AddOnScreenDebugMessage(-1, GetWorld()->DeltaTimeSeconds, FColor::Emerald,
-		// 			                                 "SassPlayer CheckBldgCorners: OVERLAPS ENEMY TERRITORY");
-		// 			return true;
-		// 		}
-		// 	}
-		// }
-		// else if (!isCity)
-		// {
-		// 	//Trace did not hit
-		// 	GEngine->AddOnScreenDebugMessage(-1, GetWorld()->DeltaTimeSeconds, FColor::Green,
-		// 	                                 "SassPlayer CheckBldgCorners: TERRITORY TRACE DID NOT MAKE CONTACT");
-		// 	return true;
-		// }
-	}
-
-	if (isCity)
-	{
-		TArray<FHitResult> SphereHits;
-		UKismetSystemLibrary::SphereTraceMulti(GetWorld(), Center, Center + FVector(0, 0, 1),
-		                                       USassCStaticLibrary::CityDefaultInfluenceRange(),
-		                                       UEngineTypes::ConvertToTraceType(
-			                                       ECollisionChannel::ECC_GameTraceChannel1), false, nullArray,
-		                                       EDrawDebugTrace::ForOneFrame, SphereHits, true);
-		for (FHitResult AHit : SphereHits)
-		{
-			if (ABuildingBase* Bldg = Cast<ABuildingBase>(AHit.GetActor()))
-			{
-				if (Bldg->OwningPlayerID != PlayerID)
-				{
-					GEngine->AddOnScreenDebugMessage(-1, GetWorld()->DeltaTimeSeconds, FColor::Orange,
-					                                 "SassPlayer CheckBldgCorners: CITY TERRITORY OVERLAPS ENEMY TERRITORY");
-					return true;
-				}
-			}
-		}
-	}
-
-	return false;
-}
-
 void ASassPlayer::LateStart_Implementation(APlayerController* NewPlayer)
 {
 }
@@ -1205,7 +828,7 @@ bool ASassPlayer::LateStart_Validate(APlayerController* NewPlayer)
 }
 
 
-void ASassPlayer::SpawnWallPreview_Implementation(FVector Location, FRotator Rotation)
+void ASassPlayer::SpawnWallPreview(FVector Location, FRotator Rotation)
 {
 	FActorSpawnParameters TempParams = FActorSpawnParameters();
 	TempParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;

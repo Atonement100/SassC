@@ -100,9 +100,9 @@ void ASassPlayerController::UpdateHUD(TSubclassOf<UUserWidget> WidgetToCreate)
 	}
 }
 
-bool ASassPlayerController::IsSpawnableRequestValid()
+bool ASassPlayerController::IsSpawnableRequestValid(AActor* ActorToCheck, FVector Location, FRotator Rotation)
 {
-	return SassGameManager->IsValidBuildLocation();
+	return SassGameManager->IsValidSpawnLocation(this, ActorToCheck, Location, Rotation);
 }
 
 bool ASassPlayerController::RequestSpawnable()

@@ -25,12 +25,11 @@ public:
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 	
 	UFUNCTION(BlueprintCallable)
-	bool IsValidBuildLocation();
+	bool IsValidSpawnLocation(APlayerController* Player, AActor* ActorToCheck, FVector Location, FRotator Rotator);
 	AActor* RequestGhostSpawn(APlayerController* Player, ETypeOfEntity BuildingToSpawn, FVector Location, FRotator Rotator) const;
 
 	UFUNCTION(BlueprintCallable)
-	bool RequestBuildingSpawn(APlayerController* Player, ETypeOfEntity BuildingToSpawn, FVector Location,
-		FRotator Rotator);
+	bool RequestBuildingSpawn(APlayerController* Player, ETypeOfEntity BuildingToSpawn, FVector Location, FRotator Rotator);
 	AGraphNode* GetClosestNode(FVector Location, float SearchRadius) const;
 	void UpdateTerritories() const;
 

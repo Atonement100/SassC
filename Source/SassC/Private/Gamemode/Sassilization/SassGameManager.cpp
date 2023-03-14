@@ -2,6 +2,8 @@
 
 
 #include "Gamemode/Sassilization/SassGameManager.h"
+
+#include "Core/EntityInterface.h"
 #include "Gamemode/Sassilization/EntityManager.h"
 #include "Gamemode/Sassilization/EmpireManager.h"
 #include "Gamemode/Sassilization/Territory/TerritoryInfo.h"
@@ -21,14 +23,12 @@ void ASassGameManager::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& Out
 }
 
 
-bool ASassGameManager::IsValidBuildLocation()//UEmpire* Empire, )
+bool ASassGameManager::IsValidSpawnLocation(APlayerController* Player, AActor* ActorToCheck, FVector Location, FRotator Rotator)
 {
-	//BuildingManager->CanBuild()
-	return true;
+	return EntityManager->IsValidSpawnLocation(Player, ActorToCheck, Location, Rotator, GetTerritoryManager());
 }
 
-AActor* ASassGameManager::RequestGhostSpawn(APlayerController* Player, ETypeOfEntity BuildingToSpawn,
-	FVector Location, FRotator Rotator) const
+AActor* ASassGameManager::RequestGhostSpawn(APlayerController* Player, ETypeOfEntity BuildingToSpawn, FVector Location, FRotator Rotator) const
 {
 	return EntityManager->SpawnGhost(Player, BuildingToSpawn, Location, Rotator);
 }

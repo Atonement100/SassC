@@ -35,7 +35,7 @@ public:
 	UFUNCTION(BlueprintCallable) 
 	void UpdateHUD(TSubclassOf<UUserWidget> WidgetToCreate);
 	UFUNCTION(BlueprintCallable)
-	bool IsSpawnableRequestValid();
+	bool IsSpawnableRequestValid(AActor* ActorToCheck, FVector Location, FRotator Rotation);
 	UFUNCTION(BlueprintCallable)
 	bool RequestSpawnable();
 	UFUNCTION(Reliable, Server, WithValidation, BlueprintCallable)

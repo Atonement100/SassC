@@ -5,6 +5,7 @@
 #include "GameFramework/Actor.h"
 #include "Gamemode/Sassilization/TypeOfEntity.h"
 #include "Buildings/Data/BuildingData.h"
+#include "Core/EntityInterface.h"
 #include "EntityManager.generated.h"
 
 class ATerritoryManager;
@@ -32,6 +33,10 @@ public:
 	TSubclassOf<AActor> GetClassForEntityType(const ETypeOfEntity TypeOfEntity) const;
 	UFUNCTION(BlueprintCallable)
 	TArray<AActor*> GetEntitiesOfTypeInSphere(ETypeOfEntity TypeOfEntity, FVector Location, float Radius) const;
+	bool IsValidSpawnLocation(APlayerController* Player, AActor* ActorToCheck, const FVector& TargetLocation, const FRotator& Rotator, ATerritoryManager
+	                          * TerritoryManager);
+	bool IsInValidTerritory(const IEntityInterface* NewEntity, ATerritoryManager* TerritoryManager, FVector TargetLocation, AEmpire* PlayerEmpire);
+	bool AreWallTowersTooClose(IEntityInterface* NewEntity, FVector TargetLocation, AEmpire* PlayerEmpire);
 
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)

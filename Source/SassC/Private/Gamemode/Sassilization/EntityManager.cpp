@@ -117,7 +117,7 @@ bool AEntityManager::CanFit(FHitResult PlayerToLocTraceResult, FBox EntityBoundi
 {
 	if (!PlayerToLocTraceResult.bBlockingHit || PlayerToLocTraceResult.Normal.Z < .7)
 	{
-		UE_LOG(Sassilization, Display, TEXT("Blocking Hit? %s Normal Z? %f"),
+		UE_LOG(Sassilization, Display, TEXT("Can't fit due to either Blocking Hit? %s or Normal Z? %f"),
 			PlayerToLocTraceResult.bBlockingHit ? TEXT("true") : TEXT("false"), PlayerToLocTraceResult.Normal.Z)
 		return false;
 	}
@@ -126,9 +126,6 @@ bool AEntityManager::CanFit(FHitResult PlayerToLocTraceResult, FBox EntityBoundi
 							- PlayerToLocTraceResult.Normal * EntityBoundingBox.Min.Z
 							+ PlayerToLocTraceResult.Normal * .1905;
 	FVector BoxCenter = EntityBoundingBox.GetExtent() * 2;
-	
-	UE_LOG(Sassilization, Display, TEXT("BoundingBox %s"), *EntityBoundingBox.ToString());
-	UE_LOG(Sassilization, Display, TEXT("BoxCenter %s"), *BoxCenter.ToString());
 	
 	TArray<FVector> Corners = {
 		FVector(BoxCenter.X, BoxCenter.Y, 0),
@@ -141,12 +138,6 @@ bool AEntityManager::CanFit(FHitResult PlayerToLocTraceResult, FBox EntityBoundi
 	{
 		float Magnitude = Corners[Index].Size2D();
 		Corners[Index] = (Corners[Index].Rotation() + Rotation).Vector() * Magnitude + HitLocation;
-	}
-
-	UE_LOG(Sassilization, Display, TEXT("Corners: "))
-	for (FVector Corner : Corners)
-	{
-		UE_LOG(Sassilization, Display, TEXT("Corner : %s"), *Corner.ToString())
 	}
 	
 	// TODO: if target location or corners are translucent or underwater return then fail the check
@@ -273,7 +264,14 @@ void AEntityManager::SpawnEntity(APlayerController* Player, ETypeOfEntity Entity
 	FTransform TemporaryTransform = FTransform(FVector(-1000, -1000, -1000));
 	AActor* NewActor = GetWorld()->SpawnActorDeferred<AActor>(ActorToSpawn, TemporaryTransform, Player,
 		Player->GetPawn(), ESpawnActorCollisionHandlingMethod::AlwaysSpawn);
-
+	
+	if (!NewActor)
+	{
+		UE_LOG(Sassilization, Warning, TEXT("Actor failed to spawn!! Type: %s, Loc: %s, Rot: %s"),
+			*UEnum::GetValueAsString(EntityToSpawn), *TargetLocation.ToString(), *Rotator.ToString())
+		return;
+	}
+	
 	IEntityInterface* NewEntity = Cast<IEntityInterface>(NewActor);
 	
 	FBox BoundingBox = NewEntity->GetSpawnBoundingBox();
@@ -298,38 +296,18 @@ void AEntityManager::SpawnEntity(APlayerController* Player, ETypeOfEntity Entity
 		return;
 	}
 	
-	if (NewEntity->GetRequirementsForLevel(0).IsEntityRequired(ETypeOfEntity::City))
-    {
-        if (!TerritoryManager->IsLocationInTerritory(TargetLocation, PlayerEmpire->GetEmpireId()))
-        {
-            UE_LOG(Sassilization, Display, TEXT("Target Location was not in player's territory but requires a city. Loc %s EmpireId %d"), *TargetLocation.ToString(), PlayerEmpire->GetEmpireId())
-        	NewActor->Destroy();
-            return;
-        }
-    }
-    else
-    {
-    	if (!TerritoryManager->IsLocationInTerritory(TargetLocation, 0))
-    	{
-    		UE_LOG(Sassilization, Display, TEXT("Target Location was not in empty territory but needed to be Loc %s EmpireId %d"), *TargetLocation.ToString(), PlayerEmpire->GetEmpireId())
-    		NewActor->Destroy();
-    		return;
-    	}
-    }
-
-	if (NewEntity->GetTypeOfEntity() == ETypeOfEntity::Wall)
+	if (!IsInValidTerritory(NewEntity, TerritoryManager, TargetLocation, PlayerEmpire))
 	{
-		TArray<AActor*> NearbyWalls = GetEntitiesOfTypeInSphere(ETypeOfEntity::Wall, TargetLocation, 243.84f);
-		for (AActor* WallActor : NearbyWalls)
-		{
-			if (Cast<IEntityInterface>(WallActor)->GetEmpire() == PlayerEmpire &&
-				FVector::Dist(WallActor->GetActorLocation(), TargetLocation) < 60.96f)
-			{
-				UE_LOG(Sassilization, Display, TEXT("Wall was too close to %s"), *WallActor->GetName())
-				NewActor->Destroy();
-				return;
-			}
-		}
+		UE_LOG(Sassilization, Display, TEXT("Target Location was not in valid territory. Loc %s EmpireId %d"), *TargetLocation.ToString(), PlayerEmpire->GetEmpireId())
+		NewActor->Destroy();
+		return;
+	}
+
+	if (AreWallTowersTooClose(NewEntity, TargetLocation, PlayerEmpire))
+	{
+		UE_LOG(Sassilization, Display, TEXT("Wall was too close to another"))
+		NewActor->Destroy();
+		return;
 	}
 	
 	//TODO: Implement spawning statistics recording functionality
@@ -337,12 +315,6 @@ void AEntityManager::SpawnEntity(APlayerController* Player, ETypeOfEntity Entity
 	PlayerEmpire->AddFood(+NewEntity->GetResourceCosts().Food);
 	PlayerEmpire->AddIron(+NewEntity->GetResourceCosts().Iron);
 	PlayerEmpire->AddGold(+NewEntity->GetResourceCosts().Gold);
-
-	if (!NewActor)
-	{
-		UE_LOG(Sassilization, Warning, TEXT("Actor failed to spawn!! Type: %s, Loc: %s, Rot: %s"),
-			*UEnum::GetValueAsString(EntityToSpawn), *TargetLocation.ToString(), *Rotator.ToString())
-	}
 	
 	FTransform FinalTransform = FTransform(Rotator, TargetLocation + NewEntity->GetSpawnOffset());
 	NewActor->FinishSpawning(FinalTransform);
@@ -376,4 +348,71 @@ TArray<AActor*> AEntityManager::GetEntitiesOfTypeInSphere(ETypeOfEntity TypeOfEn
 		TraceObjectTypes, GetClassForEntityType(TypeOfEntity), TArray<AActor*>(), OverlappingActors);
 
 	return OverlappingActors;
+}
+
+bool AEntityManager::IsInValidTerritory(const IEntityInterface* NewEntity, ATerritoryManager* TerritoryManager, FVector TargetLocation, AEmpire* PlayerEmpire)
+{
+	if (NewEntity->GetRequirementsForLevel(0).IsEntityRequired(ETypeOfEntity::City))
+	{
+		if (!TerritoryManager->IsLocationInTerritory(TargetLocation, PlayerEmpire->GetEmpireId()))
+		{
+			UE_LOG(Sassilization, Verbose, TEXT("Target Location was not in player's territory but requires a city. Loc %s EmpireId %d"), *TargetLocation.ToString(), PlayerEmpire->GetEmpireId())
+			return false;
+		}
+	}
+	else
+	{
+		if (!TerritoryManager->IsLocationInTerritory(TargetLocation, 0))
+		{
+			UE_LOG(Sassilization, Verbose, TEXT("Target Location was not in empty territory but needed to be Loc %s EmpireId %d"), *TargetLocation.ToString(), PlayerEmpire->GetEmpireId())
+			return false;
+		}
+	}
+
+	return true;
+}
+
+bool AEntityManager::AreWallTowersTooClose(IEntityInterface* NewEntity, FVector TargetLocation, AEmpire* PlayerEmpire)
+{
+	if (NewEntity->GetTypeOfEntity() == ETypeOfEntity::Wall)
+	{
+		TArray<AActor*> NearbyWalls = GetEntitiesOfTypeInSphere(ETypeOfEntity::Wall, TargetLocation, 243.84f);
+		for (AActor* WallActor : NearbyWalls)
+		{
+			if (Cast<IEntityInterface>(WallActor)->GetEmpire() == PlayerEmpire &&
+				FVector::Dist(WallActor->GetActorLocation(), TargetLocation) < 60.96f)
+			{
+				return true;
+			}
+		}
+	}
+
+	return false;
+}
+
+bool AEntityManager::IsValidSpawnLocation(APlayerController* Player, AActor* ActorToCheck, const FVector& TargetLocation,
+	const FRotator& Rotator, ATerritoryManager* TerritoryManager)
+{
+	const ASassPlayerState* SassPlayerState = Player->GetPlayerState<ASassPlayerState>();
+	const IEntityInterface* EntityToCheck = Cast<IEntityInterface>(ActorToCheck); 
+	if (!SassPlayerState->IsAllowedToSpawnEntity()) return false;
+	
+	AEmpire* PlayerEmpire = SassPlayerState->GetEmpire();
+	if (!PlayerEmpire) return false;
+	if (!CanAfford(PlayerEmpire, EntityToCheck->GetTypeOfEntity())) return false;
+
+	// TODO: Factor this into common function, maybe at Module level 
+	FHitResult EyeToLocTraceHit;
+	FVector EyeLocation;
+	FRotator EyeRotation;
+	Player->GetPawn()->GetActorEyesViewPoint(EyeLocation, EyeRotation);
+	bool bWasHit = UKismetSystemLibrary::LineTraceSingle(GetWorld(), EyeLocation,
+		TargetLocation + UKismetMathLibrary::GetDirectionUnitVector(EyeLocation, TargetLocation) * 2048.0f,
+		UEngineTypes::ConvertToTraceType(ECC_SPAWNING),true,{ActorToCheck},
+		EDrawDebugTrace::ForDuration, EyeToLocTraceHit, true);
+	
+	if (!CanFit(EyeToLocTraceHit, EntityToCheck->GetSpawnBoundingBox(), Rotator, true, true)) return false;
+	if (!IsInValidTerritory(EntityToCheck, TerritoryManager, TargetLocation, PlayerEmpire)) return false;
+
+	return true;
 }
