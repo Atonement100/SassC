@@ -18,6 +18,7 @@ class SASSC_API AGraphNode : public AActor
 public:
 	// Sets default values for this actor's properties
 	AGraphNode();
+	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
 protected:
 	// Called when the game starts or when spawned
@@ -40,7 +41,7 @@ protected:
 	FVector Normal;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Territory")
 	AGraphNode* AStarParentNode;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Territory")
+	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, Category = "Territory")
 	float AStarFScore;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Territory")
 	float AStarGScore;

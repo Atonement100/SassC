@@ -5,20 +5,27 @@
 
 #include "Gamemode/Sassilization/Territory/GraphBorderData.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "Net/UnrealNetwork.h"
 
 
 AGraphNode::AGraphNode()
 {
+	this->bReplicates = true;
 	PrimaryActorTick.bCanEverTick = false;
 	Connections.SetNum(8, false);
 	HasVisited.SetNum(8, false);
+}
+
+void AGraphNode::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+	DOREPLIFETIME(AGraphNode, AStarFScore)
 }
 
 // Called when the game starts or when spawned
 void AGraphNode::BeginPlay()
 {
 	Super::BeginPlay();
-
 }
 
 int32 AGraphNode::GetEmpireId() const

@@ -172,7 +172,7 @@ void AEmpire::CalculateSupply()
 
 bool AEmpire::HasColor() const
 {
-	return this->EmpireColor == NullColor;
+	return this->EmpireColor != NullColor;
 }
 
 void AEmpire::SetColor(const FColor NewColor)
