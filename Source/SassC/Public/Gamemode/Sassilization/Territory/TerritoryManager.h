@@ -6,6 +6,7 @@
 #include "Gamemode/Sassilization/Territory/EmpireBorderData.h"
 #include "TerritoryManager.generated.h"
 
+class ATerritoryVisual;
 class ANodeManager;
 
 /**
@@ -22,14 +23,17 @@ public:
 	AGraphNode* GetNearestNode(FVector Location, float SearchRadius) const;
 	UFUNCTION(BlueprintCallable)
 	bool IsLocationInTerritory(FVector Location, uint8 EmpireId) const;
-	UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
-	void UpdateTerritories();
+	UFUNCTION(Reliable, Server, WithValidation, BlueprintCallable)
+	void ServerUpdateTerritories();
 	void Test_ColorTerritoryBorderNodes();
-	void UpdateTerritories_Implementation();
 
 protected:
 	UPROPERTY(EditAnywhere)
 	ANodeManager* NodeManager;
 	UPROPERTY(VisibleAnywhere, Replicated)
 	TArray<FEmpireBorderData> TerritoryBorders;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	TSubclassOf<ATerritoryVisual> TerritoryVisualClass;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	TArray<ATerritoryVisual*> TerritoryVisuals;
 };

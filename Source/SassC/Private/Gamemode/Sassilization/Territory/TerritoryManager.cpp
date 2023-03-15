@@ -4,6 +4,7 @@
 
 #include "Buildings/BuildingBase.h"
 #include "Buildings/City.h"
+#include "Components/SplineComponent.h"
 #include "Gamemode/Sassilization/Empire.h"
 #include "Gamemode/Sassilization/EmpireManager.h"
 #include "Gamemode/Sassilization/SassGameManager.h"
@@ -11,6 +12,7 @@
 #include "Gamemode/Sassilization/Territory/GraphNode.h"
 #include "Kismet/GameplayStatics.h"
 #include "Gamemode/Sassilization/Territory/NodeManager.h"
+#include "Gamemode/Sassilization/Territory/TerritoryVisual.h"
 #include "Kismet/KismetStringLibrary.h"
 #include "Net/UnrealNetwork.h"
 
@@ -41,7 +43,7 @@ bool ATerritoryManager::IsLocationInTerritory(const FVector Location, const uint
 		return false;
 	}
 	
-	UE_LOG(Sassilization, Display, TEXT("Found Node %s at %s with empire %d while querying for Empire %d"),
+	UE_LOG(Sassilization, Verbose, TEXT("Found Node %s at %s with empire %d while querying for Empire %d"),
 		*GetNameSafe(NearestNode), *UKismetStringLibrary::Conv_VectorToString(Location), NearestNode->GetEmpireId(), EmpireId)
 
 	return NearestNode->GetEmpireId() == EmpireId;
@@ -68,7 +70,7 @@ void ATerritoryManager::Test_ColorTerritoryBorderNodes()
 	}
 }
 
-void ATerritoryManager::UpdateTerritories_Implementation()
+void ATerritoryManager::ServerUpdateTerritories_Implementation()
 {
 	UE_LOG(Sassilization, Display, TEXT("Trying to update territories"))
 	TArray<FTerritoryInfo> Origins = TArray<FTerritoryInfo>();
@@ -103,4 +105,44 @@ void ATerritoryManager::UpdateTerritories_Implementation()
 	
 	this->TerritoryBorders = NewTerritoryBorders;
 	this->Test_ColorTerritoryBorderNodes();
+
+	const ASassGameManager* GameManager = GetWorld()->GetGameState<ASassGameState>()->GetGameManager();
+	
+	TArray<ATerritoryVisual*> TempTerritoryVisuals = TArray<ATerritoryVisual*>();
+	int Index2 = 0;
+	for (FEmpireBorderData BorderData : TerritoryBorders)
+	{
+		Index2++;
+		FTransform FinalTransform = FTransform(BorderData.BorderNodes[0]->GetActorLocation()); 
+		ATerritoryVisual* NewTerritoryVisual = GetWorld()->SpawnActorDeferred<ATerritoryVisual>(TerritoryVisualClass,
+			FinalTransform, this, nullptr, ESpawnActorCollisionHandlingMethod::AlwaysSpawn);
+
+		UE_LOG(Sassilization, Display, TEXT("BorderNode count: %d"), BorderData.BorderNodes.Num())
+		
+		NewTerritoryVisual->MulticastSetSplinePoints(TArray<AActor*>(BorderData.BorderNodes),
+			GameManager->GetEmpireManager()->GetEmpireById(BorderData.EmpireId)->GetColor(), Index2);
+		
+		NewTerritoryVisual->FinishSpawning(FinalTransform);
+		TempTerritoryVisuals.Add(NewTerritoryVisual);
+	}
+
+	UE_LOG(Sassilization, Display, TEXT("Spline count: %d"), TempTerritoryVisuals.Num())
+	for (ATerritoryVisual* TerritoryVisual : TempTerritoryVisuals)
+	{
+		UE_LOG(Sassilization, Display, TEXT("Number of spline points for %s was %d"), *TerritoryVisual->SplineComponent->GetFullName(), TerritoryVisual->SplineComponent->GetNumberOfSplinePoints())
+	}
+
+	while (!this->TerritoryVisuals.IsEmpty())
+	{
+		const int Index = TerritoryVisuals.Num() - 1;
+		this->TerritoryVisuals[Index]->Destroy();
+		this->TerritoryVisuals.RemoveAt(Index);
+	}
+	
+	this->TerritoryVisuals = TempTerritoryVisuals;
+}
+
+bool ATerritoryManager::ServerUpdateTerritories_Validate()
+{
+	return true;
 }

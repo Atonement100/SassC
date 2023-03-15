@@ -89,16 +89,16 @@ bool AEntityManager::AreCornersValid(TArray<FVector> CornerLocations, double& Ma
 	{
 		FVector Start = Corner + FVector(0, 0, 57.15f);
 		FVector End = Corner - FVector(0, 0, 19.05f);
-		UE_LOG(Sassilization, Display, TEXT("Corner %s Start %s End %s"), *Corner.ToString(), *Start.ToString(), *End.ToString())
+		UE_LOG(Sassilization, Verbose, TEXT("Corner %s Start %s End %s"), *Corner.ToString(), *Start.ToString(), *End.ToString())
 		bool bWasHit = UKismetSystemLibrary::LineTraceSingle(GetWorld(), Start,
 			End, UEngineTypes::ConvertToTraceType(ECC_LEVEL_MESH),
-			true, TArray<AActor*>(), EDrawDebugTrace::ForDuration, Hit, true);
+			true, TArray<AActor*>(), EDrawDebugTrace::ForOneFrame, Hit, true);
 
-		UE_LOG(Sassilization, Display, TEXT("Trace Details: %s"), *Hit.ToString())
+		UE_LOG(Sassilization, Verbose, TEXT("Trace Details: %s"), *Hit.ToString())
 		
 		if (!bWasHit || Hit.Time == 0)
 		{
-			UE_LOG(Sassilization, Display, TEXT("Trace at %s had no hit or was inside something (time = 0)"), *Hit.TraceStart.ToString())
+			UE_LOG(Sassilization, Verbose, TEXT("Trace at %s had no hit or was inside something (time = 0)"), *Hit.TraceStart.ToString())
 			return false;
 		}
 
@@ -117,7 +117,7 @@ bool AEntityManager::CanFit(FHitResult PlayerToLocTraceResult, FBox EntityBoundi
 {
 	if (!PlayerToLocTraceResult.bBlockingHit || PlayerToLocTraceResult.Normal.Z < .7)
 	{
-		UE_LOG(Sassilization, Display, TEXT("Can't fit due to either Blocking Hit? %s or Normal Z? %f"),
+		UE_LOG(Sassilization, Verbose, TEXT("Can't fit due to either Blocking Hit? %s or Normal Z? %f"),
 			PlayerToLocTraceResult.bBlockingHit ? TEXT("true") : TEXT("false"), PlayerToLocTraceResult.Normal.Z)
 		return false;
 	}
@@ -146,7 +146,7 @@ bool AEntityManager::CanFit(FHitResult PlayerToLocTraceResult, FBox EntityBoundi
 
 	if (!bAreCornersValid)
 	{
-		UE_LOG(Sassilization, Display, TEXT("Corners are not valid."))
+		UE_LOG(Sassilization, Verbose, TEXT("Corners are not valid."))
 		return false;
 	}
 	
@@ -158,8 +158,8 @@ bool AEntityManager::CanFit(FHitResult PlayerToLocTraceResult, FBox EntityBoundi
 										  HitLocation + FVector(0, 0, EntityBoundingBox.Max.Z * 2),
 										  FVector(EntityBoundingBox.Max.X, EntityBoundingBox.Max.Y, 0), Rotation,
 										  UEngineTypes::ConvertToTraceType(ECC_SPAWNING), true,
-										  TArray<AActor*>(), EDrawDebugTrace::ForDuration, BoxHit, true);
-	UE_LOG(Sassilization, Display, TEXT("BoxTrace: %s"), *BoxHit.ToString());
+										  TArray<AActor*>(), EDrawDebugTrace::ForOneFrame, BoxHit, true);
+	UE_LOG(Sassilization, Verbose, TEXT("BoxTrace: %s"), *BoxHit.ToString());
 	if (bDidBoxHit)
 	{
 		if (!BoxHit.GetActor()->IsA(AStaticMeshActor::StaticClass()) || bFoundation)
@@ -177,17 +177,17 @@ bool AEntityManager::CanFit(FHitResult PlayerToLocTraceResult, FBox EntityBoundi
 
 		FHitResult DebugHit;
 		UKismetSystemLibrary::SphereTraceSingle(GetWorld(), HitLocation, HitLocation, EntityBoundingBox.GetSize().Size(),
-			UEngineTypes::ConvertToTraceType(ECC_SPAWNING), true, TArray<AActor*>(), EDrawDebugTrace::ForDuration, DebugHit, true);
+			UEngineTypes::ConvertToTraceType(ECC_SPAWNING), true, TArray<AActor*>(), EDrawDebugTrace::ForOneFrame, DebugHit, true);
         if (UKismetSystemLibrary::SphereOverlapActors(GetWorld(), HitLocation, EntityBoundingBox.GetSize().Size(),
         								  TraceTypes, AWallSegment::StaticClass(), TArray<AActor*>(), HitActors))
         {
-        	UE_LOG(Sassilization, Display, TEXT("Found %d actors in Wall Check."), HitActors.Num())
+        	UE_LOG(Sassilization, Verbose, TEXT("Found %d actors in Wall Check."), HitActors.Num())
 
         	for (AActor* Actor : HitActors)
         	{
                 if (UKismetMathLibrary::IsPointInBox_Box(Actor->GetActorLocation(), FBox(Corners[0], Corners[0] + EntityBoundingBox.Max)))
                 {
-        	        UE_LOG(Sassilization, Display, TEXT("Actor %s caused failure in wall check at location %s"), *Actor->GetName(), *Actor->GetActorLocation().ToString())
+        	        UE_LOG(Sassilization, Verbose, TEXT("Actor %s caused failure in wall check at location %s"), *Actor->GetName(), *Actor->GetActorLocation().ToString())
                     return false;
                 }
         	}
@@ -282,7 +282,7 @@ void AEntityManager::SpawnEntity(APlayerController* Player, ETypeOfEntity Entity
 	bool bWasHit = UKismetSystemLibrary::LineTraceSingle(GetWorld(), EyeLocation,
 		TargetLocation + UKismetMathLibrary::GetDirectionUnitVector(EyeLocation, TargetLocation) * 2048.0f,
 		UEngineTypes::ConvertToTraceType(ECC_SPAWNING),true, TArray<AActor*>(),
-		EDrawDebugTrace::ForDuration, EyeToLocTraceHit, true);
+		EDrawDebugTrace::ForOneFrame, EyeToLocTraceHit, true);
 	
 	if (NewEntity->GetTypeOfEntity() == ETypeOfEntity::Gate)
 	{
@@ -409,7 +409,7 @@ bool AEntityManager::IsValidSpawnLocation(APlayerController* Player, AActor* Act
 	bool bWasHit = UKismetSystemLibrary::LineTraceSingle(GetWorld(), EyeLocation,
 		TargetLocation + UKismetMathLibrary::GetDirectionUnitVector(EyeLocation, TargetLocation) * 2048.0f,
 		UEngineTypes::ConvertToTraceType(ECC_SPAWNING),true,{ActorToCheck},
-		EDrawDebugTrace::ForDuration, EyeToLocTraceHit, true);
+		EDrawDebugTrace::ForOneFrame, EyeToLocTraceHit, true);
 	
 	if (!CanFit(EyeToLocTraceHit, EntityToCheck->GetSpawnBoundingBox(), Rotator, true, true)) return false;
 	if (!IsInValidTerritory(EntityToCheck, TerritoryManager, TargetLocation, PlayerEmpire)) return false;

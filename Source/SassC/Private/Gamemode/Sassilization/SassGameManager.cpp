@@ -46,7 +46,7 @@ AGraphNode* ASassGameManager::GetClosestNode(const FVector Location, const float
 
 void ASassGameManager::UpdateTerritories() const 
 {
-	this->TerritoryManager->UpdateTerritories();
+	this->TerritoryManager->ServerUpdateTerritories();
 }
 
 AEmpireManager* ASassGameManager::GetEmpireManager() const
