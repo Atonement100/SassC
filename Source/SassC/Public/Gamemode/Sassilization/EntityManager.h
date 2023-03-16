@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "Buildings/BuildingBase.h"
 #include "GameFramework/Actor.h"
 #include "Gamemode/Sassilization/TypeOfEntity.h"
 #include "Buildings/Data/BuildingData.h"
@@ -32,11 +33,12 @@ public:
 	UFUNCTION(BlueprintCallable)
 	TSubclassOf<AActor> GetClassForEntityType(const ETypeOfEntity TypeOfEntity) const;
 	UFUNCTION(BlueprintCallable)
-	TArray<AActor*> GetEntitiesOfTypeInSphere(ETypeOfEntity TypeOfEntity, FVector Location, float Radius) const;
+	TArray<AActor*> GetEntitiesOfTypeInSphere(TSubclassOf<AActor> TypeOfEntity, FVector Location, float Radius) const;
 	bool IsValidSpawnLocation(APlayerController* Player, AActor* ActorToCheck, const FVector& TargetLocation, const FRotator& Rotator, ATerritoryManager
 	                          * TerritoryManager);
 	bool IsInValidTerritory(const IEntityInterface* NewEntity, ATerritoryManager* TerritoryManager, FVector TargetLocation, AEmpire* PlayerEmpire);
 	bool AreWallTowersTooClose(IEntityInterface* NewEntity, FVector TargetLocation, AEmpire* PlayerEmpire);
+	void SpawnExpansion(ABuildingBase* OwningCity, const FRotator& DirectionToExpand, ATerritoryManager* TerritoryManager);
 
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)

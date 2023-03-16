@@ -33,6 +33,9 @@ public:
 	AGraphNode* GetClosestNode(FVector Location, float SearchRadius) const;
 	void UpdateTerritories() const;
 
+	UFUNCTION(Server, Reliable)
+	void ServerRequestCityExpansion(ABuildingBase* RootBuilding, const FRotator& Rotator);
+
 protected: 
 	UPROPERTY(Replicated, EditAnywhere, Category = "Gamemode")
 	AEmpireManager* EmpireManager;

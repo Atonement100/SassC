@@ -33,7 +33,7 @@ public:
 #pragma region IEntityInterface
 	virtual ETypeOfEntity GetTypeOfEntity() const override {return ETypeOfEntity::City;}
 	virtual FResourceCosts GetResourceCosts() const override {return FResourceCosts();}
-	virtual FBox GetSpawnBoundingBox() const override 
+	virtual FBox GetSpawnBoundingBox(int ForLevel) const override 
 	{
 		FVector Origin, Extent;
 		GetActorBounds(true, Origin, Extent, true);
@@ -189,8 +189,12 @@ public:
 	bool IsDestroyed() const;
 	void SetIsDestroyed(const bool bNewIsDestroyed);
 	virtual float GetInfluence() {return this->Influence;}
+	virtual void UpdateInfluence() {};
 	bool IsBuilt() const {return this->bIsBuilt;}
 	uint8 GetUpgradeLevel() const {return this->UpgradeLevel;}
+	ABuildingBase* GetBuildingParent() const {return this->BuildingParent;}
+	void SetBuildingParent(ABuildingBase* NewBuildingParent) {this->BuildingParent = NewBuildingParent;}
+	void AddExpansion(ABuildingBase* NewExpansion) {this->Expansions.Add(NewExpansion);}
 	
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Building Base")
@@ -217,10 +221,17 @@ protected:
 	virtual void NetFixSpawnLocation_Implementation(FVector RealLocation);
 	virtual bool NetFixSpawnLocation_Validate(FVector RealLocation);
 
+	UFUNCTION()
+	void Expand(FRotator DirectionToExpand);
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Building Base")
 	bool bIsBuilt = false;
 	//These properties are used for buildings with upgrades, i.e. workshop, tower, and wall->gate. 
 	//For any buildings using these properties, each mesh must be individually declared in AvailableBuildingMeshes.
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Building Base")
 	uint8 UpgradeLevel = 0;
+	UPROPERTY()
+	ABuildingBase* BuildingParent;
+	UPROPERTY()
+	TArray<ABuildingBase*> Expansions = TArray<ABuildingBase*>();
 };

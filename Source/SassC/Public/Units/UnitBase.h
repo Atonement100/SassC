@@ -75,7 +75,7 @@ public:
 #pragma region IEntityInterface
 	virtual ETypeOfEntity GetTypeOfEntity() const override {return ETypeOfEntity::Peasant;}
 	virtual FResourceCosts GetResourceCosts() const override {return FResourceCosts();}
-	virtual FBox GetSpawnBoundingBox() const override 
+	virtual FBox GetSpawnBoundingBox(int ForLevel) const override 
 	{
 		return this->GetCapsuleComponent()->GetLocalBounds().GetBox();
 	}

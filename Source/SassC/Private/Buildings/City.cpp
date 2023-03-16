@@ -2,6 +2,7 @@
 
 #include "Buildings/City.h"
 #include "SassC.h"
+#include "TimerManager.h"
 #include "Gamemode/Sassilization/Empire.h"
 
 ACity::ACity()
@@ -33,6 +34,16 @@ bool ACity::PostCreation_Validate(FLinearColor PlayerColor)
 	return true;
 }
 
+void ACity::TimedExpansion()
+{
+	UE_LOG(Sassilization, Display, TEXT("Timed expansion occuring for %s"), *this->GetName())
+	this->Expand(FRotator(0, FMath::RandRange(0.f, 360.f), 0));
+
+	FTimerHandle NextTimedExpansion;
+	const FTimerDelegate NextTimedDelegate = FTimerDelegate().CreateLambda([this] { this->TimedExpansion(); });
+	GetWorldTimerManager().SetTimer(NextTimedExpansion, NextTimedDelegate, FMath::RandRange(3.f, 10.f), false);
+}
+
 void ACity::WhenBuilt()
 {
 	Super::WhenBuilt();
@@ -43,5 +54,21 @@ void ACity::WhenBuilt()
 		ControllingEmpire->CalculateSupply();
 	}
 
+	//TODO: Implement "Update Control"
+
+	
+	FTimerHandle RepeatingExpansion;
+	const FTimerDelegate RepeatingDelegate = FTimerDelegate().CreateLambda([this] { this->TimedExpansion(); });
+	GetWorldTimerManager().SetTimer(RepeatingExpansion, RepeatingDelegate, FMath::RandRange(3.f, 10.f), false);
+	
+	FTimerHandle Expansion1, Expansion2, Expansion3, Expansion4;
+	const FTimerDelegate ExpansionDelegate = FTimerDelegate().CreateLambda([this] {this->Expand(FRotator(0, FMath::RandRange(0.f, 360.f), 0));});
+
+	GetWorldTimerManager().SetTimer(Expansion1, ExpansionDelegate, FMath::RandRange(3.f, 10.f), false);
+	GetWorldTimerManager().SetTimer(Expansion2, ExpansionDelegate, FMath::RandRange(3.f, 10.f), false);
+	GetWorldTimerManager().SetTimer(Expansion3, ExpansionDelegate, FMath::RandRange(3.f, 10.f), false);
+	GetWorldTimerManager().SetTimer(Expansion4, ExpansionDelegate, FMath::RandRange(3.f, 10.f), false);
 	//TODO: Implement post-build work including expansions
+
+	UE_LOG(Sassilization, Display, TEXT("Whenbuilt over"))
 }

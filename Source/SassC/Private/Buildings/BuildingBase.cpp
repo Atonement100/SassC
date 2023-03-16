@@ -11,6 +11,7 @@
 #include "Core/SassCStaticLibrary.h"
 #include "Gamemode/Sassilization/SassGameManager.h"
 #include "Gamemode/Sassilization/SassGameState.h"
+#include "Kismet/KismetSystemLibrary.h"
 #include "Net/UnrealNetwork.h"
 
 ABuildingBase::ABuildingBase()
@@ -218,6 +219,11 @@ void ABuildingBase::NetFixSpawnLocation_Implementation(FVector RealLocation)
 	//I can only pray that the buildings do not rise up and attempt to take over servers. If that happens, we may all be doomed.
 	//SetActorLocation(RealLocation + FVector(10));
 	SetActorLocation(RealLocation);
+}
+
+void ABuildingBase::Expand(const FRotator DirectionToExpand)
+{
+	GetWorld()->GetGameState<ASassGameState>()->GetGameManager()->ServerRequestCityExpansion(this, DirectionToExpand);
 }
 
 bool ABuildingBase::NetFixSpawnLocation_Validate(FVector RealLocation)

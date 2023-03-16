@@ -9,6 +9,7 @@ ASelectionSphere::ASelectionSphere()
 {
 	PrimaryActorTick.bCanEverTick = false;
 	Sphere = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Sphere"));
+	SetRootComponent(Sphere);
 }
 
 // Called when the game starts or when spawned

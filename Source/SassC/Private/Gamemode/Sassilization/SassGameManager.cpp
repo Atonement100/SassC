@@ -49,6 +49,11 @@ void ASassGameManager::UpdateTerritories() const
 	this->TerritoryManager->ServerUpdateTerritories();
 }
 
+void ASassGameManager::ServerRequestCityExpansion_Implementation(ABuildingBase* RootBuilding, const FRotator& Rotator)
+{
+	this->EntityManager->SpawnExpansion(RootBuilding, Rotator, GetTerritoryManager());
+}
+
 AEmpireManager* ASassGameManager::GetEmpireManager() const
 {
 	return EmpireManager;

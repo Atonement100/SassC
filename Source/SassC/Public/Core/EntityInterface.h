@@ -30,7 +30,7 @@ public:
 	virtual ETypeOfEntity GetTypeOfEntity() const {return ETypeOfEntity::City;}
 	virtual FResourceCosts GetResourceCosts() const {return FResourceCosts();}
 	virtual FBuildingRequirements GetRequirementsForLevel(int Level) const {return FBuildingRequirements();}
-	virtual FBox GetSpawnBoundingBox() const {return FBox();}
+	virtual FBox GetSpawnBoundingBox(int ForLevel = 0) const {return FBox();}
 	virtual bool IsBuilding() const {return false;}
 	virtual bool IsUnit() const {return false;}
 	virtual bool CanPlayerSpawn() const {return true;}

@@ -4,6 +4,7 @@
 
 #include "TimerManager.h"
 #include "Buildings/BuildingBase.h"
+#include "Buildings/House.h"
 #include "Buildings/WallSegment.h"
 #include "Core/ChannelDefines.h"
 #include "Engine/StaticMeshActor.h"
@@ -158,7 +159,7 @@ bool AEntityManager::CanFit(FHitResult PlayerToLocTraceResult, FBox EntityBoundi
 										  HitLocation + FVector(0, 0, EntityBoundingBox.Max.Z * 2),
 										  FVector(EntityBoundingBox.Max.X, EntityBoundingBox.Max.Y, 0), Rotation,
 										  UEngineTypes::ConvertToTraceType(ECC_SPAWNING), true,
-										  TArray<AActor*>(), EDrawDebugTrace::ForOneFrame, BoxHit, true);
+										  TArray<AActor*>(), EDrawDebugTrace::ForDuration, BoxHit, true);
 	UE_LOG(Sassilization, Verbose, TEXT("BoxTrace: %s"), *BoxHit.ToString());
 	if (bDidBoxHit)
 	{
@@ -338,14 +339,14 @@ TSubclassOf<AActor> AEntityManager::GetClassForEntityType(const ETypeOfEntity Ty
 	return this->EntityTypeToClass[TypeOfEntity];
 }
 
-TArray<AActor*> AEntityManager::GetEntitiesOfTypeInSphere(ETypeOfEntity TypeOfEntity, FVector Location, float Radius) const
+TArray<AActor*> AEntityManager::GetEntitiesOfTypeInSphere(TSubclassOf<AActor> TypeOfEntity, FVector Location, float Radius) const
 {
 	TArray<AActor*> OverlappingActors;
 	TArray<TEnumAsByte<EObjectTypeQuery>> TraceObjectTypes;
 	TraceObjectTypes.Add(UEngineTypes::ConvertToObjectType(ECollisionChannel::ECC_WorldStatic));
 
 	UKismetSystemLibrary::SphereOverlapActors(GetWorld(), Location, Radius,
-		TraceObjectTypes, GetClassForEntityType(TypeOfEntity), TArray<AActor*>(), OverlappingActors);
+		TraceObjectTypes, TypeOfEntity, TArray<AActor*>(), OverlappingActors);
 
 	return OverlappingActors;
 }
@@ -376,7 +377,7 @@ bool AEntityManager::AreWallTowersTooClose(IEntityInterface* NewEntity, FVector 
 {
 	if (NewEntity->GetTypeOfEntity() == ETypeOfEntity::Wall)
 	{
-		TArray<AActor*> NearbyWalls = GetEntitiesOfTypeInSphere(ETypeOfEntity::Wall, TargetLocation, 243.84f);
+		TArray<AActor*> NearbyWalls = GetEntitiesOfTypeInSphere(GetClassForEntityType(ETypeOfEntity::Wall), TargetLocation, 243.84f);
 		for (AActor* WallActor : NearbyWalls)
 		{
 			if (Cast<IEntityInterface>(WallActor)->GetEmpire() == PlayerEmpire &&
@@ -390,8 +391,133 @@ bool AEntityManager::AreWallTowersTooClose(IEntityInterface* NewEntity, FVector 
 	return false;
 }
 
+void AEntityManager::SpawnExpansion(ABuildingBase* OwningCity, const FRotator& DirectionToExpand, ATerritoryManager* TerritoryManager)
+{
+	UE_LOG(Sassilization, Display, TEXT("Expanding with yaw %f"), DirectionToExpand.Yaw);
+
+	if (!IsValid(OwningCity) || OwningCity->IsDestroyed() || !OwningCity->GetEmpire())
+	{
+		return;
+	}
+
+	FVector DirectionNormal = DirectionToExpand.Vector() * FMath::RandRange(45.72f, 91.44f);
+	FVector TraceStart = OwningCity->GetActorLocation() + FVector(0, 0, 95.25f);
+	FVector TraceTarget = TraceStart + OwningCity->GetActorRightVector() * DirectionNormal.X + OwningCity->GetActorForwardVector() * DirectionNormal.Y + OwningCity->GetActorUpVector() * 57.15f;
+	FHitResult TraceResult;
+	
+	if (UKismetSystemLibrary::LineTraceSingle(GetWorld(), TraceStart, TraceTarget, UEngineTypes::ConvertToTraceType(ECollisionChannel::ECC_WorldStatic),
+		true, { OwningCity }, EDrawDebugTrace::ForDuration, TraceResult, true))
+	{
+		UE_LOG(Sassilization, Display, TEXT("Expand trace for %s hit actor."), *OwningCity->GetName())
+		return;
+	}
+
+	TraceStart = TraceResult.TraceEnd;
+	TraceTarget = TraceStart - FVector(0, 0, 312.42);
+
+	if(!UKismetSystemLibrary::LineTraceSingle(GetWorld(), TraceStart, TraceTarget, UEngineTypes::ConvertToTraceType(ECollisionChannel::ECC_WorldStatic),
+		true, { OwningCity }, EDrawDebugTrace::ForDuration, TraceResult, true))
+	{
+		UE_LOG(Sassilization, Display, TEXT("Expand trace down for %s did not hit anything. TraceResult: %s"), *OwningCity->GetName(), *TraceResult.ToString())
+		return;
+	}
+
+	// TODO: If trace in water, return
+
+	FRotator TraceHitRotator = TraceResult.Normal.Rotation();
+	if (!((TraceHitRotator.Pitch <= 300 && TraceHitRotator.Pitch >= 240) || (TraceHitRotator.Pitch <= 120 && TraceHitRotator.Pitch >= 60)))
+	{
+		UE_LOG(Sassilization, Display, TEXT("Expand trace for %s had an invalid pitch of %f. TraceResult: %s"), *OwningCity->GetName(), TraceHitRotator.Pitch, *TraceResult.ToString())
+		return;
+	}
+
+	FRotator HouseRotation = FRotator(0, FMath::RandRange(0, 360), 0);
+	uint8 HouseLevel = FMath::RandRange(0, 2);
+	FTransform PlannedFinalHouseTransform = FTransform(HouseRotation);
+	PlannedFinalHouseTransform.SetLocation(TraceResult.Location);
+
+	if (FMath::Abs(OwningCity->GetActorLocation().Z - PlannedFinalHouseTransform.GetLocation().Z) > 57.15)
+	{
+		UE_LOG(Sassilization, Display, TEXT("Planned expansion for city had a too-high height differential of %f"),
+			OwningCity->GetActorLocation().Z - PlannedFinalHouseTransform.GetLocation().Z)
+		return;
+	}
+	
+	const TSubclassOf<AActor> ActorToSpawn = GetClassForEntityType(ETypeOfEntity::House);
+	FTransform TemporaryTransform = FTransform(FVector(-1000, -1000, -1000));
+	AActor* NewActor = GetWorld()->SpawnActorDeferred<AActor>(ActorToSpawn, TemporaryTransform, OwningCity,
+		nullptr, ESpawnActorCollisionHandlingMethod::AlwaysSpawn);
+	
+	if (!NewActor)
+	{
+		UE_LOG(Sassilization, Warning, TEXT("House failed to spawn"))
+		return;
+	}
+
+	AHouse* NewHouse = Cast<AHouse>(NewActor);
+	NewHouse->SetHouseType(HouseLevel);
+	IEntityInterface* NewEntity = Cast<IEntityInterface>(NewActor);
+
+	UE_LOG(Sassilization, Display, TEXT("SpawnBoundingBox is %s"), *NewEntity->GetSpawnBoundingBox(HouseLevel).ToString())
+	if (!CanFit(TraceResult, NewEntity->GetSpawnBoundingBox(HouseLevel), HouseRotation, true, true))
+	{
+		UE_LOG(Sassilization, Display, TEXT("Expand failed because house can't fit at location %s."), *TraceResult.Location.ToString())
+		NewActor->Destroy();
+		return;
+	}
+
+	ABuildingBase* HouseParent = Cast<ABuildingBase>(OwningCity)->GetBuildingParent();
+	
+	if (HouseParent)
+	{
+		if (FVector::Distance(HouseParent->GetActorLocation(), TraceResult.Location) > 228.6) //TODO: Define as max distance away from city permitted
+		{
+			UE_LOG(Sassilization, Display, TEXT("Expand failed because house is too far away at location %s from city location %s."),
+				*TraceResult.Location.ToString(), *HouseParent->GetActorLocation().ToString())
+			NewActor->Destroy();
+			return;
+		}
+	}
+	else
+	{
+		HouseParent = OwningCity;
+	}
+
+	TraceStart = OwningCity->GetActorLocation();
+	TraceTarget = TraceResult.Location;
+
+	if(UKismetSystemLibrary::LineTraceSingle(GetWorld(), TraceStart, TraceTarget, UEngineTypes::ConvertToTraceType(ECollisionChannel::ECC_WorldStatic),
+		true, { OwningCity }, EDrawDebugTrace::ForDuration, TraceResult, true))
+	{
+		if (TraceResult.Normal.Z == 0)
+		{
+			UE_LOG(Sassilization, Display, TEXT("Trace Hit had normal z vector of 0. %s"), *TraceResult.ToString())
+			NewActor->Destroy();
+			return;
+		}
+	}
+
+	if (!GetEntitiesOfTypeInSphere(ABuildingBase::StaticClass(), PlannedFinalHouseTransform.GetLocation(), 34.29f).IsEmpty())
+	{
+		UE_LOG(Sassilization, Display, TEXT("Planned expansion was too close to another building."))
+		NewActor->Destroy();
+		return;
+	}
+
+	// TODO Cancel if too close to mine or farm. Those aren't implemented yet.
+
+	NewActor->FinishSpawning(PlannedFinalHouseTransform);
+	NewEntity->Initialize(OwningCity->GetEmpire());
+	OwningCity->GetEmpire()->AddEntity(NewActor);
+	NewHouse->SetBuildingParent(HouseParent);
+	NewEntity->WhenBuilt();
+	OwningCity->AddExpansion(NewHouse);
+	HouseParent->UpdateInfluence();
+	TerritoryManager->ServerUpdateTerritories();
+}
+
 bool AEntityManager::IsValidSpawnLocation(APlayerController* Player, AActor* ActorToCheck, const FVector& TargetLocation,
-	const FRotator& Rotator, ATerritoryManager* TerritoryManager)
+                                          const FRotator& Rotator, ATerritoryManager* TerritoryManager)
 {
 	const ASassPlayerState* SassPlayerState = Player->GetPlayerState<ASassPlayerState>();
 	const IEntityInterface* EntityToCheck = Cast<IEntityInterface>(ActorToCheck); 

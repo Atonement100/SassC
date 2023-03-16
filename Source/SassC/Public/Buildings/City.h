@@ -22,15 +22,17 @@ class SASSC_API ACity : public ABuildingBase
 	virtual void Tick(float DeltaSeconds) override;
 	virtual void PostCreation_Implementation(FLinearColor PlayerColor) override;
 	virtual bool PostCreation_Validate(FLinearColor PlayerColor) override;
+	void TimedExpansion();
 	virtual ETypeOfEntity GetTypeOfEntity() const override { return this->TypeOfBuilding; }
 	virtual FResourceCosts GetResourceCosts() const override { return FResourceCosts(50, 50, 32); }
-	virtual FBox GetSpawnBoundingBox() const override 
-	{
-		return Cast<UStaticMesh>(this->AvailableBuildingMeshes[0])->GetBoundingBox();
-	}
+	// virtual FBox GetSpawnBoundingBox(int ForLevel) const override 
+	// {
+	// 	return Cast<UStaticMesh>(this->AvailableBuildingMeshes[0])->GetBoundingBox();
+	// }
 	virtual void WhenBuilt() override;
 	
 	virtual float GetInfluence() override {return this->Influence;}
+	virtual void UpdateInfluence() override {this->Influence = FMath::Max(0, this->Influence - 32.1469f);};
 	virtual TArray<FBuildingRequirements> GetBuildingRequirements() const override { return this->LevelRequirements; }
 
 protected:

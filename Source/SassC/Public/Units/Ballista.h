@@ -18,7 +18,7 @@ class SASSC_API ABallista : public AUnitBase
 	virtual ETypeOfEntity GetTypeOfEntity() const override { return this->TypeOfEntity; }
 	virtual FResourceCosts GetResourceCosts() const override { return FResourceCosts(30, 25, 5, 2); }
 	virtual TArray<FBuildingRequirements> GetBuildingRequirements() const override { return this->LevelRequirements; }
-	virtual FBox GetSpawnBoundingBox() const override { return this->UnitCollision->GetLocalBounds().GetBox(); }
+	virtual FBox GetSpawnBoundingBox(int ForLevel) const override { return this->UnitCollision->GetLocalBounds().GetBox(); }
 	virtual FVector GetSpawnOffset() override { return FVector(0, 0, this->GetCapsuleComponent()->GetScaledCapsuleHalfHeight()); }
 
 protected:
