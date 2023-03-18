@@ -11,7 +11,7 @@
 
 AGraphNode::AGraphNode()
 {
-	this->bReplicates = true;
+	this->bReplicates = false;
 	PrimaryActorTick.bCanEverTick = false;
 	Connections.SetNum(8, false);
 	IdConnections.SetNum(8, false);
