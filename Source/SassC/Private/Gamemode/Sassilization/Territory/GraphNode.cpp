@@ -4,15 +4,17 @@
 #include "Gamemode/Sassilization/Territory/GraphNode.h"
 
 #include "Gamemode/Sassilization/Territory/GraphBorderData.h"
+#include "Gamemode/Sassilization/Territory/NodeManager.h"
+#include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "Net/UnrealNetwork.h"
-
 
 AGraphNode::AGraphNode()
 {
 	this->bReplicates = true;
 	PrimaryActorTick.bCanEverTick = false;
 	Connections.SetNum(8, false);
+	IdConnections.SetNum(8, false);
 	HasVisited.SetNum(8, false);
 }
 
@@ -20,6 +22,17 @@ void AGraphNode::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifeti
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 	DOREPLIFETIME(AGraphNode, AStarFScore)
+}
+
+ANodeManager* AGraphNode::GetOrFindNodeManager()
+{
+	if (!this->NodeManager)
+	{
+		UE_LOG(Sassilization, Warning, TEXT("Needed to find NodeManager"))
+		this->NodeManager = Cast<ANodeManager>(UGameplayStatics::GetActorOfClass(GetWorld(), ANodeManager::StaticClass()));
+	}
+
+	return this->NodeManager;
 }
 
 // Called when the game starts or when spawned
@@ -35,12 +48,16 @@ int32 AGraphNode::GetEmpireId() const
 
 void AGraphNode::SetConnection(AGraphNode* NodeToConnect, EGraphNodeDirection Direction)
 {
-	this->Connections[static_cast<int>(Direction)] = NodeToConnect;
+	this->IdConnections[static_cast<int>(Direction)] = NodeToConnect->Id;
 }
 
 AGraphNode* AGraphNode::GetConnection(EGraphNodeDirection Direction)
 {
-	return this->Connections[static_cast<int>(Direction)];
+	AGraphNode* Result = NodeManager->GetNodeById(this->IdConnections[static_cast<int>(Direction)]);
+	
+	// UE_LOG(Sassilization, Warning, TEXT("Node %s tried to get direction %d with id %d and it returned %s"),
+		// *this->GetName(), Direction, this->IdConnections[static_cast<int>(Direction)], (Result? *Result->GetName() : TEXT("null")))
+	return Result;
 }
 
 void AGraphNode::SetVisited(const int Index, const bool HasBeenVisited)

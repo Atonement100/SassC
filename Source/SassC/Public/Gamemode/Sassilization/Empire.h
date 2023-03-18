@@ -93,7 +93,7 @@ protected:
 
 	/* Do not use for gameplay purposes */
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Empire")
-	TMap<ETypeOfEntity, int> LifetimeSpawns;
+	TMap<ETypeOfEntity, int32> LifetimeSpawns;
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Empire")
 	TSet<AUnitBase*> SelectedUnits = TSet<AUnitBase*>();

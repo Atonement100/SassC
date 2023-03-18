@@ -107,7 +107,7 @@ void ABuildingBase::WhenBuilt()
 
 	UE_LOG(Sassilization, Display, TEXT("GameManager %s"), *GameManager->GetName());
 	
-	AGraphNode* ClosestNode = GameManager->GetClosestNode(GetActorLocation(), 10.f);
+	AGraphNode* ClosestNode = GameManager->GetClosestNode(GetActorLocation(), 30.f);
 
 	UE_LOG(Sassilization, Display, TEXT("WhenBuilt Closest Node %s Controlling Empire %s"), *ClosestNode->GetName(), *GetNameSafe(ControllingEmpire));
 	

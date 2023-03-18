@@ -8,6 +8,7 @@
 #include "Components/StaticMeshComponent.h"
 #include "GraphNode.generated.h"
 
+class ANodeManager;
 class UGraphBorderData;
 
 UCLASS(Blueprintable)
@@ -20,21 +21,29 @@ public:
 	AGraphNode();
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
+	UFUNCTION(BlueprintCallable)
+	ANodeManager* GetOrFindNodeManager();
+	
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Territory")
+	ANodeManager* NodeManager;
+	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Territory|Debug")
 	UStaticMeshComponent* DebugMeshComponent;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Territory")
-	int Id;
+	int32 Id;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Territory", meta=(ExposeOnSpawn="true"))
 	AGraphNode* ParentNode;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Territory")
 	UGraphBorderData* BorderData;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Territory")
 	TArray<AGraphNode*> Connections;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Territory")
+	TArray<int32> IdConnections;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Territory")
 	TArray<bool> HasVisited;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Territory", meta=(ExposeOnSpawn="true"))

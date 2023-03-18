@@ -2,7 +2,9 @@
 
 
 #include "Gamemode/Sassilization/Territory/NodeManager.h"
-
+#include "Gamemode/Sassilization/Territory/EmpireBorderData.h"
+#include "Gamemode/Sassilization/Territory/GraphNode.h"
+#include "Gamemode/Sassilization/Territory/TerritoryInfo.h"
 #include "Engine/World.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "Kismet/KismetSystemLibrary.h"
@@ -55,6 +57,19 @@ AGraphNode* ANodeManager::FindNearestNode(const FVector Location, const float Ra
 	}
 
 	return NearestNode;
+}
+
+AGraphNode* ANodeManager::GetNodeById(const int32 NodeId)
+{
+	AGraphNode** FoundNode = NodesById.Find(NodeId);
+
+	if (!FoundNode)
+	{
+		UE_LOG(Sassilization, Warning, TEXT("Node with id %d not found"), NodeId)
+		return nullptr;
+	}
+
+	return *FoundNode;
 }
 
 void ANodeManager::FloodTerritory_Implementation(const TArray<FTerritoryInfo>& TerritoryOrigins, TArray<FEmpireBorderData>& TerritoryBordersResult)
