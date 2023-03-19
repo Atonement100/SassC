@@ -35,7 +35,7 @@ AGraphNode* ATerritoryManager::GetNearestNode(FVector Location, float SearchRadi
 
 bool ATerritoryManager::IsLocationInTerritory(const FVector Location, const uint8 EmpireId) const
 {
-	const AGraphNode* NearestNode = GetNearestNode(Location, 10.f);
+	const AGraphNode* NearestNode = GetNearestNode(Location, 20.f);
 
 	if (!NearestNode)
 	{
