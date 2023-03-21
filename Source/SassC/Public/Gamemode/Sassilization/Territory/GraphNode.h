@@ -23,6 +23,10 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	ANodeManager* GetOrFindNodeManager();
+	void SetId(int32 NewId);
+	int32 GetId();
+	UFUNCTION(BlueprintCallable)
+	void SetNodeManager(ANodeManager* NewNodeManager);
 	
 protected:
 	// Called when the game starts or when spawned
@@ -61,6 +65,7 @@ protected:
 
 public:
 	float GetAStarFScore() const;
+	float GetAStarGScore() const;
 
 	UFUNCTION(BlueprintCallable)
 	int32 GetEmpireId() const;
@@ -80,6 +85,8 @@ public:
 	bool GetHasVisitedAtIndex(int Index);
 	UFUNCTION(BlueprintCallable)
 	FVector GetLocation();
+	void SetParentNode(AGraphNode* NewParent);
+	void SetNormal(FVector NewNormal);
 	UFUNCTION(BlueprintCallable)
 	FVector GetNormal();
 	UFUNCTION(BlueprintCallable)
@@ -100,6 +107,14 @@ public:
 	void SetBorderPrev(AGraphNode* GraphNode);
 	UFUNCTION(BlueprintCallable)
 	AGraphNode* GetBorderPrev();
+	UGraphBorderData* GetBorderData() const;
+	void SetBorderData(UGraphBorderData* const NewBorderData);
+	bool IsOpen() const;
+	void SetIsOpen(const bool NewIsOpen);
+	bool IsClosed() const;
+	void SetIsClosed(const bool NewIsClosed);
+	UFUNCTION(BlueprintCallable)
+	void ResetTraversalFlags();
 	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

@@ -28,6 +28,4 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Gamemode")
 	virtual void PostLogin(APlayerController* NewPlayer) override;
 	virtual void HandleStartingNewPlayer_Implementation(APlayerController* NewPlayer) override;
-	//	UFUNCTION(BlueprintCallable, Category = "Gamemode")
-	//		AActor* FindPlayerStart(AsassPlayerController* Player, FString IncomingName);
 };

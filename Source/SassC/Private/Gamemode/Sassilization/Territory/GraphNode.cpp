@@ -35,7 +35,21 @@ ANodeManager* AGraphNode::GetOrFindNodeManager()
 	return this->NodeManager;
 }
 
-// Called when the game starts or when spawned
+void AGraphNode::SetId(int32 NewId)
+{
+	this->Id = NewId;
+}
+
+int32 AGraphNode::GetId()
+{
+	return this->Id;
+}
+
+void AGraphNode::SetNodeManager(ANodeManager* NewNodeManager)
+{
+	this->NodeManager = NewNodeManager;
+}
+
 void AGraphNode::BeginPlay()
 {
 	Super::BeginPlay();
@@ -48,16 +62,12 @@ int32 AGraphNode::GetEmpireId() const
 
 void AGraphNode::SetConnection(AGraphNode* NodeToConnect, EGraphNodeDirection Direction)
 {
-	this->IdConnections[static_cast<int>(Direction)] = NodeToConnect->Id;
+	this->IdConnections[StaticCast<int>(Direction)] = NodeToConnect->Id;
 }
 
 AGraphNode* AGraphNode::GetConnection(EGraphNodeDirection Direction)
 {
-	AGraphNode* Result = NodeManager->GetNodeById(this->IdConnections[static_cast<int>(Direction)]);
-	
-	// UE_LOG(Sassilization, Warning, TEXT("Node %s tried to get direction %d with id %d and it returned %s"),
-		// *this->GetName(), Direction, this->IdConnections[static_cast<int>(Direction)], (Result? *Result->GetName() : TEXT("null")))
-	return Result;
+	return NodeManager->GetNodeById(this->IdConnections[StaticCast<int>(Direction)]);
 }
 
 void AGraphNode::SetVisited(const int Index, const bool HasBeenVisited)
@@ -73,6 +83,16 @@ bool AGraphNode::GetHasVisitedAtIndex(int Index)
 FVector AGraphNode::GetLocation()
 {
 	return this->GetActorLocation();
+}
+
+void AGraphNode::SetParentNode(AGraphNode* NewParent)
+{
+	this->ParentNode = NewParent;
+}
+
+void AGraphNode::SetNormal(FVector NewNormal)
+{
+	this->Normal = NewNormal;
 }
 
 FVector AGraphNode::GetNormal()
@@ -138,9 +158,50 @@ AGraphNode* AGraphNode::GetBorderPrev()
 	return this->BorderData->GetPrevious();
 }
 
+UGraphBorderData* AGraphNode::GetBorderData() const
+{
+	return BorderData;
+}
+
+void AGraphNode::SetBorderData(UGraphBorderData* const NewBorderData)
+{
+	this->BorderData = NewBorderData;
+}
+
+bool AGraphNode::IsOpen() const
+{
+	return bIsOpen;
+}
+
+void AGraphNode::SetIsOpen(const bool NewIsOpen)
+{
+	this->bIsOpen = NewIsOpen;
+}
+
+bool AGraphNode::IsClosed() const
+{
+	return bIsClosed;
+}
+
+void AGraphNode::SetIsClosed(const bool NewIsClosed)
+{
+	this->bIsClosed = NewIsClosed;
+}
+
+void AGraphNode::ResetTraversalFlags()
+{
+	this->bIsOpen = false;
+	this->bIsClosed = false;
+}
+
 float AGraphNode::GetAStarFScore() const
 {
 	return this->AStarFScore;
+}
+
+float AGraphNode::GetAStarGScore() const
+{
+	return this->AStarGScore;
 }
 
 // Called every frame
