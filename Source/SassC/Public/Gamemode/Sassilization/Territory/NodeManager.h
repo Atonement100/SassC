@@ -57,7 +57,9 @@ public:
 	bool IsConnectionSameEmpire(AGraphNode* CurrentNode, EGraphNodeDirection Direction, int32 EmpireId);
 	UGraphBorder* GetBorderForNodeIfValid(AGraphNode* GraphNode);
 	bool IsBorderValid(const UGraphBorder* GraphBorder);
+	UFUNCTION(BlueprintCallable)
 	bool GetGroundHeight(const FVector Position, FVector& GroundLocation, FVector& GroundNormal);
+	UFUNCTION(BlueprintCallable)
 	AGraphNode* AddNode(FVector NewLocation, FVector NewNormal, EGraphNodeDirection Direction,
 	                    AGraphNode* SourceNode, TMap<FVector, AGraphNode*>& TruncatedVectorsToNode, bool& ShouldUseNewNode);
 	UFUNCTION(BlueprintCallable)

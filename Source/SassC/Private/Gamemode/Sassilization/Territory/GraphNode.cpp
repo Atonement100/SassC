@@ -135,7 +135,7 @@ void AGraphNode::SetBorder(UGraphBorder* Border)
 
 UGraphBorder* AGraphNode::GetBorder()
 {
-	return this->BorderData->GetBorder();
+	return this->BorderData ? this->BorderData->GetBorder() : nullptr;
 }
 
 void AGraphNode::SetBorderNext(AGraphNode* GraphNode)

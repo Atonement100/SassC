@@ -20,12 +20,17 @@ class SASSC_API ATerritoryManager : public AActor
 public:
 	ATerritoryManager();
 
+	virtual void BeginPlay() override;
+	virtual void Tick(float DeltaSeconds) override;
+
 	AGraphNode* GetNearestNode(FVector Location, float SearchRadius) const;
 	UFUNCTION(BlueprintCallable)
 	bool IsLocationInTerritory(FVector Location, uint8 EmpireId) const;
 	UFUNCTION(Reliable, Server, WithValidation, BlueprintCallable)
 	void ServerUpdateTerritories();
 	void Test_ColorTerritoryBorderNodes();
+	void PropagateTerritoryUpdate();
+	void UpdateTerritoriesAsyncDelegate(TArray<AActor*> Buildings);
 
 protected:
 	UPROPERTY(EditAnywhere)
@@ -36,4 +41,8 @@ protected:
 	TSubclassOf<ATerritoryVisual> TerritoryVisualClass;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	TArray<ATerritoryVisual*> TerritoryVisuals;
+	bool bNeedToProcessTerritoryUpdate = true;
+	std::atomic_flag bTerritoryUpdateInProgress;
+	FTimerHandle TerritoryUpdateTimeoutHandle = FTimerHandle();
+	FTimerHandle TerritoryUpdateSoonHandle = FTimerHandle();
 };

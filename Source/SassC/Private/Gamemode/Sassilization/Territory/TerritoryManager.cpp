@@ -2,6 +2,8 @@
 
 #include "Gamemode/Sassilization/Territory/TerritoryManager.h"
 
+#include "TimerManager.h"
+#include "Async/Async.h"
 #include "Buildings/BuildingBase.h"
 #include "Buildings/City.h"
 #include "Components/SplineComponent.h"
@@ -19,6 +21,25 @@
 ATerritoryManager::ATerritoryManager()
 {
 	bReplicates = true;
+}
+
+void ATerritoryManager::BeginPlay()
+{
+	Super::BeginPlay();
+
+	// Only tick on server
+	this->SetActorTickEnabled(GetLocalRole() == ROLE_Authority);
+}
+
+void ATerritoryManager::Tick(float DeltaSeconds)
+{
+	Super::Tick(DeltaSeconds);
+
+	if (!bNeedToProcessTerritoryUpdate)
+	{
+		PropagateTerritoryUpdate();
+		bNeedToProcessTerritoryUpdate = false;
+	}
 }
 
 void ATerritoryManager::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
@@ -70,13 +91,50 @@ void ATerritoryManager::Test_ColorTerritoryBorderNodes()
 	}
 }
 
-void ATerritoryManager::ServerUpdateTerritories_Implementation()
+void ATerritoryManager::PropagateTerritoryUpdate()
 {
-	UE_LOG(Sassilization, Display, TEXT("Trying to update territories"))
-	TArray<FTerritoryInfo> Origins = TArray<FTerritoryInfo>();
-	TArray<AActor*> Buildings;
+	const ASassGameManager* GameManager = GetWorld()->GetGameState<ASassGameState>()->GetGameManager();
 	
-	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ABuildingBase::StaticClass(), Buildings);
+	TArray<ATerritoryVisual*> TempTerritoryVisuals = TArray<ATerritoryVisual*>();
+	int RibbonId = 0;
+	for (FEmpireBorderData BorderData : TerritoryBorders)
+	{
+		RibbonId++;
+		FTransform FinalTransform = FTransform(BorderData.BorderNodes[0]->GetActorLocation()); 
+		ATerritoryVisual* NewTerritoryVisual = GetWorld()->SpawnActorDeferred<ATerritoryVisual>(TerritoryVisualClass,
+			FinalTransform, this, nullptr, ESpawnActorCollisionHandlingMethod::AlwaysSpawn);
+
+		UE_LOG(Sassilization, Display, TEXT("BorderNode count: %d"), BorderData.BorderNodes.Num())
+		
+		NewTerritoryVisual->MulticastSetSplinePoints(TArray<AActor*>(BorderData.BorderNodes),
+			GameManager->GetEmpireManager()->GetEmpireById(BorderData.EmpireId)->GetColor(), RibbonId);
+		
+		NewTerritoryVisual->FinishSpawning(FinalTransform);
+		TempTerritoryVisuals.Add(NewTerritoryVisual);
+	}
+
+	UE_LOG(Sassilization, Display, TEXT("Spline count: %d"), TempTerritoryVisuals.Num())
+	
+	for (const ATerritoryVisual* TerritoryVisual : TempTerritoryVisuals)
+	{
+		UE_LOG(Sassilization, Display, TEXT("Number of spline points for %s was %d"), *TerritoryVisual->SplineComponent->GetFullName(), TerritoryVisual->SplineComponent->GetNumberOfSplinePoints())
+	}
+
+	while (!this->TerritoryVisuals.IsEmpty())
+	{
+		const int Index = TerritoryVisuals.Num() - 1;
+		this->TerritoryVisuals[Index]->Destroy();
+		this->TerritoryVisuals.RemoveAt(Index);
+	}
+	
+	this->TerritoryVisuals = TempTerritoryVisuals;
+}
+
+void ATerritoryManager::UpdateTerritoriesAsyncDelegate(TArray<AActor*> Buildings)
+{
+	const double StartTime = FPlatformTime::Seconds();
+	
+	TArray<FTerritoryInfo> Origins = TArray<FTerritoryInfo>();
 	for (const AActor* Building : Buildings)
 	{
 		if (!IsValid(Building))
@@ -104,42 +162,54 @@ void ATerritoryManager::ServerUpdateTerritories_Implementation()
 	UE_LOG(Sassilization, Display, TEXT("Found %d new territory borders"), NewTerritoryBorders.Num())
 	
 	this->TerritoryBorders = NewTerritoryBorders;
-	this->Test_ColorTerritoryBorderNodes();
 
-	const ASassGameManager* GameManager = GetWorld()->GetGameState<ASassGameState>()->GetGameManager();
-	
-	TArray<ATerritoryVisual*> TempTerritoryVisuals = TArray<ATerritoryVisual*>();
-	int Index2 = 0;
-	for (FEmpireBorderData BorderData : TerritoryBorders)
+	const double EndTime = FPlatformTime::Seconds();
+
+	UE_LOG(Sassilization, Display, TEXT("Flooding took %f seconds"), EndTime - StartTime)
+}
+
+void ATerritoryManager::ServerUpdateTerritories_Implementation()
+{
+	UE_LOG(Sassilization, Display, TEXT("Trying to update territories"))
+
+	if (GetWorldTimerManager().IsTimerActive(TerritoryUpdateTimeoutHandle) || bTerritoryUpdateInProgress.test_and_set())
 	{
-		Index2++;
-		FTransform FinalTransform = FTransform(BorderData.BorderNodes[0]->GetActorLocation()); 
-		ATerritoryVisual* NewTerritoryVisual = GetWorld()->SpawnActorDeferred<ATerritoryVisual>(TerritoryVisualClass,
-			FinalTransform, this, nullptr, ESpawnActorCollisionHandlingMethod::AlwaysSpawn);
+		UE_LOG(Sassilization, Display, TEXT("Territory Update In Progress or can't yet be updated."))
 
-		UE_LOG(Sassilization, Display, TEXT("BorderNode count: %d"), BorderData.BorderNodes.Num())
+		if (GetWorldTimerManager().IsTimerActive(TerritoryUpdateSoonHandle))
+		{
+			UE_LOG(Sassilization, Display, TEXT("A territory update is already queued."))
+			return;
+		}
 		
-		NewTerritoryVisual->MulticastSetSplinePoints(TArray<AActor*>(BorderData.BorderNodes),
-			GameManager->GetEmpireManager()->GetEmpireById(BorderData.EmpireId)->GetColor(), Index2);
-		
-		NewTerritoryVisual->FinishSpawning(FinalTransform);
-		TempTerritoryVisuals.Add(NewTerritoryVisual);
+		const FTimerDelegate UpdateSoonTimerDelegate = FTimerDelegate().CreateLambda([this]
+		{
+			UE_LOG(Sassilization, Display, TEXT("Trying to update again after a delay.."))
+			ServerUpdateTerritories();
+		});
+
+		UE_LOG(Sassilization, Display, TEXT("Queueing a territory update to execute after 1 second.."))
+		GetWorldTimerManager().SetTimer(TerritoryUpdateSoonHandle, UpdateSoonTimerDelegate, 1.0f, false);
+		return;
 	}
 
-	UE_LOG(Sassilization, Display, TEXT("Spline count: %d"), TempTerritoryVisuals.Num())
-	for (ATerritoryVisual* TerritoryVisual : TempTerritoryVisuals)
+	const FTimerDelegate TerritoryTimeoutResetDelegate = FTimerDelegate().CreateLambda([]
 	{
-		UE_LOG(Sassilization, Display, TEXT("Number of spline points for %s was %d"), *TerritoryVisual->SplineComponent->GetFullName(), TerritoryVisual->SplineComponent->GetNumberOfSplinePoints())
-	}
+		UE_LOG(Sassilization, Display, TEXT("Territory can be updated again."))
+	});
+	GetWorldTimerManager().SetTimer(TerritoryUpdateTimeoutHandle, TerritoryTimeoutResetDelegate, 0.3f, false);
 
-	while (!this->TerritoryVisuals.IsEmpty())
+	TArray<AActor*> Buildings;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ABuildingBase::StaticClass(), Buildings);
+
+	TFuture<void> TaskFuture = Async(EAsyncExecution::Thread, [this, Buildings]()
 	{
-		const int Index = TerritoryVisuals.Num() - 1;
-		this->TerritoryVisuals[Index]->Destroy();
-		this->TerritoryVisuals.RemoveAt(Index);
-	}
-	
-	this->TerritoryVisuals = TempTerritoryVisuals;
+		this->UpdateTerritoriesAsyncDelegate(Buildings);
+	}, [this]()
+	{
+		this->bNeedToProcessTerritoryUpdate = true;
+		this->bTerritoryUpdateInProgress.clear();
+	});
 }
 
 bool ATerritoryManager::ServerUpdateTerritories_Validate()
