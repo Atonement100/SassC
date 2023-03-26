@@ -37,4 +37,4 @@ All features are designed for and tested in a networked multiplayer environment.
 The backlog, issue, and progress tracker can be found [on Trello](https://trello.com/b/TZ4kPoE7/sassc)
 
 ## Contributing
-SassC is built on Unreal Engine 4.9. All other relevant content should be provided here.
+SassC is built on Unreal Engine 5.1. All other relevant content should be provided here.
