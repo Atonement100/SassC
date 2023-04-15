@@ -3,11 +3,13 @@
 #pragma once
 
 #include "GraphBorder.h"
+#include "GraphBorderData.h"
 #include "GameFramework/Actor.h"
 #include "GraphNodeDirection.h"
 #include "Components/StaticMeshComponent.h"
 #include "GraphNode.generated.h"
 
+class UBoxComponent;
 class ANodeManager;
 class UGraphBorderData;
 
@@ -27,8 +29,13 @@ public:
 	int32 GetId();
 	UFUNCTION(BlueprintCallable)
 	void SetNodeManager(ANodeManager* NewNodeManager);
-	
+
+	FString ToString() const;
+
 protected:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UBoxComponent* BoxComponent;
+	
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
@@ -43,11 +50,11 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Territory", meta=(ExposeOnSpawn="true"))
 	AGraphNode* ParentNode;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Territory")
-	UGraphBorderData* BorderData;
+	UGraphBorderData* BorderData = NewObject<UGraphBorderData>();
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Territory")
 	TArray<AGraphNode*> Connections;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Territory")
-	TArray<int32> IdConnections;
+	TArray<int32> IdConnections = {-1, -1, -1, -1, -1, -1, -1, -1};
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Territory")
 	TArray<bool> HasVisited;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Territory", meta=(ExposeOnSpawn="true"))
@@ -86,6 +93,7 @@ public:
 	UFUNCTION(BlueprintCallable)
 	FVector GetLocation();
 	void SetParentNode(AGraphNode* NewParent);
+	AGraphNode* GetParentNode() const;
 	void SetNormal(FVector NewNormal);
 	UFUNCTION(BlueprintCallable)
 	FVector GetNormal();

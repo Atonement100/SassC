@@ -7,8 +7,10 @@
 #include "Gamemode/Sassilization/Territory/EmpireBorderData.h"
 #include "Gamemode/Sassilization/Territory/GraphNode.h"
 #include "Gamemode/Sassilization/Territory/TerritoryInfo.h"
+#include "Gamemode/Sassilization/Territory/NodeGenerator.h"
 #include "Engine/World.h"
 #include "Gamemode/Sassilization/Territory/GraphBorderData.h"
+#include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "Kismet/KismetSystemLibrary.h"
 
@@ -36,6 +38,8 @@ void ANodeManager::ResetTerritory()
 
 	for (TPair<int32, AGraphNode*> NodeById : NodesById)
 	{
+		if (!NodeById.Value) continue;
+		
 		NodeById.Value->ResetTraversalFlags();
 		NodeById.Value->SetAStarStatus(nullptr, 0, 0);
 	}
@@ -46,22 +50,23 @@ void ANodeManager::ResetTerritory()
  */
 AGraphNode* ANodeManager::GetNodeAtPosition(FVector PositionToCheck) const
 {
-	return FindNearestNode(PositionToCheck, 1.0f);
+	return FindNearestNode(PositionToCheck, 10.0f);
 }
 
 AGraphNode* ANodeManager::FindNearestNode(const FVector Location, const float Radius) const
 {
 	AGraphNode* NearestNode = nullptr;
 	TArray<AActor*> OverlappingActors;
-	TArray<TEnumAsByte<EObjectTypeQuery>> TraceObjectTypes;
-	TraceObjectTypes.Add(UEngineTypes::ConvertToObjectType(ECollisionChannel::ECC_WorldStatic));
 
+	UE_LOG(Sassilization, Display, TEXT("Searching for actors at location %s with radius %f"), *Location.ToString(), Radius)
+	
 	const bool bWasOverlapping = UKismetSystemLibrary::SphereOverlapActors(GetWorld(), Location, Radius,
-		TraceObjectTypes, AGraphNode::StaticClass(), TArray<AActor*>(), OverlappingActors);
+		{UEngineTypes::ConvertToObjectType(ECollisionChannel::ECC_WorldStatic)},
+		AGraphNode::StaticClass(), {}, OverlappingActors);
 
 	if (!bWasOverlapping)
 	{
-		UE_LOG(Sassilization, Warning, TEXT("No nodes found in range."));
+		UE_LOG(Sassilization, Warning, TEXT("No nodes found in range around %s."), *Location.ToString());
 		return NearestNode;
 	}
 
@@ -93,15 +98,16 @@ AGraphNode* ANodeManager::GetNodeById(const int32 NodeId)
 	return *FoundNode;
 }
 
-void ANodeManager::FloodTerritory(const TArray<FTerritoryInfo>& TerritoryOrigins,
-                                                       TArray<FEmpireBorderData>& TerritoryBordersResult)
+TArray<FEmpireBorderData> ANodeManager::FloodTerritory(const TArray<FTerritoryInfo>& TerritoryOrigins)
 {
 	ResetTerritory();
 
+	TArray<FEmpireBorderData> EmpireBorderDataList = TArray<FEmpireBorderData>();
+	
 	if (TerritoryOrigins.IsEmpty())
 	{
 		UE_LOG(Sassilization, Warning, TEXT("No territory origins were found"))
-		return;
+		return EmpireBorderDataList;
 	}
 
 	TArray<AGraphNode*> OpenedNodes = TArray<AGraphNode*>();
@@ -178,8 +184,6 @@ void ANodeManager::FloodTerritory(const TArray<FTerritoryInfo>& TerritoryOrigins
 	{
 		MakeConnections(GraphBorders, BorderNode);
 	}
-
-	TArray<FEmpireBorderData> EmpireBorderDataList = TArray<FEmpireBorderData>();
 	
 	for (const UGraphBorder* Border : GraphBorders)
 	{
@@ -221,8 +225,18 @@ void ANodeManager::FloodTerritory(const TArray<FTerritoryInfo>& TerritoryOrigins
 		EmpireBorderDataList.Add(EmpireBorderData);
 	}
 
-	//TODO: Can migrate back to a normal return once detached from BP.
-	TerritoryBordersResult = EmpireBorderDataList;
+	return EmpireBorderDataList;
+}
+
+void ANodeManager::GenerateNodeNetwork()
+{
+	UNodeGenerator* NodeGenerator = NewObject<UNodeGenerator>();
+	NodeGenerator->GenerateNodeNetwork(GetActorLocation(), this);
+}
+
+void ANodeManager::ResetNodeNetwork()
+{
+	this->NodesById.Empty();
 }
 
 bool ANodeManager::IsConnectionSameEmpire(AGraphNode* CurrentNode, EGraphNodeDirection Direction, int32 EmpireId)
@@ -282,7 +296,7 @@ bool ANodeManager::GetGroundHeight(const FVector Position, FVector& GroundLocati
 	TArray<FHitResult> Hits = TArray<FHitResult>();
 	FVector TraceTarget = FVector(Position.X, Position.Y, -9999.f);
 	
-	for (float Offset = 1.905; Offset < 190.5; Offset += 19.05)
+	for (float Offset = 19.05; Offset < 190.5; Offset += 19.05)
 	{
 		FHitResult HitResult;
 
@@ -345,6 +359,8 @@ AGraphNode* ANodeManager::AddNode(FVector NewLocation, FVector NewNormal, EGraph
 
 AGraphNode* ANodeManager::SpawnAndConnectGraphNode(const FVector Location, const FVector Normal, AGraphNode* ParentNode)
 {
+	UE_LOG(Sassilization, Verbose, TEXT("Spawning GraphNode at %s"), *Location.ToString())
+	
 	FActorSpawnParameters SpawnParameters = FActorSpawnParameters();
 	SpawnParameters.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn; 
 	AGraphNode* NewNode = GetWorld()->SpawnActor<AGraphNode>(AGraphNode::StaticClass(), Location, FRotator(0, 0, 0), SpawnParameters);
@@ -355,6 +371,9 @@ AGraphNode* ANodeManager::SpawnAndConnectGraphNode(const FVector Location, const
 
 	NodesById.Add(NewNode->GetId(), NewNode);
 
+	NewNode->SetFolderPath("GraphNodes");
+	
+	UE_LOG(Sassilization, Display, TEXT("Spawned GraphNode %s at %s"), *NewNode->GetName(), *NewNode->GetActorLocation().ToString())
 	return NewNode;
 }
 
@@ -379,10 +398,15 @@ void ANodeManager::MakeConnections(TArray<UGraphBorder*>& Borders, AGraphNode* N
 
 	if (EmpireId <= 0) return;
 
-	const EDirectionBitmask BorderBitmask = StaticCast<EDirectionBitmask>(CalculateBorderBitmask(Node, EmpireId));
+	const int32 BorderBitmask = CalculateBorderBitmask(Node, EmpireId);
 
+	UE_LOG(Sassilization, Display, TEXT("BorderBitmask: %d"), BorderBitmask)
+	UE_LOG(Sassilization, Display, TEXT("BorderBitmask comparison: %d"), (NO | NE | EA | SE | SO | WE | NW))
+	UE_LOG(Sassilization, Display, TEXT("BorderBitmask equals: %d"), (SE | SO | WE | NW))
+	UE_LOG(Sassilization, Display, TEXT("BorderBitmask and: %d"), (BorderBitmask & (NO | NE | EA | SE | SO | WE | NW)))
+	
 	// 90 Deg. Corners
-	if((BorderBitmask & (NO | NE | EA | SE | SO | WE | NW)) == (SE | SO | WE | NW) )
+	if((BorderBitmask & (NO | NE | EA | SE | SO | WE | NW)) == (SE | SO | WE | NW))
 	{
 		AddBorderConnection(Borders, Node, EGraphNodeDirection::East, EGraphNodeDirection::North);
 	}
@@ -567,7 +591,7 @@ void ANodeManager::MakeConnections(TArray<UGraphBorder*>& Borders, AGraphNode* N
 		AddBorderConnection(Borders, Node, EGraphNodeDirection::West, EGraphNodeDirection::Southwest);
 	}
 	// Rare fail-safe case
-	else if((BorderBitmask & (NO | EA | SO | WE )) == (NO | SO))
+	else if((BorderBitmask & (NO | EA | SO | WE)) == (NO | SO))
 	{
 		Node->SetAStarStatus( nullptr, 0, 0);
 		MakeConnections(Borders, Node->GetConnection(EGraphNodeDirection::Northeast));
@@ -577,7 +601,7 @@ void ANodeManager::MakeConnections(TArray<UGraphBorder*>& Borders, AGraphNode* N
 		MakeConnections(Borders, Node->GetConnection(EGraphNodeDirection::West));
 		MakeConnections(Borders, Node->GetConnection(EGraphNodeDirection::Northwest));
 	}
-	else if((BorderBitmask & (NO | EA | SO | WE )) == (EA | WE))
+	else if((BorderBitmask & (NO | EA | SO | WE)) == (EA | WE))
 	{
 		Node->SetAStarStatus( nullptr, 0, 0);
 		MakeConnections(Borders, Node->GetConnection(EGraphNodeDirection::Northeast));
@@ -587,19 +611,23 @@ void ANodeManager::MakeConnections(TArray<UGraphBorder*>& Borders, AGraphNode* N
 		MakeConnections(Borders, Node->GetConnection(EGraphNodeDirection::South));
 		MakeConnections(Borders, Node->GetConnection(EGraphNodeDirection::Northwest));
 	}
+	else
+	{
+		UE_LOG(Sassilization, Warning, TEXT("Somehow failed to make connections for graph node %s with bitmask %d"), *Node->GetName(), BorderBitmask)
+	}
 }
 
 int32 ANodeManager::CalculateBorderBitmask(AGraphNode* Node, int32 EmpireId)
 {
 	int32 BorderBitmask = 0;
 
-	if (IsConnectionSameEmpire(Node, EGraphNodeDirection::North, EmpireId)) BorderBitmask |= StaticCast<uint8>(EDirectionBitmask::North);
+	if (IsConnectionSameEmpire(Node, EGraphNodeDirection::North, EmpireId))		BorderBitmask |= StaticCast<uint8>(EDirectionBitmask::North);
 	if (IsConnectionSameEmpire(Node, EGraphNodeDirection::Northeast, EmpireId)) BorderBitmask |= StaticCast<uint8>(EDirectionBitmask::Northeast);
-	if (IsConnectionSameEmpire(Node, EGraphNodeDirection::East, EmpireId)) BorderBitmask |= StaticCast<uint8>(EDirectionBitmask::East);
+	if (IsConnectionSameEmpire(Node, EGraphNodeDirection::East, EmpireId))		BorderBitmask |= StaticCast<uint8>(EDirectionBitmask::East);
 	if (IsConnectionSameEmpire(Node, EGraphNodeDirection::Southeast, EmpireId)) BorderBitmask |= StaticCast<uint8>(EDirectionBitmask::Southeast);
-	if (IsConnectionSameEmpire(Node, EGraphNodeDirection::South, EmpireId)) BorderBitmask |= StaticCast<uint8>(EDirectionBitmask::South);
+	if (IsConnectionSameEmpire(Node, EGraphNodeDirection::South, EmpireId))		BorderBitmask |= StaticCast<uint8>(EDirectionBitmask::South);
 	if (IsConnectionSameEmpire(Node, EGraphNodeDirection::Southwest, EmpireId)) BorderBitmask |= StaticCast<uint8>(EDirectionBitmask::Southwest);
-	if (IsConnectionSameEmpire(Node, EGraphNodeDirection::West, EmpireId)) BorderBitmask |= StaticCast<uint8>(EDirectionBitmask::West);
+	if (IsConnectionSameEmpire(Node, EGraphNodeDirection::West, EmpireId))		BorderBitmask |= StaticCast<uint8>(EDirectionBitmask::West);
 	if (IsConnectionSameEmpire(Node, EGraphNodeDirection::Northwest, EmpireId)) BorderBitmask |= StaticCast<uint8>(EDirectionBitmask::Northwest);
 
 	return ~BorderBitmask;
@@ -608,8 +636,13 @@ int32 ANodeManager::CalculateBorderBitmask(AGraphNode* Node, int32 EmpireId)
 void ANodeManager::AddBorderConnection(TArray<UGraphBorder*>& GraphBorders, AGraphNode* Node,
 	EGraphNodeDirection NextDirection, EGraphNodeDirection PreviousDirection)
 {
+	UE_LOG(Sassilization, Display, TEXT("AddBorderConnection for %s with next dir %s and prev dir %s"), *Node->GetName(),
+		*UEnum::GetValueAsString(NextDirection), *UEnum::GetValueAsString(PreviousDirection))
+	
 	if (!Node) return;
 
+	UE_LOG(Sassilization, Display, TEXT("Node for this call: %s"), *Node->ToString())
+	
 	if (!Node->GetBorderData())
 	{
 		Node->SetBorderData(NewObject<UGraphBorderData>());

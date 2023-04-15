@@ -21,6 +21,7 @@
 ATerritoryManager::ATerritoryManager()
 {
 	bReplicates = true;
+	
 }
 
 void ATerritoryManager::BeginPlay()
@@ -28,15 +29,20 @@ void ATerritoryManager::BeginPlay()
 	Super::BeginPlay();
 
 	// Only tick on server
-	this->SetActorTickEnabled(GetLocalRole() == ROLE_Authority);
+	this->SetActorTickEnabled(true);
+	// this->SetActorTickEnabled(GetNetMode() < NM_Client);
 }
 
 void ATerritoryManager::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
 
-	if (!bNeedToProcessTerritoryUpdate)
+	UE_LOG(Sassilization, VeryVerbose, TEXT("territory tick %s"), (bNeedToProcessTerritoryUpdate ? TEXT("true"):TEXT("false")))
+	
+	if (bNeedToProcessTerritoryUpdate)
 	{
+		UE_LOG(Sassilization, Display, TEXT("Trying to propagate territory update"))
+
 		PropagateTerritoryUpdate();
 		bNeedToProcessTerritoryUpdate = false;
 	}
@@ -93,6 +99,8 @@ void ATerritoryManager::Test_ColorTerritoryBorderNodes()
 
 void ATerritoryManager::PropagateTerritoryUpdate()
 {
+	UE_LOG(Sassilization, Display, TEXT("TerritoryBorders to propagate count: %d"), TerritoryBorders.Num())
+
 	const ASassGameManager* GameManager = GetWorld()->GetGameState<ASassGameState>()->GetGameManager();
 	
 	TArray<ATerritoryVisual*> TempTerritoryVisuals = TArray<ATerritoryVisual*>();
@@ -152,17 +160,13 @@ void ATerritoryManager::UpdateTerritoriesAsyncDelegate(TArray<AActor*> Buildings
 		UE_LOG(Sassilization, Display, TEXT("Adding TerritoryInfo %s"), *BuildingBase->GetTerritoryInfo().ToString())
 		Origins.Add(BuildingBase->GetTerritoryInfo());
 	}
-	
-	TArray<FEmpireBorderData> NewTerritoryBorders = TArray<FEmpireBorderData>();
 
 	UE_LOG(Sassilization, Display, TEXT("Found %d territory origins"), Origins.Num())
 	
-	this->NodeManager->FloodTerritory(Origins, NewTerritoryBorders);
+	this->TerritoryBorders = this->NodeManager->FloodTerritory(Origins);
 
-	UE_LOG(Sassilization, Display, TEXT("Found %d new territory borders"), NewTerritoryBorders.Num())
+	UE_LOG(Sassilization, Display, TEXT("Found %d new territory borders"), TerritoryBorders.Num())
 	
-	this->TerritoryBorders = NewTerritoryBorders;
-
 	const double EndTime = FPlatformTime::Seconds();
 
 	UE_LOG(Sassilization, Display, TEXT("Flooding took %f seconds"), EndTime - StartTime)
@@ -204,10 +208,12 @@ void ATerritoryManager::ServerUpdateTerritories_Implementation()
 
 	TFuture<void> TaskFuture = Async(EAsyncExecution::Thread, [this, Buildings]()
 	{
+		UE_LOG(Sassilization, Display, TEXT("territory1"))
 		this->UpdateTerritoriesAsyncDelegate(Buildings);
 	}, [this]()
 	{
 		this->bNeedToProcessTerritoryUpdate = true;
+		UE_LOG(Sassilization, Display, TEXT("territory callback %s"), (bNeedToProcessTerritoryUpdate ? TEXT("true"):TEXT("false")))
 		this->bTerritoryUpdateInProgress.clear();
 	});
 }

@@ -10,6 +10,7 @@
 class AGraphNode;
 class UGraphBorder;
 class UGraphBorderData;
+class UNodeGenerator;
 struct FTerritoryInfo;
 struct FEmpireBorderData;
 
@@ -25,22 +26,9 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-
-	float NodeSpacingDistance = SassGamemodeConstants::GetGraphNodeSpacingDistance();
-	FVector OffGroundTraceOffset = FVector(0, 0, NodeSpacingDistance / 2);
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TMap<int32, AGraphNode*> NodesById;
-	TMap<EGraphNodeDirection, FVector> NodeDirectionToDisplacement = {
-		{EGraphNodeDirection::North, 		FVector(0, NodeSpacingDistance, 0)},
-		{EGraphNodeDirection::East, 		FVector(NodeSpacingDistance, 0, 0)},
-		{EGraphNodeDirection::South, 		FVector(0, -NodeSpacingDistance, 0)},
-		{EGraphNodeDirection::West, 		FVector(-NodeSpacingDistance, 0, 0)},
-		{EGraphNodeDirection::Northeast, 	FVector(NodeSpacingDistance, NodeSpacingDistance, 0)},
-		{EGraphNodeDirection::Northwest, 	FVector(-NodeSpacingDistance, NodeSpacingDistance, 0)},
-		{EGraphNodeDirection::Southeast, 	FVector(NodeSpacingDistance, -NodeSpacingDistance, 0)},
-		{EGraphNodeDirection::Southwest, 	FVector(-NodeSpacingDistance, -NodeSpacingDistance, 0)},
-	};
 	
 public:
 	// Called every frame
@@ -71,15 +59,20 @@ public:
 	void AddBorderConnection(TArray<UGraphBorder*>& GraphBorders, AGraphNode* Node,
 		EGraphNodeDirection NextDirection, EGraphNodeDirection PreviousDirection);
 	UFUNCTION(BlueprintCallable)
-	void FloodTerritory(const TArray<FTerritoryInfo>& TerritoryOrigins, TArray<FEmpireBorderData>& TerritoryBordersResult);
+	TArray<FEmpireBorderData> FloodTerritory(const TArray<FTerritoryInfo>& TerritoryOrigins);
 
+	UFUNCTION(BlueprintCallable, CallInEditor)
+	void GenerateNodeNetwork();
+	void ResetNodeNetwork();
+	int32 GetNumNodesKnown() const {return this->NodesById.Num();}
+	
 private:
-	inline static EDirectionBitmask NO = EDirectionBitmask::North;
-	inline static EDirectionBitmask NE = EDirectionBitmask::North;
-	inline static EDirectionBitmask EA = EDirectionBitmask::North;
-	inline static EDirectionBitmask SE = EDirectionBitmask::North;
-	inline static EDirectionBitmask SO = EDirectionBitmask::North;
-	inline static EDirectionBitmask WE = EDirectionBitmask::North;
-	inline static EDirectionBitmask NW = EDirectionBitmask::North;
-	inline static EDirectionBitmask SW = EDirectionBitmask::North;
+	inline static uint8 NO = StaticCast<uint8>(EDirectionBitmask::North);
+	inline static uint8 NE = StaticCast<uint8>(EDirectionBitmask::Northeast);
+	inline static uint8 EA = StaticCast<uint8>(EDirectionBitmask::East);
+	inline static uint8 SE = StaticCast<uint8>(EDirectionBitmask::Southeast);
+	inline static uint8 SO = StaticCast<uint8>(EDirectionBitmask::South);
+	inline static uint8 SW = StaticCast<uint8>(EDirectionBitmask::Southwest);
+	inline static uint8 WE = StaticCast<uint8>(EDirectionBitmask::West);
+	inline static uint8 NW = StaticCast<uint8>(EDirectionBitmask::Northwest);
 };

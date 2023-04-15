@@ -3,6 +3,8 @@
 
 #include "Gamemode/Sassilization/Territory/GraphNode.h"
 
+#include "Components/BoxComponent.h"
+#include "Core/ChannelDefines.h"
 #include "Gamemode/Sassilization/Territory/GraphBorderData.h"
 #include "Gamemode/Sassilization/Territory/NodeManager.h"
 #include "Kismet/GameplayStatics.h"
@@ -16,6 +18,17 @@ AGraphNode::AGraphNode()
 	Connections.SetNum(8, false);
 	IdConnections.SetNum(8, false);
 	HasVisited.SetNum(8, false);
+
+	RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("RootComponent"));
+	BoxComponent = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxComponent"));
+	BoxComponent->SetBoxExtent(FVector(5.f));
+	BoxComponent->SetCollisionResponseToChannel(ECollisionChannel::ECC_WorldStatic, ECR_Block);
+	FCollisionResponseContainer IgnoreAll = FCollisionResponseContainer();
+	IgnoreAll.SetAllChannels(ECR_Ignore);
+	BoxComponent->SetCollisionResponseToChannels(IgnoreAll);
+	BoxComponent->SetCollisionResponseToChannel(ECC_NODE_NETWORK, ECR_Block);
+	BoxComponent->SetupAttachment(RootComponent);
+	BoxComponent->SetCollisionObjectType(ECC_WorldStatic);
 }
 
 void AGraphNode::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
@@ -50,6 +63,11 @@ void AGraphNode::SetNodeManager(ANodeManager* NewNodeManager)
 	this->NodeManager = NewNodeManager;
 }
 
+FString AGraphNode::ToString() const
+{
+	return "Name: " + GetName() + ", BorderData: " + (BorderData ? BorderData->ToString() : "NULL");
+}
+
 void AGraphNode::BeginPlay()
 {
 	Super::BeginPlay();
@@ -67,7 +85,14 @@ void AGraphNode::SetConnection(AGraphNode* NodeToConnect, EGraphNodeDirection Di
 
 AGraphNode* AGraphNode::GetConnection(EGraphNodeDirection Direction)
 {
-	return NodeManager->GetNodeById(this->IdConnections[StaticCast<int>(Direction)]);
+	const int32 IdToRetrieve = this->IdConnections[StaticCast<int>(Direction)];
+
+	if (IdToRetrieve == -1)
+	{
+		return nullptr;
+	}
+	
+	return NodeManager->GetNodeById(IdToRetrieve);
 }
 
 void AGraphNode::SetVisited(const int Index, const bool HasBeenVisited)
@@ -88,6 +113,11 @@ FVector AGraphNode::GetLocation()
 void AGraphNode::SetParentNode(AGraphNode* NewParent)
 {
 	this->ParentNode = NewParent;
+}
+
+AGraphNode* AGraphNode::GetParentNode() const
+{
+	return this->ParentNode;
 }
 
 void AGraphNode::SetNormal(FVector NewNormal)

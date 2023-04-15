@@ -41,7 +41,7 @@ protected:
 	TSubclassOf<ATerritoryVisual> TerritoryVisualClass;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	TArray<ATerritoryVisual*> TerritoryVisuals;
-	bool bNeedToProcessTerritoryUpdate = true;
+	bool bNeedToProcessTerritoryUpdate = false;
 	std::atomic_flag bTerritoryUpdateInProgress;
 	FTimerHandle TerritoryUpdateTimeoutHandle = FTimerHandle();
 	FTimerHandle TerritoryUpdateSoonHandle = FTimerHandle();

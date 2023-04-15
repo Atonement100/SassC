@@ -2,9 +2,10 @@
 
 #pragma once
 
-#include "GraphBorder.h"
-#include "GraphNode.h"
 #include "GraphBorderData.generated.h"
+
+class UGraphBorder;
+class AGraphNode;
 
 /**
  * 
@@ -29,4 +30,6 @@ public:
 	void SetNext(AGraphNode* NewNext);
 	AGraphNode* GetPrevious() const;
 	void SetPrevious(AGraphNode* NewPrevious);
+
+	FString ToString() const;
 };

@@ -25,4 +25,6 @@ public:
 	void SetHead(AGraphNode* NewHead);
 	AGraphNode* GetTail() const;
 	void SetTail(AGraphNode* NewTail);
+
+	FString ToString() const;
 };
