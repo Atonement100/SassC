@@ -198,18 +198,13 @@ TArray<FEmpireBorderData> ANodeManager::FloodTerritory(const TArray<FTerritoryIn
 			CurrentEmpireId = CurrentBorderNode->GetAStarFScore();
 			NodesForBorder.Add(CurrentBorderNode);
 
-			if (CurrentBorderNode->GetBorder())
+			NextBorderNode = CurrentBorderNode->GetBorderNext();
+
+			if (CurrentBorderNode->GetBorderData())
 			{
-				NextBorderNode = CurrentBorderNode->GetBorderNext();
-			}
-			else
-			{
-				UGraphBorderData* NewBorderData = NewObject<UGraphBorderData>();
-				CurrentBorderNode->SetBorderData(NewBorderData);
-				NextBorderNode = NewBorderData->GetNext();
+				CurrentBorderNode->ResetBorderData();
 			}
 
-			CurrentBorderNode->ClearBorderData();
 			CurrentBorderNode = NextBorderNode;
 
 			if (CurrentBorderNode == StartingBorderNode)
@@ -264,6 +259,11 @@ UGraphBorder* ANodeManager::GetBorderForNodeIfValid(AGraphNode* GraphNode)
 		return nullptr;
 	}
 
+	if (!GraphNode->GetBorderData())
+	{
+		return nullptr;
+	}
+	
 	UGraphBorder* GraphBorder = GraphNode->GetBorder();
 	
 	if (!IsValid(GraphBorder))
@@ -400,10 +400,10 @@ void ANodeManager::MakeConnections(TArray<UGraphBorder*>& Borders, AGraphNode* N
 
 	const int32 BorderBitmask = CalculateBorderBitmask(Node, EmpireId);
 
-	UE_LOG(Sassilization, Display, TEXT("BorderBitmask: %d"), BorderBitmask)
-	UE_LOG(Sassilization, Display, TEXT("BorderBitmask comparison: %d"), (NO | NE | EA | SE | SO | WE | NW))
-	UE_LOG(Sassilization, Display, TEXT("BorderBitmask equals: %d"), (SE | SO | WE | NW))
-	UE_LOG(Sassilization, Display, TEXT("BorderBitmask and: %d"), (BorderBitmask & (NO | NE | EA | SE | SO | WE | NW)))
+	// UE_LOG(Sassilization, Display, TEXT("BorderBitmask: %d"), BorderBitmask)
+	// UE_LOG(Sassilization, Display, TEXT("BorderBitmask comparison: %d"), (NO | NE | EA | SE | SO | WE | NW))
+	// UE_LOG(Sassilization, Display, TEXT("BorderBitmask equals: %d"), (SE | SO | WE | NW))
+	// UE_LOG(Sassilization, Display, TEXT("BorderBitmask and: %d"), (BorderBitmask & (NO | NE | EA | SE | SO | WE | NW)))
 	
 	// 90 Deg. Corners
 	if((BorderBitmask & (NO | NE | EA | SE | SO | WE | NW)) == (SE | SO | WE | NW))
@@ -645,28 +645,48 @@ void ANodeManager::AddBorderConnection(TArray<UGraphBorder*>& GraphBorders, AGra
 	
 	if (!Node->GetBorderData())
 	{
-		Node->SetBorderData(NewObject<UGraphBorderData>());
+		Node->ResetBorderData();
 	}
 
-	if (GetBorderForNodeIfValid(Node)) return;
+	if (GetBorderForNodeIfValid(Node))
+	{
+		UE_LOG(Sassilization, Warning, TEXT("Border for node was somehow invalid %s"), *Node->ToString())
+		return;
+	}
 
 	UGraphBorder *NextBorder = nullptr, *PreviousBorder = nullptr;
 
 	AGraphNode* NextNode = Node->GetConnection(NextDirection);
 	AGraphNode* PreviousNode = Node->GetConnection(PreviousDirection);
 
-	if (NextNode && NextNode->HasValidBorderData())
+	if (NextNode)
 	{
-		NextBorder = GetBorderForNodeIfValid(NextNode);
+		if (NextNode->HasValidBorderData())
+		{
+			NextBorder = GetBorderForNodeIfValid(NextNode);
+		}
+		else
+		{
+			NextNode->ResetBorderData();
+		}
 	}
 
-	if (PreviousNode && PreviousNode->HasValidBorderData())
+	if (PreviousNode)
 	{
-		PreviousBorder = GetBorderForNodeIfValid(PreviousNode);
+		if (PreviousNode->HasValidBorderData())
+		{
+			PreviousBorder = GetBorderForNodeIfValid(PreviousNode);
+		}
+		else
+		{
+			PreviousNode->ResetBorderData();
+		}
 	}
 
 	if (!NextBorder && !PreviousBorder)
 	{
+		UE_LOG(Sassilization, Display, TEXT("NoBorder Node: %s."), *Node->ToString())
+		
 		UGraphBorder* NewBorder = NewObject<UGraphBorder>();
 		NewBorder->SetHead(Node);
 		NewBorder->SetTail(Node);
@@ -678,6 +698,8 @@ void ANodeManager::AddBorderConnection(TArray<UGraphBorder*>& GraphBorders, AGra
 	{
 		if (NextBorder == PreviousBorder)
 		{
+			UE_LOG(Sassilization, Display, TEXT("Loop Node: %s. Next Tail %s. Next Head %s."), *Node->ToString(), *NextBorder->GetTail()->ToString(), *NextBorder->GetHead()->ToString())
+			
 			Node->SetBorder(NextBorder);
 			Node->SetBorderNext(NextBorder->GetTail());
 			NextBorder->GetTail()->SetBorderPrev(Node);
@@ -689,6 +711,10 @@ void ANodeManager::AddBorderConnection(TArray<UGraphBorder*>& GraphBorders, AGra
 		}
 		else
 		{
+			UE_LOG(Sassilization, Display, TEXT("Merge Node: %s. Next Tail %s. Next Head %s. Prev Tail %s. Prev Head %s."), *Node->ToString(),
+				*NextBorder->GetTail()->ToString(), *NextBorder->GetHead()->ToString(),
+				*PreviousBorder->GetTail()->ToString(), *PreviousBorder->GetHead()->ToString())
+
 			NextBorder->GetTail()->SetBorderPrev(Node);
 			Node->SetBorderNext(NextBorder->GetTail());
 			NextBorder->SetTail(PreviousBorder->GetTail());
@@ -701,8 +727,9 @@ void ANodeManager::AddBorderConnection(TArray<UGraphBorder*>& GraphBorders, AGra
 			return;
 		}
 	}
-	else if (IsBorderValid(NextBorder))
+	else if (NextBorder)
 	{
+		UE_LOG(Sassilization, Display, TEXT("NextBorder Tail: %s."), *NextBorder->GetTail()->ToString())
 		NextBorder->GetTail()->SetBorderPrev(Node);
 		Node->SetBorderNext(NextBorder->GetTail());
 		NextBorder->SetTail(Node);
@@ -711,6 +738,7 @@ void ANodeManager::AddBorderConnection(TArray<UGraphBorder*>& GraphBorders, AGra
 	}
 	else
 	{
+		UE_LOG(Sassilization, Display, TEXT("PrevBorder Head: %s"), *PreviousBorder->GetHead()->ToString())
 		PreviousBorder->GetHead()->SetBorderNext(Node);
 		Node->SetBorderPrev(PreviousBorder->GetHead());
 		PreviousBorder->SetHead(Node);

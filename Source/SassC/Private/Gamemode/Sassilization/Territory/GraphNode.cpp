@@ -31,6 +31,13 @@ AGraphNode::AGraphNode()
 	BoxComponent->SetCollisionObjectType(ECC_WorldStatic);
 }
 
+void AGraphNode::BeginPlay()
+{
+	Super::BeginPlay();
+
+	if (!this->BorderData) ResetBorderData();
+}
+
 void AGraphNode::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
@@ -66,11 +73,6 @@ void AGraphNode::SetNodeManager(ANodeManager* NewNodeManager)
 FString AGraphNode::ToString() const
 {
 	return "Name: " + GetName() + ", BorderData: " + (BorderData ? BorderData->ToString() : "NULL");
-}
-
-void AGraphNode::BeginPlay()
-{
-	Super::BeginPlay();
 }
 
 int32 AGraphNode::GetEmpireId() const
@@ -191,6 +193,18 @@ AGraphNode* AGraphNode::GetBorderPrev()
 UGraphBorderData* AGraphNode::GetBorderData() const
 {
 	return BorderData;
+}
+
+void AGraphNode::ResetBorderData()
+{
+	if (this->BorderData)
+	{
+		this->SetBorder(nullptr);
+		this->SetBorderNext(nullptr);
+		this->SetBorderPrev(nullptr);
+	}
+	
+	this->BorderData = NewObject<UGraphBorderData>();
 }
 
 void AGraphNode::SetBorderData(UGraphBorderData* const NewBorderData)

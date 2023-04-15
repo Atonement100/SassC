@@ -50,7 +50,7 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Territory", meta=(ExposeOnSpawn="true"))
 	AGraphNode* ParentNode;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Territory")
-	UGraphBorderData* BorderData = NewObject<UGraphBorderData>();
+	UGraphBorderData* BorderData;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Territory")
 	TArray<AGraphNode*> Connections;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Territory")
@@ -116,6 +116,7 @@ public:
 	UFUNCTION(BlueprintCallable)
 	AGraphNode* GetBorderPrev();
 	UGraphBorderData* GetBorderData() const;
+	void ResetBorderData();
 	void SetBorderData(UGraphBorderData* const NewBorderData);
 	bool IsOpen() const;
 	void SetIsOpen(const bool NewIsOpen);
